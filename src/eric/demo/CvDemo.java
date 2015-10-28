@@ -4,8 +4,7 @@ import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by 麟 on 2015/10/28.
@@ -21,38 +20,57 @@ public class CvDemo
         System.out.println("src: "+ src);
 
         Mat roi = getROI(src);
+        System.out.println("roi: "+ roi);
         Imgcodecs.imwrite("resources\\roi.png",roi);
 
         Mat binary = getBinaryMat(roi);
+        System.out.println("binary:" + binary);
         Imgcodecs.imwrite("resources\\binary.png",binary);
 
         Mat eroded = removeNoise(binary);
         System.out.println("eroded : " + eroded);
         Imgcodecs.imwrite("resources\\eroded.png",eroded);
 
-        Mat eroded_bak = new Mat();
-        eroded.copyTo(eroded_bak);
-        Imgcodecs.imwrite("resources\\eroded_bak.png",eroded_bak);
-        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-        Imgproc.findContours(eroded,contours,new Mat(),Imgproc.RETR_LIST  , Imgproc.CHAIN_APPROX_NONE);
-        System.out.println("coutours counts : " + contours.size());
 
+        Mat eroded_bak = new Mat(eroded.rows(),eroded.cols(),CvType.CV_8UC3);
+        eroded.convertTo(eroded_bak,CvType.CV_8UC3);
+        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+        Imgproc.findContours(eroded,contours,new Mat(),Imgproc.RETR_EXTERNAL  , Imgproc.CHAIN_APPROX_NONE);
+
+        System.out.println("coutours counts : " + contours.size());
+        List<Mat> sortedDigits = getSortedRectsOfDigits(contours,eroded_bak);
+        System.out.println(sortedDigits);
+    }
+    
+    private static List<Mat> getSortedRectsOfDigits(List<MatOfPoint> contours,Mat src)
+    {
+        Map<Double, Rect> sortedRects = new TreeMap<Double, Rect>();
+        List<Mat> ret = new ArrayList<Mat>();
         for(int i = 0 ; i < contours.size(); ++i)
         {
-            Imgproc.drawContours(eroded_bak, contours, i, new Scalar(255, 0, 0));
+            Rect rect = Imgproc.boundingRect(contours.get(i));
+            sortedRects.put(rect.tl().x, rect);
+//            Imgproc.drawContours(eroded_bak, contours, i, new Scalar(0, 0, 255));
+//            Imgproc.rectangle(eroded_bak,rect.tl(),rect.br(),new Scalar(0, 0, 255));
         }
-//        Imgcodecs.imwrite("resources\\eroded.png",eroded);
-
-        Imgcodecs.imwrite("resources\\coutours.png",eroded_bak);
-
+        for (Map.Entry<Double, Rect> doubleRectEntry : sortedRects.entrySet())
+        {
+            System.out.println(doubleRectEntry.getValue());
+            Mat cur = src.submat(doubleRectEntry.getValue());
+            ret.add(cur);
+            Imgcodecs.imwrite("resources\\digit"+ doubleRectEntry.getKey() +".png",cur);
+        }
+        return ret;
     }
+
 
     private static Mat removeNoise(Mat binary)
     {
         Mat eroded = new Mat(binary.rows(),binary.cols(),1);
         Mat element = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_ELLIPSE, new Size(2, 2));
-        Imgproc.dilate(binary, eroded, element);
-        Imgproc.erode(eroded, eroded, element);
+        Imgproc.erode(binary, eroded, element);
+        Imgproc.dilate(eroded, eroded, element);
+
         return eroded;
     }
 
@@ -77,9 +95,7 @@ public class CvDemo
 
 
         Mat binary = new Mat(roi.rows(),roi.cols(),CvType.CV_8U);
-        Imgproc.threshold(red_green, binary, 100, 255, 1);
-        System.out.println("binary:" + binary);
-
+        Imgproc.threshold(red_green, binary, 100, 255, Imgproc.THRESH_BINARY);
         return binary;
     }
 
