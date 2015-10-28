@@ -27,9 +27,23 @@ public class CvDemo
         Imgcodecs.imwrite("resources\\binary.png",binary);
 
         Mat eroded = removeNoise(binary);
+        System.out.println("eroded : " + eroded);
         Imgcodecs.imwrite("resources\\eroded.png",eroded);
 
+        Mat eroded_bak = new Mat();
+        eroded.copyTo(eroded_bak);
+        Imgcodecs.imwrite("resources\\eroded_bak.png",eroded_bak);
+        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+        Imgproc.findContours(eroded,contours,new Mat(),Imgproc.RETR_LIST  , Imgproc.CHAIN_APPROX_NONE);
+        System.out.println("coutours counts : " + contours.size());
 
+        for(int i = 0 ; i < contours.size(); ++i)
+        {
+            Imgproc.drawContours(eroded_bak, contours, i, new Scalar(255, 0, 0));
+        }
+//        Imgcodecs.imwrite("resources\\eroded.png",eroded);
+
+        Imgcodecs.imwrite("resources\\coutours.png",eroded_bak);
 
     }
 
@@ -62,9 +76,9 @@ public class CvDemo
         Imgcodecs.imwrite("resources\\red-green.png",red_green);
 
 
-        Mat binary = new Mat(roi.rows(),roi.cols(),type);
+        Mat binary = new Mat(roi.rows(),roi.cols(),CvType.CV_8U);
         Imgproc.threshold(red_green, binary, 100, 255, 1);
-        System.out.println(binary);
+        System.out.println("binary:" + binary);
 
         return binary;
     }
