@@ -39,9 +39,9 @@ public class CvDemo
 
         System.out.println("coutours counts : " + contours.size());
         List<Mat> sortedDigits = getSortedRectsOfDigits(contours,eroded_bak);
-        System.out.println(sortedDigits);
+        System.out.println(sortedDigits.get(0));
     }
-    
+
     private static List<Mat> getSortedRectsOfDigits(List<MatOfPoint> contours,Mat src)
     {
         Map<Double, Rect> sortedRects = new TreeMap<Double, Rect>();
@@ -57,8 +57,10 @@ public class CvDemo
         {
             System.out.println(doubleRectEntry.getValue());
             Mat cur = src.submat(doubleRectEntry.getValue());
-            ret.add(cur);
-            Imgcodecs.imwrite("resources\\digit"+ doubleRectEntry.getKey() +".png",cur);
+            Mat resized = new Mat();
+            Imgproc.resize(cur,resized,new Size(20,20));
+            ret.add(resized);
+            Imgcodecs.imwrite("resources\\digit"+ doubleRectEntry.getKey() +".png",resized);
         }
         return ret;
     }
