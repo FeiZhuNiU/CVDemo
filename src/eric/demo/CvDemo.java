@@ -1,9 +1,11 @@
 package eric.demo;
 
+import com.sun.javafx.collections.transformation.SortedList;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -11,11 +13,13 @@ import java.util.*;
  */
 public class CvDemo
 {
-    private static String picPath = "resources\\paimai.png";
+    private static String pic = "paimai8";
+    private static String resource_path = "resources";
 
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        String picPath = resource_path + File.separator + pic + ".png";
         Mat src = Imgcodecs.imread(picPath);
         System.out.println("src: "+ src);
 
@@ -31,7 +35,6 @@ public class CvDemo
         System.out.println("eroded : " + eroded);
         Imgcodecs.imwrite("resources\\eroded.png",eroded);
 
-
         Mat eroded_bak = new Mat(eroded.rows(),eroded.cols(),CvType.CV_8UC3);
         eroded.convertTo(eroded_bak,CvType.CV_8UC3);
         List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
@@ -39,11 +42,37 @@ public class CvDemo
 
         System.out.println("coutours counts : " + contours.size());
         List<Mat> sortedDigits = getSortedRectsOfDigits(contours,eroded_bak);
+
         System.out.println(sortedDigits.get(0));
     }
 
     private static List<Mat> getSortedRectsOfDigits(List<MatOfPoint> contours,Mat src)
     {
+        //make sure there are 4 contours
+        if(contours.size()<4){
+            System.out.println("failed");
+            return new ArrayList<Mat>();
+        }
+        else
+        {
+            if (contours.size() > 4){
+                Collections.sort(contours, new Comparator<MatOfPoint>()
+                {
+                    @Override
+                    public int compare(MatOfPoint o1, MatOfPoint o2)
+                    {
+                        if(o1.rows()+o1.cols()-o2.rows()-o2.cols() > 0 )
+                            return 1;
+                        return -1;
+                    }
+                });
+                for(int i = 0; i < contours.size()-4; ++i){
+                    contours.remove(i);
+                }
+
+            }
+        }
+
         Map<Double, Rect> sortedRects = new TreeMap<Double, Rect>();
         List<Mat> ret = new ArrayList<Mat>();
         for(int i = 0 ; i < contours.size(); ++i)
@@ -53,6 +82,7 @@ public class CvDemo
 //            Imgproc.drawContours(eroded_bak, contours, i, new Scalar(0, 0, 255));
 //            Imgproc.rectangle(eroded_bak,rect.tl(),rect.br(),new Scalar(0, 0, 255));
         }
+
         for (Map.Entry<Double, Rect> doubleRectEntry : sortedRects.entrySet())
         {
             System.out.println(doubleRectEntry.getValue());
@@ -60,11 +90,10 @@ public class CvDemo
             Mat resized = new Mat();
             Imgproc.resize(cur,resized,new Size(20,20));
             ret.add(resized);
-            Imgcodecs.imwrite("resources\\digit"+ doubleRectEntry.getKey() +".png",resized);
+            Imgcodecs.imwrite("resources\\"+ pic +"_"+ doubleRectEntry.getKey() +".png",resized);
         }
         return ret;
     }
-
 
     private static Mat removeNoise(Mat binary)
     {
@@ -72,6 +101,9 @@ public class CvDemo
         Mat element = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_ELLIPSE, new Size(2, 2));
         Imgproc.erode(binary, eroded, element);
         Imgproc.dilate(eroded, eroded, element);
+//        Imgproc.dilate(eroded, eroded, element);
+//        Imgproc.erode(eroded, eroded, element);
+
 
         return eroded;
     }
@@ -91,13 +123,13 @@ public class CvDemo
 //        Mat red_blue = new Mat(roi.rows(),roi.cols(),type);
 //        Core.absdiff(mats.get(2),mats.get(0),red_blue);
 //        Imgcodecs.imwrite("resources\\red-blue.png",red_blue);
-        Mat red_green = new Mat(roi.rows(),roi.cols(),type);
-        Core.absdiff(mats.get(2),mats.get(1),red_green);
-        Imgcodecs.imwrite("resources\\red-green.png",red_green);
+        Mat red_minus_green = new Mat(roi.rows(),roi.cols(),type);
+        Core.absdiff(mats.get(2),mats.get(1),red_minus_green);
+        Imgcodecs.imwrite("resources\\red-green.png",red_minus_green);
 
 
-        Mat binary = new Mat(roi.rows(),roi.cols(),CvType.CV_8U);
-        Imgproc.threshold(red_green, binary, 100, 255, Imgproc.THRESH_BINARY);
+        Mat binary = new Mat(roi.rows(),roi.cols(),CvType.CV_8UC1);
+        Imgproc.threshold(red_minus_green, binary, 100, 255, Imgproc.THRESH_BINARY);
         return binary;
     }
 
@@ -107,13 +139,13 @@ public class CvDemo
         if(roi.elemSize()==3)
         {
             int totalBytes = (int) (roi.total() * roi.elemSize());
-            byte buffer[] = new byte[totalBytes];
+            int buffer[] = new int[totalBytes];
             roi.get(0, 0, buffer);
             for (int i = 0; i < totalBytes; ++i)
             {
                 if (i % 3 != 2)
                 {
-                    buffer[i] = 127;
+                    buffer[i] = 255;
                 }
             }
             ret.put(0,0,buffer);
@@ -123,6 +155,7 @@ public class CvDemo
 
     private static Mat getROI(Mat src)
     {
-        return new Mat(src,new Rect(1090,425,120,34));
+//        return new Mat(src,new Rect(1090,425,120,34));
+        return new Mat(src,new Rect(740,368,120,35));
     }
 }
