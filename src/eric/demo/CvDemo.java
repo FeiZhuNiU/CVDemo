@@ -1,6 +1,5 @@
 package eric.demo;
 
-import com.sun.javafx.collections.transformation.SortedList;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -13,7 +12,7 @@ import java.util.*;
  */
 public class CvDemo
 {
-    private static String pic = "paimai8";
+    private static String pic = "paimai19";
     private static String resource_path = "resources";
 
     public static void main(String[] args)
@@ -66,32 +65,51 @@ public class CvDemo
                         return -1;
                     }
                 });
-                for(int i = 0; i < contours.size()-4; ++i){
-                    contours.remove(i);
+                while(contours.size()>4){
+                    contours.remove(0);
                 }
-
             }
         }
 
-        Map<Double, Rect> sortedRects = new TreeMap<Double, Rect>();
+        List<Rect> boundRects = new ArrayList<Rect>();
+//        Map<Double, Rect> sortedRects = new TreeMap<Double, Rect>();
         List<Mat> ret = new ArrayList<Mat>();
         for(int i = 0 ; i < contours.size(); ++i)
         {
             Rect rect = Imgproc.boundingRect(contours.get(i));
-            sortedRects.put(rect.tl().x, rect);
+//            sortedRects.put(rect.tl().x, rect);
+            boundRects.add(rect);
 //            Imgproc.drawContours(eroded_bak, contours, i, new Scalar(0, 0, 255));
 //            Imgproc.rectangle(eroded_bak,rect.tl(),rect.br(),new Scalar(0, 0, 255));
         }
-
-        for (Map.Entry<Double, Rect> doubleRectEntry : sortedRects.entrySet())
+        Collections.sort(boundRects, new Comparator<Rect>()
         {
-            System.out.println(doubleRectEntry.getValue());
-            Mat cur = src.submat(doubleRectEntry.getValue());
+            @Override
+            public int compare(Rect o1, Rect o2)
+            {
+                if(o1.tl().x > o2.tl().x)
+                    return 1;
+                return -1;
+            }
+        });
+
+        for(Rect rect : boundRects)
+        {
+            Mat cur = src.submat(rect);
             Mat resized = new Mat();
             Imgproc.resize(cur,resized,new Size(20,20));
             ret.add(resized);
-            Imgcodecs.imwrite("resources\\"+ pic +"_"+ doubleRectEntry.getKey() +".png",resized);
+            Imgcodecs.imwrite("resources\\"+ pic +"_"+ rect.tl().x +".png",resized);
         }
+//        for (Map.Entry<Double, Rect> doubleRectEntry : sortedRects.entrySet())
+//        {
+//            System.out.println(doubleRectEntry.getValue());
+//            Mat cur = src.submat(doubleRectEntry.getValue());
+//            Mat resized = new Mat();
+//            Imgproc.resize(cur,resized,new Size(20,20));
+//            ret.add(resized);
+//            Imgcodecs.imwrite("resources\\"+ pic +"_"+ doubleRectEntry.getKey() +".png",resized);
+//        }
         return ret;
     }
 
