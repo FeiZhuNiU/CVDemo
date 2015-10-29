@@ -3,8 +3,13 @@ package eric.demo;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.objdetect.BaseCascadeClassifier;
+import org.opencv.objdetect.CascadeClassifier;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -15,19 +20,73 @@ public class CvDemo
     private static String pic = "paimai";
     private static String resource_path = "resources\\paimai";
     private static int cnt = 1;
+//    private static CascadeClassifier zeroDetector = new CascadeClassifier("resources\\data\\cascade.xml");
 
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        for(int i = 21 ; i <=21 ; ++i)
+        for(int i = 5 ; i <=5 ; ++i)
         {
             cnt = i;
-            digitSegmentation(i);
+            List<Mat> digitsToRecog = digitSegmentation(i);
+
         }
+
+//        renameImageFiles("0");
 
     }
 
-    private static void digitSegmentation(int index)
+    /**
+     * rename image name to image**.png
+     * generate *.info for training
+     *
+     * fileName :  line  0 1 2 3 4 5 ... 9
+     */
+
+    private static void renameImageFiles(String fileName)
+    {
+        File file = new File("resources\\" + fileName);
+        File[] images = file.listFiles(new FilenameFilter()
+        {
+            @Override
+            public boolean accept(File dir, String name)
+            {
+                return name.endsWith(".png");
+            }
+        });
+        for(int i = 0 ; i < images.length; ++i)
+        {
+            images[i].renameTo(new File(file.getAbsolutePath() + "\\temp"+(i+1)+".png"));
+        }
+
+        for(int i = 0 ; i < images.length; ++i)
+        {
+            images[i].renameTo(new File(file.getAbsolutePath() + "\\image"+(i+1)+".png"));
+        }
+        try
+        {
+            FileWriter infoFile = new FileWriter(file.getAbsolutePath() + "\\" + fileName + ".info");
+            for(int i = 0 ; i < images.length; ++i)
+            {
+                infoFile.write("image" + (i + 1) + ".png 1 0 0 20 20\n");
+            }
+            infoFile.close();
+            FileWriter negdataFile = new FileWriter(file.getAbsolutePath() + "\\" + fileName + "negdata.txt");
+            for(int i = 0 ; i < images.length; ++i)
+            {
+                negdataFile.write(fileName + "\\image" + (i + 1) + ".png\n");
+            }
+            negdataFile.close();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+    private static List<Mat> digitSegmentation(int index)
     {
         String picPath = resource_path + File.separator + pic + index + ".png";
         System.out.println("processing : " + picPath);
@@ -47,7 +106,8 @@ public class CvDemo
         List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
         Imgproc.findContours(eroded, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
 
-        List<Mat> sortedDigits = getSortedRectsOfDigits(contours,eroded_bak);
+        List<Mat> ret = getSortedRectsOfDigits(contours,eroded_bak);
+        return ret;
     }
 
     private static List<Mat> getSortedRectsOfDigits(List<MatOfPoint> contours,Mat src)
@@ -114,6 +174,19 @@ public class CvDemo
         Mat element = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_ELLIPSE, new Size(2, 2));
         Imgproc.erode(binary, eroded, element);
         Imgproc.dilate(eroded, eroded, element);
+
+//        CascadeClassifier zeroDetector = new CascadeClassifier("resources\\data\\cascade.xml");
+//        MatOfRect zeroDetections = new MatOfRect();
+//        zeroDetector.detectMultiScale(eroded,zeroDetections);
+//        Mat detectedMat = new Mat();
+//        Imgproc.cvtColor(eroded,detectedMat,Imgproc.COLOR_GRAY2RGB);
+//        for (Rect rect : zeroDetections.toArray()) {
+//            Imgproc.rectangle(detectedMat, new Point(rect.x, rect.y), new Point(rect.x
+//                    + rect.width, rect.y + rect.height), new Scalar(0, 255, 0));
+//        }
+//        Imgcodecs.imwrite("resources\\zero-detected.png",detectedMat);
+
+
         return eroded;
     }
 
