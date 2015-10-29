@@ -12,37 +12,42 @@ import java.util.*;
  */
 public class CvDemo
 {
-    private static String pic = "paimai19";
-    private static String resource_path = "resources";
+    private static String pic = "paimai";
+    private static String resource_path = "resources\\paimai";
+    private static int cnt = 1;
 
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        String picPath = resource_path + File.separator + pic + ".png";
+        for(int i = 21 ; i <=21 ; ++i)
+        {
+            cnt = i;
+            digitSegmentation(i);
+        }
+
+    }
+
+    private static void digitSegmentation(int index)
+    {
+        String picPath = resource_path + File.separator + pic + index + ".png";
+        System.out.println("processing : " + picPath);
         Mat src = Imgcodecs.imread(picPath);
-        System.out.println("src: "+ src);
 
         Mat roi = getROI(src);
-        System.out.println("roi: "+ roi);
         Imgcodecs.imwrite("resources\\roi.png",roi);
 
         Mat binary = getBinaryMat(roi);
-        System.out.println("binary:" + binary);
         Imgcodecs.imwrite("resources\\binary.png",binary);
 
         Mat eroded = removeNoise(binary);
-        System.out.println("eroded : " + eroded);
         Imgcodecs.imwrite("resources\\eroded.png",eroded);
 
-        Mat eroded_bak = new Mat(eroded.rows(),eroded.cols(),CvType.CV_8UC3);
+        Mat eroded_bak = new Mat(eroded.rows(),eroded.cols(), CvType.CV_8UC3);
         eroded.convertTo(eroded_bak,CvType.CV_8UC3);
         List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-        Imgproc.findContours(eroded,contours,new Mat(),Imgproc.RETR_EXTERNAL  , Imgproc.CHAIN_APPROX_NONE);
+        Imgproc.findContours(eroded, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
 
-        System.out.println("coutours counts : " + contours.size());
         List<Mat> sortedDigits = getSortedRectsOfDigits(contours,eroded_bak);
-
-        System.out.println(sortedDigits.get(0));
     }
 
     private static List<Mat> getSortedRectsOfDigits(List<MatOfPoint> contours,Mat src)
@@ -72,12 +77,10 @@ public class CvDemo
         }
 
         List<Rect> boundRects = new ArrayList<Rect>();
-//        Map<Double, Rect> sortedRects = new TreeMap<Double, Rect>();
         List<Mat> ret = new ArrayList<Mat>();
         for(int i = 0 ; i < contours.size(); ++i)
         {
             Rect rect = Imgproc.boundingRect(contours.get(i));
-//            sortedRects.put(rect.tl().x, rect);
             boundRects.add(rect);
 //            Imgproc.drawContours(eroded_bak, contours, i, new Scalar(0, 0, 255));
 //            Imgproc.rectangle(eroded_bak,rect.tl(),rect.br(),new Scalar(0, 0, 255));
@@ -99,17 +102,9 @@ public class CvDemo
             Mat resized = new Mat();
             Imgproc.resize(cur,resized,new Size(20,20));
             ret.add(resized);
-            Imgcodecs.imwrite("resources\\"+ pic +"_"+ rect.tl().x +".png",resized);
+//            System.out.println(cur.dump());
+            Imgcodecs.imwrite("resources\\"+ pic + cnt +"_"+ rect.tl().x +".png",resized);
         }
-//        for (Map.Entry<Double, Rect> doubleRectEntry : sortedRects.entrySet())
-//        {
-//            System.out.println(doubleRectEntry.getValue());
-//            Mat cur = src.submat(doubleRectEntry.getValue());
-//            Mat resized = new Mat();
-//            Imgproc.resize(cur,resized,new Size(20,20));
-//            ret.add(resized);
-//            Imgcodecs.imwrite("resources\\"+ pic +"_"+ doubleRectEntry.getKey() +".png",resized);
-//        }
         return ret;
     }
 
@@ -119,10 +114,6 @@ public class CvDemo
         Mat element = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_ELLIPSE, new Size(2, 2));
         Imgproc.erode(binary, eroded, element);
         Imgproc.dilate(eroded, eroded, element);
-//        Imgproc.dilate(eroded, eroded, element);
-//        Imgproc.erode(eroded, eroded, element);
-
-
         return eroded;
     }
 
@@ -133,9 +124,10 @@ public class CvDemo
         mats.add(new Mat(roi.rows(),roi.cols(),type));
         mats.add(new Mat(roi.rows(),roi.cols(),type));
         mats.add(new Mat(roi.rows(),roi.cols(),type));
+        // splite into 3 channels
         Core.split(roi, mats);
         for(int i = 0; i < 3; ++i){
-            Imgcodecs.imwrite("resources\\mats" + i + ".png", mats.get(i));
+            Imgcodecs.imwrite("resources\\channel" + i + ".png", mats.get(i));
         }
 
 //        Mat red_blue = new Mat(roi.rows(),roi.cols(),type);
