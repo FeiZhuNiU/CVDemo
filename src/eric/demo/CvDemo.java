@@ -1,9 +1,12 @@
 package eric.demo;
 
 import eric.demo.image.ImageUtils;
+import eric.demo.recognize.RecogUtils;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.ml.KNearest;
+import org.opencv.ml.Ml;
 import org.opencv.objdetect.BaseCascadeClassifier;
 import org.opencv.objdetect.CascadeClassifier;
 
@@ -26,11 +29,27 @@ public class CvDemo
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        for(int i = 5 ; i <=5 ; ++i)
+
+        Map.Entry<Mat,Mat> trainData = RecogUtils.loadSamplesToMat();
+        KNearest kNearest = KNearest.create();
+        kNearest.train(trainData.getKey(), Ml.ROW_SAMPLE,trainData.getValue());
+
+        for(int i = 22 ; i <=22 ; ++i)
         {
             cnt = i;
             List<Mat> digitsToRecog = digitSegmentation(i);
 
+            for(Mat mat : digitsToRecog)
+            {
+                int cols = mat.rows()*mat.cols();
+                Mat toRecog = new Mat(1,cols,CvType.CV_32FC1);
+                for(int j = 0 ; j < cols ; ++j )
+                {
+                    toRecog.put(0,j,mat.get(j/mat.cols(), j %mat.cols()));
+                }
+
+                System.out.println((int)kNearest.findNearest(toRecog, 1, new Mat()));
+            }
         }
 
 //        renameImageFiles("0");
