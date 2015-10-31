@@ -53,9 +53,9 @@ public class ImageUtils
         mats.add(new Mat(src.rows(),src.cols(),type));
         // splite into 3 channels
         Core.split(src, mats);
-        for(int i = 0; i < 3; ++i){
-            Imgcodecs.imwrite("resources\\channel" + i + ".png", mats.get(i));
-        }
+//        for(int i = 0; i < 3; ++i){
+//            Imgcodecs.imwrite("resources\\channel" + i + ".png", mats.get(i));
+//        }
 
 //        Mat red_blue = new Mat(src.rows(),src.cols(),type);
 //        Core.absdiff(mats.get(2),mats.get(0),red_blue);

@@ -6,14 +6,10 @@ import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.ml.KNearest;
-import org.opencv.ml.Ml;
-import org.opencv.objdetect.BaseCascadeClassifier;
-import org.opencv.objdetect.CascadeClassifier;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -23,21 +19,23 @@ public class CvDemo
 {
     private static String pic = "paimai";
     private static String resource_path = "resources\\paimai";
-    private static int cnt = 1;
 //    private static CascadeClassifier zeroDetector = new CascadeClassifier("resources\\data\\cascade.xml");
 
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-        Map.Entry<Mat,Mat> trainData = RecogUtils.loadSamplesToMat();
-        KNearest kNearest = KNearest.create();
-        kNearest.train(trainData.getKey(), Ml.ROW_SAMPLE,trainData.getValue());
+        Long startTime = System.currentTimeMillis();
+
+        //get classifier
+        KNearest kNearest = RecogUtils.getClassifier();
+
+        Long midTime = System.currentTimeMillis();
 
         for(int i = 22 ; i <=22 ; ++i)
         {
-            cnt = i;
-            List<Mat> digitsToRecog = digitSegmentation(i);
+            //get samples to recognize
+            List<Mat> digitsToRecog = digitSegmentation("resources\\paimai\\paimai"+i+".png");
 
             for(Mat mat : digitsToRecog)
             {
@@ -51,7 +49,10 @@ public class CvDemo
                 System.out.println((int)kNearest.findNearest(toRecog, 1, new Mat()));
             }
         }
+        Long endTime = System.currentTimeMillis();
 
+        System.out.println("train time : " + (midTime - startTime)/1000.0);
+        System.out.println("recog time : " + (endTime - midTime)/1000.0);
 //        renameImageFiles("0");
 
     }
@@ -100,11 +101,11 @@ public class CvDemo
 
     }
 
-    private static List<Mat> digitSegmentation(int index)
+    private static List<Mat> digitSegmentation(String absolutePathOfPic)
     {
-        String picPath = resource_path + File.separator + pic + index + ".png";
-        System.out.println("processing : " + picPath);
-        Mat src = Imgcodecs.imread(picPath);
+        //String absolutePathOfPic = resource_path + File.separator + pic + index + ".png";
+        System.out.println("processing : " + absolutePathOfPic);
+        Mat src = Imgcodecs.imread(absolutePathOfPic);
 
 //        new Rect(1090,425,120,34)
         Mat roi = src.submat(new Rect(740,368,120,35));
@@ -124,7 +125,8 @@ public class CvDemo
         List<Mat> ret = ImageUtils.getSortedRectsOfDigits(contours, eroded_bak);
         for(Mat mat:ret)
         {
-            Imgcodecs.imwrite("resources\\"+ pic + cnt +"_"+ ret.indexOf(mat) +".png",mat);
+            String pathToSave = absolutePathOfPic.substring(0,absolutePathOfPic.lastIndexOf("."))+ret.indexOf(mat) +".png";
+            Imgcodecs.imwrite(pathToSave,mat);
         }
         return ret;
     }

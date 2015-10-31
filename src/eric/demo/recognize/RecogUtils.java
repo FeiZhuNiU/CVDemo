@@ -3,6 +3,8 @@ package eric.demo.recognize;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.ml.KNearest;
+import org.opencv.ml.Ml;
 
 
 import java.io.File;
@@ -53,5 +55,12 @@ public class RecogUtils
             }
         }
         return ret;
+    }
+    public static KNearest getClassifier()
+    {
+        KNearest kNearest = KNearest.create();
+        Map.Entry<Mat,Mat> trainData = RecogUtils.loadSamplesToMat();
+        kNearest.train(trainData.getKey(), Ml.ROW_SAMPLE,trainData.getValue());
+        return kNearest;
     }
 }
