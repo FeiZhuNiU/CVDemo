@@ -63,4 +63,23 @@ public class RecogUtils
         kNearest.train(trainData.getKey(), Ml.ROW_SAMPLE,trainData.getValue());
         return kNearest;
     }
+
+    public static Mat getEigenVec(Mat mat,EigenStrategy strategy)
+    {
+        if(strategy == null)
+        {
+            int cols = mat.rows()*mat.cols();
+            Mat ret = new Mat(1,cols,CvType.CV_32FC1);
+            for(int j = 0 ; j < cols ; ++j )
+            {
+                ret.put(0,j,mat.get(j/mat.cols(), j %mat.cols()));
+            }
+            return ret;
+        }
+        else
+        {
+            System.out.println("not yet support");
+            return null;
+        }
+    }
 }

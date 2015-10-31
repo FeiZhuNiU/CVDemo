@@ -17,8 +17,6 @@ import java.util.*;
  */
 public class CvDemo
 {
-    private static String pic = "paimai";
-    private static String resource_path = "resources\\paimai";
 //    private static CascadeClassifier zeroDetector = new CascadeClassifier("resources\\data\\cascade.xml");
 
     public static void main(String[] args)
@@ -39,13 +37,7 @@ public class CvDemo
 
             for(Mat mat : digitsToRecog)
             {
-                int cols = mat.rows()*mat.cols();
-                Mat toRecog = new Mat(1,cols,CvType.CV_32FC1);
-                for(int j = 0 ; j < cols ; ++j )
-                {
-                    toRecog.put(0,j,mat.get(j/mat.cols(), j %mat.cols()));
-                }
-
+                Mat toRecog = RecogUtils.getEigenVec(mat,null);
                 System.out.println((int)kNearest.findNearest(toRecog, 1, new Mat()));
             }
         }
@@ -54,52 +46,9 @@ public class CvDemo
         System.out.println("train time : " + (midTime - startTime)/1000.0);
         System.out.println("recog time : " + (endTime - midTime)/1000.0);
 //        renameImageFiles("0");
-
     }
 
-    /**
-     * rename image name to image**.png
-     * generate *.info for training
-     *
-     * fileName :  line  0 1 2 3 4 5 ... 9
-     */
 
-    private static void renameImageFiles(String fileName)
-    {
-        File file = new File("resources\\" + fileName);
-        File[] images = file.listFiles(new FilenameFilter()
-        {
-            @Override
-            public boolean accept(File dir, String name)
-            {
-                return name.endsWith(".png");
-            }
-        });
-
-        for(int i = 0 ; i < images.length; ++i)
-        {
-            images[i].renameTo(new File(file.getAbsolutePath() + "\\image"+(i+1)+".png"));
-        }
-        try
-        {
-            FileWriter infoFile = new FileWriter(file.getAbsolutePath() + "\\" + fileName + ".info");
-            for(int i = 0 ; i < images.length; ++i)
-            {
-                infoFile.write("image" + (i + 1) + ".png 1 0 0 20 20\n");
-            }
-            infoFile.close();
-            FileWriter negdataFile = new FileWriter(file.getAbsolutePath() + "\\" + fileName + "negdata.txt");
-            for(int i = 0 ; i < images.length; ++i)
-            {
-                negdataFile.write(fileName + "\\image" + (i + 1) + ".png\n");
-            }
-            negdataFile.close();
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-    }
 
     private static List<Mat> digitSegmentation(String absolutePathOfPic)
     {
@@ -130,13 +79,5 @@ public class CvDemo
         }
         return ret;
     }
-
-
-
-
-
-
-
-
 
 }
