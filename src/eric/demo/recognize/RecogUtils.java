@@ -1,5 +1,6 @@
 package eric.demo.recognize;
 
+import eric.demo.image.ImageUtils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -24,13 +25,15 @@ public class RecogUtils
 
         for(int i = 0 ; i < 10 ; ++i)
         {
+//            String path = Thread.currentThread().getContextClassLoader().getResource("/resources/0/image1.png").getFile();
+//            File file = new File(path);
             File file = new File("resources\\"+ i);
             String[] pics = file.list(new FilenameFilter()
             {
                 @Override
                 public boolean accept(File dir, String name)
                 {
-                    return name.endsWith(".png");
+                    return name.endsWith("."+ ImageUtils.imageFormat);
                 }
             });
 
@@ -78,7 +81,7 @@ public class RecogUtils
         }
         else
         {
-            System.out.println("not yet support");
+            System.out.println("EigenStrategy not yet support");
             return null;
         }
     }

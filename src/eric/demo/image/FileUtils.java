@@ -1,8 +1,6 @@
 package eric.demo.image;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
+import java.io.*;
 
 /**
  * Created by 麟 on 2015/10/31.
@@ -51,4 +49,23 @@ public class FileUtils
         }
 
     }
+
+    public static void writeObjectToFile(Object obj)
+    {
+        File file =new File("test.dat");
+        FileOutputStream out;
+        try {
+            out = new FileOutputStream(file);
+            ObjectOutputStream objOut=new ObjectOutputStream(out);
+            objOut.writeObject(obj);
+            objOut.flush();
+            objOut.close();
+            System.out.println("write object success!");
+        } catch (Exception e) {
+            System.out.println("write object failed");
+            e.printStackTrace();
+        }
+    }
+
+
 }

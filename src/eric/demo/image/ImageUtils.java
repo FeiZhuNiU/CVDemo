@@ -1,9 +1,14 @@
 package eric.demo.image;
 
+import eric.demo.CvDemo;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,6 +19,8 @@ import java.util.List;
  */
 public class ImageUtils
 {
+    public static String screenCaptureImage = "screenCapture.png";
+    public static String imageFormat = "png";
 
     public static Mat getRedPartOfPic(Mat src)
     {
@@ -61,8 +68,11 @@ public class ImageUtils
 //        Core.absdiff(mats.get(2),mats.get(0),red_blue);
 //        Imgcodecs.imwrite("resources\\red-blue.png",red_blue);
         Mat red_minus_green = new Mat(src.rows(),src.cols(),type);
-        Core.absdiff(mats.get(2),mats.get(1),red_minus_green);
-        Imgcodecs.imwrite("resources\\red-green.png",red_minus_green);
+        Core.absdiff(mats.get(2), mats.get(1), red_minus_green);
+        if(CvDemo.dumpImg)
+        {
+            Imgcodecs.imwrite("resources\\red-green.png", red_minus_green);
+        }
         return red_minus_green;
     }
 
@@ -95,7 +105,7 @@ public class ImageUtils
     {
         //make sure there are 4 contours
         if(contours.size()<4){
-            System.out.println("failed");
+            System.out.println("recognize failed");
             return new ArrayList<Mat>();
         }
         else
@@ -147,5 +157,22 @@ public class ImageUtils
         return ret;
     }
 
+    public static void screenCapture()
+    {
+        try
+        {
+            BufferedImage screen = new Robot().createScreenCapture(new Rectangle(0, 0, 1280, 800));
+            ImageIO.write(screen, imageFormat, new File(screenCaptureImage));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args)
+    {
+        screenCapture();
+    }
 
 }
