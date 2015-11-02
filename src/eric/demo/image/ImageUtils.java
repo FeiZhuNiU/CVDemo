@@ -172,9 +172,21 @@ public class ImageUtils
         }
     }
 
+    public static Mat rgb2hsv(Mat mat)
+    {
+        Mat ret = new Mat();
+        Imgproc.cvtColor(mat,ret,Imgproc.COLOR_RGB2HSV);
+        return ret;
+    }
+
+
     public static void main(String[] args)
     {
-        screenCapture();
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        Mat src = Imgcodecs.imread("6614.jpg");
+        System.out.println(src);
+        Mat dst = rgb2hsv(src);
+        System.out.println(dst);
     }
 
 }
