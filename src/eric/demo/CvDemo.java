@@ -3,12 +3,16 @@ package eric.demo;
 import eric.demo.image.FileUtils;
 import eric.demo.image.ImageUtils;
 import eric.demo.recognize.RecogUtils;
+import eric.demo.robot.RobotUtils;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.ml.KNearest;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by 麟 on 2015/10/28.
@@ -32,11 +36,25 @@ public class CvDemo
             List<Mat> digitsToRecog = digitSegmentation(ImageUtils.screenCaptureImage);
             if(digitsToRecog != null)
             {
+                ArrayList<Integer> numbers = new ArrayList<Integer>();
                 for (Mat mat : digitsToRecog)
                 {
                     Mat toRecog = RecogUtils.getEigenVec(mat, null);
-                    System.out.println((int) kNearest.findNearest(toRecog, 1, new Mat()));
+                    int num = (int) kNearest.findNearest(toRecog, 1, new Mat());
+                    numbers.add(num);
+                    System.out.println(num);
                 }
+                //do robot thing here
+                RobotUtils.doRobotThing(numbers);
+                try
+                {
+                    Thread.sleep(10000);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+
             }
             try
             {
@@ -48,6 +66,8 @@ public class CvDemo
             }
         }
     }
+
+
 
     /**
      * if fails , return null
