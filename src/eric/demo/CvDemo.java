@@ -44,21 +44,13 @@ public class CvDemo
                     numbers.add(num);
                     System.out.println(num);
                 }
-                //do robot thing here
-                RobotUtils.doRobotThing(numbers);
-                try
-                {
-                    Thread.sleep(10000);
-                }
-                catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
-
+//                //do robot thing here
+//                RobotUtils.doRobotThing(numbers);
+                return;
             }
             try
             {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             }
             catch (InterruptedException e)
             {
@@ -81,6 +73,7 @@ public class CvDemo
         Mat src = Imgcodecs.imread(absolutePathOfPic);
 
 //        Mat roi = src.submat(new Rect(740,368,120,35));
+        //TODO: input position
         Mat roi = src.submat(new Rect(1090, 450, 120, 34));
         Mat binary = ImageUtils.getBinaryMat(roi);
         Mat eroded = ImageUtils.removeNoise(binary);
