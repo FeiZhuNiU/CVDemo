@@ -71,7 +71,7 @@ public class ImageUtils
         Core.absdiff(mats.get(2), mats.get(1), red_minus_green);
         if(CvDemo.dumpImg)
         {
-            Imgcodecs.imwrite("resources\\red-green.png", red_minus_green);
+            Imgcodecs.imwrite("red-green.png", red_minus_green);
         }
         return red_minus_green;
     }
@@ -161,7 +161,9 @@ public class ImageUtils
     {
         try
         {
-            BufferedImage screen = new Robot().createScreenCapture(new Rectangle(0, 0, 1280, 800));
+            int width = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+            int height = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+            BufferedImage screen = new Robot().createScreenCapture(new Rectangle(0, 0, width, height));
             ImageIO.write(screen, imageFormat, new File(screenCaptureImage));
         }
         catch (Exception e)

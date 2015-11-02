@@ -44,8 +44,6 @@ public class CvDemo
                     numbers.add(num);
                     System.out.println(num);
                 }
-//                //do robot thing here
-//                RobotUtils.doRobotThing(numbers);
                 return;
             }
             try
@@ -80,9 +78,9 @@ public class CvDemo
 
         if(dumpImg)
         {
-            Imgcodecs.imwrite("resources\\roi.png",roi);
-            Imgcodecs.imwrite("resources\\binary.png",binary);
-            Imgcodecs.imwrite("resources\\eroded.png",eroded);
+            Imgcodecs.imwrite("roi.png",roi);
+            Imgcodecs.imwrite("binary.png",binary);
+            Imgcodecs.imwrite("eroded.png",eroded);
         }
         Mat eroded_bak = new Mat(eroded.rows(),eroded.cols(), CvType.CV_8UC3);
         eroded.convertTo(eroded_bak,CvType.CV_8UC3);
@@ -96,7 +94,7 @@ public class CvDemo
         }
         for(Mat mat:ret)
         {
-            String pathToSave = absolutePathOfPic.substring(0,absolutePathOfPic.lastIndexOf("."))+ret.indexOf(mat) +".png";
+            String pathToSave = ret.indexOf(mat) +".png";
             if(dumpImg)
             {
                 Imgcodecs.imwrite(pathToSave, mat);
