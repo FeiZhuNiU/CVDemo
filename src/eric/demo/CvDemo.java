@@ -20,15 +20,15 @@ import java.util.List;
 public class CvDemo
 {
     private static Rect picRect;
-    public static boolean dumpImg = true;
+    public static boolean dumpImg = false;
 //    private static CascadeClassifier zeroDetector = new CascadeClassifier("resources\\data\\cascade.xml");
 
-    public static int main(String[] args)
+    public static void main(String[] args)
     {
-        if(initParams(args)==false)
+        if(!initParams(args))
         {
             System.out.println("please verify the input params");
-            return -1;
+            return;
         }
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
@@ -50,7 +50,7 @@ public class CvDemo
                     numbers.add(num);
                     System.out.println(num);
                 }
-                return 0;
+                return;
             }
             try
             {
@@ -70,19 +70,19 @@ public class CvDemo
         {
             System.out.println("input args are not correct.\n" +
                     "There should be 4 args: \n" +
-                    "x,y,width,height\n\n" +
-                    " ___________________________________\n" +
-                    "|\t\t\t\t^\t\t\t\t\t|\n" +
-                    "|\t\t\t\t|\t\t\t\t\t|\n" +
-                    "|  screen\t\ty\t\t\t\t\t|\n" +
-                    "|\t\t\t\t|\t\t\t\t\t|\n" +
-                    "|\t\t\t\tv\t\t\t\t\t|\n" +
-                    "|<----x------->  __width____\t\t|\n" +
-                    "|\t\t  ^\t\t|\t\t    |\t\t|\n" +
-                    "|\t\theight\t| digits    |\t\t|\n" +
-                    "|         v     |___________|\t\t|\n" +
-                    "|\t\t\t\t\t\t\t\t\t|\n" +
-                    "|___________________________________|");
+                    "x,y,width,height\n" +
+                    " ______________________________________\n" +
+                    "|              ^                       |\n" +
+                    "|              |                       |\n" +
+                    "|  screen      y                       |\n" +
+                    "|              |                       |\n" +
+                    "|              v                       |\n" +
+                    "|<----x-------> __width____            |\n" +
+                    "|          ^   |           |           |\n" +
+                    "|      height  | digits    |           |\n" +
+                    "|          v   |___________|           |\n" +
+                    "|                                      |\n" +
+                    "|______________________________________|");
             return false;
         }
         int x,y,width,height;
@@ -110,7 +110,7 @@ public class CvDemo
 
     private static List<Mat> digitSegmentation(String absolutePathOfPic)
     {
-        System.out.println("processing : " + absolutePathOfPic);
+        System.out.println("processing ... ");
         Mat src = Imgcodecs.imread(absolutePathOfPic);
 
 //        Mat roi = src.submat(new Rect(740,368,120,35));
