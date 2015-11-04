@@ -19,11 +19,17 @@ import java.util.List;
  */
 public class CvDemo
 {
-    public static boolean dumpImg = false;
+    private static Rect picRect;
+    public static boolean dumpImg = true;
 //    private static CascadeClassifier zeroDetector = new CascadeClassifier("resources\\data\\cascade.xml");
 
-    public static void main(String[] args)
+    public static int main(String[] args)
     {
+        if(initParams(args)==false)
+        {
+            System.out.println("please verify the input params");
+            return -1;
+        }
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
         //get classifier
@@ -44,7 +50,7 @@ public class CvDemo
                     numbers.add(num);
                     System.out.println(num);
                 }
-                return;
+                return 0;
             }
             try
             {
@@ -57,6 +63,43 @@ public class CvDemo
         }
     }
 
+    private static boolean initParams(String[] args)
+    {
+        int argCnt=args.length;
+        if(argCnt!=4)
+        {
+            System.out.println("input args are not correct.\n" +
+                    "There should be 4 args: \n" +
+                    "x,y,width,height\n\n" +
+                    " ___________________________________\n" +
+                    "|\t\t\t\t^\t\t\t\t\t|\n" +
+                    "|\t\t\t\t|\t\t\t\t\t|\n" +
+                    "|  screen\t\ty\t\t\t\t\t|\n" +
+                    "|\t\t\t\t|\t\t\t\t\t|\n" +
+                    "|\t\t\t\tv\t\t\t\t\t|\n" +
+                    "|<----x------->  __width____\t\t|\n" +
+                    "|\t\t  ^\t\t|\t\t    |\t\t|\n" +
+                    "|\t\theight\t| digits    |\t\t|\n" +
+                    "|         v     |___________|\t\t|\n" +
+                    "|\t\t\t\t\t\t\t\t\t|\n" +
+                    "|___________________________________|");
+            return false;
+        }
+        int x,y,width,height;
+        try
+        {
+            x = Integer.parseInt(args[0]);
+            y = Integer.parseInt(args[1]);
+            width = Integer.parseInt(args[2]);
+            height = Integer.parseInt(args[3]);
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        picRect = new Rect(x,y,width,height);
+        return true;
+    }
 
 
     /**
@@ -72,7 +115,8 @@ public class CvDemo
 
 //        Mat roi = src.submat(new Rect(740,368,120,35));
         //TODO: input position
-        Mat roi = src.submat(new Rect(1090, 450, 120, 34));
+//        Mat roi = src.submat(new Rect(1090, 450, 120, 34));
+        Mat roi = src.submat(picRect);
         Mat binary = ImageUtils.getBinaryMat(roi);
         Mat eroded = ImageUtils.removeNoise(binary);
 
