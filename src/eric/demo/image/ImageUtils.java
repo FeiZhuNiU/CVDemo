@@ -172,21 +172,49 @@ public class ImageUtils
         }
     }
 
-    public static Mat rgb2hsv(Mat mat)
+    public static Mat reduceColor(Mat mat)
     {
-        Mat ret = new Mat();
-        Imgproc.cvtColor(mat,ret,Imgproc.COLOR_RGB2HSV);
+        Mat ret = new Mat(mat.size(),CvType.CV_8UC3);
+        for(int i = 0; i < ret.rows(); ++i)
+        {
+            for(int j = 0; j <ret.cols(); ++j)
+            {
+                int r = reduceVal(mat.get(i,j)[0]);
+                int g = reduceVal(mat.get(i,j)[1]);
+                int b = reduceVal(mat.get(i,j)[2]);
+                ret.put(i,j, r,g,b);
+            }
+        }
+//        Imgproc.cvtColor(mat,ret,Imgproc.COLOR_RGB2HSV);
         return ret;
     }
-
+    private static int reduceVal(double val)
+    {
+        if(val<64)
+            return 0;
+        else if(val<128)
+            return 128;
+        else
+            return 255;
+    }
 
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        Mat src = Imgcodecs.imread("6614.jpg");
-        System.out.println(src);
-        Mat dst = rgb2hsv(src);
-        System.out.println(dst);
+        Mat src = Imgcodecs.imread("9566.jpg");
+
+        Mat result = reduceColor(src);
+        Imgcodecs.imwrite("preFilter.png",result);
+
+        Mat filtered = new Mat();
+//        Imgproc.medianBlur(src,filtered,3);
+        Imgproc.GaussianBlur(src,filtered,new Size(3,3),0,0);
+        Imgcodecs.imwrite("media.png", filtered);
+
+        result = reduceColor(filtered);
+        Imgcodecs.imwrite("postFilter.png",result);
+//        System.out.println(src);
+
     }
 
 }
