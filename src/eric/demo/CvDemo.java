@@ -1,16 +1,10 @@
 package eric.demo;
 
-import eric.demo.image.FileUtils;
 import eric.demo.image.ImageUtils;
 import eric.demo.recognize.RecogUtils;
-import eric.demo.robot.RobotUtils;
 import org.opencv.core.*;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
 import org.opencv.ml.KNearest;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 
@@ -20,7 +14,6 @@ import java.util.List;
 public class CvDemo
 {
     private static Rect picRect;
-    public static boolean dumpImg = false;
 //    private static CascadeClassifier zeroDetector = new CascadeClassifier("resources\\data\\cascade.xml");
 
     public static void main(String[] args)
@@ -39,7 +32,7 @@ public class CvDemo
         {
             //get samples to recognize
             ImageUtils.screenCapture();
-            List<Mat> digitsToRecog = digitSegmentation(ImageUtils.screenCaptureImage);
+            List<Mat> digitsToRecog = ImageUtils.digitSegmentationWithROI(ImageUtils.screenCaptureImage,picRect);
             if(digitsToRecog != null)
             {
                 ArrayList<Integer> numbers = new ArrayList<Integer>();
@@ -50,7 +43,7 @@ public class CvDemo
                     numbers.add(num);
                     System.out.println(num);
                 }
-                return;
+//                return;
             }
             try
             {
@@ -102,49 +95,6 @@ public class CvDemo
     }
 
 
-    /**
-     * if fails , return null
-     * @param absolutePathOfPic
-     * @return
-     */
 
-    private static List<Mat> digitSegmentation(String absolutePathOfPic)
-    {
-        System.out.println("processing ... ");
-        Mat src = Imgcodecs.imread(absolutePathOfPic);
-
-//        Mat roi = src.submat(new Rect(740,368,120,35));
-        //TODO: input position
-//        Mat roi = src.submat(new Rect(1090, 450, 120, 34));
-        Mat roi = src.submat(picRect);
-        Mat binary = ImageUtils.getBinaryMat(roi);
-        Mat eroded = ImageUtils.removeNoise(binary);
-
-        if(dumpImg)
-        {
-            Imgcodecs.imwrite("roi.png",roi);
-            Imgcodecs.imwrite("binary.png",binary);
-            Imgcodecs.imwrite("eroded.png",eroded);
-        }
-        Mat eroded_bak = new Mat(eroded.rows(),eroded.cols(), CvType.CV_8UC3);
-        eroded.convertTo(eroded_bak,CvType.CV_8UC3);
-        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-        Imgproc.findContours(eroded, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
-
-        List<Mat> ret = ImageUtils.getSortedRectsOfDigits(contours, eroded_bak);
-        if(ret.size()==0)
-        {
-            return null;
-        }
-        for(Mat mat:ret)
-        {
-            String pathToSave = ret.indexOf(mat) +".png";
-            if(dumpImg)
-            {
-                Imgcodecs.imwrite(pathToSave, mat);
-            }
-        }
-        return ret;
-    }
 
 }
