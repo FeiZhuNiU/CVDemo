@@ -1,5 +1,6 @@
 package eric.demo.image;
 
+import com.sun.javafx.collections.transformation.SortedList;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -8,9 +9,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -19,6 +18,11 @@ import java.util.List;
 public class ImageUtils
 {
     private static int[] gammaTable;
+    public static String screenCaptureImage = "screenCapture.png";
+    public static String imageFormat = "png";
+    private static boolean dumpImg = true;
+    private static String dumpDir = "dump\\";
+    private static String dumpPicName = ".png";
 
     static
     {
@@ -29,11 +33,19 @@ public class ImageUtils
         }
     }
 
-    public static String screenCaptureImage = "screenCapture.png";
-    public static String imageFormat = "png";
-    private static boolean dumpImg = true;
-    private static String dumpDir = "dump\\";
-    private static String dumpPicName = ".png";  //include .png
+
+    public static void main(String[] args)
+    {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+//        File dir = new File("CodeImage");
+//        String[] files = dir.list();
+//        for(String file : files)
+//        {
+//            dumpPicName=file;
+//            digitSegmentation("CodeImage\\" + file);
+//        }
+        digitSegmentation("CodeImage\\3436.jpg");
+    }
 
     public static Mat gammaCorrection(Mat src)
     {
@@ -48,28 +60,53 @@ public class ImageUtils
         return ret;
     }
 
-    public static Mat getBinaryMat(Mat src)
+    public static Mat equalization(Mat src)
     {
-
         int type = CvType.CV_8UC1;
+
         List<Mat> preEqualization = new ArrayList<Mat>();
         preEqualization.add(new Mat(src.rows(), src.cols(), type));
         preEqualization.add(new Mat(src.rows(), src.cols(), type));
         preEqualization.add(new Mat(src.rows(), src.cols(), type));
+        Core.split(src, preEqualization);
 
         List<Mat> postEqualization = new ArrayList<Mat>();
         postEqualization.add(new Mat(src.rows(), src.cols(), type));
         postEqualization.add(new Mat(src.rows(), src.cols(), type));
         postEqualization.add(new Mat(src.rows(), src.cols(), type));
 
-        Mat src_equalized = new Mat();
-
-        Core.split(src, preEqualization);
         for (int i = 0; i < 3; ++i)
         {
             Imgproc.equalizeHist(preEqualization.get(i), postEqualization.get(i));
         }
+        Mat src_equalized = new Mat();
         Core.merge(postEqualization, src_equalized);
+        return src_equalized;
+    }
+
+    public static Mat getBinaryMat(Mat src)
+    {
+
+//        int type = CvType.CV_8UC1;
+//        List<Mat> preEqualization = new ArrayList<Mat>();
+//        preEqualization.add(new Mat(src.rows(), src.cols(), type));
+//        preEqualization.add(new Mat(src.rows(), src.cols(), type));
+//        preEqualization.add(new Mat(src.rows(), src.cols(), type));
+//
+//        List<Mat> postEqualization = new ArrayList<Mat>();
+//        postEqualization.add(new Mat(src.rows(), src.cols(), type));
+//        postEqualization.add(new Mat(src.rows(), src.cols(), type));
+//        postEqualization.add(new Mat(src.rows(), src.cols(), type));
+//
+//        Mat src_equalized = new Mat();
+//
+//        Core.split(src, preEqualization);
+//        for (int i = 0; i < 3; ++i)
+//        {
+//            Imgproc.equalizeHist(preEqualization.get(i), postEqualization.get(i));
+//        }
+//        Core.merge(postEqualization, src_equalized);
+        Mat src_equalized = equalization(src);
         Imgcodecs.imwrite(dumpDir + "src_equalized_" + dumpPicName, src_equalized);
 
         Mat gray = new Mat();
@@ -117,7 +154,9 @@ public class ImageUtils
     public static Mat removeNoise(Mat src)
     {
         Mat ret = new Mat();
-        Imgproc.GaussianBlur(src, ret, new Size(3, 3), 0, 0);
+//        Imgproc.GaussianBlur(src, ret, new Size(3, 3), 0, 0);
+        Imgproc.medianBlur(src, ret, 3);
+//        Imgproc.blur(src,ret,new Size(3,3));
         return ret;
     }
 
@@ -234,64 +273,15 @@ public class ImageUtils
                 ret.put(i, j, r, g, b);
             }
         }
-//        Imgproc.cvtColor(mat,ret,Imgproc.COLOR_RGB2HSV);
         return ret;
     }
 
     private static int reduceVal(double val)
     {
-        if (val < 64)
-        {
-            return 0;
-        }
-        else if (val < 128)
-//            return 64;
-//        else if(val<192)
-        {
-            return 128;
-        }
-        else
-        {
-            return 255;
-        }
+        int step = 128;
+        return (int)val/step*step + step/2;
     }
 
-    public static void main(String[] args)
-    {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        File dir = new File("CodeImage");
-        String[] files = dir.list();
-        for(String file : files)
-        {
-            dumpPicName=file;
-            digitSegmentation("CodeImage\\" + file);
-        }
-
-//        Mat mat_colorReduced = reduceColor(src);
-//        Imgcodecs.imwrite("preFilter.png",mat_colorReduced);
-//
-//        Mat filtered = new Mat();
-////        Imgproc.medianBlur(src,filtered,3);
-//        Imgproc.GaussianBlur(src, filtered, new Size(3, 3), 0, 0);
-//        Imgcodecs.imwrite("media.png", filtered);
-//
-//        mat_colorReduced = reduceColor(filtered);
-//        Imgcodecs.imwrite("postFilter.png",mat_colorReduced);
-//        mat_colorReduced = getBinaryMat(mat_colorReduced);
-//        Imgcodecs.imwrite("binary.png",mat_colorReduced);
-////        System.out.println(src);
-//
-////        Mat skeleton = new Mat();
-////        Imgproc.morphologyEx(mat_colorReduced,skeleton,);
-//
-//        Mat eroded = new Mat(mat_colorReduced.rows(),mat_colorReduced.cols(),1);
-//        Mat element1 = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_ELLIPSE, new Size(2, 2));
-//        Mat element2 = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_ELLIPSE, new Size(3, 3));
-//        Imgproc.dilate(mat_colorReduced, eroded, element1);
-//        Imgproc.erode(eroded, eroded, element2);
-//
-//        Imgcodecs.imwrite("eroded.png", eroded);
-    }
 
     /**
      * if fails , return null
@@ -338,7 +328,9 @@ public class ImageUtils
 
         Mat mat_colorReduced = reduceColor(mat_noiseMoved);
 
-        Mat mat_binary = getBinaryMat(mat_colorReduced);
+        Mat mat_getTargetColor = getTargetColor(mat_colorReduced,1);
+
+        Mat mat_binary = getBinaryMat(mat_getTargetColor);
 
         Mat preprocessed = dilation(mat_binary, 3);
 
@@ -348,6 +340,7 @@ public class ImageUtils
         {
             Imgcodecs.imwrite(dumpDir + "roi_" + dumpPicName, roi);
             Imgcodecs.imwrite(dumpDir + "noiseMoved_" + dumpPicName, mat_noiseMoved);
+            Imgcodecs.imwrite(dumpDir + "getTargetColor_" + dumpPicName, mat_getTargetColor);
             Imgcodecs.imwrite(dumpDir + "colorReduced_" + dumpPicName, mat_colorReduced);
             Imgcodecs.imwrite(dumpDir + "binary_" + dumpPicName, mat_binary);
             Imgcodecs.imwrite(dumpDir + "fixed_" + dumpPicName, preprocessed);
@@ -355,15 +348,67 @@ public class ImageUtils
         return preprocessed;
     }
 
+    public static Mat getTargetColor(Mat src, int level)
+    {
+        Mat ret = new Mat(src.size(),CvType.CV_8UC3,new Scalar(255,255,255));
+
+        Map<Scalar,Integer> colorMap = new HashMap<Scalar, Integer>();
+        for(int i = 0; i < src.rows(); ++i)
+        {
+            for(int j = 0; j < src.cols(); ++j)
+            {
+                Scalar cur = new Scalar(src.get(i,j));
+                if(colorMap.get(cur)==null)
+                {
+                    colorMap.put(cur,1);
+                }
+                else
+                {
+                    int val = colorMap.get(cur);
+                    ++val;
+                    colorMap.put(cur,val);
+                }
+            }
+        }
+
+        List<Map.Entry<Scalar,Integer>> entryList = new ArrayList<Map.Entry<Scalar, Integer>>(colorMap.entrySet());
+        Collections.sort(entryList, new Comparator<Map.Entry<Scalar, Integer>>()
+        {
+            @Override
+            public int compare(Map.Entry<Scalar, Integer> o1, Map.Entry<Scalar, Integer> o2)
+            {
+                return o1.getValue().compareTo(o2.getValue());
+            }
+        });
+
+        for(int i = 0; i < ret.rows(); ++i)
+        {
+            for (int j = 0; j < ret.cols(); ++j)
+            {
+                double[] curColor =src.get(i,j);
+                Scalar temp = new Scalar(curColor);
+                for(int k=0; k <level; ++k)
+                {
+                    if(temp.equals(entryList.get(entryList.size()-2-k).getKey()))
+                    {
+                        double[] color = new double[]{temp.val[0],temp.val[1],temp.val[2]};
+                        ret.put(i,j,color);
+                        break;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
     /**
      * if fails , return null
-     *
      * @param absolutePathOfPic
      * @return
      */
     public static List<Mat> digitSegmentation(String absolutePathOfPic)
     {
-        return digitSegmentationWithROI(absolutePathOfPic, new Rect(0, 0, 105, 25));
+        return digitSegmentationWithROI(absolutePathOfPic, new Rect(3, 3, 105, 26));
     }
 
 }
