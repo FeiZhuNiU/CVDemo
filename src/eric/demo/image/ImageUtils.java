@@ -1,6 +1,5 @@
 package eric.demo.image;
 
-import com.sun.javafx.collections.transformation.SortedList;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -37,14 +36,14 @@ public class ImageUtils
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-//        File dir = new File("CodeImage");
-//        String[] files = dir.list();
-//        for(String file : files)
-//        {
-//            dumpPicName=file;
-//            digitSegmentation("CodeImage\\" + file);
-//        }
-        digitSegmentation("CodeImage\\3436.jpg");
+        File dir = new File("CodeImage");
+        String[] files = dir.list();
+        for(String file : files)
+        {
+            dumpPicName=file;
+            digitSegmentation("CodeImage\\" + file);
+        }
+//        digitSegmentation("CodeImage\\9478.jpg");
     }
 
     public static Mat gammaCorrection(Mat src)
@@ -86,39 +85,19 @@ public class ImageUtils
 
     public static Mat getBinaryMat(Mat src)
     {
-
-//        int type = CvType.CV_8UC1;
-//        List<Mat> preEqualization = new ArrayList<Mat>();
-//        preEqualization.add(new Mat(src.rows(), src.cols(), type));
-//        preEqualization.add(new Mat(src.rows(), src.cols(), type));
-//        preEqualization.add(new Mat(src.rows(), src.cols(), type));
-//
-//        List<Mat> postEqualization = new ArrayList<Mat>();
-//        postEqualization.add(new Mat(src.rows(), src.cols(), type));
-//        postEqualization.add(new Mat(src.rows(), src.cols(), type));
-//        postEqualization.add(new Mat(src.rows(), src.cols(), type));
-//
-//        Mat src_equalized = new Mat();
-//
-//        Core.split(src, preEqualization);
-//        for (int i = 0; i < 3; ++i)
-//        {
-//            Imgproc.equalizeHist(preEqualization.get(i), postEqualization.get(i));
-//        }
-//        Core.merge(postEqualization, src_equalized);
-        Mat src_equalized = equalization(src);
-        Imgcodecs.imwrite(dumpDir + "src_equalized_" + dumpPicName, src_equalized);
+//        Mat src_equalized = equalization(src);
+//        Imgcodecs.imwrite(dumpDir + "src_equalized_" + dumpPicName, src_equalized);
 
         Mat gray = new Mat();
-        Imgproc.cvtColor(src_equalized, gray, Imgproc.COLOR_RGB2GRAY);
+        Imgproc.cvtColor(src, gray, Imgproc.COLOR_RGB2GRAY);
         Imgcodecs.imwrite(dumpDir + "gray_" + dumpPicName, gray);
 
-        Mat gray_equalized = new Mat();
-        Imgproc.equalizeHist(gray, gray_equalized);
-        Imgcodecs.imwrite(dumpDir + "gray_equalized_" + dumpPicName, gray_equalized);
+//        Mat gray_equalized = new Mat();
+//        Imgproc.equalizeHist(gray, gray_equalized);
+//        Imgcodecs.imwrite(dumpDir + "gray_equalized_" + dumpPicName, gray_equalized);
 
-        Mat gamma = gammaCorrection(gray_equalized);
-        Imgcodecs.imwrite(dumpDir + "gamma_" + dumpPicName, gamma);
+//        Mat gamma = gammaCorrection(gray_equalized);
+//        Imgcodecs.imwrite(dumpDir + "gamma_" + dumpPicName, gamma);
 
         Mat binary = new Mat(src.rows(), src.cols(), CvType.CV_8UC1);
 
@@ -151,11 +130,11 @@ public class ImageUtils
 //        return red_minus_green;
 //    }
 
-    public static Mat removeNoise(Mat src)
+    public static Mat removeNoise(Mat src, int size)
     {
         Mat ret = new Mat();
 //        Imgproc.GaussianBlur(src, ret, new Size(3, 3), 0, 0);
-        Imgproc.medianBlur(src, ret, 3);
+        Imgproc.medianBlur(src, ret, size);
 //        Imgproc.blur(src,ret,new Size(3,3));
         return ret;
     }
@@ -324,17 +303,19 @@ public class ImageUtils
 
     private static Mat preProcess(Mat roi)
     {
-        Mat mat_noiseMoved = removeNoise(roi);
+        Mat mat_noiseMoved = removeNoise(roi,3);
 
         Mat mat_colorReduced = reduceColor(mat_noiseMoved);
 
-        Mat mat_getTargetColor = getTargetColor(mat_colorReduced,1);
+        Mat mat_colorReduced_noiseremoved = removeNoise(mat_colorReduced,3);
+
+        Mat mat_getTargetColor = getTargetColor(mat_colorReduced_noiseremoved,2);
 
         Mat mat_binary = getBinaryMat(mat_getTargetColor);
 
-        Mat preprocessed = dilation(mat_binary, 3);
+        Mat preprocessed = erosion(mat_binary, 3);
 
-        preprocessed = erosion(preprocessed, 3);
+        preprocessed = dilation(preprocessed, 3);
 
         if (dumpImg)
         {
