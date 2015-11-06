@@ -1,6 +1,7 @@
 package eric.demo.image;
 
 import org.opencv.core.*;
+import org.opencv.core.Point;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
@@ -43,7 +44,7 @@ public class ImageUtils
             dumpPicName=file;
             digitSegmentation("CodeImage\\" + file);
         }
-//        digitSegmentation("CodeImage\\9478.jpg");
+//        digitSegmentation("CodeImage\\1367.jpg");
     }
 
     public static Mat gammaCorrection(Mat src)
@@ -90,7 +91,10 @@ public class ImageUtils
 
         Mat gray = new Mat();
         Imgproc.cvtColor(src, gray, Imgproc.COLOR_RGB2GRAY);
-        Imgcodecs.imwrite(dumpDir + "gray_" + dumpPicName, gray);
+        if(dumpImg)
+        {
+            Imgcodecs.imwrite(dumpDir + "gray_" + dumpPicName, gray);
+        }
 
 //        Mat gray_equalized = new Mat();
 //        Imgproc.equalizeHist(gray, gray_equalized);
@@ -173,6 +177,7 @@ public class ImageUtils
         {
             if (contours.size() > 4)
             {
+                //TODO: wrong logic
                 Collections.sort(contours, new Comparator<MatOfPoint>()
                 {
                     @Override
@@ -239,25 +244,31 @@ public class ImageUtils
         }
     }
 
-    public static Mat reduceColor(Mat mat)
+
+    /**
+     * color quantization
+     * @param mat
+     * @return
+     */
+    public static Mat reduceColor(Mat mat,int step)
     {
         Mat ret = new Mat(mat.size(), CvType.CV_8UC3);
         for (int i = 0; i < ret.rows(); ++i)
         {
             for (int j = 0; j < ret.cols(); ++j)
             {
-                int r = reduceVal(mat.get(i, j)[0]);
-                int g = reduceVal(mat.get(i, j)[1]);
-                int b = reduceVal(mat.get(i, j)[2]);
+                int r = reduceVal(mat.get(i, j)[0],step);
+                int g = reduceVal(mat.get(i, j)[1],step);
+                int b = reduceVal(mat.get(i, j)[2],step);
                 ret.put(i, j, r, g, b);
             }
         }
         return ret;
     }
 
-    private static int reduceVal(double val)
+    private static int reduceVal(double val, int step)
     {
-        int step = 128;
+//        int step = 64;
         return (int)val/step*step + step/2;
     }
 
@@ -271,10 +282,9 @@ public class ImageUtils
      */
     public static List<Mat> digitSegmentationWithROI(String absolutePathOfPic, Rect picRect)
     {
-        System.out.println("processing ... ");
+        System.out.println("process Segmentation... ");
         Mat src = Imgcodecs.imread(absolutePathOfPic);
 
-        // get target mat
         Mat roi = src.submat(picRect);
 
         Mat preprocessed = preProcess(roi);
@@ -286,6 +296,7 @@ public class ImageUtils
         Imgproc.findContours(preprocessed, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
 
         List<Mat> ret = ImageUtils.getSortedRectsOfDigits(contours, mat_bak);
+
         if (ret.size() == 0)
         {
             return null;
@@ -305,30 +316,76 @@ public class ImageUtils
     {
         Mat mat_noiseMoved = removeNoise(roi,3);
 
-        Mat mat_colorReduced = reduceColor(mat_noiseMoved);
+        Mat mat_colorReduced = reduceColor(mat_noiseMoved, 128);
 
-        Mat mat_colorReduced_noiseremoved = removeNoise(mat_colorReduced,3);
+        Mat mat_colorReduced_noiseremoved = removeNoise(mat_colorReduced, 3);
 
-        Mat mat_getTargetColor = getTargetColor(mat_colorReduced_noiseremoved,2);
+        Mat mat_getTargetColor = getTargetColor(mat_colorReduced_noiseremoved, 2);
 
         Mat mat_binary = getBinaryMat(mat_getTargetColor);
 
-        Mat preprocessed = erosion(mat_binary, 3);
+        Mat mat_binary_noiseRemoved = removeNoise(mat_binary,3);
 
-        preprocessed = dilation(preprocessed, 3);
+        Mat mat_binary_noiseRemoved_removeNonDigit = removeNonDigitPart(mat_binary_noiseRemoved);
+
+        Mat ret = erosion(mat_binary_noiseRemoved_removeNonDigit, 3);
+        ret = dilation(ret, 3);
 
         if (dumpImg)
         {
             Imgcodecs.imwrite(dumpDir + "roi_" + dumpPicName, roi);
             Imgcodecs.imwrite(dumpDir + "noiseMoved_" + dumpPicName, mat_noiseMoved);
             Imgcodecs.imwrite(dumpDir + "getTargetColor_" + dumpPicName, mat_getTargetColor);
+            Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_removeNonDigit_" + dumpPicName, mat_binary_noiseRemoved_removeNonDigit);
+            Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_" + dumpPicName, mat_binary_noiseRemoved);
             Imgcodecs.imwrite(dumpDir + "colorReduced_" + dumpPicName, mat_colorReduced);
             Imgcodecs.imwrite(dumpDir + "binary_" + dumpPicName, mat_binary);
-            Imgcodecs.imwrite(dumpDir + "fixed_" + dumpPicName, preprocessed);
+            Imgcodecs.imwrite(dumpDir + "fixed_" + dumpPicName, ret);
+
         }
-        return preprocessed;
+        return ret;
     }
 
+    private static Mat removeNonDigitPart(Mat src)
+    {
+        Mat src_bak = new Mat();
+        src.copyTo(src_bak);
+        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+        Imgproc.findContours(src, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
+        for(int i = 0 ; i < contours.size(); ++i)
+        {
+            Rect rect = Imgproc.boundingRect(contours.get(i));
+            if(rect.width+ rect.height < 16 )
+            {
+                contours.remove(i--);
+            }
+        }
+        Mat ret = new Mat(src.rows(),src.cols(),CvType.CV_8UC1,new Scalar(0));
+        for(int i = 0 ; i < src.rows(); ++i)
+        {
+            for(int j = 0; j < src.cols(); ++j)
+            {
+                for (MatOfPoint contour : contours)
+                {
+                    Rect rect = Imgproc.boundingRect(contour);
+                    if (new Point(j, i).inside(rect))
+                    {
+                        ret.put(i, j, src_bak.get(i, j));
+                        break;
+                    }
+                }
+            }
+        }
+        src_bak.copyTo(src);
+        return ret;
+    }
+
+    /**
+     * return a Mat that contains the colors that have most weight
+     * @param src
+     * @param level the color count (except the background)
+     * @return
+     */
     public static Mat getTargetColor(Mat src, int level)
     {
         Mat ret = new Mat(src.size(),CvType.CV_8UC3,new Scalar(255,255,255));
@@ -370,6 +427,7 @@ public class ImageUtils
                 Scalar temp = new Scalar(curColor);
                 for(int k=0; k <level; ++k)
                 {
+                    // -2 because -1 is the background
                     if(temp.equals(entryList.get(entryList.size()-2-k).getKey()))
                     {
                         double[] color = new double[]{temp.val[0],temp.val[1],temp.val[2]};
