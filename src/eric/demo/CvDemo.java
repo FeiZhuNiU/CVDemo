@@ -33,7 +33,7 @@ public class CvDemo
             //get samples to recognize
             ImageUtils.screenCapture();
             List<Mat> digitsToRecog = ImageUtils.digitSegmentationWithROI(ImageUtils.screenCaptureImage, picRect);
-            if (digitsToRecog != null)
+            if (digitsToRecog != null && digitsToRecog.size()==4)
             {
                 ArrayList<Integer> numbers = new ArrayList<Integer>();
                 for (Mat mat : digitsToRecog)

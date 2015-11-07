@@ -37,17 +37,17 @@ public class ImageUtils
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-//        File dir = new File("CodeImage");
-//        String[] files = dir.list();
-//        for(String file : files)
-//        {
-//            dumpPicName=file;
-//            digitSegmentation("CodeImage\\" + file);
-//        }
-        long startTime = System.currentTimeMillis();
-        digitSegmentation("CodeImage\\7723.jpg");
-        long endTime = System.currentTimeMillis();
-        System.out.println("seg time: " + (endTime-startTime)/1000.0);
+        File dir = new File("CodeImage");
+        String[] files = dir.list();
+        for(String file : files)
+        {
+            dumpPicName=file;
+            digitSegmentation("CodeImage\\" + file);
+        }
+//        long startTime = System.currentTimeMillis();
+//        digitSegmentation("CodeImage\\7723.jpg");
+//        long endTime = System.currentTimeMillis();
+//        System.out.println("seg time: " + (endTime-startTime)/1000.0);
     }
 
     public static Mat gammaCorrection(Mat src)
@@ -118,31 +118,6 @@ public class ImageUtils
         Imgproc.threshold(gray, binary, 90, 255, Imgproc.THRESH_BINARY_INV);
         return binary;
     }
-
-//    private static Mat getRedMat(Mat src)
-//    {
-//        int type = 1;
-//        List<Mat> mats = new ArrayList<Mat>();
-//        mats.add(new Mat(src.rows(),src.cols(),type));
-//        mats.add(new Mat(src.rows(),src.cols(),type));
-//        mats.add(new Mat(src.rows(),src.cols(),type));
-//        // splite into 3 channels
-//        Core.split(src, mats);
-////        for(int i = 0; i < 3; ++i){
-////            Imgcodecs.imwrite("resources\\channel" + i + ".png", mats.get(i));
-////        }
-//
-////        Mat red_blue = new Mat(src.rows(),src.cols(),type);
-////        Core.absdiff(mats.get(2),mats.get(0),red_blue);
-////        Imgcodecs.imwrite("resources\\red-blue.png",red_blue);
-//        Mat red_minus_green = new Mat(src.rows(),src.cols(),type);
-//        Core.absdiff(mats.get(2), mats.get(1), red_minus_green);
-//        if(dumpImg)
-//        {
-//            Imgcodecs.imwrite("red-green.png", red_minus_green);
-//        }
-//        return red_minus_green;
-//    }
 
     public static Mat removeNoise(Mat src, int size)
     {
@@ -267,11 +242,17 @@ public class ImageUtils
 
         Mat preprocessed = preProcess(roi);
 
-//        Mat skeleton = getSkeleton(preprocessed);
-
+        if(preprocessed==null)
+        {
+            System.out.println("preprocess failed");
+            return null;
+        }
         List<Mat> ret = doSegmentation(preprocessed);
-
-        if (ret == null) return null;
+        if (ret == null)
+        {
+            System.out.println("doSegmentation failed");
+            return null;
+        }
         return ret;
     }
 
@@ -284,6 +265,8 @@ public class ImageUtils
     private static List<Mat> doSegmentation(Mat src)
     {
         List<Rect> digitRects = getDigitRects(src);
+        if(digitRects==null || digitRects.size()==0)
+            return null;
         List<Mat> ret = ImageUtils.getDigitMatsByRects(digitRects, src);
 
         if (ret.size() == 0)
@@ -295,7 +278,7 @@ public class ImageUtils
         {
             for (Mat mat : ret)
             {
-                String pathToSave = ret.indexOf(mat) + ".png";
+                String pathToSave = dumpPicName.substring(0,dumpPicName.indexOf(".")) + ret.indexOf(mat) + ".png";
                 Imgcodecs.imwrite(pathToSave, mat);
             }
         }
@@ -474,6 +457,11 @@ public class ImageUtils
         Mat mat_colorReduced_noiseremoved = removeNoise(mat_colorReduced, 3);
 
         Mat mat_getTargetColor = getTargetColor(mat_colorReduced_noiseremoved, 2);
+        if(mat_getTargetColor == null)
+        {
+            System.out.println("no digit");
+            return null;
+        }
 
         Mat mat_binary = binaryZation(mat_getTargetColor);
 
@@ -544,6 +532,7 @@ public class ImageUtils
     {
         Mat ret = new Mat(src.size(), CvType.CV_8UC3, new Scalar(255, 255, 255));
 
+        //calculate how much each color has
         Map<Scalar, Integer> colorMap = new HashMap<Scalar, Integer>();
         for (int i = 0; i < src.rows(); ++i)
         {
@@ -562,6 +551,13 @@ public class ImageUtils
             }
         }
 
+        if(colorMap.size()< level+1 )
+        {
+            System.out.println("color quantity is not enough, maybe the picture is blank.");
+            return null;
+        }
+
+        //sort color by quantity
         List<Map.Entry<Scalar, Integer>> entryList = new ArrayList<Map.Entry<Scalar, Integer>>(colorMap.entrySet());
         Collections.sort(entryList, new Comparator<Map.Entry<Scalar, Integer>>()
         {
