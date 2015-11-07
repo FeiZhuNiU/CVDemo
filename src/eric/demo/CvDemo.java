@@ -18,7 +18,7 @@ public class CvDemo
 
     public static void main(String[] args)
     {
-        if(!initParams(args))
+        if (!initParams(args))
         {
             System.out.println("please verify the input params");
             return;
@@ -28,12 +28,12 @@ public class CvDemo
         //get classifier
         KNearest kNearest = RecogUtils.getClassifier();
 
-        while(true)
+        while (true)
         {
             //get samples to recognize
             ImageUtils.screenCapture();
-            List<Mat> digitsToRecog = ImageUtils.digitSegmentationWithROI(ImageUtils.screenCaptureImage,picRect);
-            if(digitsToRecog != null)
+            List<Mat> digitsToRecog = ImageUtils.digitSegmentationWithROI(ImageUtils.screenCaptureImage, picRect);
+            if (digitsToRecog != null)
             {
                 ArrayList<Integer> numbers = new ArrayList<Integer>();
                 for (Mat mat : digitsToRecog)
@@ -48,8 +48,7 @@ public class CvDemo
             try
             {
                 Thread.sleep(1000);
-            }
-            catch (InterruptedException e)
+            } catch (InterruptedException e)
             {
                 e.printStackTrace();
             }
@@ -58,8 +57,8 @@ public class CvDemo
 
     private static boolean initParams(String[] args)
     {
-        int argCnt=args.length;
-        if(argCnt!=4)
+        int argCnt = args.length;
+        if (argCnt != 4)
         {
             System.out.println("input args are not correct.\n" +
                     "There should be 4 args: \n" +
@@ -78,23 +77,20 @@ public class CvDemo
                     "|______________________________________|");
             return false;
         }
-        int x,y,width,height;
+        int x, y, width, height;
         try
         {
             x = Integer.parseInt(args[0]);
             y = Integer.parseInt(args[1]);
             width = Integer.parseInt(args[2]);
             height = Integer.parseInt(args[3]);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             return false;
         }
-        picRect = new Rect(x,y,width,height);
+        picRect = new Rect(x, y, width, height);
         return true;
     }
-
-
 
 
 }

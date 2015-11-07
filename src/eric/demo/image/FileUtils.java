@@ -10,7 +10,7 @@ public class FileUtils
     /**
      * rename image name to image**.png
      * generate *.info for training
-     *
+     * <p/>
      * fileName :  line  0 1 2 3 4 5 ... 9
      */
     private static void renameImageFiles(String fileName)
@@ -25,20 +25,20 @@ public class FileUtils
             }
         });
 
-        for(int i = 0 ; i < images.length; ++i)
+        for (int i = 0; i < images.length; ++i)
         {
-            images[i].renameTo(new File(file.getAbsolutePath() + "\\image"+(i+1)+".png"));
+            images[i].renameTo(new File(file.getAbsolutePath() + "\\image" + (i + 1) + ".png"));
         }
         try
         {
             FileWriter infoFile = new FileWriter(file.getAbsolutePath() + "\\" + fileName + ".info");
-            for(int i = 0 ; i < images.length; ++i)
+            for (int i = 0; i < images.length; ++i)
             {
                 infoFile.write("image" + (i + 1) + ".png 1 0 0 20 20\n");
             }
             infoFile.close();
             FileWriter negdataFile = new FileWriter(file.getAbsolutePath() + "\\" + fileName + "negdata.txt");
-            for(int i = 0 ; i < images.length; ++i)
+            for (int i = 0; i < images.length; ++i)
             {
                 negdataFile.write(fileName + "\\image" + (i + 1) + ".png\n");
             }
@@ -52,16 +52,18 @@ public class FileUtils
 
     public static void writeObjectToFile(Object obj)
     {
-        File file =new File("test.dat");
+        File file = new File("test.dat");
         FileOutputStream out;
-        try {
+        try
+        {
             out = new FileOutputStream(file);
-            ObjectOutputStream objOut=new ObjectOutputStream(out);
+            ObjectOutputStream objOut = new ObjectOutputStream(out);
             objOut.writeObject(obj);
             objOut.flush();
             objOut.close();
             System.out.println("write object success!");
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             System.out.println("write object failed");
             e.printStackTrace();
         }
