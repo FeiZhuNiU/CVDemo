@@ -45,7 +45,7 @@ public class ImageUtils
             digitSegmentation("CodeImage\\" + file);
         }
 //        long startTime = System.currentTimeMillis();
-//        digitSegmentation("CodeImage\\7723.jpg");
+//        digitSegmentation("CodeImage\\1347.jpg");
 //        long endTime = System.currentTimeMillis();
 //        System.out.println("seg time: " + (endTime-startTime)/1000.0);
     }
@@ -448,6 +448,164 @@ public class ImageUtils
 
     }
 
+    /**
+     * skeleton algorithm
+     * @param src
+     * @param loops
+     * @return
+     */
+    private static Mat thin(Mat src, int loops)
+    {
+        Mat dst = new Mat();
+        int height = src.rows() -1;
+        int width  = src.cols() -1;
+
+        src.copyTo(dst);
+
+        int n = 0,i = 0,j = 0;
+        Mat tmpImg = new Mat();
+        boolean isFinished =false;
+
+        for(n=0; n<loops; n++)
+        {
+            dst.copyTo(tmpImg);
+            isFinished =false;   //一次 先行后列扫描 开始
+            //扫描过程一 开始
+            for(i=1; i<height;  i++)
+            {
+                for(j=1; j<width; j++)
+                {
+                    if(tmpImg.get(i,j)[0] > 0)
+                    {
+                        int ap=0;
+                        int p2 = tmpImg.get(i-1,j)[0] > 0 ? 1 : 0;
+                        int p3 = tmpImg.get(i-1,j+1)[0] > 0 ? 1 : 0 ;
+                        if (p2==0 && p3==1)
+                        {
+                            ap++;
+                        }
+                        int p4 = tmpImg.get(i,j+1)[0] >0 ? 1 : 0 ;
+                        if(p3==0 && p4==1)
+                        {
+                            ap++;
+                        }
+                        int p5 = tmpImg.get(i+1,j+1)[0] >0 ? 1 : 0;
+                        if(p4==0 && p5==1)
+                        {
+                            ap++;
+                        }
+                        int p6 = tmpImg.get(i+1,j)[0] >0 ? 1 : 0;
+                        if(p5==0 && p6==1)
+                        {
+                            ap++;
+                        }
+                        int p7 = tmpImg.get(i+1,j-1)[0] >0 ? 1 : 0;
+                        if(p6==0 && p7==1)
+                        {
+                            ap++;
+                        }
+                        int p8 = tmpImg.get(i,j-1)[0] >0 ? 1 : 0;
+                        if(p7==0 && p8==1)
+                        {
+                            ap++;
+                        }
+                        int p9 = tmpImg.get(i-1,j-1)[0] >0 ? 1 : 0;
+                        if(p8==0 && p9==1)
+                        {
+                            ap++;
+                        }
+                        if(p9==0 && p2==1)
+                        {
+                            ap++;
+                        }
+                        if((p2+p3+p4+p5+p6+p7+p8+p9)>1 && (p2+p3+p4+p5+p6+p7+p8+p9)<7)
+                        {
+                            if(ap==1)
+                            {
+                                if((p2*p4*p6==0)&&(p4*p6*p8==0))
+                                {
+                                    dst.put(i,j,0);
+                                    isFinished =true;
+                                }
+                            }
+                        }
+                    }
+                } //扫描过程一 结束
+
+                dst.copyTo(tmpImg);
+                //扫描过程二 开始
+                for(i=1; i<height;  i++)  //一次 先行后列扫描 开始
+                {
+                    for(j=1; j<width; j++)
+                    {
+                        if(tmpImg.get(i,j)[0] >0)
+                        {
+                            int ap=0;
+                            int p2 = tmpImg.get(i-1,j)[0] >0 ? 1 : 0;
+                            int p3 = tmpImg.get(i-1,j+1)[0] >0 ? 1 : 0;
+                            if (p2==0 && p3==1)
+                            {
+                                ap++;
+                            }
+                            int p4 = tmpImg.get(i,j+1)[0] >0 ? 1 : 0;
+                            if(p3==0 && p4==1)
+                            {
+                                ap++;
+                            }
+                            int p5 = tmpImg.get(i+1,j+1)[0] >0 ? 1 : 0;
+                            if(p4==0 && p5==1)
+                            {
+                                ap++;
+                            }
+                            int p6 = tmpImg.get(i+1,j)[0] >0 ? 1 : 0;
+                            if(p5==0 && p6==1)
+                            {
+                                ap++;
+                            }
+                            int p7 = tmpImg.get(i+1,j-1)[0] >0 ? 1 : 0;
+                            if(p6==0 && p7==1)
+                            {
+                                ap++;
+                            }
+                            int p8 = tmpImg.get(i,j-1)[0] >0 ? 1 : 0;
+                            if(p7==0 && p8==1)
+                            {
+                                ap++;
+                            }
+                            int p9 = tmpImg.get(i-1,j-1)[0] >0 ? 1 : 0;
+                            if(p8==0 && p9==1)
+                            {
+                                ap++;
+                            }
+                            if(p9==0 && p2==1)
+                            {
+                                ap++;
+                            }
+                            if((p2+p3+p4+p5+p6+p7+p8+p9)>1 && (p2+p3+p4+p5+p6+p7+p8+p9)<7)
+                            {
+                                if(ap==1)
+                                {
+                                    if((p2*p4*p8==0)&&(p2*p6*p8==0))
+                                    {
+                                        dst.put(i,j,0);
+                                        isFinished =true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                } //一次 先行后列扫描完成
+                //如果在扫描过程中没有删除点，则提前退出
+                if(isFinished ==false)
+                {
+                    break;
+                }
+            }
+        }
+        return dst;
+    }
+
     private static Mat preProcess(Mat roi)
     {
         Mat mat_noiseMoved = removeNoise(roi, 3);
@@ -470,6 +628,8 @@ public class ImageUtils
         Mat mat_binary_noiseRemoved_removeNonDigit = removeNonDigitPart(mat_binary_noiseRemoved);
 
         Mat ret = mat_binary_noiseRemoved_removeNonDigit;
+
+        Mat skeleton = thin(ret,10);
 //        Mat ret = erosion(mat_binary_noiseRemoved_removeNonDigit, 3);
 //        ret = dilation(ret, 3);
 
@@ -483,6 +643,7 @@ public class ImageUtils
             Imgcodecs.imwrite(dumpDir + "colorReduced_" + dumpPicName, mat_colorReduced);
             Imgcodecs.imwrite(dumpDir + "binary_" + dumpPicName, mat_binary);
             Imgcodecs.imwrite(dumpDir + "fixed_" + dumpPicName, ret);
+            Imgcodecs.imwrite(dumpDir + "skeleton_" + dumpPicName, skeleton);
         }
         return ret;
     }
