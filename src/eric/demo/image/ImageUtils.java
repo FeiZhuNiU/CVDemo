@@ -37,17 +37,17 @@ public class ImageUtils
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        File dir = new File("CodeImage");
-        String[] files = dir.list();
-        for(String file : files)
-        {
-            dumpPicName=file;
-            digitSegmentation("CodeImage\\" + file);
-        }
-//        long startTime = System.currentTimeMillis();
-//        digitSegmentation("CodeImage\\1347.jpg");
-//        long endTime = System.currentTimeMillis();
-//        System.out.println("seg time: " + (endTime-startTime)/1000.0);
+//        File dir = new File("CodeImage");
+//        String[] files = dir.list();
+//        for(String file : files)
+//        {
+//            dumpPicName=file;
+//            digitSegmentation("CodeImage\\" + file);
+//        }
+        long startTime = System.currentTimeMillis();
+        digitSegmentation("CodeImage\\1932.jpg");
+        long endTime = System.currentTimeMillis();
+        System.out.println("seg time: " + (endTime-startTime)/1000.0);
     }
 
     public static Mat gammaCorrection(Mat src)
@@ -173,6 +173,7 @@ public class ImageUtils
         for (Rect rect : rects)
         {
             Mat cur = src.submat(rect);
+            //归一化到 20x20
             Mat resized = new Mat();
             Imgproc.resize(cur, resized, new Size(20, 20));
             ret.add(resized);
@@ -247,13 +248,27 @@ public class ImageUtils
             System.out.println("preprocess failed");
             return null;
         }
-        List<Mat> ret = doSegmentation(preprocessed);
-        if (ret == null)
+        List<Mat> segments = doSegmentation(preprocessed);
+        if (segments == null)
         {
             System.out.println("doSegmentation failed");
             return null;
         }
-        return ret;
+        List<Mat> skeletons = new ArrayList<Mat>();
+        for(Mat mat : segments)
+        {
+            Mat skeleton = thin(mat,10);
+            skeletons.add(skeleton);
+        }
+        if (dumpImg)
+        {
+            for (Mat mat : skeletons)
+            {
+                String pathToSave = dumpPicName.substring(0,dumpPicName.indexOf(".")) + skeletons.indexOf(mat) + "_skeleton.png";
+                Imgcodecs.imwrite(pathToSave, mat);
+            }
+        }
+        return skeletons;
     }
 
     /**
@@ -415,40 +430,6 @@ public class ImageUtils
     }
 
     /**
-     * TODO
-     *
-     * @param src
-     * @return
-     */
-    @Deprecated
-    private static Mat getSkeleton(Mat src)
-    {
-        Mat skeleton = Mat.zeros(src.rows(), src.cols(), CvType.CV_8UC1);
-
-        Mat element = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_CROSS, new Size(2, 2));
-
-        Mat img = src.clone();
-        int loops = 10;
-        while (--loops > 0)
-        {
-//            Imgproc.morphologyEx(src,skeleton,Imgproc.MORPH_ERODE,element);
-//            Imgproc.morphologyEx(src,skeleton,Imgproc.MORPH_CLOSE,element);
-            Mat eroded = erosion(img, 2);
-            Imgcodecs.imwrite(dumpDir + "eroded.png", eroded);
-            Mat temp = dilation(eroded, 2);
-            Imgcodecs.imwrite(dumpDir + "temp.png", temp);
-            Core.absdiff(src, temp, temp);
-            Imgcodecs.imwrite(dumpDir + "temp_diff.png", temp);
-            Core.bitwise_or(skeleton, temp, skeleton);
-            Imgcodecs.imwrite(dumpDir + "skeleton.png", skeleton);
-            img = eroded.clone();
-        }
-
-        return skeleton;
-
-    }
-
-    /**
      * skeleton algorithm
      * @param src
      * @param loops
@@ -597,7 +578,7 @@ public class ImageUtils
 
                 } //一次 先行后列扫描完成
                 //如果在扫描过程中没有删除点，则提前退出
-                if(isFinished ==false)
+                if(!isFinished)
                 {
                     break;
                 }
@@ -629,7 +610,6 @@ public class ImageUtils
 
         Mat ret = mat_binary_noiseRemoved_removeNonDigit;
 
-        Mat skeleton = thin(ret,10);
 //        Mat ret = erosion(mat_binary_noiseRemoved_removeNonDigit, 3);
 //        ret = dilation(ret, 3);
 
@@ -643,7 +623,6 @@ public class ImageUtils
             Imgcodecs.imwrite(dumpDir + "colorReduced_" + dumpPicName, mat_colorReduced);
             Imgcodecs.imwrite(dumpDir + "binary_" + dumpPicName, mat_binary);
             Imgcodecs.imwrite(dumpDir + "fixed_" + dumpPicName, ret);
-            Imgcodecs.imwrite(dumpDir + "skeleton_" + dumpPicName, skeleton);
         }
         return ret;
     }
