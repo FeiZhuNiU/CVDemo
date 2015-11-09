@@ -23,6 +23,9 @@ public class ImageUtils
     private static boolean dumpImg = true;
     private static String dumpDir = "dump\\";
     private static String dumpPicName = ".png";
+    public static final int NORMALIZATION_WIDTH = 20;
+    public static final int NORMALIZATION_HEIGHT = 25;
+    private static final int IMAGE_ENLARGE_SIZE = 10;
 
     static
     {
@@ -48,7 +51,7 @@ public class ImageUtils
         long startTime = System.currentTimeMillis();
         digitSegmentation("CodeImage\\0687.jpg");
         long endTime = System.currentTimeMillis();
-        System.out.println("seg time: " + (endTime-startTime)/1000.0);
+        System.out.println("seg time: " + (endTime - startTime) / 1000.0);
 
 //        Mat tmp = Imgcodecs.imread("1.png");
 //        Mat rotated = rotateMat(tmp,-30);
@@ -187,29 +190,33 @@ public class ImageUtils
 
     /**
      * process digit mats
-     *  1.  enlarge the frame
-     *  2.  normalize the size to 20*25
+     * 1.  enlarge the frame
+     * 2.  normalization
+     *
      * @param srcs
      * @return
      */
     private static List<Mat> processDigitMats(List<Mat> srcs)
     {
-        if(srcs == null || srcs.size()==0)
-            return null;
-        List<Mat> ret = new ArrayList<Mat>();
-        for(Mat src:srcs)
+        if (srcs == null || srcs.size() == 0)
         {
-            Mat enlarged = new Mat(src.rows()+10, src.cols()+10,src.type(),new Scalar(0));
-            for(int i = 0 ; i < src.rows(); ++i)
+            return null;
+        }
+        List<Mat> ret = new ArrayList<Mat>();
+        for (Mat src : srcs)
+        {
+            Mat enlarged = new Mat(src.rows() + IMAGE_ENLARGE_SIZE, src.cols() + IMAGE_ENLARGE_SIZE, src.type(),
+                                   new Scalar(0));
+            for (int i = 0; i < src.rows(); ++i)
             {
-                for(int j = 0 ; j < src.cols(); ++j)
+                for (int j = 0; j < src.cols(); ++j)
                 {
-                    enlarged.put(i + 5, j + 5, src.get(i, j));
+                    enlarged.put(i + IMAGE_ENLARGE_SIZE / 2, j + IMAGE_ENLARGE_SIZE / 2, src.get(i, j));
                 }
             }
             //归一化到 20x20
             Mat resized = new Mat();
-            Imgproc.resize(enlarged, resized, new Size(20, 25));
+            Imgproc.resize(enlarged, resized, new Size(NORMALIZATION_WIDTH, NORMALIZATION_HEIGHT));
             Mat binary = new Mat();
             Imgproc.threshold(resized, binary, 90, 255, Imgproc.THRESH_BINARY);
             ret.add(binary);
@@ -228,7 +235,8 @@ public class ImageUtils
             int height = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
             BufferedImage screen = new Robot().createScreenCapture(new Rectangle(0, 0, width, height));
             ImageIO.write(screen, imageFormat, new File(screenCaptureImage));
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -278,7 +286,7 @@ public class ImageUtils
         Mat roi = src.submat(picRect);
 
         Mat preprocessed = preProcess(roi);
-        if(preprocessed==null)
+        if (preprocessed == null)
         {
             System.out.println("preprocess failed");
             return null;
@@ -292,16 +300,17 @@ public class ImageUtils
         }
 
         List<Mat> skeletons = new ArrayList<Mat>();
-        for(Mat mat : segments)
+        for (Mat mat : segments)
         {
-            Mat skeleton = thin(mat,10);
+            Mat skeleton = thin(mat, 10);
             skeletons.add(skeleton);
         }
         if (dumpImg)
         {
             for (Mat mat : skeletons)
             {
-                String pathToSave = dumpPicName.substring(0,dumpPicName.indexOf(".")) + skeletons.indexOf(mat) + "_skeleton.png";
+                String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(".")) + skeletons.indexOf(
+                        mat) + "_skeleton.png";
                 Imgcodecs.imwrite(pathToSave, mat);
             }
         }
@@ -317,8 +326,10 @@ public class ImageUtils
     private static List<Mat> doSegmentation(Mat src)
     {
         List<Rect> digitRects = getDigitRects(src);
-        if(digitRects==null || digitRects.size()==0)
+        if (digitRects == null || digitRects.size() == 0)
+        {
             return null;
+        }
 
         List<Mat> ret = ImageUtils.getDigitMatsByRects(digitRects, src);
 
@@ -332,12 +343,13 @@ public class ImageUtils
         {
             for (Mat mat : ret)
             {
-                String pathToSave = dumpPicName.substring(0,dumpPicName.indexOf(".")) + ret.indexOf(mat) + ".png";
+                String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(".")) + ret.indexOf(mat) + ".png";
                 Imgcodecs.imwrite(pathToSave, mat);
             }
             for (Mat mat : ret_processed)
             {
-                String pathToSave = dumpPicName.substring(0,dumpPicName.indexOf(".")) + ret_processed.indexOf(mat) + "_processed.png";
+                String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(".")) + ret_processed.indexOf(
+                        mat) + "_processed.png";
                 Imgcodecs.imwrite(pathToSave, mat);
             }
         }
@@ -405,13 +417,15 @@ public class ImageUtils
     {
         int rectCount = boundRects.size();
         if (rectCount >= 4 || rectCount == 0)
+        {
             return;
+        }
         Collections.sort(boundRects, new Comparator<Rect>()
         {
             @Override
             public int compare(Rect o1, Rect o2)
             {
-                return ((Integer)o1.width).compareTo(o2.width);
+                return ((Integer) o1.width).compareTo(o2.width);
             }
         });
 
@@ -419,54 +433,59 @@ public class ImageUtils
         List<Rect> rectsSplited;
         if (rectCount == 3)
         {
-            rectsSplited= splitRect(boundRects.get(2),2);
+            rectsSplited = splitRect(boundRects.get(2), 2);
             boundRects.remove(2);
             boundRects.addAll(rectsSplited);
-        } else if (rectCount == 2)
+        }
+        else if (rectCount == 2)
         {
             //分两种情况 一种是22数字粘连 另一种是三个数字粘连
-            if(boundRects.get(0).width > boundRects.get(1).width/2){
-                List<Rect> rectsSplited1 = splitRect(boundRects.get(0),2);
-                List<Rect> rectsSplited2 = splitRect(boundRects.get(1),2);
+            if (boundRects.get(0).width > boundRects.get(1).width / 2)
+            {
+                List<Rect> rectsSplited1 = splitRect(boundRects.get(0), 2);
+                List<Rect> rectsSplited2 = splitRect(boundRects.get(1), 2);
                 boundRects.clear();
                 boundRects.addAll(rectsSplited1);
                 boundRects.addAll(rectsSplited2);
             }
             //三个数字粘连的情况
-            else{
-                rectsSplited= splitRect(boundRects.get(1),3);
+            else
+            {
+                rectsSplited = splitRect(boundRects.get(1), 3);
                 boundRects.remove(1);
                 boundRects.addAll(rectsSplited);
             }
-        } else if (rectCount == 1)
+        }
+        else if (rectCount == 1)
         {
-            rectsSplited= splitRect(boundRects.get(0),4);
+            rectsSplited = splitRect(boundRects.get(0), 4);
             boundRects.remove(0);
             boundRects.addAll(rectsSplited);
         }
     }
 
     /**
-     *
-     * @param rect rect to split
+     * @param rect     rect to split
      * @param splitNum the num to be split
      * @return split rects
      */
     private static List<Rect> splitRect(Rect rect, int splitNum)
     {
         List<Rect> ret = new ArrayList<Rect>();
-        if(splitNum<=1)
+        if (splitNum <= 1)
         {
             ret.add(rect);
-        }else{
+        }
+        else
+        {
             Point tl = rect.tl();
-            for(int i = 0 ; i < splitNum; ++i)
+            for (int i = 0; i < splitNum; ++i)
             {
-                int x = (int) (tl.x+rect.width/splitNum*i);
+                int x = (int) (tl.x + rect.width / splitNum * i);
                 int y = (int) tl.y;
-                int width = rect.width/splitNum;
+                int width = rect.width / splitNum;
                 int height = rect.height;
-                Rect cur = new Rect(x,y,width,height);
+                Rect cur = new Rect(x, y, width, height);
                 ret.add(cur);
             }
         }
@@ -475,6 +494,7 @@ public class ImageUtils
 
     /**
      * skeleton algorithm
+     *
      * @param src
      * @param loops
      * @return
@@ -482,75 +502,75 @@ public class ImageUtils
     private static Mat thin(Mat src, int loops)
     {
         Mat dst = new Mat();
-        int height = src.rows() -1;
-        int width  = src.cols() -1;
+        int height = src.rows() - 1;
+        int width = src.cols() - 1;
 
         src.copyTo(dst);
 
-        int n = 0,i = 0,j = 0;
+        int n = 0, i = 0, j = 0;
         Mat tmpImg = new Mat();
-        boolean isFinished =false;
+        boolean isFinished = false;
 
-        for(n=0; n<loops; n++)
+        for (n = 0; n < loops; n++)
         {
             dst.copyTo(tmpImg);
-            isFinished =false;   //一次 先行后列扫描 开始
+            isFinished = false;   //一次 先行后列扫描 开始
             //扫描过程一 开始
-            for(i=1; i<height;  i++)
+            for (i = 1; i < height; i++)
             {
-                for(j=1; j<width; j++)
+                for (j = 1; j < width; j++)
                 {
-                    if(tmpImg.get(i,j)[0] > 0)
+                    if (tmpImg.get(i, j)[0] > 0)
                     {
-                        int ap=0;
-                        int p2 = tmpImg.get(i-1,j)[0] > 0 ? 1 : 0;
-                        int p3 = tmpImg.get(i-1,j+1)[0] > 0 ? 1 : 0 ;
-                        if (p2==0 && p3==1)
+                        int ap = 0;
+                        int p2 = tmpImg.get(i - 1, j)[0] > 0 ? 1 : 0;
+                        int p3 = tmpImg.get(i - 1, j + 1)[0] > 0 ? 1 : 0;
+                        if (p2 == 0 && p3 == 1)
                         {
                             ap++;
                         }
-                        int p4 = tmpImg.get(i,j+1)[0] >0 ? 1 : 0 ;
-                        if(p3==0 && p4==1)
+                        int p4 = tmpImg.get(i, j + 1)[0] > 0 ? 1 : 0;
+                        if (p3 == 0 && p4 == 1)
                         {
                             ap++;
                         }
-                        int p5 = tmpImg.get(i+1,j+1)[0] >0 ? 1 : 0;
-                        if(p4==0 && p5==1)
+                        int p5 = tmpImg.get(i + 1, j + 1)[0] > 0 ? 1 : 0;
+                        if (p4 == 0 && p5 == 1)
                         {
                             ap++;
                         }
-                        int p6 = tmpImg.get(i+1,j)[0] >0 ? 1 : 0;
-                        if(p5==0 && p6==1)
+                        int p6 = tmpImg.get(i + 1, j)[0] > 0 ? 1 : 0;
+                        if (p5 == 0 && p6 == 1)
                         {
                             ap++;
                         }
-                        int p7 = tmpImg.get(i+1,j-1)[0] >0 ? 1 : 0;
-                        if(p6==0 && p7==1)
+                        int p7 = tmpImg.get(i + 1, j - 1)[0] > 0 ? 1 : 0;
+                        if (p6 == 0 && p7 == 1)
                         {
                             ap++;
                         }
-                        int p8 = tmpImg.get(i,j-1)[0] >0 ? 1 : 0;
-                        if(p7==0 && p8==1)
+                        int p8 = tmpImg.get(i, j - 1)[0] > 0 ? 1 : 0;
+                        if (p7 == 0 && p8 == 1)
                         {
                             ap++;
                         }
-                        int p9 = tmpImg.get(i-1,j-1)[0] >0 ? 1 : 0;
-                        if(p8==0 && p9==1)
+                        int p9 = tmpImg.get(i - 1, j - 1)[0] > 0 ? 1 : 0;
+                        if (p8 == 0 && p9 == 1)
                         {
                             ap++;
                         }
-                        if(p9==0 && p2==1)
+                        if (p9 == 0 && p2 == 1)
                         {
                             ap++;
                         }
-                        if((p2+p3+p4+p5+p6+p7+p8+p9)>1 && (p2+p3+p4+p5+p6+p7+p8+p9)<7)
+                        if ((p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9) > 1 && (p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9) < 7)
                         {
-                            if(ap==1)
+                            if (ap == 1)
                             {
-                                if((p2*p4*p6==0)&&(p4*p6*p8==0))
+                                if ((p2 * p4 * p6 == 0) && (p4 * p6 * p8 == 0))
                                 {
-                                    dst.put(i,j,0);
-                                    isFinished =true;
+                                    dst.put(i, j, 0);
+                                    isFinished = true;
                                 }
                             }
                         }
@@ -559,61 +579,61 @@ public class ImageUtils
 
                 dst.copyTo(tmpImg);
                 //扫描过程二 开始
-                for(i=1; i<height;  i++)  //一次 先行后列扫描 开始
+                for (i = 1; i < height; i++)  //一次 先行后列扫描 开始
                 {
-                    for(j=1; j<width; j++)
+                    for (j = 1; j < width; j++)
                     {
-                        if(tmpImg.get(i,j)[0] >0)
+                        if (tmpImg.get(i, j)[0] > 0)
                         {
-                            int ap=0;
-                            int p2 = tmpImg.get(i-1,j)[0] >0 ? 1 : 0;
-                            int p3 = tmpImg.get(i-1,j+1)[0] >0 ? 1 : 0;
-                            if (p2==0 && p3==1)
+                            int ap = 0;
+                            int p2 = tmpImg.get(i - 1, j)[0] > 0 ? 1 : 0;
+                            int p3 = tmpImg.get(i - 1, j + 1)[0] > 0 ? 1 : 0;
+                            if (p2 == 0 && p3 == 1)
                             {
                                 ap++;
                             }
-                            int p4 = tmpImg.get(i,j+1)[0] >0 ? 1 : 0;
-                            if(p3==0 && p4==1)
+                            int p4 = tmpImg.get(i, j + 1)[0] > 0 ? 1 : 0;
+                            if (p3 == 0 && p4 == 1)
                             {
                                 ap++;
                             }
-                            int p5 = tmpImg.get(i+1,j+1)[0] >0 ? 1 : 0;
-                            if(p4==0 && p5==1)
+                            int p5 = tmpImg.get(i + 1, j + 1)[0] > 0 ? 1 : 0;
+                            if (p4 == 0 && p5 == 1)
                             {
                                 ap++;
                             }
-                            int p6 = tmpImg.get(i+1,j)[0] >0 ? 1 : 0;
-                            if(p5==0 && p6==1)
+                            int p6 = tmpImg.get(i + 1, j)[0] > 0 ? 1 : 0;
+                            if (p5 == 0 && p6 == 1)
                             {
                                 ap++;
                             }
-                            int p7 = tmpImg.get(i+1,j-1)[0] >0 ? 1 : 0;
-                            if(p6==0 && p7==1)
+                            int p7 = tmpImg.get(i + 1, j - 1)[0] > 0 ? 1 : 0;
+                            if (p6 == 0 && p7 == 1)
                             {
                                 ap++;
                             }
-                            int p8 = tmpImg.get(i,j-1)[0] >0 ? 1 : 0;
-                            if(p7==0 && p8==1)
+                            int p8 = tmpImg.get(i, j - 1)[0] > 0 ? 1 : 0;
+                            if (p7 == 0 && p8 == 1)
                             {
                                 ap++;
                             }
-                            int p9 = tmpImg.get(i-1,j-1)[0] >0 ? 1 : 0;
-                            if(p8==0 && p9==1)
+                            int p9 = tmpImg.get(i - 1, j - 1)[0] > 0 ? 1 : 0;
+                            if (p8 == 0 && p9 == 1)
                             {
                                 ap++;
                             }
-                            if(p9==0 && p2==1)
+                            if (p9 == 0 && p2 == 1)
                             {
                                 ap++;
                             }
-                            if((p2+p3+p4+p5+p6+p7+p8+p9)>1 && (p2+p3+p4+p5+p6+p7+p8+p9)<7)
+                            if ((p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9) > 1 && (p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9) < 7)
                             {
-                                if(ap==1)
+                                if (ap == 1)
                                 {
-                                    if((p2*p4*p8==0)&&(p2*p6*p8==0))
+                                    if ((p2 * p4 * p8 == 0) && (p2 * p6 * p8 == 0))
                                     {
-                                        dst.put(i,j,0);
-                                        isFinished =true;
+                                        dst.put(i, j, 0);
+                                        isFinished = true;
                                     }
                                 }
                             }
@@ -622,7 +642,7 @@ public class ImageUtils
 
                 } //一次 先行后列扫描完成
                 //如果在扫描过程中没有删除点，则提前退出
-                if(!isFinished)
+                if (!isFinished)
                 {
                     break;
                 }
@@ -640,7 +660,7 @@ public class ImageUtils
         Mat mat_colorReduced_noiseremoved = removeNoise(mat_colorReduced, 3);
 
         Mat mat_getTargetColor = getTargetColor(mat_colorReduced_noiseremoved, 2);
-        if(mat_getTargetColor == null)
+        if (mat_getTargetColor == null)
         {
             System.out.println("no digit");
             return null;
@@ -662,7 +682,8 @@ public class ImageUtils
             Imgcodecs.imwrite(dumpDir + "roi_" + dumpPicName, roi);
             Imgcodecs.imwrite(dumpDir + "noiseMoved_" + dumpPicName, mat_noiseMoved);
             Imgcodecs.imwrite(dumpDir + "getTargetColor_" + dumpPicName, mat_getTargetColor);
-            Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_removeNonDigit_" + dumpPicName, mat_binary_noiseRemoved_removeNonDigit);
+            Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_removeNonDigit_" + dumpPicName,
+                              mat_binary_noiseRemoved_removeNonDigit);
             Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_" + dumpPicName, mat_binary_noiseRemoved);
             Imgcodecs.imwrite(dumpDir + "colorReduced_" + dumpPicName, mat_colorReduced);
             Imgcodecs.imwrite(dumpDir + "binary_" + dumpPicName, mat_binary);
@@ -726,7 +747,8 @@ public class ImageUtils
                 if (colorMap.get(cur) == null)
                 {
                     colorMap.put(cur, 1);
-                } else
+                }
+                else
                 {
                     int val = colorMap.get(cur);
                     ++val;
@@ -735,7 +757,7 @@ public class ImageUtils
             }
         }
 
-        if(colorMap.size()< level+1 )
+        if (colorMap.size() < level + 1)
         {
             System.out.println("color quantity is not enough, maybe the picture is blank.");
             return null;
@@ -786,17 +808,18 @@ public class ImageUtils
 
     /**
      * rotate image with given angles
+     *
      * @param src
      * @param angle
      * @return
      */
-    private static Mat rotateMat(Mat src,double angle)
+    private static Mat rotateMat(Mat src, double angle)
     {
         Mat ret = new Mat();
-        int length = Math.max(src.rows(),src.cols());
-        Point point = new Point(length/2.0,length/2.0);
-        Mat r = Imgproc.getRotationMatrix2D(point,angle,1.0);
-        Imgproc.warpAffine(src,ret,r,new Size(length,length));
+        int length = Math.max(src.rows(), src.cols());
+        Point point = new Point(length / 2.0, length / 2.0);
+        Mat r = Imgproc.getRotationMatrix2D(point, angle, 1.0);
+        Imgproc.warpAffine(src, ret, r, new Size(length, length));
         return ret;
 
     }
