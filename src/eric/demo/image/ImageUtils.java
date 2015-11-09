@@ -45,14 +45,14 @@ public class ImageUtils
 //            digitSegmentation("CodeImage\\" + file);
 //        }
 
-//        long startTime = System.currentTimeMillis();
-//        digitSegmentation("CodeImage\\1932.jpg");
-//        long endTime = System.currentTimeMillis();
-//        System.out.println("seg time: " + (endTime-startTime)/1000.0);
+        long startTime = System.currentTimeMillis();
+        digitSegmentation("CodeImage\\1932.jpg");
+        long endTime = System.currentTimeMillis();
+        System.out.println("seg time: " + (endTime-startTime)/1000.0);
 
-        Mat tmp = Imgcodecs.imread("1.png");
-        Mat rotated = rotateMat(tmp,-30);
-        Imgcodecs.imwrite("rotated.png", rotated);
+//        Mat tmp = Imgcodecs.imread("1.png");
+//        Mat rotated = rotateMat(tmp,-30);
+//        Imgcodecs.imwrite("rotated.png", rotated);
     }
 
     public static Mat gammaCorrection(Mat src)
@@ -151,6 +151,8 @@ public class ImageUtils
 
 
     /**
+     * return digit images according to the given rects
+     *
      * @param rects make sure the size is 4
      * @param src
      * @return mats of contoured-images in order
@@ -178,9 +180,29 @@ public class ImageUtils
         for (Rect rect : rects)
         {
             Mat cur = src.submat(rect);
-            //归一化到 20x20
-            Mat resized = new Mat();
-            Imgproc.resize(cur, resized, new Size(20, 20));
+//            //归一化到 20x20
+//            Mat resized = new Mat();
+//            Imgproc.resize(cur, resized, new Size(20, 20));
+            ret.add(cur);
+        }
+        return ret;
+    }
+
+    private static List<Mat> processDigitMats(List<Mat> srcs)
+    {
+        if(srcs == null || srcs.size()==0)
+            return null;
+        List<Mat> ret = new ArrayList<Mat>();
+        for(Mat src:srcs)
+        {
+            Mat resized = new Mat(src.rows()+10, src.cols()+10,src.type(),new Scalar(0));
+            for(int i = 0 ; i < src.rows(); ++i)
+            {
+                for(int j = 0 ; j < src.cols(); ++j)
+                {
+                    resized.put(i+5,j+5,src.get(i,j));
+                }
+            }
             ret.add(resized);
         }
         return ret;
@@ -247,18 +269,19 @@ public class ImageUtils
         Mat roi = src.submat(picRect);
 
         Mat preprocessed = preProcess(roi);
-
         if(preprocessed==null)
         {
             System.out.println("preprocess failed");
             return null;
         }
+
         List<Mat> segments = doSegmentation(preprocessed);
         if (segments == null)
         {
             System.out.println("doSegmentation failed");
             return null;
         }
+
         List<Mat> skeletons = new ArrayList<Mat>();
         for(Mat mat : segments)
         {
@@ -287,13 +310,15 @@ public class ImageUtils
         List<Rect> digitRects = getDigitRects(src);
         if(digitRects==null || digitRects.size()==0)
             return null;
+
         List<Mat> ret = ImageUtils.getDigitMatsByRects(digitRects, src);
 
-        if (ret.size() == 0)
+        if (ret == null || ret.size() == 0)
         {
             System.out.println("do segmentation fails");
             return null;
         }
+        List<Mat> ret_processed = processDigitMats(ret);
         if (dumpImg)
         {
             for (Mat mat : ret)
@@ -301,14 +326,19 @@ public class ImageUtils
                 String pathToSave = dumpPicName.substring(0,dumpPicName.indexOf(".")) + ret.indexOf(mat) + ".png";
                 Imgcodecs.imwrite(pathToSave, mat);
             }
+            for (Mat mat : ret_processed)
+            {
+                String pathToSave = dumpPicName.substring(0,dumpPicName.indexOf(".")) + ret_processed.indexOf(mat) + "_processed.png";
+                Imgcodecs.imwrite(pathToSave, mat);
+            }
         }
-        return ret;
+        return ret_processed;
     }
 
     /**
-     * make sure not change src
+     * return bound rects each contains one digits
      *
-     * @param src
+     * @param src make sure not change src
      * @return need not be sorted and size should be 4
      */
     private static List<Rect> getDigitRects(Mat src)
