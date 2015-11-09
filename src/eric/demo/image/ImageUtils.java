@@ -861,4 +861,19 @@ public class ImageUtils
 
     }
 
+    public static Mat transition(Mat src, int x, int y)
+    {
+        Mat ret = new Mat(src.size(), src.type(), new Scalar(0));
+        for (int i = 0; i < ret.rows(); ++i)
+        {
+            for (int j = 0; j < ret.cols(); ++j)
+            {
+                if (i + x >= 0 && i + x < src.rows() && j + y >= 0 && j + y < src.cols())
+                {
+                    ret.put(i,j,src.get(i+x,j+y));
+                }
+            }
+        }
+        return ret;
+    }
 }
