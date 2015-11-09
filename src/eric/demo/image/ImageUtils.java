@@ -21,11 +21,12 @@ public class ImageUtils
     public static String screenCaptureImage = "screenCapture.png";
     public static String imageFormat = "png";
     private static boolean dumpImg = true;
-    private static String dumpDir = "dump\\";
-    private static String dumpPicName = ".png";
+    public static String dumpDir = "dump\\";
+    public static String dumpPicName = ".png";
     public static final int NORMALIZATION_WIDTH = 20;
     public static final int NORMALIZATION_HEIGHT = 25;
     private static final int IMAGE_ENLARGE_SIZE = 10;
+    public static boolean dumpUnNormalizedSamples = false;
 
     static
     {
@@ -40,6 +41,10 @@ public class ImageUtils
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+        String imageFile = (args.length == 0 ? "CodeImage\\0687.jpg" : args[0]);
+        dumpPicName = new File(imageFile).getName();
+
 //        File dir = new File("CodeImage");
 //        String[] files = dir.list();
 //        for(String file : files)
@@ -49,7 +54,7 @@ public class ImageUtils
 //        }
 
         long startTime = System.currentTimeMillis();
-        digitSegmentation("CodeImage\\0687.jpg");
+        digitSegmentation(imageFile);
         long endTime = System.currentTimeMillis();
         System.out.println("seg time: " + (endTime - startTime) / 1000.0);
 
@@ -205,22 +210,46 @@ public class ImageUtils
         List<Mat> ret = new ArrayList<Mat>();
         for (Mat src : srcs)
         {
-            Mat enlarged = new Mat(src.rows() + IMAGE_ENLARGE_SIZE, src.cols() + IMAGE_ENLARGE_SIZE, src.type(),
-                                   new Scalar(0));
-            for (int i = 0; i < src.rows(); ++i)
-            {
-                for (int j = 0; j < src.cols(); ++j)
-                {
-                    enlarged.put(i + IMAGE_ENLARGE_SIZE / 2, j + IMAGE_ENLARGE_SIZE / 2, src.get(i, j));
-                }
-            }
-            //归一化到 20x20
-            Mat resized = new Mat();
-            Imgproc.resize(enlarged, resized, new Size(NORMALIZATION_WIDTH, NORMALIZATION_HEIGHT));
-            Mat binary = new Mat();
-            Imgproc.threshold(resized, binary, 90, 255, Imgproc.THRESH_BINARY);
-            ret.add(binary);
+            Mat enlarged = enlargeMat(src, IMAGE_ENLARGE_SIZE);
+            Mat normalized = normalize(enlarged);
+            ret.add(normalized);
         }
+        return ret;
+    }
+
+    /**
+     * enlarge mat by adding frame
+     *
+     * @param src
+     * @param size
+     * @return
+     */
+    private static Mat enlargeMat(Mat src, int size)
+    {
+        Mat enlarged = new Mat(src.rows() + size, src.cols() + size, src.type(),
+                               new Scalar(0));
+        for (int i = 0; i < src.rows(); ++i)
+        {
+            for (int j = 0; j < src.cols(); ++j)
+            {
+                enlarged.put(i + size / 2, j + size / 2, src.get(i, j));
+            }
+        }
+        return enlarged;
+    }
+
+    /**
+     * normalize
+     *
+     * @param src
+     * @return binary image mat
+     */
+    public static Mat normalize(Mat src)
+    {
+        Mat resized = new Mat();
+        Imgproc.resize(src, resized, new Size(NORMALIZATION_WIDTH, NORMALIZATION_HEIGHT));
+        Mat ret = new Mat();
+        Imgproc.threshold(resized, ret, 90, 255, Imgproc.THRESH_BINARY);
         return ret;
     }
 
@@ -331,29 +360,36 @@ public class ImageUtils
             return null;
         }
 
-        List<Mat> ret = ImageUtils.getDigitMatsByRects(digitRects, src);
+        List<Mat> unNormalizedDigits = ImageUtils.getDigitMatsByRects(digitRects, src);
 
-        if (ret == null || ret.size() == 0)
+        if (unNormalizedDigits == null || unNormalizedDigits.size() == 0)
         {
             System.out.println("do segmentation fails");
             return null;
         }
-        List<Mat> ret_processed = processDigitMats(ret);
+
+        if (dumpUnNormalizedSamples)
+        {
+            for (Mat mat : unNormalizedDigits)
+            {
+                Mat enlarged = enlargeMat(mat, IMAGE_ENLARGE_SIZE);
+                String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(".")) +
+                        unNormalizedDigits.indexOf(mat) + "_unNormalized.png";
+                Imgcodecs.imwrite(pathToSave, enlarged);
+            }
+        }
+
+        List<Mat> normalized = processDigitMats(unNormalizedDigits);
         if (dumpImg)
         {
-            for (Mat mat : ret)
+            for (Mat mat : normalized)
             {
-                String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(".")) + ret.indexOf(mat) + ".png";
-                Imgcodecs.imwrite(pathToSave, mat);
-            }
-            for (Mat mat : ret_processed)
-            {
-                String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(".")) + ret_processed.indexOf(
+                String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(".")) + normalized.indexOf(
                         mat) + "_processed.png";
                 Imgcodecs.imwrite(pathToSave, mat);
             }
         }
-        return ret_processed;
+        return normalized;
     }
 
     /**
@@ -813,13 +849,13 @@ public class ImageUtils
      * @param angle
      * @return
      */
-    private static Mat rotateMat(Mat src, double angle)
+    public static Mat rotateMat(Mat src, double angle)
     {
         Mat ret = new Mat();
-        int length = Math.max(src.rows(), src.cols());
-        Point point = new Point(length / 2.0, length / 2.0);
+
+        Point point = new Point(src.cols() / 2.0, src.rows() / 2.0);
         Mat r = Imgproc.getRotationMatrix2D(point, angle, 1.0);
-        Imgproc.warpAffine(src, ret, r, new Size(length, length));
+        Imgproc.warpAffine(src, ret, r, new Size(src.width(), src.height()));
         return ret;
 
     }

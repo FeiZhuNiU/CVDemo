@@ -18,6 +18,8 @@ import java.util.*;
 public class RecogUtils
 {
 
+    public static String sampleDir = "resources\\samples";
+
     public static Map.Entry<Mat, Mat> loadSamplesToMat()
     {
 

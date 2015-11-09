@@ -1,5 +1,9 @@
 package eric.demo.image;
 
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
+
 import java.io.*;
 
 /**
@@ -43,7 +47,8 @@ public class SampleUtils
                 negdataFile.write(fileName + "\\image" + (i + 1) + ".png\n");
             }
             negdataFile.close();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -62,12 +67,59 @@ public class SampleUtils
             objOut.flush();
             objOut.close();
             System.out.println("write object success!");
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.out.println("write object failed");
             e.printStackTrace();
         }
     }
 
+    /**
+     * generate rotated samples (normalized)
+     * @param fileName input image (should not be normalized!)
+     * @param dstDir dir to save rotated samples
+     */
+    public static void generateRotatedSamples(String fileName, String dstDir)
+    {
+        Mat digit = Imgcodecs.imread(fileName);
+        for (int i = -8; i <= 8; ++i)
+        {
+            Mat rotated = ImageUtils.rotateMat(digit, i * 10);
+            Mat normalized = ImageUtils.normalize(rotated);
+            String curFileName = (new File(fileName).getName()).substring(0, (new File(fileName).getName()).lastIndexOf(
+                    "."));
+            Imgcodecs.imwrite(dstDir + File.separator + curFileName + "_rotated_" + i * 10 + ".png", normalized);
+        }
+    }
+
+    public static void generateUnNormalizedSample()
+    {
+        ImageUtils.dumpUnNormalizedSamples = true;
+
+        ImageUtils.main(new String[]{"CodeImage\\1347.jpg"});
+        ImageUtils.main(new String[]{"CodeImage\\1697.jpg"});
+        ImageUtils.main(new String[]{"CodeImage\\2118.jpg"});
+        ImageUtils.main(new String[]{"CodeImage\\4150.jpg"});
+
+        ImageUtils.dumpUnNormalizedSamples = false;
+
+    }
+
+    public static void main(String[] args)
+    {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+        File unNormFile = new File("dump\\unNormalized");
+
+        File[] files = unNormFile.listFiles();
+
+        for(File pic : files)
+        {
+            generateRotatedSamples(pic.getAbsolutePath(),"dump\\rotated");
+        }
+//        generateUnNormalizedSample();
+//        generateRotatedSamples(ImageUtils.dumpDir + "2_processed (3).png");
+    }
 
 }
