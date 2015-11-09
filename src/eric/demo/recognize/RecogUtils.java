@@ -25,26 +25,23 @@ public class RecogUtils
 
         List<Map.Entry<Integer, Mat>> samples = new ArrayList<Map.Entry<Integer, Mat>>();
 
-        for (int i = 0; i < 10; ++i)
-        {
-//            String path = Thread.currentThread().getContextClassLoader().getResource("/resources/0/image1.png").getFile();
-//            File file = new File(path);
-            File file = new File("resources\\" + i);
-            String[] pics = file.list(new FilenameFilter()
-            {
-                @Override
-                public boolean accept(File dir, String name)
-                {
-                    return name.endsWith("." + ImageUtils.imageFormat);
-                }
-            });
 
-            for (String pic : pics)
+        File file = new File(sampleDir);
+        File[] pics = file.listFiles(new FilenameFilter()
+        {
+            @Override
+            public boolean accept(File dir, String name)
             {
-                Mat cur = Imgcodecs.imread("resources\\" + i + "\\" + pic);
-                samples.add(new AbstractMap.SimpleEntry<Integer, Mat>(i, cur));
+                return name.endsWith("." + ImageUtils.sampleImageFormat);
             }
+        });
+        //make sure the name of picFiles start with the number it means
+        for (File pic : pics)
+        {
+            Mat cur = Imgcodecs.imread(pic.getAbsolutePath());
+            samples.add(new AbstractMap.SimpleEntry<Integer, Mat>(Integer.parseInt(pic.getName().substring(0,1)), cur));
         }
+
 
         Mat trainData = new Mat(samples.size(), samples.get(0).getValue().rows() * samples.get(0).getValue().cols(), CvType.CV_32FC1);
         Mat trainClasses = new Mat(samples.size(), 1, CvType.CV_32FC1);
@@ -56,7 +53,7 @@ public class RecogUtils
             trainClasses.put(i, 0, curVal);
             for (int j = 0; j < trainData.cols(); ++j)
             {
-                trainData.put(i, j, curMat.get(j / curMat.rows(), j % curMat.rows()));
+                trainData.put(i, j, curMat.get(j / curMat.cols(), j % curMat.cols())[0]);
             }
         }
         return ret;

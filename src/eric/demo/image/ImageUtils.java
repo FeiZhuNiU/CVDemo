@@ -27,6 +27,7 @@ public class ImageUtils
     public static final int NORMALIZATION_HEIGHT = 25;
     private static final int IMAGE_ENLARGE_SIZE = 10;
     public static boolean dumpUnNormalizedSamples = false;
+    public static String sampleImageFormat="png";
 
     static
     {
