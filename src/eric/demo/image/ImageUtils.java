@@ -44,10 +44,15 @@ public class ImageUtils
 //            dumpPicName=file;
 //            digitSegmentation("CodeImage\\" + file);
 //        }
-        long startTime = System.currentTimeMillis();
-        digitSegmentation("CodeImage\\1932.jpg");
-        long endTime = System.currentTimeMillis();
-        System.out.println("seg time: " + (endTime-startTime)/1000.0);
+
+//        long startTime = System.currentTimeMillis();
+//        digitSegmentation("CodeImage\\1932.jpg");
+//        long endTime = System.currentTimeMillis();
+//        System.out.println("seg time: " + (endTime-startTime)/1000.0);
+
+        Mat tmp = Imgcodecs.imread("1.png");
+        Mat rotated = rotateMat(tmp,-30);
+        Imgcodecs.imwrite("rotated.png", rotated);
     }
 
     public static Mat gammaCorrection(Mat src)
@@ -738,6 +743,23 @@ public class ImageUtils
     public static List<Mat> digitSegmentation(String absolutePathOfPic)
     {
         return digitSegmentationWithROI(absolutePathOfPic, new Rect(3, 3, 105, 26));
+    }
+
+    /**
+     * rotate image with given angles
+     * @param src
+     * @param angle
+     * @return
+     */
+    private static Mat rotateMat(Mat src,double angle)
+    {
+        Mat ret = new Mat();
+        int length = Math.max(src.rows(),src.cols());
+        Point point = new Point(length/2.0,length/2.0);
+        Mat r = Imgproc.getRotationMatrix2D(point,angle,1.0);
+        Imgproc.warpAffine(src,ret,r,new Size(length,length));
+        return ret;
+
     }
 
 }
