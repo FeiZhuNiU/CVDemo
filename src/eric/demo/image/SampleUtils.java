@@ -5,7 +5,7 @@ import java.io.*;
 /**
  * Created by 麟 on 2015/10/31.
  */
-public class FileUtils
+public class SampleUtils
 {
     /**
      * rename image name to image**.png

@@ -46,7 +46,7 @@ public class ImageUtils
 //        }
 
         long startTime = System.currentTimeMillis();
-        digitSegmentation("CodeImage\\1932.jpg");
+        digitSegmentation("CodeImage\\0687.jpg");
         long endTime = System.currentTimeMillis();
         System.out.println("seg time: " + (endTime-startTime)/1000.0);
 
@@ -180,14 +180,18 @@ public class ImageUtils
         for (Rect rect : rects)
         {
             Mat cur = src.submat(rect);
-//            //归一化到 20x20
-//            Mat resized = new Mat();
-//            Imgproc.resize(cur, resized, new Size(20, 20));
             ret.add(cur);
         }
         return ret;
     }
 
+    /**
+     * process digit mats
+     *  1.  enlarge the frame
+     *  2.  normalize the size to 20*25
+     * @param srcs
+     * @return
+     */
     private static List<Mat> processDigitMats(List<Mat> srcs)
     {
         if(srcs == null || srcs.size()==0)
@@ -195,15 +199,20 @@ public class ImageUtils
         List<Mat> ret = new ArrayList<Mat>();
         for(Mat src:srcs)
         {
-            Mat resized = new Mat(src.rows()+10, src.cols()+10,src.type(),new Scalar(0));
+            Mat enlarged = new Mat(src.rows()+10, src.cols()+10,src.type(),new Scalar(0));
             for(int i = 0 ; i < src.rows(); ++i)
             {
                 for(int j = 0 ; j < src.cols(); ++j)
                 {
-                    resized.put(i+5,j+5,src.get(i,j));
+                    enlarged.put(i + 5, j + 5, src.get(i, j));
                 }
             }
-            ret.add(resized);
+            //归一化到 20x20
+            Mat resized = new Mat();
+            Imgproc.resize(enlarged, resized, new Size(20, 25));
+            Mat binary = new Mat();
+            Imgproc.threshold(resized, binary, 90, 255, Imgproc.THRESH_BINARY);
+            ret.add(binary);
         }
         return ret;
     }
