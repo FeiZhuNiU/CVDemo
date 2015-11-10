@@ -20,12 +20,12 @@ public class ImageUtils
     private static int[] gammaTable;
     public static String screenCaptureImage = "screenCapture.png";
     public static String imageFormat = "png";
-    private static boolean dumpImg = true;
+    private static boolean dumpImg = false;
     public static String dumpDir = "dump\\";
     public static String dumpPicName = ".png";
     public static final int NORMALIZATION_WIDTH = 20;
     public static final int NORMALIZATION_HEIGHT = 25;
-    private static final int IMAGE_ENLARGE_SIZE = 10;
+    public static final int IMAGE_ENLARGE_SIZE = 10;
     public static boolean dumpUnNormalizedSamples = false;
     public static String sampleImageFormat="png";
 
@@ -164,7 +164,7 @@ public class ImageUtils
      *
      * @param rects make sure the size is 4
      * @param src
-     * @return mats of contoured-images in order
+     * @return mats of contoured-images IN ORDER (unNormalized)
      */
     public static List<Mat> getDigitMatsByRects(List<Rect> rects, Mat src)
     {
@@ -199,22 +199,19 @@ public class ImageUtils
      * 1.  enlarge the frame
      * 2.  normalization
      *
-     * @param srcs
+     * @param src
      * @return
      */
-    private static List<Mat> processDigitMats(List<Mat> srcs)
+    private static Mat normalization(Mat src)
     {
-        if (srcs == null || srcs.size() == 0)
+        if (src == null)
         {
             return null;
         }
-        List<Mat> ret = new ArrayList<Mat>();
-        for (Mat src : srcs)
-        {
-            Mat enlarged = enlargeMat(src, IMAGE_ENLARGE_SIZE);
-            Mat normalized = normalize(enlarged);
-            ret.add(normalized);
-        }
+
+        Mat enlarged = enlargeMat(src, IMAGE_ENLARGE_SIZE, IMAGE_ENLARGE_SIZE);
+        Mat ret = normalize(enlarged);
+
         return ret;
     }
 
@@ -222,18 +219,19 @@ public class ImageUtils
      * enlarge mat by adding frame
      *
      * @param src
-     * @param size
+     * @param size_width (%2==0)
+     * @param size_height (%2==0)
      * @return
      */
-    private static Mat enlargeMat(Mat src, int size)
+    public static Mat enlargeMat(Mat src, int size_width, int size_height)
     {
-        Mat enlarged = new Mat(src.rows() + size, src.cols() + size, src.type(),
+        Mat enlarged = new Mat(src.rows() + size_height, src.cols() + size_width, src.type(),
                                new Scalar(0));
         for (int i = 0; i < src.rows(); ++i)
         {
             for (int j = 0; j < src.cols(); ++j)
             {
-                enlarged.put(i + size / 2, j + size / 2, src.get(i, j));
+                enlarged.put(i + size_height / 2, j + size_width / 2, src.get(i, j));
             }
         }
         return enlarged;
@@ -329,29 +327,27 @@ public class ImageUtils
             return null;
         }
 
-        List<Mat> skeletons = new ArrayList<Mat>();
-        for (Mat mat : segments)
-        {
-            Mat skeleton = thin(mat, 10);
-            skeletons.add(skeleton);
-        }
-        if (dumpImg)
-        {
-            for (Mat mat : skeletons)
-            {
-                String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(".")) + skeletons.indexOf(
-                        mat) + "_skeleton.png";
-                Imgcodecs.imwrite(pathToSave, mat);
-            }
-        }
-        return skeletons;
+//        List<Mat> skeletons = new ArrayList<Mat>();
+//        for (Mat mat : segments)
+//        {
+//            Mat skeleton = thin(mat, 10);
+//            skeletons.add(skeleton);
+//        }
+//        if (dumpImg)
+//        {
+//            for (Mat mat : skeletons)
+//            {
+//                String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(".")) + skeletons.indexOf(
+//                        mat) + "_skeleton.png";
+//                Imgcodecs.imwrite(pathToSave, mat);
+//            }
+//        }
+        return segments;
     }
 
     /**
-     * return 4 mat that contain 4 digit
-     *
      * @param src a binary image that has been preprocessed
-     * @return if fails return null
+     * @return return 4 mat that contain 4 digits IN ORDER, if fails return null
      */
     private static List<Mat> doSegmentation(Mat src)
     {
@@ -373,14 +369,19 @@ public class ImageUtils
         {
             for (Mat mat : unNormalizedDigits)
             {
-                Mat enlarged = enlargeMat(mat, IMAGE_ENLARGE_SIZE);
+//                Mat enlarged = enlargeMat(mat, IMAGE_ENLARGE_SIZE, IMAGE_ENLARGE_SIZE);
                 String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(".")) +
                         unNormalizedDigits.indexOf(mat) + "_unNormalized.png";
-                Imgcodecs.imwrite(pathToSave, enlarged);
+                Imgcodecs.imwrite(pathToSave, mat);
             }
         }
 
-        List<Mat> normalized = processDigitMats(unNormalizedDigits);
+        List<Mat> normalized = new ArrayList<Mat>();
+        for(Mat tmp:unNormalizedDigits)
+        {
+            normalized.add(normalization(tmp));
+        }
+
         if (dumpImg)
         {
             for (Mat mat : normalized)
@@ -401,13 +402,7 @@ public class ImageUtils
      */
     private static List<Rect> getDigitRects(Mat src)
     {
-        Mat src_bak = new Mat(/*src.rows(), src.cols(), CvType.CV_8UC3*/);
-        src.copyTo(src_bak);
-        //get contours
-        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-        Imgproc.findContours(src, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
-        src_bak.copyTo(src);
-
+        List<MatOfPoint> contours = findContours(src);
 
         if (contours.size() > 4)
         {
@@ -875,5 +870,37 @@ public class ImageUtils
             }
         }
         return ret;
+    }
+
+    /**
+     * cut a image to its border
+     * @param src
+     * @return
+     */
+    public static Mat cutDigit(Mat src)
+    {
+        List<MatOfPoint> contours = findContours(src);
+        if(contours.size()!=1)
+        {
+            System.out.println("failed to cut digit");
+        }
+        Rect rect = Imgproc.boundingRect(contours.get(0));
+        Mat ret = src.submat(rect);
+        return ret;
+    }
+
+    /**
+     * this method would not change src image
+     * @param src the type should be CvType.CV_8UC1
+     * @return
+     */
+    public static List<MatOfPoint> findContours(Mat src)
+    {
+        Mat src_bak = new Mat();
+        src.copyTo(src_bak);
+        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+        Imgproc.findContours(src, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
+        src_bak.copyTo(src);
+        return contours;
     }
 }

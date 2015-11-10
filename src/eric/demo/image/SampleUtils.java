@@ -4,6 +4,7 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 import java.io.*;
 
@@ -113,8 +114,9 @@ public class SampleUtils
 
     /**
      * generate rotated samples (normalized)
-     * @param imagePath input image (should NOT be normalized!)
-     * @param dstDir dir to save rotated samples
+     *
+     * @param imagePath input image (should NOT be normalized AND NOT be enlarged!)
+     * @param dstDir    dir to save rotated samples
      */
     public static void generateRotatedSamples(String imagePath, String dstDir)
     {
@@ -130,31 +132,55 @@ public class SampleUtils
                 new Point(1, 1)
         };
 
-        Mat digit = Imgcodecs.imread(imagePath);
-        for (int i = -8; i <= 8; ++i)
-        {
-            Mat rotated = ImageUtils.rotateMat(digit, i * 10);
-            Mat normalized = ImageUtils.normalize(rotated);
+        Mat src = Imgcodecs.imread(imagePath);
+        Mat digit = new Mat();
+        Imgproc.cvtColor(src, digit, Imgproc.COLOR_RGB2GRAY);
 
-            String curFileName = new File(imagePath).getName();
-            String curFileNameWithNoSuffix = curFileName.substring(0, curFileName.lastIndexOf("."));
-            for (Point offset : offsets)
+        /**
+         * generate samples
+         * 0. enlarge by size(2,2) and offset
+         * 1. rotate
+         * 2. cut with new contour
+         * 3. enlarge
+         * 4. normalize
+         */
+
+        String curFileName = new File(imagePath).getName();
+        String curFileNameWithNoSuffix = curFileName.substring(0, curFileName.lastIndexOf("."));
+
+        //enlarge
+        Mat enlarged = ImageUtils.enlargeMat(digit, 2, 2);
+        for (Point offset : offsets)
+        {
+            //offset
+            Mat offsetImage = ImageUtils.transition(enlarged, (int) offset.y, (int) offset.x);
+
+            for (int i = -8; i <= 8; ++i)
             {
-                Mat offsetImage = ImageUtils.transition(normalized, (int) offset.y, (int) offset.x);
+                //rotate
+                Mat rotated = ImageUtils.rotateMat(offsetImage, i * 10);
+                //cut
+                Mat cut = ImageUtils.cutDigit(rotated);
+                //enlarge
+                Mat cut_enlarged = ImageUtils.enlargeMat(cut, ImageUtils.IMAGE_ENLARGE_SIZE,
+                                                         ImageUtils.IMAGE_ENLARGE_SIZE);
+                //normalize
+                Mat normalized = ImageUtils.normalize(cut_enlarged);
+
                 Imgcodecs.imwrite(dstDir + File.separator + curFileNameWithNoSuffix +
-                        "_rotated_" + i * 10 +
-                        "_x_" + offset.x +
-                        "_y_" + offset.y +
-                        ".png", offsetImage);
+                                          "_rotated_" + i * 10 +
+                                          "_x_" + offset.x +
+                                          "_y_" + offset.y +
+                                          ".png", normalized);
             }
         }
     }
 
     /**
      * rename unNormalizedImages according to its name
-     *
+     * <p/>
      * e.g.
-     *
+     * <p/>
      * 21182_xxx.png   ->   1_21182.png
      * 1 is "2118".charAt(2)
      */
@@ -162,20 +188,21 @@ public class SampleUtils
     {
         File file = new File(unNormalizedDir);
         File[] images = file.listFiles();
-        for(File image : images)
+        for (File image : images)
         {
             String curName = image.getName();
-            String numbers = curName.substring(0,4);
-            String index = curName.substring(4,5);
-            char targetNumber  = numbers.charAt(Integer.parseInt(index));
-            image.renameTo(new File(unNormalizedDir + "\\" + String.valueOf(targetNumber)+"_"+numbers+index+".png"));
+            String numbers = curName.substring(0, 4);
+            String index = curName.substring(4, 5);
+            char targetNumber = numbers.charAt(Integer.parseInt(index));
+            image.renameTo(
+                    new File(unNormalizedDir + "\\" + String.valueOf(targetNumber) + "_" + numbers + index + ".png"));
         }
     }
 
     public static void generateUnNormalizedSample()
     {
         ImageUtils.dumpUnNormalizedSamples = true;
-        for(String file : straightImages)
+        for (String file : straightImages)
         {
             ImageUtils.main(new String[]{file});
         }
@@ -196,18 +223,18 @@ public class SampleUtils
 //        }
 
 //        1.
-//        generateUnNormalizedSample();
+        generateUnNormalizedSample();
 
 //        2.
-//        renameUnNormalizedImage();
+        renameUnNormalizedImage();
 
 //        3.
         File file = new File(unNormalizedDir);
         File[] files = file.listFiles();
-        for(File image :files)
+        for (File image : files)
         {
             String path = image.getAbsolutePath();
-            generateRotatedSamples(path,"resources\\samples");
+            generateRotatedSamples(path, "resources\\samples");
         }
 
     }
