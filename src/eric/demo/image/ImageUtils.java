@@ -20,14 +20,16 @@ public class ImageUtils
     private static int[] gammaTable;
     public static String screenCaptureImage = "screenCapture.png";
     public static String imageFormat = "png";
-    private static boolean dumpImg = true;
+    public static boolean dumpImg = true;
     public static String dumpDir = "dump\\";
     public static String dumpPicName = ".png";
-    public static final int NORMALIZATION_WIDTH = 20;
-    public static final int NORMALIZATION_HEIGHT = 25;
+    public static final int NORMALIZATION_WIDTH = 35;
+    public static final int NORMALIZATION_HEIGHT = 35;
     public static final int IMAGE_ENLARGE_SIZE = 10;
     public static boolean dumpUnNormalizedSamples = false;
-    public static String sampleImageFormat="png";
+    public static String sampleImageFormat = "png";
+    public static String normalizedSkeletonDir = "dump\\NormalizedSkeleton";
+    public static String unNormalizedDir = "dump\\unNormalized";
 
     static
     {
@@ -37,7 +39,6 @@ public class ImageUtils
             gammaTable[i] = (int) (Math.pow(i / 255.0, 1.5) * 255.0);
         }
     }
-
 
     public static void main(String[] args)
     {
@@ -189,7 +190,8 @@ public class ImageUtils
         for (Rect rect : rects)
         {
             Mat cur = src.submat(rect);
-            ret.add(cur);
+            Mat cut = cutDigit(cur);
+            ret.add(cut);
         }
         return ret;
     }
@@ -219,14 +221,14 @@ public class ImageUtils
      * enlarge mat by adding frame
      *
      * @param src
-     * @param size_width (%2==0)
+     * @param size_width  (%2==0)
      * @param size_height (%2==0)
      * @return
      */
     public static Mat enlargeMat(Mat src, int size_width, int size_height)
     {
         Mat enlarged = new Mat(src.rows() + size_height, src.cols() + size_width, src.type(),
-                               new Scalar(0));
+                new Scalar(0));
         for (int i = 0; i < src.rows(); ++i)
         {
             for (int j = 0; j < src.cols(); ++j)
@@ -263,8 +265,7 @@ public class ImageUtils
             int height = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
             BufferedImage screen = new Robot().createScreenCapture(new Rectangle(0, 0, width, height));
             ImageIO.write(screen, imageFormat, new File(screenCaptureImage));
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -370,7 +371,7 @@ public class ImageUtils
             for (Mat mat : unNormalizedDigits)
             {
 //                Mat enlarged = enlargeMat(mat, IMAGE_ENLARGE_SIZE, IMAGE_ENLARGE_SIZE);
-                String pathToSave = SampleUtils.unNormalizedDir + File.separator +
+                String pathToSave = unNormalizedDir + File.separator +
                         dumpPicName.substring(0, dumpPicName.indexOf(".")) +
                         unNormalizedDigits.indexOf(mat) + "_unNormalized.png";
                 Imgcodecs.imwrite(pathToSave, mat);
@@ -378,7 +379,7 @@ public class ImageUtils
         }
 
         List<Mat> normalized = new ArrayList<Mat>();
-        for(Mat tmp:unNormalizedDigits)
+        for (Mat tmp : unNormalizedDigits)
         {
             normalized.add(normalization(tmp));
         }
@@ -469,8 +470,7 @@ public class ImageUtils
             rectsSplited = splitRect(boundRects.get(2), 2);
             boundRects.remove(2);
             boundRects.addAll(rectsSplited);
-        }
-        else if (rectCount == 2)
+        } else if (rectCount == 2)
         {
             //分两种情况 一种是22数字粘连 另一种是三个数字粘连
             if (boundRects.get(0).width > boundRects.get(1).width / 2)
@@ -488,8 +488,7 @@ public class ImageUtils
                 boundRects.remove(1);
                 boundRects.addAll(rectsSplited);
             }
-        }
-        else if (rectCount == 1)
+        } else if (rectCount == 1)
         {
             rectsSplited = splitRect(boundRects.get(0), 4);
             boundRects.remove(0);
@@ -508,8 +507,7 @@ public class ImageUtils
         if (splitNum <= 1)
         {
             ret.add(rect);
-        }
-        else
+        } else
         {
             Point tl = rect.tl();
             for (int i = 0; i < splitNum; ++i)
@@ -716,7 +714,7 @@ public class ImageUtils
             Imgcodecs.imwrite(dumpDir + "noiseMoved_" + dumpPicName, mat_noiseMoved);
             Imgcodecs.imwrite(dumpDir + "getTargetColor_" + dumpPicName, mat_getTargetColor);
             Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_removeNonDigit_" + dumpPicName,
-                              mat_binary_noiseRemoved_removeNonDigit);
+                    mat_binary_noiseRemoved_removeNonDigit);
             Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_" + dumpPicName, mat_binary_noiseRemoved);
             Imgcodecs.imwrite(dumpDir + "colorReduced_" + dumpPicName, mat_colorReduced);
             Imgcodecs.imwrite(dumpDir + "binary_" + dumpPicName, mat_binary);
@@ -780,8 +778,7 @@ public class ImageUtils
                 if (colorMap.get(cur) == null)
                 {
                     colorMap.put(cur, 1);
-                }
-                else
+                } else
                 {
                     int val = colorMap.get(cur);
                     ++val;
@@ -866,7 +863,7 @@ public class ImageUtils
             {
                 if (i + x >= 0 && i + x < src.rows() && j + y >= 0 && j + y < src.cols())
                 {
-                    ret.put(i,j,src.get(i+x,j+y));
+                    ret.put(i, j, src.get(i + x, j + y));
                 }
             }
         }
@@ -875,6 +872,7 @@ public class ImageUtils
 
     /**
      * cut a image to its border
+     *
      * @param src
      * @return
      */
@@ -883,53 +881,86 @@ public class ImageUtils
         Mat ret;
         int rows = src.rows();
         int cols = src.cols();
-        int top=0,bottom=rows-1,left=0,right=cols-1;
-        for(int i = 0 ; i < rows; ++i)
+        int top = 0, bottom = rows - 1, left = 0, right = cols - 1;
+        boolean hasFound = false;
+        for (int i = 0; i < rows; ++i)
         {
-            for(int j = 0 ; j < cols; ++j)
+            for (int j = 0; j < cols; ++j)
             {
-                if((int)src.get(i,j)[0]!=0)
+                if ((int) src.get(i, j)[0] != 0)
                 {
-                    top=i;
+                    top = i;
+                    hasFound = true;
+                    break;
                 }
             }
-        }
-        for(int j = 0 ; j < cols; ++j)
-        {
-            for(int i = 0 ; i < rows; ++i)
+            if(hasFound)
             {
-                if((int)src.get(i,j)[0]!=0)
-                {
-                    left=j;
-                }
+                hasFound =false;
+                break;
             }
         }
-        for(int i = rows-1 ; i >= 0; --i)
+
+        for (int j = 0; j < cols; ++j)
         {
-            for(int j = 0 ; j < cols; ++j)
+            for (int i = 0; i < rows; ++i)
             {
-                if((int)src.get(i,j)[0]!=0)
+                if ((int) src.get(i, j)[0] != 0)
                 {
-                    bottom=i;
+                    left = j;
+                    hasFound = true;
+                    break;
                 }
             }
-        }
-        for(int j = cols-1 ; j >=0; --j)
-        {
-            for(int i = 0 ; i < rows; ++i)
+            if(hasFound)
             {
-                if((int)src.get(i,j)[0]!=0)
-                {
-                    right=j;
-                }
+                hasFound =false;
+                break;
             }
         }
-        ret = src.submat(bottom,top,right,left);
+
+        for (int i = rows - 1; i >= 0; --i)
+        {
+            for (int j = 0; j < cols; ++j)
+            {
+                if ((int) src.get(i, j)[0] != 0)
+                {
+                    bottom = i;
+                    hasFound = true;
+                    break;
+                }
+            }
+            if(hasFound)
+            {
+                hasFound =false;
+                break;
+            }
+        }
+
+        for (int j = cols - 1; j >= 0; --j)
+        {
+            for (int i = 0; i < rows; ++i)
+            {
+                if ((int) src.get(i, j)[0] != 0)
+                {
+                    right = j;
+                    hasFound = true;
+                    break;
+                }
+            }
+            if(hasFound)
+            {
+                hasFound =false;
+                break;
+            }
+        }
+        ret = src.submat(top,bottom+1,left,right+1);
         return ret;
     }
 
     /**
      * this method would not change src image
+     *
      * @param src the type should be CvType.CV_8UC1
      * @return
      */

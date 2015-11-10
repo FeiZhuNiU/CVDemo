@@ -39,7 +39,7 @@ public class CvDemo
                 for (Mat mat : digitsToRecog)
                 {
                     Mat toRecog = RecogUtils.getEigenVec(mat, null);
-                    int num = (int) kNearest.findNearest(toRecog, 4, new Mat());
+                    int num = (int) kNearest.findNearest(toRecog, 5, new Mat());
                     numbers.add(num);
                     System.out.println(num);
                 }

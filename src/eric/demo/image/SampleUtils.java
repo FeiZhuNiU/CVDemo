@@ -13,8 +13,8 @@ import java.io.*;
  */
 public class SampleUtils
 {
-    public static String normalizedSkeletonDir = "dump\\NormalizedSkeleton";
-    public static String unNormalizedDir = "dump\\unNormalized";
+    public static String sampleDir = "resources\\samples";
+
     private static String[] straightImages = new String[]{
             "CodeImage\\0069.jpg",
             "CodeImage\\0441.jpg",
@@ -46,6 +46,25 @@ public class SampleUtils
             "CodeImage\\9149.jpg",
             "CodeImage\\9566.jpg",
     };
+
+    static
+    {
+        mkDir(new File(ImageUtils.unNormalizedDir));
+    }
+
+
+    public static void mkDir(File file)
+    {
+        file = file.getAbsoluteFile();
+        if (file.getParentFile().exists())
+        {
+            file.mkdir();
+        } else
+        {
+            mkDir(file.getParentFile());
+            file.mkdir();
+        }
+    }
 
     /**
      * rename image name to image**.png
@@ -84,8 +103,7 @@ public class SampleUtils
                 negdataFile.write(fileName + "\\image" + (i + 1) + ".png\n");
             }
             negdataFile.close();
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -104,8 +122,7 @@ public class SampleUtils
             objOut.flush();
             objOut.close();
             System.out.println("write object success!");
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             System.out.println("write object failed");
             e.printStackTrace();
@@ -120,6 +137,7 @@ public class SampleUtils
      */
     public static void generateRotatedSamples(String imagePath, String dstDir)
     {
+        mkDir(new File(dstDir));
         Point[] offsets = new Point[]{
                 new Point(0, 0),
 //                new Point(-1, -1),
@@ -149,7 +167,7 @@ public class SampleUtils
         String curFileNameWithNoSuffix = curFileName.substring(0, curFileName.lastIndexOf("."));
 
         //enlarge
-        Mat enlarged = ImageUtils.enlargeMat(digit, 2, 2);
+        Mat enlarged = ImageUtils.enlargeMat(digit, 10, 10);
         for (Point offset : offsets)
         {
             //offset
@@ -163,15 +181,15 @@ public class SampleUtils
                 Mat cut = ImageUtils.cutDigit(rotated);
                 //enlarge
                 Mat cut_enlarged = ImageUtils.enlargeMat(cut, ImageUtils.IMAGE_ENLARGE_SIZE,
-                                                         ImageUtils.IMAGE_ENLARGE_SIZE);
+                        ImageUtils.IMAGE_ENLARGE_SIZE);
                 //normalize
                 Mat normalized = ImageUtils.normalize(cut_enlarged);
 
                 Imgcodecs.imwrite(dstDir + File.separator + curFileNameWithNoSuffix +
-                                          "_rotated_" + i * 10 +
-                                          "_x_" + offset.x +
-                                          "_y_" + offset.y +
-                                          ".png", normalized);
+                        "_rotated_" + i * 10 +
+                        "_x_" + offset.x +
+                        "_y_" + offset.y +
+                        ".png", normalized);
             }
         }
     }
@@ -186,7 +204,7 @@ public class SampleUtils
      */
     public static void renameUnNormalizedImage()
     {
-        File file = new File(unNormalizedDir);
+        File file = new File(ImageUtils.unNormalizedDir);
         File[] images = file.listFiles();
         for (File image : images)
         {
@@ -195,23 +213,46 @@ public class SampleUtils
             String index = curName.substring(4, 5);
             char targetNumber = numbers.charAt(Integer.parseInt(index));
             image.renameTo(
-                    new File(unNormalizedDir + "\\" + String.valueOf(targetNumber) + "_" + numbers + index + ".png"));
+                    new File(ImageUtils.unNormalizedDir + "\\" + String.valueOf(targetNumber) + "_" + numbers + index + ".png"));
         }
     }
 
     public static void generateUnNormalizedSample()
     {
         ImageUtils.dumpUnNormalizedSamples = true;
+//        ImageUtils.dumpImg = false;
         for (String file : straightImages)
         {
             ImageUtils.main(new String[]{file});
         }
         ImageUtils.dumpUnNormalizedSamples = false;
+        ImageUtils.dumpImg = true;
     }
 
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+        File unNormalizedFile = new File(ImageUtils.unNormalizedDir);
+        if (unNormalizedFile.exists())
+        {
+            File[] files = unNormalizedFile.listFiles();
+            for (File cur : files)
+            {
+                cur.delete();
+            }
+        }
+
+        File sampleFile = new File(sampleDir);
+        if(sampleFile.exists())
+        {
+            File[] files = sampleFile.listFiles();
+            for (File cur : files)
+            {
+                cur.delete();
+            }
+        }
+
 
 //        1.
         generateUnNormalizedSample();
@@ -220,12 +261,12 @@ public class SampleUtils
         renameUnNormalizedImage();
 
 //        3.
-        File file = new File(unNormalizedDir);
+        File file = new File(ImageUtils.unNormalizedDir);
         File[] files = file.listFiles();
         for (File image : files)
         {
             String path = image.getAbsolutePath();
-            generateRotatedSamples(path, "resources\\samples");
+            generateRotatedSamples(path, sampleDir);
         }
 
     }
