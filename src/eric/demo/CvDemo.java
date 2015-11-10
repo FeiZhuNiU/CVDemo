@@ -3,6 +3,7 @@ package eric.demo;
 import eric.demo.image.ImageUtils;
 import eric.demo.recognize.RecogUtils;
 import org.opencv.core.*;
+import org.opencv.ml.ANN_MLP;
 import org.opencv.ml.KNearest;
 
 import java.util.*;
@@ -26,7 +27,8 @@ public class CvDemo
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
         //get classifier
-        KNearest kNearest = RecogUtils.getClassifier();
+        KNearest kNearest = RecogUtils.getKnnClassifier();
+//        ANN_MLP ann_mlp = RecogUtils.getAnnClassifier();
 
         while (true)
         {
@@ -40,6 +42,8 @@ public class CvDemo
                 {
                     Mat toRecog = RecogUtils.getEigenVec(mat, null);
                     int num = (int) kNearest.findNearest(toRecog, 5, new Mat());
+//                    int num = (int)ann_mlp.predict(toRecog);
+
                     numbers.add(num);
                     System.out.println(num);
                 }
