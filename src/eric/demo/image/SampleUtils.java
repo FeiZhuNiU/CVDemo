@@ -122,14 +122,14 @@ public class SampleUtils
     {
         Point[] offsets = new Point[]{
                 new Point(0, 0),
-                new Point(-1, -1),
-                new Point(-1, 0),
-                new Point(-1, 1),
-                new Point(0, -1),
-                new Point(0, 1),
-                new Point(1, -1),
-                new Point(1, 0),
-                new Point(1, 1)
+//                new Point(-1, -1),
+//                new Point(-1, 0),
+//                new Point(-1, 1),
+//                new Point(0, -1),
+//                new Point(0, 1),
+//                new Point(1, -1),
+//                new Point(1, 0),
+//                new Point(1, 1)
         };
 
         Mat src = Imgcodecs.imread(imagePath);
@@ -212,15 +212,6 @@ public class SampleUtils
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
-//        File unNormFile = new File("dump\\unNormalized");
-//
-//        File[] files = unNormFile.listFiles();
-//
-//        for(File pic : files)
-//        {
-//            generateRotatedSamples(pic.getAbsolutePath(),"dump\\rotated");
-//        }
 
 //        1.
         generateUnNormalizedSample();

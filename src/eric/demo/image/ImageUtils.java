@@ -20,7 +20,7 @@ public class ImageUtils
     private static int[] gammaTable;
     public static String screenCaptureImage = "screenCapture.png";
     public static String imageFormat = "png";
-    private static boolean dumpImg = false;
+    private static boolean dumpImg = true;
     public static String dumpDir = "dump\\";
     public static String dumpPicName = ".png";
     public static final int NORMALIZATION_WIDTH = 20;
@@ -370,7 +370,8 @@ public class ImageUtils
             for (Mat mat : unNormalizedDigits)
             {
 //                Mat enlarged = enlargeMat(mat, IMAGE_ENLARGE_SIZE, IMAGE_ENLARGE_SIZE);
-                String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(".")) +
+                String pathToSave = SampleUtils.unNormalizedDir + File.separator +
+                        dumpPicName.substring(0, dumpPicName.indexOf(".")) +
                         unNormalizedDigits.indexOf(mat) + "_unNormalized.png";
                 Imgcodecs.imwrite(pathToSave, mat);
             }
@@ -851,7 +852,7 @@ public class ImageUtils
 
         Point point = new Point(src.cols() / 2.0, src.rows() / 2.0);
         Mat r = Imgproc.getRotationMatrix2D(point, angle, 1.0);
-        Imgproc.warpAffine(src, ret, r, new Size(src.width(), src.height()));
+        Imgproc.warpAffine(src, ret, r, new Size(src.height(), src.height()));
         return ret;
 
     }
@@ -879,13 +880,51 @@ public class ImageUtils
      */
     public static Mat cutDigit(Mat src)
     {
-        List<MatOfPoint> contours = findContours(src);
-        if(contours.size()!=1)
+        Mat ret;
+        int rows = src.rows();
+        int cols = src.cols();
+        int top=0,bottom=rows-1,left=0,right=cols-1;
+        for(int i = 0 ; i < rows; ++i)
         {
-            System.out.println("failed to cut digit");
+            for(int j = 0 ; j < cols; ++j)
+            {
+                if((int)src.get(i,j)[0]!=0)
+                {
+                    top=i;
+                }
+            }
         }
-        Rect rect = Imgproc.boundingRect(contours.get(0));
-        Mat ret = src.submat(rect);
+        for(int j = 0 ; j < cols; ++j)
+        {
+            for(int i = 0 ; i < rows; ++i)
+            {
+                if((int)src.get(i,j)[0]!=0)
+                {
+                    left=j;
+                }
+            }
+        }
+        for(int i = rows-1 ; i >= 0; --i)
+        {
+            for(int j = 0 ; j < cols; ++j)
+            {
+                if((int)src.get(i,j)[0]!=0)
+                {
+                    bottom=i;
+                }
+            }
+        }
+        for(int j = cols-1 ; j >=0; --j)
+        {
+            for(int i = 0 ; i < rows; ++i)
+            {
+                if((int)src.get(i,j)[0]!=0)
+                {
+                    right=j;
+                }
+            }
+        }
+        ret = src.submat(bottom,top,right,left);
         return ret;
     }
 
