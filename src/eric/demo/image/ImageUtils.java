@@ -301,19 +301,20 @@ public class ImageUtils
 
 
     /**
-     * if fails , return null
+     * generate digit images for recognition
      *
      * @param absolutePathOfPic
-     * @param picRect
+     * @param roiRect ROI (which region of the image want to be recognized)
      * @return
      */
-    public static List<Mat> digitSegmentationWithROI(String absolutePathOfPic, Rect picRect)
+    public static List<Mat> digitSegmentationWithROI(String absolutePathOfPic, Rect roiRect)
     {
         System.out.println("process Segmentation... ");
         Mat src = Imgcodecs.imread(absolutePathOfPic);
 
-        Mat roi = src.submat(picRect);
+        Mat roi = src.submat(roiRect);
 
+        //preprocessing
         Mat preprocessed = preProcess(roi);
         if (preprocessed == null)
         {
@@ -321,28 +322,13 @@ public class ImageUtils
             return null;
         }
 
+        //segmentation
         List<Mat> segments = doSegmentation(preprocessed);
         if (segments == null)
         {
             System.out.println("doSegmentation failed");
             return null;
         }
-
-//        List<Mat> skeletons = new ArrayList<Mat>();
-//        for (Mat mat : segments)
-//        {
-//            Mat skeleton = thin(mat, 10);
-//            skeletons.add(skeleton);
-//        }
-//        if (dumpImg)
-//        {
-//            for (Mat mat : skeletons)
-//            {
-//                String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(".")) + skeletons.indexOf(
-//                        mat) + "_skeleton.png";
-//                Imgcodecs.imwrite(pathToSave, mat);
-//            }
-//        }
         return segments;
     }
 

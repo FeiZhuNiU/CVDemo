@@ -79,7 +79,8 @@ public class RecogUtils
         kNearest.train(trainData.getKey(), Ml.ROW_SAMPLE, trainData.getValue());
         return kNearest;
     }
-    
+
+    @Deprecated
     public static ANN_MLP getAnnClassifier()
     {
         ANN_MLP ann_mlp = ANN_MLP.create();
@@ -110,8 +111,7 @@ public class RecogUtils
             return ret;
         } else
         {
-            System.out.println("EigenStrategy not yet support");
-            return null;
+            return strategy.getEigenVec(mat);
         }
     }
 }

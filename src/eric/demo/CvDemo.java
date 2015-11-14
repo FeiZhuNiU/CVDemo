@@ -62,7 +62,7 @@ public class CvDemo
     private static boolean initParams(String[] args)
     {
         int argCnt = args.length;
-        if (argCnt != 4)
+        if (argCnt < 4)
         {
             System.out.println("input args are not correct.\n" +
                     "There should be 4 args: \n" +
