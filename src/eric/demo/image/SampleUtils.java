@@ -3,6 +3,7 @@ package eric.demo.image;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
+import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
@@ -160,7 +161,6 @@ public class SampleUtils
          * 1. rotate
          * 2. cut with new contour
          * 3. enlarge
-         * 4. normalize
          */
 
         String curFileName = new File(imagePath).getName();
@@ -177,13 +177,7 @@ public class SampleUtils
             {
                 //rotate
                 Mat rotated = ImageUtils.rotateMat(offsetImage, i * 10);
-                //cut
-                Mat cut = ImageUtils.cutDigit(rotated);
-                //enlarge
-                Mat cut_enlarged = ImageUtils.enlargeMat(cut, ImageUtils.IMAGE_ENLARGE_SIZE,
-                        ImageUtils.IMAGE_ENLARGE_SIZE);
-                //normalize
-                Mat normalized = ImageUtils.normalize(cut_enlarged);
+                Mat normalized = ImageUtils.normalization(rotated);
 
                 Imgcodecs.imwrite(dstDir + File.separator + curFileNameWithNoSuffix +
                         "_rotated_" + i * 10 +

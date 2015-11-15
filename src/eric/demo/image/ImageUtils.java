@@ -190,29 +190,34 @@ public class ImageUtils
         for (Rect rect : rects)
         {
             Mat cur = src.submat(rect);
-            Mat cut = cutDigit(cur);
-            ret.add(cut);
+            ret.add(cur);
         }
         return ret;
     }
 
     /**
      * process digit mats
-     * 1.  enlarge the frame
-     * 2.  normalization
+     * 1.   cut
+     * 2.   enlarge
+     * 3.   resize
+     * 4.   binaryzation
      *
      * @param src
      * @return
      */
-    private static Mat normalization(Mat src)
+    public static Mat normalization(Mat src)
     {
         if (src == null)
         {
             return null;
         }
-
-        Mat enlarged = enlargeMat(src, IMAGE_ENLARGE_SIZE, IMAGE_ENLARGE_SIZE);
-        Mat ret = normalize(enlarged);
+        Mat cut = cutImage(src);
+        Mat enlarged = enlargeMat(cut, IMAGE_ENLARGE_SIZE, IMAGE_ENLARGE_SIZE);
+        Mat resized = new Mat();
+        Imgproc.resize(enlarged, resized, new Size(NORMALIZATION_WIDTH, NORMALIZATION_HEIGHT));
+        Mat binary = new Mat();
+        Imgproc.threshold(resized, binary, 90, 255, Imgproc.THRESH_BINARY);
+        Mat ret = binary;
 
         return ret;
     }
@@ -237,21 +242,6 @@ public class ImageUtils
             }
         }
         return enlarged;
-    }
-
-    /**
-     * normalize
-     *
-     * @param src
-     * @return binary image mat
-     */
-    public static Mat normalize(Mat src)
-    {
-        Mat resized = new Mat();
-        Imgproc.resize(src, resized, new Size(NORMALIZATION_WIDTH, NORMALIZATION_HEIGHT));
-        Mat ret = new Mat();
-        Imgproc.threshold(resized, ret, 90, 255, Imgproc.THRESH_BINARY);
-        return ret;
     }
 
     /**
@@ -304,7 +294,7 @@ public class ImageUtils
      * generate digit images for recognition
      *
      * @param absolutePathOfPic
-     * @param roiRect ROI (which region of the image want to be recognized)
+     * @param roiRect           ROI (which region of the image want to be recognized)
      * @return
      */
     public static List<Mat> digitSegmentationWithROI(String absolutePathOfPic, Rect roiRect)
@@ -862,7 +852,7 @@ public class ImageUtils
      * @param src
      * @return
      */
-    public static Mat cutDigit(Mat src)
+    public static Mat cutImage(Mat src)
     {
         Mat ret;
         int rows = src.rows();
@@ -880,9 +870,9 @@ public class ImageUtils
                     break;
                 }
             }
-            if(hasFound)
+            if (hasFound)
             {
-                hasFound =false;
+                hasFound = false;
                 break;
             }
         }
@@ -898,9 +888,9 @@ public class ImageUtils
                     break;
                 }
             }
-            if(hasFound)
+            if (hasFound)
             {
-                hasFound =false;
+                hasFound = false;
                 break;
             }
         }
@@ -916,9 +906,9 @@ public class ImageUtils
                     break;
                 }
             }
-            if(hasFound)
+            if (hasFound)
             {
-                hasFound =false;
+                hasFound = false;
                 break;
             }
         }
@@ -934,13 +924,13 @@ public class ImageUtils
                     break;
                 }
             }
-            if(hasFound)
+            if (hasFound)
             {
-                hasFound =false;
+                hasFound = false;
                 break;
             }
         }
-        ret = src.submat(top,bottom+1,left,right+1);
+        ret = src.submat(top, bottom + 1, left, right + 1);
         return ret;
     }
 
