@@ -1,10 +1,15 @@
-package eric.demo.recognize;
-
-import eric.demo.image.ImageUtils;
+package eric.recognize.recognize;
+/*===========================================================================+
+ |      Copyright (c) 2015 Eric Yu                                           |
+ |                         All rights reserved.                              |
+ +===========================================================================+
+ |  HISTORY                                                                  |
+ |           Created by lliyu on 10/30/2015  (yulin.jay@gmail.com)           |
+ +===========================================================================*/
+import eric.recognize.image.ImageUtils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
-import org.opencv.core.TermCriteria;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.ml.ANN_MLP;
 import org.opencv.ml.KNearest;
@@ -15,9 +20,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.*;
 
-/**
- * Created by 麟 on 2015/10/30.
- */
 public class RecogUtils
 {
     public enum Classifier

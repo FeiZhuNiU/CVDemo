@@ -1,11 +1,10 @@
-package eric.demo;
+package eric.recognize;
 
-import eric.demo.image.ImageUtils;
-import eric.demo.image.SegByContours;
-import eric.demo.image.Segmentation;
-import eric.demo.recognize.RecogUtils;
+import eric.recognize.image.ImageUtils;
+import eric.recognize.image.SegByContours;
+import eric.recognize.image.Segmentation;
+import eric.recognize.recognize.RecogUtils;
 import org.opencv.core.*;
-import org.opencv.ml.ANN_MLP;
 import org.opencv.ml.KNearest;
 
 import java.util.*;

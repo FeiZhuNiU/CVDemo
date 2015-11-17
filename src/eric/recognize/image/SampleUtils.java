@@ -1,17 +1,21 @@
-package eric.demo.image;
+package eric.recognize.image;
+/*===========================================================================+
+ |      Copyright (c) 2015 Eric Yu                                           |
+ |                         All rights reserved.                              |
+ +===========================================================================+
+ |  HISTORY                                                                  |
+ |           Created by lliyu on 10/31/2015  (yulin.jay@gmail.com)           |
+ +===========================================================================*/
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
-import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.*;
 
-/**
- * Created by 麟 on 2015/10/31.
- */
+
 public class SampleUtils
 {
     public static String sampleDir = "resources\\samples";

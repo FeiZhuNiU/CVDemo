@@ -1,4 +1,11 @@
-package eric.demo.image;
+package eric.recognize.image;
+/*===========================================================================+
+ |      Copyright (c) 2015 Eric Yu                                           |
+ |                         All rights reserved.                              |
+ +===========================================================================+
+ |  HISTORY                                                                  |
+ |           Created by lliyu on 10/30/2015  (yulin.jay@gmail.com)           |
+ +===========================================================================*/
 
 import org.opencv.core.*;
 import org.opencv.core.Point;
@@ -12,9 +19,6 @@ import java.io.File;
 import java.util.*;
 import java.util.List;
 
-/**
- * Created by 麟 on 2015/10/30.
- */
 public class ImageUtils
 {
     private static int[] gammaTable;
