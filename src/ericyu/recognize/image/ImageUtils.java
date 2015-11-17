@@ -156,7 +156,7 @@ public class ImageUtils
      * @param src
      * @return mats of contoured-images IN ORDER (unNormalized)
      */
-    public static List<Mat> getDigitMatsByRects(List<Rect> rects, Mat src)
+    public static List<Mat> getOrderedMatsByRects(List<Rect> rects, Mat src)
     {
         if (rects == null || rects.size() != 4)
         {
@@ -485,9 +485,9 @@ public class ImageUtils
 
         Mat mat_binary_noiseRemoved = removeNoise(mat_binary, 3);
 
-        Mat mat_binary_noiseRemoved_removeNonDigit = removeNonDigitPart(mat_binary_noiseRemoved);
+//        Mat mat_binary_noiseRemoved_removeNonDigit = removeSmallPart(mat_binary_noiseRemoved);
 
-        Mat ret = mat_binary_noiseRemoved_removeNonDigit;
+        Mat ret = mat_binary_noiseRemoved;
 
 //        Mat ret = erosion(mat_binary_noiseRemoved_removeNonDigit, 3);
 //        ret = dilation(ret, 3);
@@ -497,8 +497,7 @@ public class ImageUtils
             Imgcodecs.imwrite(dumpDir + "roi_" + dumpPicName, roi);
             Imgcodecs.imwrite(dumpDir + "noiseMoved_" + dumpPicName, mat_noiseMoved);
             Imgcodecs.imwrite(dumpDir + "getTargetColor_" + dumpPicName, mat_getTargetColor);
-            Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_removeNonDigit_" + dumpPicName,
-                              mat_binary_noiseRemoved_removeNonDigit);
+//            Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_removeNonDigit_" + dumpPicName, mat_binary_noiseRemoved_removeNonDigit);
             Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_" + dumpPicName, mat_binary_noiseRemoved);
             Imgcodecs.imwrite(dumpDir + "colorReduced_" + dumpPicName, mat_colorReduced);
             Imgcodecs.imwrite(dumpDir + "binary_" + dumpPicName, mat_binary);
@@ -513,7 +512,7 @@ public class ImageUtils
      * @param src
      * @return
      */
-    public static Mat removeNonDigitPart(Mat src)
+    public static Mat removeSmallPart(Mat src)
     {
         Mat src_bak = new Mat();
         src.copyTo(src_bak);

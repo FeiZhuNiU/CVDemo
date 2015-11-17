@@ -148,19 +148,18 @@ public class SampleUtils
         mkDir(new File(dstDir));
         Point[] offsets = new Point[]{
                 new Point(0, 0),
-//                new Point(-1, -1),
-//                new Point(-1, 0),
-//                new Point(-1, 1),
-//                new Point(0, -1),
-//                new Point(0, 1),
-//                new Point(1, -1),
-//                new Point(1, 0),
-//                new Point(1, 1)
+                new Point(-1, -1),
+                new Point(-1, 0),
+                new Point(-1, 1),
+                new Point(0, -1),
+                new Point(0, 1),
+                new Point(1, -1),
+                new Point(1, 0),
+                new Point(1, 1)
         };
 
         Mat src = Imgcodecs.imread(imagePath);
-        Mat digit = new Mat();
-        Imgproc.cvtColor(src, digit, Imgproc.COLOR_RGB2GRAY);
+        Mat digit = ImageUtils.color2Gray(src);
 
         /**
          * generate samples
@@ -173,21 +172,23 @@ public class SampleUtils
         String curFileName = new File(imagePath).getName();
         String curFileNameWithNoSuffix = curFileName.substring(0, curFileName.lastIndexOf("."));
 
-        //enlarge
-        Mat enlarged = ImageUtils.enlargeMat(digit, 10, 10);
+
+
         for (Point offset : offsets)
         {
             //offset
-            Mat offsetImage = ImageUtils.transition(enlarged, (int) offset.y, (int) offset.x);
+            Mat offsetImage = ImageUtils.transition(digit, (int) offset.y, (int) offset.x);
+            //enlarge
+            Mat enlarged = ImageUtils.enlargeMat(offsetImage, 10, 10);
 
-            for (int i = -8; i <= 8; ++i)
+            for (int i = -16; i <= 16; ++i)
             {
                 //rotate
-                Mat rotated = ImageUtils.rotateMat(offsetImage, i * 10);
+                Mat rotated = ImageUtils.rotateMat(enlarged, i * 5);
                 Mat normalized = ImageUtils.normalization(rotated);
 
                 Imgcodecs.imwrite(dstDir + File.separator + curFileNameWithNoSuffix +
-                                          "_rotated_" + i * 10 +
+                                          "_rotated_" + i * 5 +
                                           "_x_" + offset.x +
                                           "_y_" + offset.y +
                                           ".png", normalized);

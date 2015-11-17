@@ -37,40 +37,19 @@ public class SegByContours
     {
         List<MatOfPoint> contours = ImageUtils.findContours(src);
 
-        if (contours.size() > 4)
-        {
-            //TODO: not good solution (MatOfPoint is the mat of contour points)
-            Collections.sort(contours, new Comparator<MatOfPoint>()
-            {
-                @Override
-                public int compare(MatOfPoint o1, MatOfPoint o2)
-                {
-                    if (o1.rows() + o1.cols() - o2.rows() - o2.cols() > 0)
-                    {
-                        return 1;
-                    }
-                    return -1;
-                }
-            });
-            while (contours.size() > 4)
-            {
-                contours.remove(0);
-            }
-        }
-
         List<Rect> boundRects = new ArrayList<Rect>();
+
         for (int i = 0; i < contours.size(); ++i)
         {
             //get rect bound of contour
             Rect rect = Imgproc.boundingRect(contours.get(i));
-            boundRects.add(rect);
-//            Imgproc.drawContours(eroded_bak, contours, i, new Scalar(0, 0, 255));
-//            Imgproc.rectangle(eroded_bak,rect.tl(),rect.br(),new Scalar(0, 0, 255));
+            //give up small rects which we assert they are not digits
+            if(rect.width+rect.height > 18)
+                boundRects.add(rect);
         }
 
         checkAndSplitBounds(boundRects);
         return boundRects;
-
     }
 
     /**
@@ -94,7 +73,7 @@ public class SegByContours
             }
         });
 
-        //¸ù¾ÝRectµÄÊýÁ¿ ¶ÔÕ³Á¬µÄÊý×Ö½øÐÐ·Ö¸î
+        //ï¿½ï¿½ï¿½ï¿½Rectï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½Ð·Ö¸ï¿½
         List<Rect> rectsSplited;
         if (rectCount == 3)
         {
@@ -104,7 +83,7 @@ public class SegByContours
         }
         else if (rectCount == 2)
         {
-            //·ÖÁ½ÖÖÇé¿ö Ò»ÖÖÊÇ22Êý×ÖÕ³Á¬ ÁíÒ»ÖÖÊÇÈý¸öÊý×ÖÕ³Á¬
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ò»ï¿½ï¿½ï¿½ï¿½22ï¿½ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ³ï¿½ï¿½
             if (boundRects.get(0).width > boundRects.get(1).width / 2)
             {
                 List<Rect> rectsSplited1 = ImageUtils.splitRect(boundRects.get(0), 2);
@@ -113,7 +92,7 @@ public class SegByContours
                 boundRects.addAll(rectsSplited1);
                 boundRects.addAll(rectsSplited2);
             }
-            //Èý¸öÊý×ÖÕ³Á¬µÄÇé¿ö
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             else
             {
                 rectsSplited = ImageUtils.splitRect(boundRects.get(1), 3);

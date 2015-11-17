@@ -89,7 +89,7 @@ public class Segmentation
             return null;
         }
 
-        List<Mat> unNormalizedDigits = ImageUtils.getDigitMatsByRects(digitRects, src);
+        List<Mat> unNormalizedDigits = ImageUtils.getOrderedMatsByRects(digitRects, src);
 
         if (unNormalizedDigits == null || unNormalizedDigits.size() == 0)
         {
