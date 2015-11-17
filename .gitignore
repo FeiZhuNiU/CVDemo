@@ -40,3 +40,5 @@ build/
 build.properties
 junit*.properties
 production/
+resources/
+
