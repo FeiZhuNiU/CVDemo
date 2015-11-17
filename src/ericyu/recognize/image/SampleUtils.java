@@ -222,20 +222,6 @@ public class SampleUtils
 
     public static void generateUnNormalizedSample()
     {
-        ImageUtils.dumpUnNormalizedSamples = true;
-//        ImageUtils.dumpImg = false;
-        for (String file : straightImages)
-        {
-            Segmentation.main(new String[]{file});
-        }
-        ImageUtils.dumpUnNormalizedSamples = false;
-        ImageUtils.dumpImg = true;
-    }
-
-    public static void main(String[] args)
-    {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
         File unNormalizedFile = new File(ImageUtils.unNormalizedDir);
         if (unNormalizedFile.exists())
         {
@@ -245,6 +231,20 @@ public class SampleUtils
                 cur.delete();
             }
         }
+        Boolean bak = ImageUtils.dumpImg;
+        ImageUtils.dumpUnNormalizedSamples = true;
+        ImageUtils.dumpImg = false;
+        for (String file : straightImages)
+        {
+            Segmentation.main(new String[]{file});
+        }
+        ImageUtils.dumpUnNormalizedSamples = false;
+        ImageUtils.dumpImg = bak;
+    }
+
+    public static void main(String[] args)
+    {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
         File sampleFile = new File(sampleDir);
         if (sampleFile.exists())
