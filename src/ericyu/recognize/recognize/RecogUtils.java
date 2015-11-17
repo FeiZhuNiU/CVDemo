@@ -1,4 +1,4 @@
-package eric.recognize.recognize;
+package ericyu.recognize.recognize;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |
@@ -6,7 +6,8 @@ package eric.recognize.recognize;
  |  HISTORY                                                                  |
  |           Created by lliyu on 10/30/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
-import eric.recognize.image.ImageUtils;
+
+import ericyu.recognize.image.ImageUtils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;

@@ -1,4 +1,4 @@
-package eric.recognize.image;
+package ericyu.recognize.image;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |

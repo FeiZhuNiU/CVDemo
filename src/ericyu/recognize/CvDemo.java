@@ -1,9 +1,9 @@
-package eric.recognize;
+package ericyu.recognize;
 
-import eric.recognize.image.ImageUtils;
-import eric.recognize.image.SegByContours;
-import eric.recognize.image.Segmentation;
-import eric.recognize.recognize.RecogUtils;
+import ericyu.recognize.image.ImageUtils;
+import ericyu.recognize.image.SegByContours;
+import ericyu.recognize.image.Segmentation;
+import ericyu.recognize.recognize.RecogUtils;
 import org.opencv.core.*;
 import org.opencv.ml.KNearest;
 

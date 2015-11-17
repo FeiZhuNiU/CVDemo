@@ -1,4 +1,4 @@
-package eric.recognize.robot;
+package ericyu.recognize.robot;
 /*===========================================================================+
  |      Copyright (c) 2014 Oracle Corporation, Redwood Shores, CA, USA       |
  |                         All rights reserved.                              |

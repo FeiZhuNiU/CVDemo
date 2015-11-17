@@ -1,4 +1,4 @@
-package eric.recognize.image;
+package ericyu.recognize.image;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |
@@ -25,7 +25,6 @@ public class SegByContours
     {
         List<Rect> digitRects = getDigitRects(src);
         return digitRects;
-
     }
 
     /**
@@ -34,7 +33,7 @@ public class SegByContours
      * @param src make sure not change src
      * @return need not be sorted and size should be 4
      */
-    private static List<Rect> getDigitRects(Mat src)
+    private List<Rect> getDigitRects(Mat src)
     {
         List<MatOfPoint> contours = ImageUtils.findContours(src);
 
@@ -79,7 +78,7 @@ public class SegByContours
      *
      * @param boundRects
      */
-    private static void checkAndSplitBounds(List<Rect> boundRects)
+    private void checkAndSplitBounds(List<Rect> boundRects)
     {
         int rectCount = boundRects.size();
         if (rectCount >= 4 || rectCount == 0)

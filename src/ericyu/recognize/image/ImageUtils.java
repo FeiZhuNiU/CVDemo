@@ -1,4 +1,4 @@
-package eric.recognize.image;
+package ericyu.recognize.image;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |
@@ -97,8 +97,7 @@ public class ImageUtils
      */
     public static Mat color2Binary(Mat src)
     {
-        Mat gray = new Mat();
-        Imgproc.cvtColor(src, gray, Imgproc.COLOR_RGB2GRAY);
+        Mat gray = color2Gray(src);
 
         if (dumpImg)
         {
@@ -107,6 +106,13 @@ public class ImageUtils
 
         Mat binary = gray2Binary(gray);
         return binary;
+    }
+
+    public static Mat color2Gray(Mat src)
+    {
+        Mat gray = new Mat();
+        Imgproc.cvtColor(src, gray, Imgproc.COLOR_RGB2GRAY);
+        return gray;
     }
 
     public static Mat gray2Binary(Mat gray)

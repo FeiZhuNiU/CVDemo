@@ -1,4 +1,4 @@
-package eric.recognize.image;
+package ericyu.recognize.image;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |
@@ -12,12 +12,7 @@ import org.opencv.core.Rect;
 
 import java.util.List;
 
-public class SegByGap
-        implements SegStrategy
+public interface SegStrategy
 {
-    @Override
-    public List<Rect> doSegmentation(Mat src)
-    {
-        return null;
-    }
+    List<Rect> doSegmentation(Mat src);
 }

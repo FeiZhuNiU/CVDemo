@@ -1,18 +1,15 @@
-package eric.recognize.image;
+package ericyu.recognize.recognize;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |
  +===========================================================================+
  |  HISTORY                                                                  |
- |           Created by lliyu on 11/17/2015  (yulin.jay@gmail.com)           |
+ |           Created by lliyu on 10/31/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
 import org.opencv.core.Mat;
-import org.opencv.core.Rect;
 
-import java.util.List;
-
-public interface SegStrategy
+public interface EigenStrategy
 {
-    List<Rect> doSegmentation(Mat src);
+    Mat getEigenVec(Mat src);
 }
