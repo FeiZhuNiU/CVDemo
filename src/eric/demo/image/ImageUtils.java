@@ -20,16 +20,18 @@ public class ImageUtils
     private static int[] gammaTable;
     public static String screenCaptureImage = "screenCapture.png";
     public static String imageFormat = "png";
-    public static boolean dumpImg = true;
-    public static String dumpDir = "dump\\";
-    public static String dumpPicName = ".png";
-    public static final int NORMALIZATION_WIDTH = 35;
-    public static final int NORMALIZATION_HEIGHT = 35;
-    public static final int IMAGE_ENLARGE_SIZE = 10;
-    public static boolean dumpUnNormalizedSamples = false;
     public static String sampleImageFormat = "png";
     public static String normalizedSkeletonDir = "dump\\NormalizedSkeleton";
     public static String unNormalizedDir = "dump\\unNormalized";
+
+    public static final int NORMALIZATION_WIDTH = 35;
+    public static final int NORMALIZATION_HEIGHT = 35;
+    public static final int IMAGE_ENLARGE_SIZE = 10;
+
+    public static boolean dumpImg = true;
+    public static String dumpDir = "dump\\";
+    public static String dumpPicName = ".png";
+    public static boolean dumpUnNormalizedSamples = false;
 
     static
     {
@@ -56,7 +58,7 @@ public class ImageUtils
 //        }
 
         long startTime = System.currentTimeMillis();
-        digitSegmentation(imageFile);
+        Segmentation.digitSegmentation(imageFile);
         long endTime = System.currentTimeMillis();
         System.out.println("seg time: " + (endTime - startTime) / 1000.0);
 
@@ -78,6 +80,12 @@ public class ImageUtils
         return ret;
     }
 
+    /**
+     * histogram equalization for color image
+     *
+     * @param src color image
+     * @return  histogram equalized color image
+     */
     public static Mat equalization(Mat src)
     {
         int type = CvType.CV_8UC1;
@@ -104,31 +112,28 @@ public class ImageUtils
 
     /**
      * 1. convert rgb to gray
-     * 2. binaryZation
+     * 2. color2Binary
      *
      * @param src
      * @return
      */
-    public static Mat binaryZation(Mat src)
+    public static Mat color2Binary(Mat src)
     {
-//        Mat src_equalized = equalization(src);
-//        Imgcodecs.imwrite(dumpDir + "src_equalized_" + dumpPicName, src_equalized);
-
         Mat gray = new Mat();
         Imgproc.cvtColor(src, gray, Imgproc.COLOR_RGB2GRAY);
+
         if (dumpImg)
         {
             Imgcodecs.imwrite(dumpDir + "gray_" + dumpPicName, gray);
         }
 
-//        Mat gray_equalized = new Mat();
-//        Imgproc.equalizeHist(gray, gray_equalized);
-//        Imgcodecs.imwrite(dumpDir + "gray_equalized_" + dumpPicName, gray_equalized);
+        Mat binary = gray2Binary(gray);
+        return binary;
+    }
 
-//        Mat gamma = gammaCorrection(gray_equalized);
-//        Imgcodecs.imwrite(dumpDir + "gamma_" + dumpPicName, gamma);
-
-        Mat binary = new Mat(src.rows(), src.cols(), CvType.CV_8UC1);
+    private static Mat gray2Binary(Mat gray)
+    {
+        Mat binary = new Mat(gray.rows(), gray.cols(), CvType.CV_8UC1);
 
         Imgproc.threshold(gray, binary, 90, 255, Imgproc.THRESH_BINARY_INV);
         return binary;
@@ -289,195 +294,12 @@ public class ImageUtils
         return (int) val / step * step + step / 2;
     }
 
-
-    /**
-     * generate digit images for recognition
-     *
-     * @param absolutePathOfPic
-     * @param roiRect           ROI (which region of the image want to be recognized)
-     * @return
-     */
-    public static List<Mat> digitSegmentationWithROI(String absolutePathOfPic, Rect roiRect)
-    {
-        System.out.println("process Segmentation... ");
-        Mat src = Imgcodecs.imread(absolutePathOfPic);
-
-        Mat roi = src.submat(roiRect);
-
-        //preprocessing
-        Mat preprocessed = preProcess(roi);
-        if (preprocessed == null)
-        {
-            System.out.println("preprocess failed");
-            return null;
-        }
-
-        //segmentation
-        List<Mat> segments = doSegmentation(preprocessed);
-        if (segments == null)
-        {
-            System.out.println("doSegmentation failed");
-            return null;
-        }
-        return segments;
-    }
-
-    /**
-     * @param src a binary image that has been preprocessed
-     * @return return 4 mat that contain 4 digits IN ORDER, if fails return null
-     */
-    private static List<Mat> doSegmentation(Mat src)
-    {
-        List<Rect> digitRects = getDigitRects(src);
-        if (digitRects == null || digitRects.size() == 0)
-        {
-            return null;
-        }
-
-        List<Mat> unNormalizedDigits = ImageUtils.getDigitMatsByRects(digitRects, src);
-
-        if (unNormalizedDigits == null || unNormalizedDigits.size() == 0)
-        {
-            System.out.println("do segmentation fails");
-            return null;
-        }
-
-        if (dumpUnNormalizedSamples)
-        {
-            for (Mat mat : unNormalizedDigits)
-            {
-//                Mat enlarged = enlargeMat(mat, IMAGE_ENLARGE_SIZE, IMAGE_ENLARGE_SIZE);
-                String pathToSave = unNormalizedDir + File.separator +
-                        dumpPicName.substring(0, dumpPicName.indexOf(".")) +
-                        unNormalizedDigits.indexOf(mat) + "_unNormalized.png";
-                Imgcodecs.imwrite(pathToSave, mat);
-            }
-        }
-
-        List<Mat> normalized = new ArrayList<Mat>();
-        for (Mat tmp : unNormalizedDigits)
-        {
-            normalized.add(normalization(tmp));
-        }
-
-        if (dumpImg)
-        {
-            for (Mat mat : normalized)
-            {
-                String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(".")) + normalized.indexOf(
-                        mat) + "_processed.png";
-                Imgcodecs.imwrite(pathToSave, mat);
-            }
-        }
-        return normalized;
-    }
-
-    /**
-     * return bound rects each contains one digits
-     *
-     * @param src make sure not change src
-     * @return need not be sorted and size should be 4
-     */
-    private static List<Rect> getDigitRects(Mat src)
-    {
-        List<MatOfPoint> contours = findContours(src);
-
-        if (contours.size() > 4)
-        {
-            //TODO: not good solution (MatOfPoint is the mat of contour points)
-            Collections.sort(contours, new Comparator<MatOfPoint>()
-            {
-                @Override
-                public int compare(MatOfPoint o1, MatOfPoint o2)
-                {
-                    if (o1.rows() + o1.cols() - o2.rows() - o2.cols() > 0)
-                    {
-                        return 1;
-                    }
-                    return -1;
-                }
-            });
-            while (contours.size() > 4)
-            {
-                contours.remove(0);
-            }
-        }
-
-        List<Rect> boundRects = new ArrayList<Rect>();
-        for (int i = 0; i < contours.size(); ++i)
-        {
-            //get rect bound of contour
-            Rect rect = Imgproc.boundingRect(contours.get(i));
-            boundRects.add(rect);
-//            Imgproc.drawContours(eroded_bak, contours, i, new Scalar(0, 0, 255));
-//            Imgproc.rectangle(eroded_bak,rect.tl(),rect.br(),new Scalar(0, 0, 255));
-        }
-
-        checkAndSplitBounds(boundRects);
-        return boundRects;
-
-    }
-
-    /**
-     * split bounds if digits are connected
-     *
-     * @param boundRects
-     */
-    private static void checkAndSplitBounds(List<Rect> boundRects)
-    {
-        int rectCount = boundRects.size();
-        if (rectCount >= 4 || rectCount == 0)
-        {
-            return;
-        }
-        Collections.sort(boundRects, new Comparator<Rect>()
-        {
-            @Override
-            public int compare(Rect o1, Rect o2)
-            {
-                return ((Integer) o1.width).compareTo(o2.width);
-            }
-        });
-
-        //根据Rect的数量 对粘连的数字进行分割
-        List<Rect> rectsSplited;
-        if (rectCount == 3)
-        {
-            rectsSplited = splitRect(boundRects.get(2), 2);
-            boundRects.remove(2);
-            boundRects.addAll(rectsSplited);
-        } else if (rectCount == 2)
-        {
-            //分两种情况 一种是22数字粘连 另一种是三个数字粘连
-            if (boundRects.get(0).width > boundRects.get(1).width / 2)
-            {
-                List<Rect> rectsSplited1 = splitRect(boundRects.get(0), 2);
-                List<Rect> rectsSplited2 = splitRect(boundRects.get(1), 2);
-                boundRects.clear();
-                boundRects.addAll(rectsSplited1);
-                boundRects.addAll(rectsSplited2);
-            }
-            //三个数字粘连的情况
-            else
-            {
-                rectsSplited = splitRect(boundRects.get(1), 3);
-                boundRects.remove(1);
-                boundRects.addAll(rectsSplited);
-            }
-        } else if (rectCount == 1)
-        {
-            rectsSplited = splitRect(boundRects.get(0), 4);
-            boundRects.remove(0);
-            boundRects.addAll(rectsSplited);
-        }
-    }
-
     /**
      * @param rect     rect to split
      * @param splitNum the num to be split
      * @return split rects
      */
-    private static List<Rect> splitRect(Rect rect, int splitNum)
+    public static List<Rect> splitRect(Rect rect, int splitNum)
     {
         List<Rect> ret = new ArrayList<Rect>();
         if (splitNum <= 1)
@@ -658,7 +480,7 @@ public class ImageUtils
         return dst;
     }
 
-    private static Mat preProcess(Mat roi)
+    public static Mat preProcess(Mat roi)
     {
         Mat mat_noiseMoved = removeNoise(roi, 3);
 
@@ -673,7 +495,7 @@ public class ImageUtils
             return null;
         }
 
-        Mat mat_binary = binaryZation(mat_getTargetColor);
+        Mat mat_binary = color2Binary(mat_getTargetColor);
 
         Mat mat_binary_noiseRemoved = removeNoise(mat_binary, 3);
 
@@ -699,6 +521,12 @@ public class ImageUtils
         return ret;
     }
 
+    /**
+     * strategy: remove the regions where width+height < 16
+     *
+     * @param src
+     * @return
+     */
     private static Mat removeNonDigitPart(Mat src)
     {
         Mat src_bak = new Mat();
@@ -801,16 +629,6 @@ public class ImageUtils
         return ret;
     }
 
-    /**
-     * if fails , return null
-     *
-     * @param absolutePathOfPic
-     * @return
-     */
-    public static List<Mat> digitSegmentation(String absolutePathOfPic)
-    {
-        return digitSegmentationWithROI(absolutePathOfPic, new Rect(3, 3, 105, 26));
-    }
 
     /**
      * rotate image with given angles

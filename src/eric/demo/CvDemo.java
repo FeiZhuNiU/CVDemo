@@ -1,6 +1,7 @@
 package eric.demo;
 
 import eric.demo.image.ImageUtils;
+import eric.demo.image.Segmentation;
 import eric.demo.recognize.RecogUtils;
 import org.opencv.core.*;
 import org.opencv.ml.ANN_MLP;
@@ -34,7 +35,7 @@ public class CvDemo
         {
             //get samples to recognize
             ImageUtils.screenCapture();
-            List<Mat> digitsToRecog = ImageUtils.digitSegmentationWithROI(ImageUtils.screenCaptureImage, picRect);
+            List<Mat> digitsToRecog = Segmentation.digitSegmentationWithROI(ImageUtils.screenCaptureImage, picRect);
             if (digitsToRecog != null && digitsToRecog.size()==4)
             {
                 ArrayList<Integer> numbers = new ArrayList<Integer>();
