@@ -1,6 +1,7 @@
 package eric.demo;
 
 import eric.demo.image.ImageUtils;
+import eric.demo.image.SegByContours;
 import eric.demo.image.Segmentation;
 import eric.demo.recognize.RecogUtils;
 import org.opencv.core.*;
@@ -35,8 +36,9 @@ public class CvDemo
         {
             //get samples to recognize
             ImageUtils.screenCapture();
-            List<Mat> digitsToRecog = Segmentation.digitSegmentationWithROI(ImageUtils.screenCaptureImage, picRect);
-            if (digitsToRecog != null && digitsToRecog.size()==4)
+            List<Mat> digitsToRecog = Segmentation.digitSegmentationWithROI(ImageUtils.screenCaptureImage, picRect,
+                                                                            new SegByContours());
+            if (digitsToRecog != null && digitsToRecog.size() == 4)
             {
                 ArrayList<Integer> numbers = new ArrayList<Integer>();
                 for (Mat mat : digitsToRecog)
@@ -53,7 +55,8 @@ public class CvDemo
             try
             {
                 Thread.sleep(1000);
-            } catch (InterruptedException e)
+            }
+            catch (InterruptedException e)
             {
                 e.printStackTrace();
             }
@@ -66,20 +69,20 @@ public class CvDemo
         if (argCnt < 4)
         {
             System.out.println("input args are not correct.\n" +
-                    "There should be 4 args: \n" +
-                    "x,y,width,height\n" +
-                    " ______________________________________\n" +
-                    "|              ^                       |\n" +
-                    "|              |                       |\n" +
-                    "|  screen      y                       |\n" +
-                    "|              |                       |\n" +
-                    "|              v                       |\n" +
-                    "|<----x-------> __width____            |\n" +
-                    "|          ^   |           |           |\n" +
-                    "|      height  | digits    |           |\n" +
-                    "|          v   |___________|           |\n" +
-                    "|                                      |\n" +
-                    "|______________________________________|");
+                                       "There should be 4 args: \n" +
+                                       "x,y,width,height\n" +
+                                       " ______________________________________\n" +
+                                       "|              ^                       |\n" +
+                                       "|              |                       |\n" +
+                                       "|  screen      y                       |\n" +
+                                       "|              |                       |\n" +
+                                       "|              v                       |\n" +
+                                       "|<----x-------> __width____            |\n" +
+                                       "|          ^   |           |           |\n" +
+                                       "|      height  | digits    |           |\n" +
+                                       "|          v   |___________|           |\n" +
+                                       "|                                      |\n" +
+                                       "|______________________________________|");
             return false;
         }
         int x, y, width, height;
@@ -89,7 +92,8 @@ public class CvDemo
             y = Integer.parseInt(args[1]);
             width = Integer.parseInt(args[2]);
             height = Integer.parseInt(args[3]);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             return false;
         }

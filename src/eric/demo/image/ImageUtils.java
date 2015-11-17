@@ -19,7 +19,6 @@ public class ImageUtils
 {
     private static int[] gammaTable;
     public static String screenCaptureImage = "screenCapture.png";
-    public static String imageFormat = "png";
     public static String sampleImageFormat = "png";
     public static String normalizedSkeletonDir = "dump\\NormalizedSkeleton";
     public static String unNormalizedDir = "dump\\unNormalized";
@@ -42,31 +41,6 @@ public class ImageUtils
         }
     }
 
-    public static void main(String[] args)
-    {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
-        String imageFile = (args.length == 0 ? "CodeImage\\0687.jpg" : args[0]);
-        dumpPicName = new File(imageFile).getName();
-
-//        File dir = new File("CodeImage");
-//        String[] files = dir.list();
-//        for(String file : files)
-//        {
-//            dumpPicName=file;
-//            digitSegmentation("CodeImage\\" + file);
-//        }
-
-        long startTime = System.currentTimeMillis();
-        Segmentation.digitSegmentation(imageFile);
-        long endTime = System.currentTimeMillis();
-        System.out.println("seg time: " + (endTime - startTime) / 1000.0);
-
-//        Mat tmp = Imgcodecs.imread("1.png");
-//        Mat rotated = rotateMat(tmp,-30);
-//        Imgcodecs.imwrite("rotated.png", rotated);
-    }
-
     public static Mat gammaCorrection(Mat src)
     {
         Mat ret = new Mat(src.rows(), src.cols(), CvType.CV_8UC1);
@@ -84,7 +58,7 @@ public class ImageUtils
      * histogram equalization for color image
      *
      * @param src color image
-     * @return  histogram equalized color image
+     * @return histogram equalized color image
      */
     public static Mat equalization(Mat src)
     {
@@ -131,7 +105,7 @@ public class ImageUtils
         return binary;
     }
 
-    private static Mat gray2Binary(Mat gray)
+    public static Mat gray2Binary(Mat gray)
     {
         Mat binary = new Mat(gray.rows(), gray.cols(), CvType.CV_8UC1);
 
@@ -238,7 +212,7 @@ public class ImageUtils
     public static Mat enlargeMat(Mat src, int size_width, int size_height)
     {
         Mat enlarged = new Mat(src.rows() + size_height, src.cols() + size_width, src.type(),
-                new Scalar(0));
+                               new Scalar(0));
         for (int i = 0; i < src.rows(); ++i)
         {
             for (int j = 0; j < src.cols(); ++j)
@@ -259,8 +233,9 @@ public class ImageUtils
             int width = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
             int height = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
             BufferedImage screen = new Robot().createScreenCapture(new Rectangle(0, 0, width, height));
-            ImageIO.write(screen, imageFormat, new File(screenCaptureImage));
-        } catch (Exception e)
+            ImageIO.write(screen, "png", new File(screenCaptureImage));
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -305,7 +280,8 @@ public class ImageUtils
         if (splitNum <= 1)
         {
             ret.add(rect);
-        } else
+        }
+        else
         {
             Point tl = rect.tl();
             for (int i = 0; i < splitNum; ++i)
@@ -328,7 +304,7 @@ public class ImageUtils
      * @param loops
      * @return
      */
-    private static Mat thin(Mat src, int loops)
+    public static Mat thin(Mat src, int loops)
     {
         Mat dst = new Mat();
         int height = src.rows() - 1;
@@ -512,7 +488,7 @@ public class ImageUtils
             Imgcodecs.imwrite(dumpDir + "noiseMoved_" + dumpPicName, mat_noiseMoved);
             Imgcodecs.imwrite(dumpDir + "getTargetColor_" + dumpPicName, mat_getTargetColor);
             Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_removeNonDigit_" + dumpPicName,
-                    mat_binary_noiseRemoved_removeNonDigit);
+                              mat_binary_noiseRemoved_removeNonDigit);
             Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_" + dumpPicName, mat_binary_noiseRemoved);
             Imgcodecs.imwrite(dumpDir + "colorReduced_" + dumpPicName, mat_colorReduced);
             Imgcodecs.imwrite(dumpDir + "binary_" + dumpPicName, mat_binary);
@@ -527,7 +503,7 @@ public class ImageUtils
      * @param src
      * @return
      */
-    private static Mat removeNonDigitPart(Mat src)
+    public static Mat removeNonDigitPart(Mat src)
     {
         Mat src_bak = new Mat();
         src.copyTo(src_bak);
@@ -582,7 +558,8 @@ public class ImageUtils
                 if (colorMap.get(cur) == null)
                 {
                     colorMap.put(cur, 1);
-                } else
+                }
+                else
                 {
                     int val = colorMap.get(cur);
                     ++val;

@@ -60,7 +60,8 @@ public class SampleUtils
         if (file.getParentFile().exists())
         {
             file.mkdir();
-        } else
+        }
+        else
         {
             mkDir(file.getParentFile());
             file.mkdir();
@@ -104,7 +105,8 @@ public class SampleUtils
                 negdataFile.write(fileName + "\\image" + (i + 1) + ".png\n");
             }
             negdataFile.close();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -123,7 +125,8 @@ public class SampleUtils
             objOut.flush();
             objOut.close();
             System.out.println("write object success!");
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.out.println("write object failed");
             e.printStackTrace();
@@ -180,10 +183,10 @@ public class SampleUtils
                 Mat normalized = ImageUtils.normalization(rotated);
 
                 Imgcodecs.imwrite(dstDir + File.separator + curFileNameWithNoSuffix +
-                        "_rotated_" + i * 10 +
-                        "_x_" + offset.x +
-                        "_y_" + offset.y +
-                        ".png", normalized);
+                                          "_rotated_" + i * 10 +
+                                          "_x_" + offset.x +
+                                          "_y_" + offset.y +
+                                          ".png", normalized);
             }
         }
     }
@@ -207,7 +210,8 @@ public class SampleUtils
             String index = curName.substring(4, 5);
             char targetNumber = numbers.charAt(Integer.parseInt(index));
             image.renameTo(
-                    new File(ImageUtils.unNormalizedDir + "\\" + String.valueOf(targetNumber) + "_" + numbers + index + ".png"));
+                    new File(ImageUtils.unNormalizedDir + "\\" + String.valueOf(
+                            targetNumber) + "_" + numbers + index + ".png"));
         }
     }
 
@@ -217,7 +221,7 @@ public class SampleUtils
 //        ImageUtils.dumpImg = false;
         for (String file : straightImages)
         {
-            ImageUtils.main(new String[]{file});
+            Segmentation.main(new String[]{file});
         }
         ImageUtils.dumpUnNormalizedSamples = false;
         ImageUtils.dumpImg = true;
@@ -238,7 +242,7 @@ public class SampleUtils
         }
 
         File sampleFile = new File(sampleDir);
-        if(sampleFile.exists())
+        if (sampleFile.exists())
         {
             File[] files = sampleFile.listFiles();
             for (File cur : files)
