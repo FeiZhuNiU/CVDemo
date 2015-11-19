@@ -7,13 +7,14 @@ package ericyu.recognize.image;
  |           Created by lliyu on 10/31/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.recognize.recognize.RecogUtils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
 
 import java.io.*;
+import java.util.Map;
 
 
 public class SampleUtils
@@ -246,15 +247,10 @@ public class SampleUtils
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-        File sampleFile = new File(sampleDir);
-        if (sampleFile.exists())
-        {
-            File[] files = sampleFile.listFiles();
-            for (File cur : files)
-            {
-                cur.delete();
-            }
-        }
+        /*
+        if you want to remove some unnormalized images that not included in samples manually
+        you can run 1 and 2 first, do the clean work and then run 3 and 4.
+         */
 
 
 //        1.
@@ -264,6 +260,33 @@ public class SampleUtils
         renameUnNormalizedImage();
 
 //        3.
+        generateSamples();
+
+//        4.
+        generateTrainDataAndClassesAsALargeImage();
+
+    }
+
+    private static void generateTrainDataAndClassesAsALargeImage()
+    {
+        Map.Entry<Mat,Mat> sampleEntry = RecogUtils.loadSamplesToTrainDataAndTrainClasses(true);
+        Mat trainData = sampleEntry.getKey();
+        Mat trainClass = sampleEntry.getValue();
+        Imgcodecs.imwrite("resources\\traindata.png",trainData);
+        Imgcodecs.imwrite("resources\\trainclasses.png",trainClass);
+    }
+
+    private static void generateSamples()
+    {
+        File sampleFile = new File(sampleDir);
+        if (sampleFile.exists())
+        {
+            File[] files = sampleFile.listFiles();
+            for (File cur : files)
+            {
+                cur.delete();
+            }
+        }
         File file = new File(ImageUtils.unNormalizedDir);
         File[] files = file.listFiles();
         for (File image : files)
@@ -271,7 +294,6 @@ public class SampleUtils
             String path = image.getAbsolutePath();
             generateRotatedSamples(path, sampleDir);
         }
-
     }
 
 }

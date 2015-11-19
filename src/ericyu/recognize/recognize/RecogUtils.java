@@ -33,57 +33,74 @@ public class RecogUtils
 
     static
     {
-        trainData = loadSamplesToMat();
+        trainData = loadSamplesToTrainDataAndTrainClasses(false);
     }
 
     /**
      * @return <trainData , trainClasses>
      */
-    public static Map.Entry<Mat, Mat> loadSamplesToMat()
+    public static Map.Entry<Mat, Mat> loadSamplesToTrainDataAndTrainClasses(Boolean isRawSamples)
     {
+        Mat trainData = null;
+        Mat trainClasses = null;
 
-        List<Map.Entry<Integer, Mat>> samples = new ArrayList<Map.Entry<Integer, Mat>>();
-
-
-        File file = new File(sampleDir);
-        File[] pics = file.listFiles(new FilenameFilter()
+        if(isRawSamples)
         {
-            @Override
-            public boolean accept(File dir, String name)
+            List<Map.Entry<Integer, Mat>> samples = new ArrayList<Map.Entry<Integer, Mat>>();
+            File file = new File(sampleDir);
+            File[] pics = file.listFiles(new FilenameFilter()
             {
-                return name.endsWith("." + ImageUtils.sampleImageFormat);
-            }
-        });
-        //make sure the name of picFiles start with the number it means
-        for (File pic : pics)
-        {
-            Mat cur = Imgcodecs.imread(pic.getAbsolutePath());
-            samples.add(
-                    new AbstractMap.SimpleEntry<Integer, Mat>(Integer.parseInt(pic.getName().substring(0, 1)), cur));
-        }
-
-
-        Mat trainData = new Mat(samples.size(), samples.get(0).getValue().rows() * samples.get(0).getValue().cols(),
-                                CvType.CV_32FC1);
-        Mat trainClasses = new Mat(samples.size(), 1, CvType.CV_32FC1);
-        Map.Entry<Mat, Mat> ret = new AbstractMap.SimpleEntry<Mat, Mat>(trainData, trainClasses);
-        for (int i = 0; i < samples.size(); ++i)
-        {
-            int curVal = samples.get(i).getKey();
-            Mat curMat = samples.get(i).getValue();
-            trainClasses.put(i, 0, curVal);
-            for (int j = 0; j < trainData.cols(); ++j)
+                @Override
+                public boolean accept(File dir, String name)
+                {
+                    return name.endsWith("." + ImageUtils.sampleImageFormat);
+                }
+            });
+            //make sure the name of picFiles start with the number it means
+            for (File pic : pics)
             {
-                trainData.put(i, j, curMat.get(j / curMat.cols(), j % curMat.cols())[0]);
+                Mat cur = Imgcodecs.imread(pic.getAbsolutePath());
+                samples.add(
+                        new AbstractMap.SimpleEntry<Integer, Mat>(Integer.parseInt(pic.getName().substring(0, 1)),
+                                                                  cur));
             }
+
+
+            trainData = new Mat(samples.size(), samples.get(0).getValue().rows() * samples.get(0).getValue().cols(),
+                                    CvType.CV_32FC1);
+            trainClasses = new Mat(samples.size(), 1, CvType.CV_32FC1);
+
+            for (int i = 0; i < samples.size(); ++i)
+            {
+                int curVal = samples.get(i).getKey();
+                Mat curMat = samples.get(i).getValue();
+                trainClasses.put(i, 0, curVal);
+                for (int j = 0; j < trainData.cols(); ++j)
+                {
+                    trainData.put(i, j, curMat.get(j / curMat.cols(), j % curMat.cols())[0]);
+                }
+            }
+
         }
+        else
+        {
+            Mat trainDataColor = Imgcodecs.imread("resources\\traindata.png");
+            Mat trainClassesColor = Imgcodecs.imread("resources\\trainclasses.png");
+            trainData = ImageUtils.color2Gray(trainDataColor);
+            trainClasses = ImageUtils.color2Gray(trainClassesColor);
+            trainData.convertTo(trainData,CvType.CV_32FC1);
+            trainClasses.convertTo(trainClasses,CvType.CV_32FC1);
+        }
+        Map.Entry<Mat, Mat> ret = new AbstractMap.SimpleEntry<>(trainData, trainClasses);
         return ret;
     }
+
+
 
     public static KNearest getKnnClassifier()
     {
         KNearest kNearest = KNearest.create();
-//        Map.Entry<Mat, Mat> trainData = RecogUtils.loadSamplesToMat();
+//        Map.Entry<Mat, Mat> trainData = RecogUtils.loadSamplesToTrainDataAndTrainClasses();
         kNearest.train(trainData.getKey(), Ml.ROW_SAMPLE, trainData.getValue());
         return kNearest;
     }
@@ -100,7 +117,7 @@ public class RecogUtils
         ann_mlp.setBackpropMomentumScale(0.1);
         ann_mlp.setBackpropWeightScale(0.1);
 
-//        Map.Entry<Mat, Mat> trainData = RecogUtils.loadSamplesToMat();
+//        Map.Entry<Mat, Mat> trainData = RecogUtils.loadSamplesToTrainDataAndTrainClasses();
         ann_mlp.train(trainData.getKey(), Ml.ROW_SAMPLE, trainData.getValue());
 
         return ann_mlp;
