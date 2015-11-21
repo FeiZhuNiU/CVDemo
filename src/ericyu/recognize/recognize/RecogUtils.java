@@ -41,6 +41,15 @@ public class RecogUtils
      */
     private static Map.Entry<Mat, Mat> loadTrainDataAndTrainClasses()
     {
+        File file1 = new File("resources\\traindata.png");
+        File file2 = new File("resources\\trainclasses.png");
+
+        if(!file1.exists() || !file2.exists())
+        {
+            System.out.println("train data does not exist");
+            System.exit(0);
+        }
+
         Mat trainDataColor = Imgcodecs.imread("resources\\traindata.png");
         Mat trainClassesColor = Imgcodecs.imread("resources\\trainclasses.png");
         Mat trainData = ImageUtils.color2Gray(trainDataColor);
