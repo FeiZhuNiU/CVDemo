@@ -49,7 +49,7 @@ public class RecogUtils
         if (!file1.exists() || !file2.exists())
         {
             System.out.println("train data does not exist");
-            System.exit(0);
+            return null;
         }
 
         Mat trainDataColor = Imgcodecs.imread(TRAIN_SAMPLE_PATH);
@@ -86,6 +86,7 @@ public class RecogUtils
         }
 
         Map.Entry<Mat, Mat> ret = new AbstractMap.SimpleEntry<>(trainData, trainClasses);
+        RecogUtils.trainData = loadTrainDataAndTrainClasses();
         return ret;
     }
 

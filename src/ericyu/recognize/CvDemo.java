@@ -16,7 +16,6 @@ import java.util.List;
 public class CvDemo
 {
     private static Rect picRect;
-//    private static CascadeClassifier zeroDetector = new CascadeClassifier("resources\\data\\cascade.xml");
 
     public static void main(String[] args)
     {
