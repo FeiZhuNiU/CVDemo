@@ -14,12 +14,19 @@ import org.opencv.core.Point;
 import org.opencv.imgcodecs.Imgcodecs;
 
 import java.io.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
 public class SampleUtils
 {
-    public static String sampleDir = "resources\\samples";
+
+    static
+    {
+        mkDir(new File(ImageUtils.unNormalizedDir));
+    }
 
     private static String[] straightImages = new String[]{
             "CodeImage\\0069.jpg",
@@ -52,12 +59,6 @@ public class SampleUtils
             "CodeImage\\9149.jpg",
             "CodeImage\\9566.jpg",
     };
-
-    static
-    {
-        mkDir(new File(ImageUtils.unNormalizedDir));
-    }
-
 
     public static void mkDir(File file)
     {
@@ -142,11 +143,10 @@ public class SampleUtils
      * generate rotated samples (normalized)
      *
      * @param imagePath input image (should NOT be normalized AND NOT be enlarged!)
-     * @param dstDir    dir to save rotated samples
+     * @param samples   list that comtains samples
      */
-    public static void generateRotatedSamples(String imagePath, String dstDir)
+    public static void generateRotatedSamples(String imagePath, List<Map.Entry<Mat,Integer>> samples)
     {
-        mkDir(new File(dstDir));
         Point[] offsets = new Point[]{
                 new Point(0, 0),
                 new Point(-1, -1),
@@ -171,8 +171,8 @@ public class SampleUtils
          */
 
         String curFileName = new File(imagePath).getName();
-        String curFileNameWithNoSuffix = curFileName.substring(0, curFileName.lastIndexOf("."));
-
+//        String curFileNameWithNoSuffix = curFileName.substring(0, curFileName.lastIndexOf("."));
+        Integer curClass = Integer.valueOf(curFileName.substring(0,1));
 
 
         for (Point offset : offsets)
@@ -188,11 +188,12 @@ public class SampleUtils
                 Mat rotated = ImageUtils.rotateMat(enlarged, i * 5);
                 Mat normalized = ImageUtils.normalization(rotated);
 
-                Imgcodecs.imwrite(dstDir + File.separator + curFileNameWithNoSuffix +
-                                          "_rotated_" + i * 5 +
-                                          "_x_" + offset.x +
-                                          "_y_" + offset.y +
-                                          ".png", normalized);
+//                Imgcodecs.imwrite(dstDir + File.separator + curFileNameWithNoSuffix +
+//                                          "_rotated_" + i * 5 +
+//                                          "_x_" + offset.x +
+//                                          "_y_" + offset.y +
+//                                          ".png", normalized);
+                samples.add(new AbstractMap.SimpleEntry<>(normalized, curClass));
             }
         }
     }
@@ -260,40 +261,49 @@ public class SampleUtils
         renameUnNormalizedImage();
 
 //        3.
-        generateSamples();
+        List<Map.Entry<Mat,Integer>> samples = generateSamples();
 
 //        4.
-        generateTrainDataAndClassesAsALargeImage();
+        generateTrainDataAndClassesAsALargeImage(samples);
 
     }
 
-    private static void generateTrainDataAndClassesAsALargeImage()
+    /**
+     * generate trainData.png and trainclasses.png
+     * @param samples
+     */
+    private static void generateTrainDataAndClassesAsALargeImage(List<Map.Entry<Mat, Integer>> samples)
     {
-        Map.Entry<Mat,Mat> sampleEntry = RecogUtils.loadSamplesToTrainDataAndTrainClasses(true);
+        Map.Entry<Mat,Mat> sampleEntry = RecogUtils.loadSamplesToTrainDataAndTrainClasses(samples);
         Mat trainData = sampleEntry.getKey();
         Mat trainClass = sampleEntry.getValue();
+
+        File file = new File("resources\\traindata.png");
+        if (file.exists())
+        {
+            file.delete();
+        }
+        file = new File("resources\\trainclasses.png");
+        if (file.exists())
+        {
+            file.delete();
+        }
+
         Imgcodecs.imwrite("resources\\traindata.png",trainData);
         Imgcodecs.imwrite("resources\\trainclasses.png",trainClass);
     }
 
-    private static void generateSamples()
+    private static List<Map.Entry<Mat,Integer>> generateSamples()
     {
-        File sampleFile = new File(sampleDir);
-        if (sampleFile.exists())
-        {
-            File[] files = sampleFile.listFiles();
-            for (File cur : files)
-            {
-                cur.delete();
-            }
-        }
+        List<Map.Entry<Mat,Integer>> ret = new ArrayList<>();
         File file = new File(ImageUtils.unNormalizedDir);
         File[] files = file.listFiles();
         for (File image : files)
         {
             String path = image.getAbsolutePath();
-            generateRotatedSamples(path, sampleDir);
+            generateRotatedSamples(path, ret);
         }
+        return ret;
     }
 
 }

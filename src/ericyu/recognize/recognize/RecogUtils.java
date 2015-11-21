@@ -28,73 +28,55 @@ public class RecogUtils
         KNN, ANN
     }
 
-    public static String sampleDir = "resources\\samples";
     public static Map.Entry<Mat, Mat> trainData;
 
     static
     {
-        trainData = loadSamplesToTrainDataAndTrainClasses(false);
+        trainData = loadTrainDataAndTrainClasses();
+    }
+
+    /**
+     * load train data when load class
+     * @return
+     */
+    private static Map.Entry<Mat, Mat> loadTrainDataAndTrainClasses()
+    {
+        Mat trainDataColor = Imgcodecs.imread("resources\\traindata.png");
+        Mat trainClassesColor = Imgcodecs.imread("resources\\trainclasses.png");
+        Mat trainData = ImageUtils.color2Gray(trainDataColor);
+        Mat trainClasses = ImageUtils.color2Gray(trainClassesColor);
+        trainData.convertTo(trainData,CvType.CV_32FC1);
+        trainClasses.convertTo(trainClasses,CvType.CV_32FC1);
+        return new AbstractMap.SimpleEntry<>(trainData, trainClasses);
     }
 
     /**
      * @return <trainData , trainClasses>
+     * @param samples a list of samples
      */
-    public static Map.Entry<Mat, Mat> loadSamplesToTrainDataAndTrainClasses(Boolean isRawSamples)
+    public static Map.Entry<Mat, Mat> loadSamplesToTrainDataAndTrainClasses(List<Map.Entry<Mat, Integer>> samples)
     {
         Mat trainData = null;
         Mat trainClasses = null;
 
-        if(isRawSamples)
+        trainData = new Mat(samples.size(), samples.get(0).getKey().rows() * samples.get(0).getKey().cols(),
+                                CvType.CV_32FC1);
+        trainClasses = new Mat(samples.size(), 1, CvType.CV_32FC1);
+
+        for (int i = 0; i < samples.size(); ++i)
         {
-            List<Map.Entry<Integer, Mat>> samples = new ArrayList<Map.Entry<Integer, Mat>>();
-            File file = new File(sampleDir);
-            File[] pics = file.listFiles(new FilenameFilter()
+            int curVal = samples.get(i).getValue();
+            Mat curMat = samples.get(i).getKey();
+            trainClasses.put(i, 0, curVal);
+            for (int j = 0; j < trainData.cols(); ++j)
             {
-                @Override
-                public boolean accept(File dir, String name)
-                {
-                    return name.endsWith("." + ImageUtils.sampleImageFormat);
-                }
-            });
-            //make sure the name of picFiles start with the number it means
-            for (File pic : pics)
-            {
-                Mat cur = Imgcodecs.imread(pic.getAbsolutePath());
-                samples.add(
-                        new AbstractMap.SimpleEntry<Integer, Mat>(Integer.parseInt(pic.getName().substring(0, 1)),
-                                                                  cur));
+                trainData.put(i, j, curMat.get(j / curMat.cols(), j % curMat.cols())[0]);
             }
-
-
-            trainData = new Mat(samples.size(), samples.get(0).getValue().rows() * samples.get(0).getValue().cols(),
-                                    CvType.CV_32FC1);
-            trainClasses = new Mat(samples.size(), 1, CvType.CV_32FC1);
-
-            for (int i = 0; i < samples.size(); ++i)
-            {
-                int curVal = samples.get(i).getKey();
-                Mat curMat = samples.get(i).getValue();
-                trainClasses.put(i, 0, curVal);
-                for (int j = 0; j < trainData.cols(); ++j)
-                {
-                    trainData.put(i, j, curMat.get(j / curMat.cols(), j % curMat.cols())[0]);
-                }
-            }
-
         }
-        else
-        {
-            Mat trainDataColor = Imgcodecs.imread("resources\\traindata.png");
-            Mat trainClassesColor = Imgcodecs.imread("resources\\trainclasses.png");
-            trainData = ImageUtils.color2Gray(trainDataColor);
-            trainClasses = ImageUtils.color2Gray(trainClassesColor);
-            trainData.convertTo(trainData,CvType.CV_32FC1);
-            trainClasses.convertTo(trainClasses,CvType.CV_32FC1);
-        }
+
         Map.Entry<Mat, Mat> ret = new AbstractMap.SimpleEntry<>(trainData, trainClasses);
         return ret;
     }
-
 
 
     public static KNearest getKnnClassifier()
