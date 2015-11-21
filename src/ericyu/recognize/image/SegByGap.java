@@ -45,6 +45,7 @@ public class SegByGap
 
     /**
      * the input should be zero - nonezero where zeros represent gaps
+     *
      * @param countNonZeros
      * @return
      */
@@ -63,17 +64,16 @@ public class SegByGap
 
         for (int i = 0; i < len; ++i)
         {
-            if(countNonZeros.get(i) > 0)
+            if (countNonZeros.get(i) > 0)
             {
-                if(inZero)
+                if (inZero)
                 {
-                    ret.add((i-zeroStart)/2);
+                    ret.add((i - zeroStart) / 2);
                     inZero = false;
                 }
-            }
-            else
+            } else
             {
-                if(!inZero)
+                if (!inZero)
                 {
                     zeroStart = i;
                     inZero = true;
@@ -81,7 +81,7 @@ public class SegByGap
             }
         }
         //remove the first and last index
-        ret.remove(ret.size()-1);
+        ret.remove(ret.size() - 1);
         ret.remove(0);
 
         //TODO
@@ -96,8 +96,7 @@ public class SegByGap
             if (countNonZeros.get(i) <= threshold)
             {
                 countNonZeros.set(i, 0);
-            }
-            else
+            } else
             {
                 countNonZeros.set(i, 1);
             }

@@ -47,8 +47,7 @@ public class RobotUtils
                 keyPress(robot, keyMap.get(num));
                 System.out.println("robot pressed number " + num);
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }

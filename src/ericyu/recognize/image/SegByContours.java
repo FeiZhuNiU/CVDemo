@@ -44,7 +44,7 @@ public class SegByContours
             //get rect bound of contour
             Rect rect = Imgproc.boundingRect(contours.get(i));
             //give up small rects which we assert they are not digits
-            if(rect.width+rect.height > 18)
+            if (rect.width + rect.height > 18)
                 boundRects.add(rect);
         }
 
@@ -80,8 +80,7 @@ public class SegByContours
             rectsSplited = ImageUtils.splitRect(boundRects.get(2), 2);
             boundRects.remove(2);
             boundRects.addAll(rectsSplited);
-        }
-        else if (rectCount == 2)
+        } else if (rectCount == 2)
         {
             //��������� һ����22����ճ�� ��һ������������ճ��
             if (boundRects.get(0).width > boundRects.get(1).width / 2)
@@ -99,8 +98,7 @@ public class SegByContours
                 boundRects.remove(1);
                 boundRects.addAll(rectsSplited);
             }
-        }
-        else if (rectCount == 1)
+        } else if (rectCount == 1)
         {
             rectsSplited = ImageUtils.splitRect(boundRects.get(0), 4);
             boundRects.remove(0);

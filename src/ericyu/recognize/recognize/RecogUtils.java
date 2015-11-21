@@ -16,9 +16,7 @@ import org.opencv.ml.ANN_MLP;
 import org.opencv.ml.KNearest;
 import org.opencv.ml.Ml;
 
-
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.*;
 
 public class RecogUtils
@@ -30,6 +28,9 @@ public class RecogUtils
 
     public static Map.Entry<Mat, Mat> trainData;
 
+    public static final String TRAIN_SAMPLE_PATH = "resources\\traindata.png";
+    public static final String TRAIN_CLASS_PATH = "resources\\trainclasses.png";
+
     static
     {
         trainData = loadTrainDataAndTrainClasses();
@@ -37,31 +38,32 @@ public class RecogUtils
 
     /**
      * load train data when load class
+     *
      * @return
      */
     private static Map.Entry<Mat, Mat> loadTrainDataAndTrainClasses()
     {
-        File file1 = new File("resources\\traindata.png");
-        File file2 = new File("resources\\trainclasses.png");
+        File file1 = new File(TRAIN_SAMPLE_PATH);
+        File file2 = new File(TRAIN_CLASS_PATH);
 
-        if(!file1.exists() || !file2.exists())
+        if (!file1.exists() || !file2.exists())
         {
             System.out.println("train data does not exist");
             System.exit(0);
         }
 
-        Mat trainDataColor = Imgcodecs.imread("resources\\traindata.png");
-        Mat trainClassesColor = Imgcodecs.imread("resources\\trainclasses.png");
+        Mat trainDataColor = Imgcodecs.imread(TRAIN_SAMPLE_PATH);
+        Mat trainClassesColor = Imgcodecs.imread(TRAIN_CLASS_PATH);
         Mat trainData = ImageUtils.color2Gray(trainDataColor);
         Mat trainClasses = ImageUtils.color2Gray(trainClassesColor);
-        trainData.convertTo(trainData,CvType.CV_32FC1);
-        trainClasses.convertTo(trainClasses,CvType.CV_32FC1);
+        trainData.convertTo(trainData, CvType.CV_32FC1);
+        trainClasses.convertTo(trainClasses, CvType.CV_32FC1);
         return new AbstractMap.SimpleEntry<>(trainData, trainClasses);
     }
 
     /**
-     * @return <trainData , trainClasses>
      * @param samples a list of samples
+     * @return <trainData , trainClasses>
      */
     public static Map.Entry<Mat, Mat> loadSamplesToTrainDataAndTrainClasses(List<Map.Entry<Mat, Integer>> samples)
     {
@@ -69,7 +71,7 @@ public class RecogUtils
         Mat trainClasses = null;
 
         trainData = new Mat(samples.size(), samples.get(0).getKey().rows() * samples.get(0).getKey().cols(),
-                                CvType.CV_32FC1);
+                CvType.CV_32FC1);
         trainClasses = new Mat(samples.size(), 1, CvType.CV_32FC1);
 
         for (int i = 0; i < samples.size(); ++i)
@@ -125,8 +127,7 @@ public class RecogUtils
                 ret.put(0, j, mat.get(j / mat.cols(), j % mat.cols()));
             }
             return ret;
-        }
-        else
+        } else
         {
             return strategy.getEigenVec(mat);
         }

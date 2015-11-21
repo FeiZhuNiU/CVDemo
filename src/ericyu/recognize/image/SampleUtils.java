@@ -66,8 +66,7 @@ public class SampleUtils
         if (file.getParentFile().exists())
         {
             file.mkdir();
-        }
-        else
+        } else
         {
             mkDir(file.getParentFile());
             file.mkdir();
@@ -111,8 +110,7 @@ public class SampleUtils
                 negdataFile.write(fileName + "\\image" + (i + 1) + ".png\n");
             }
             negdataFile.close();
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -131,8 +129,7 @@ public class SampleUtils
             objOut.flush();
             objOut.close();
             System.out.println("write object success!");
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             System.out.println("write object failed");
             e.printStackTrace();
@@ -145,7 +142,7 @@ public class SampleUtils
      * @param imagePath input image (should NOT be normalized AND NOT be enlarged!)
      * @param samples   list that comtains samples
      */
-    public static void generateRotatedSamples(String imagePath, List<Map.Entry<Mat,Integer>> samples)
+    public static void generateRotatedSamples(String imagePath, List<Map.Entry<Mat, Integer>> samples)
     {
         Point[] offsets = new Point[]{
                 new Point(0, 0),
@@ -172,7 +169,7 @@ public class SampleUtils
 
         String curFileName = new File(imagePath).getName();
 //        String curFileNameWithNoSuffix = curFileName.substring(0, curFileName.lastIndexOf("."));
-        Integer curClass = Integer.valueOf(curFileName.substring(0,1));
+        Integer curClass = Integer.valueOf(curFileName.substring(0, 1));
 
 
         for (Point offset : offsets)
@@ -261,7 +258,7 @@ public class SampleUtils
         renameUnNormalizedImage();
 
 //        3.
-        List<Map.Entry<Mat,Integer>> samples = generateSamples();
+        List<Map.Entry<Mat, Integer>> samples = generateSamples();
 
 //        4.
         generateTrainDataAndClassesAsALargeImage(samples);
@@ -270,11 +267,12 @@ public class SampleUtils
 
     /**
      * generate trainData.png and trainclasses.png
+     *
      * @param samples
      */
     private static void generateTrainDataAndClassesAsALargeImage(List<Map.Entry<Mat, Integer>> samples)
     {
-        Map.Entry<Mat,Mat> sampleEntry = RecogUtils.loadSamplesToTrainDataAndTrainClasses(samples);
+        Map.Entry<Mat, Mat> sampleEntry = RecogUtils.loadSamplesToTrainDataAndTrainClasses(samples);
         Mat trainData = sampleEntry.getKey();
         Mat trainClass = sampleEntry.getValue();
 
@@ -289,13 +287,13 @@ public class SampleUtils
             file.delete();
         }
 
-        Imgcodecs.imwrite("resources\\traindata.png",trainData);
-        Imgcodecs.imwrite("resources\\trainclasses.png",trainClass);
+        Imgcodecs.imwrite("resources\\traindata.png", trainData);
+        Imgcodecs.imwrite("resources\\trainclasses.png", trainClass);
     }
 
-    private static List<Map.Entry<Mat,Integer>> generateSamples()
+    private static List<Map.Entry<Mat, Integer>> generateSamples()
     {
-        List<Map.Entry<Mat,Integer>> ret = new ArrayList<>();
+        List<Map.Entry<Mat, Integer>> ret = new ArrayList<>();
         File file = new File(ImageUtils.unNormalizedDir);
         File[] files = file.listFiles();
         for (File image : files)

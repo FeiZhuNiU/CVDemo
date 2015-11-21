@@ -222,7 +222,7 @@ public class ImageUtils
     public static Mat enlargeMat(Mat src, int size_width, int size_height)
     {
         Mat enlarged = new Mat(src.rows() + size_height, src.cols() + size_width, src.type(),
-                               new Scalar(0));
+                new Scalar(0));
         for (int i = 0; i < src.rows(); ++i)
         {
             for (int j = 0; j < src.cols(); ++j)
@@ -244,8 +244,7 @@ public class ImageUtils
             int height = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
             BufferedImage screen = new Robot().createScreenCapture(new Rectangle(0, 0, width, height));
             ImageIO.write(screen, "png", new File(screenCaptureImage));
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -290,8 +289,7 @@ public class ImageUtils
         if (splitNum <= 1)
         {
             ret.add(rect);
-        }
-        else
+        } else
         {
             Point tl = rect.tl();
             for (int i = 0; i < splitNum; ++i)
@@ -567,8 +565,7 @@ public class ImageUtils
                 if (colorMap.get(cur) == null)
                 {
                     colorMap.put(cur, 1);
-                }
-                else
+                } else
                 {
                     int val = colorMap.get(cur);
                     ++val;
