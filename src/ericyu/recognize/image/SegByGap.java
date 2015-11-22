@@ -20,7 +20,7 @@ public class SegByGap
         implements SegStrategy
 {
     @Override
-    public List<Rect> doSegmentation(Mat src)
+    public List<Mat> doSegmentation(Mat src)
     {
         if (src == null || src.type() != CvType.CV_8UC1)
         {
@@ -39,7 +39,7 @@ public class SegByGap
         List<Integer> indexes = getSegmentationLine(countNonZeros);
 
 
-        return ret;
+        return null;
     }
 
 

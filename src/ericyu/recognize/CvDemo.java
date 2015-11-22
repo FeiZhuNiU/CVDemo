@@ -1,10 +1,11 @@
 package ericyu.recognize;
 
 import ericyu.recognize.image.ImageUtils;
-import ericyu.recognize.image.SegByContours;
+import ericyu.recognize.image.SegSingleColor;
 import ericyu.recognize.image.Segmentation;
 import ericyu.recognize.recognize.RecogUtils;
 import org.opencv.core.*;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.ml.KNearest;
 
 import java.util.*;
@@ -32,10 +33,12 @@ public class CvDemo
 
         while (true)
         {
-            //get samples to recognize
+            //get screen shot
             ImageUtils.screenCapture();
-            List<Mat> digitsToRecog = Segmentation.digitSegmentationWithROI(ImageUtils.screenCaptureImage, picRect,
-                    new SegByContours());
+            Mat src = Imgcodecs.imread(ImageUtils.screenCaptureImage);
+            //get images to recognize
+            List<Mat> digitsToRecog = Segmentation.segmentROI(src, picRect, new SegSingleColor());
+            //recognize
             if (digitsToRecog != null && digitsToRecog.size() == 4)
             {
                 ArrayList<Integer> numbers = new ArrayList<Integer>();
@@ -44,7 +47,6 @@ public class CvDemo
                     Mat toRecog = RecogUtils.getEigenVec(mat, null);
                     int num = (int) kNearest.findNearest(toRecog, 10, new Mat());
 //                    int num = (int)ann_mlp.predict(toRecog);
-
                     numbers.add(num);
                     System.out.println(num);
                 }

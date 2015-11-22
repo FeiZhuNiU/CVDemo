@@ -8,11 +8,15 @@ package ericyu.recognize.image;
  +===========================================================================*/
 
 import org.opencv.core.Mat;
-import org.opencv.core.Rect;
 
 import java.util.List;
 
 public interface SegStrategy
 {
-    List<Rect> doSegmentation(Mat src);
+
+    /**
+     * @param src color image
+     * @return return mats should be ordered
+     */
+    List<Mat> doSegmentation(Mat src);
 }

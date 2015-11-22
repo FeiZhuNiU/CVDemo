@@ -10,6 +10,7 @@ package ericyu.recognize.image;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
@@ -17,14 +18,66 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class SegByContours
+public class SegSingleColor
         implements SegStrategy
 {
-    @Override
-    public List<Rect> doSegmentation(Mat src)
+    /**
+     * process the color image to a binary one with least noise
+     *
+     * @param src
+     * @return
+     */
+    private static Mat preProcess(Mat src)
     {
-        List<Rect> digitRects = getDigitRects(src);
-        return digitRects;
+        Mat mat_noiseMoved = ImageUtils.removeNoise(src, 3);
+
+        Mat mat_colorReduced = ImageUtils.reduceColor(mat_noiseMoved, 128);
+
+        Mat mat_colorReduced_noiseremoved = ImageUtils.removeNoise(mat_colorReduced, 3);
+
+        Mat mat_getTargetColor = ImageUtils.getTargetColor(mat_colorReduced_noiseremoved, 2);
+        if (mat_getTargetColor == null)
+        {
+            System.out.println("get target color failed, there may be no digit");
+            return null;
+        }
+
+        Mat mat_binary = ImageUtils.color2Binary(mat_getTargetColor);
+
+        Mat mat_binary_noiseRemoved = ImageUtils.removeNoise(mat_binary, 3);
+
+//        Mat mat_binary_noiseRemoved_removeNonDigit = removeSmallPart(mat_binary_noiseRemoved);
+
+        Mat ret = mat_binary_noiseRemoved;
+
+//        Mat ret = erosion(mat_binary_noiseRemoved_removeNonDigit, 3);
+//        ret = dilation(ret, 3);
+
+        if (ImageUtils.dumpImg)
+        {
+            Imgcodecs.imwrite(ImageUtils.dumpDir + "roi_" + ImageUtils.dumpPicName, src);
+            Imgcodecs.imwrite(ImageUtils.dumpDir + "noiseMoved_" + ImageUtils.dumpPicName, mat_noiseMoved);
+            Imgcodecs.imwrite(ImageUtils.dumpDir + "getTargetColor_" + ImageUtils.dumpPicName, mat_getTargetColor);
+//            Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_removeNonDigit_" + dumpPicName, mat_binary_noiseRemoved_removeNonDigit);
+            Imgcodecs.imwrite(ImageUtils.dumpDir + "binary_noiseRemoved_" + ImageUtils.dumpPicName, mat_binary_noiseRemoved);
+            Imgcodecs.imwrite(ImageUtils.dumpDir + "colorReduced_" + ImageUtils.dumpPicName, mat_colorReduced);
+            Imgcodecs.imwrite(ImageUtils.dumpDir + "binary_" + ImageUtils.dumpPicName, mat_binary);
+            Imgcodecs.imwrite(ImageUtils.dumpDir + "fixed_" + ImageUtils.dumpPicName, ret);
+        }
+        return ret;
+    }
+
+    @Override
+    public List<Mat> doSegmentation(Mat src)
+    {
+        Mat preprocessed = preProcess(src);
+        if (src == null)
+        {
+            System.out.println("preprocess failed");
+            return null;
+        }
+        List<Rect> digitRects = getDigitRects(preprocessed);
+        return ImageUtils.getOrderedMatsByRects(digitRects, preprocessed);
     }
 
     /**
@@ -35,9 +88,13 @@ public class SegByContours
      */
     private List<Rect> getDigitRects(Mat src)
     {
+        if (src == null)
+        {
+            return null;
+        }
         List<MatOfPoint> contours = ImageUtils.findContours(src);
 
-        List<Rect> boundRects = new ArrayList<Rect>();
+        List<Rect> boundRects = new ArrayList<>();
 
         for (int i = 0; i < contours.size(); ++i)
         {
@@ -54,6 +111,7 @@ public class SegByContours
 
     /**
      * split bounds if digits are connected
+     * make sure there will be at least 4 bounds
      *
      * @param boundRects
      */

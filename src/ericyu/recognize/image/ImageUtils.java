@@ -23,18 +23,13 @@ public class ImageUtils
 {
     private static int[] gammaTable;
     public static String screenCaptureImage = "screenCapture.png";
-    public static String sampleImageFormat = "png";
-    public static String normalizedSkeletonDir = "dump\\NormalizedSkeleton";
-    public static String unNormalizedDir = "dump\\unNormalized";
-
-    public static final int NORMALIZATION_WIDTH = 35;
-    public static final int NORMALIZATION_HEIGHT = 35;
-    public static final int IMAGE_ENLARGE_SIZE = 10;
 
     public static boolean dumpImg = true;
     public static String dumpDir = "dump\\";
     public static String dumpPicName = ".png";
     public static boolean dumpUnNormalizedSamples = false;
+    public static String sampleImageFormat = "png";
+    public static String normalizedSkeletonDir = "dump\\NormalizedSkeleton";
 
     static
     {
@@ -152,13 +147,13 @@ public class ImageUtils
     /**
      * return digit images according to the given rects
      *
-     * @param rects make sure the size is 4
+     * @param rects
      * @param src
      * @return mats of contoured-images IN ORDER (unNormalized)
      */
     public static List<Mat> getOrderedMatsByRects(List<Rect> rects, Mat src)
     {
-        if (rects == null || rects.size() != 4)
+        if (rects == null || rects.size() == 0)
         {
             System.out.println("digit rects are not correct!");
             return null;
@@ -181,33 +176,6 @@ public class ImageUtils
             Mat cur = src.submat(rect);
             ret.add(cur);
         }
-        return ret;
-    }
-
-    /**
-     * process digit mats
-     * 1.   cut
-     * 2.   enlarge
-     * 3.   resize
-     * 4.   binaryzation
-     *
-     * @param src
-     * @return
-     */
-    public static Mat normalization(Mat src)
-    {
-        if (src == null)
-        {
-            return null;
-        }
-        Mat cut = cutImage(src);
-        Mat enlarged = enlargeMat(cut, IMAGE_ENLARGE_SIZE, IMAGE_ENLARGE_SIZE);
-        Mat resized = new Mat();
-        Imgproc.resize(enlarged, resized, new Size(NORMALIZATION_WIDTH, NORMALIZATION_HEIGHT));
-        Mat binary = new Mat();
-        Imgproc.threshold(resized, binary, 90, 255, Imgproc.THRESH_BINARY);
-        Mat ret = binary;
-
         return ret;
     }
 
@@ -464,46 +432,6 @@ public class ImageUtils
         return dst;
     }
 
-    public static Mat preProcess(Mat roi)
-    {
-        Mat mat_noiseMoved = removeNoise(roi, 3);
-
-        Mat mat_colorReduced = reduceColor(mat_noiseMoved, 128);
-
-        Mat mat_colorReduced_noiseremoved = removeNoise(mat_colorReduced, 3);
-
-        Mat mat_getTargetColor = getTargetColor(mat_colorReduced_noiseremoved, 2);
-        if (mat_getTargetColor == null)
-        {
-            System.out.println("no digit");
-            return null;
-        }
-
-        Mat mat_binary = color2Binary(mat_getTargetColor);
-
-        Mat mat_binary_noiseRemoved = removeNoise(mat_binary, 3);
-
-//        Mat mat_binary_noiseRemoved_removeNonDigit = removeSmallPart(mat_binary_noiseRemoved);
-
-        Mat ret = mat_binary_noiseRemoved;
-
-//        Mat ret = erosion(mat_binary_noiseRemoved_removeNonDigit, 3);
-//        ret = dilation(ret, 3);
-
-        if (dumpImg)
-        {
-            Imgcodecs.imwrite(dumpDir + "roi_" + dumpPicName, roi);
-            Imgcodecs.imwrite(dumpDir + "noiseMoved_" + dumpPicName, mat_noiseMoved);
-            Imgcodecs.imwrite(dumpDir + "getTargetColor_" + dumpPicName, mat_getTargetColor);
-//            Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_removeNonDigit_" + dumpPicName, mat_binary_noiseRemoved_removeNonDigit);
-            Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_" + dumpPicName, mat_binary_noiseRemoved);
-            Imgcodecs.imwrite(dumpDir + "colorReduced_" + dumpPicName, mat_colorReduced);
-            Imgcodecs.imwrite(dumpDir + "binary_" + dumpPicName, mat_binary);
-            Imgcodecs.imwrite(dumpDir + "fixed_" + dumpPicName, ret);
-        }
-        return ret;
-    }
-
     /**
      * strategy: remove the regions where width+height < 16
      *
@@ -743,6 +671,8 @@ public class ImageUtils
      */
     public static List<MatOfPoint> findContours(Mat src)
     {
+        if (src == null)
+            return null;
         Mat src_bak = new Mat();
         src.copyTo(src_bak);
         List<MatOfPoint> contours = new ArrayList<MatOfPoint>();

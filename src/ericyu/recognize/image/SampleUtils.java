@@ -25,7 +25,7 @@ public class SampleUtils
 
     static
     {
-        mkDir(new File(ImageUtils.unNormalizedDir));
+        mkDir(new File(Segmentation.unNormalizedDir));
     }
 
     private static String[] straightImages = new String[]{
@@ -140,7 +140,7 @@ public class SampleUtils
      * generate rotated samples (normalized)
      *
      * @param imagePath input image (should NOT be normalized AND NOT be enlarged!)
-     * @param samples   list that comtains samples
+     * @param samples   list where save the generated samples
      */
     public static void generateRotatedSamples(String imagePath, List<Map.Entry<Mat, Integer>> samples)
     {
@@ -183,7 +183,7 @@ public class SampleUtils
             {
                 //rotate
                 Mat rotated = ImageUtils.rotateMat(enlarged, i * 5);
-                Mat normalized = ImageUtils.normalization(rotated);
+                Mat normalized = Segmentation.normalization(rotated);
 
 //                Imgcodecs.imwrite(dstDir + File.separator + curFileNameWithNoSuffix +
 //                                          "_rotated_" + i * 5 +
@@ -205,7 +205,7 @@ public class SampleUtils
      */
     public static void renameUnNormalizedImage()
     {
-        File file = new File(ImageUtils.unNormalizedDir);
+        File file = new File(Segmentation.unNormalizedDir);
         File[] images = file.listFiles();
         for (File image : images)
         {
@@ -214,14 +214,15 @@ public class SampleUtils
             String index = curName.substring(4, 5);
             char targetNumber = numbers.charAt(Integer.parseInt(index));
             image.renameTo(
-                    new File(ImageUtils.unNormalizedDir + "\\" + String.valueOf(
+                    new File(Segmentation.unNormalizedDir + "\\" + String.valueOf(
                             targetNumber) + "_" + numbers + index + ".png"));
         }
     }
 
     public static void generateUnNormalizedSample()
     {
-        File unNormalizedFile = new File(ImageUtils.unNormalizedDir);
+        File unNormalizedFile = new File(Segmentation.unNormalizedDir);
+        //clear origin unnormalized samples
         if (unNormalizedFile.exists())
         {
             File[] files = unNormalizedFile.listFiles();
@@ -294,7 +295,7 @@ public class SampleUtils
     private static List<Map.Entry<Mat, Integer>> generateSamples()
     {
         List<Map.Entry<Mat, Integer>> ret = new ArrayList<>();
-        File file = new File(ImageUtils.unNormalizedDir);
+        File file = new File(Segmentation.unNormalizedDir);
         File[] files = file.listFiles();
         for (File image : files)
         {
