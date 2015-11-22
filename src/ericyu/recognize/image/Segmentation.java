@@ -7,7 +7,6 @@ package ericyu.recognize.image;
  |           Created by lliyu on 11/17/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import org.opencv.core.Size;
@@ -24,22 +23,12 @@ public class Segmentation
     public static final int NORMALIZATION_HEIGHT = 35;
     public static final int IMAGE_ENLARGE_SIZE = 10;
     public static String unNormalizedDir = "dump\\unNormalized";
-
-    public static void main(String[] args)
-    {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
-        String imageFile = (args.length == 0 ? "CodeImage\\0687.jpg" : args[0]);
-        ImageUtils.dumpPicName = new File(imageFile).getName();
-
-        long startTime = System.currentTimeMillis();
-
-        Mat src = Imgcodecs.imread(imageFile);
-        Segmentation.segment(src, new SegSingleColor());
-        long endTime = System.currentTimeMillis();
-        System.out.println("seg time: " + (endTime - startTime) / 1000.0);
-
-    }
+    public static boolean dumpImg = true;
+    public static String dumpDir = "dump\\";
+    public static String dumpPicName = ".png";
+    public static boolean dumpUnNormalizedSamples = false;
+    public static String sampleImageFormat = "png";
+    public static String normalizedSkeletonDir = "dump\\NormalizedSkeleton";
 
     /**
      * segment src images into small ones for recognition
@@ -74,21 +63,13 @@ public class Segmentation
             return null;
         }
 
-//        List<Mat> unNormalizedDigits = ImageUtils.getOrderedMatsByRects(segs, src);
-//
-//        if (unNormalizedDigits == null || unNormalizedDigits.size() == 0)
-//        {
-//            System.out.println("do segmentation fails");
-//            return null;
-//        }
-//
-        if (ImageUtils.dumpUnNormalizedSamples)
+        if (dumpUnNormalizedSamples)
         {
             for (Mat mat : unNormalizedDigits)
             {
-//                Mat enlarged = enlargeMat(mat, IMAGE_ENLARGE_SIZE, IMAGE_ENLARGE_SIZE);
+                //06093_unNormailized.png   where 3 represents that current digit is 0609[3]
                 String pathToSave = unNormalizedDir + File.separator +
-                        ImageUtils.dumpPicName.substring(0, ImageUtils.dumpPicName.indexOf(".")) +
+                        dumpPicName.substring(0, dumpPicName.indexOf(".")) +
                         unNormalizedDigits.indexOf(mat) + "_unNormalized.png";
                 Imgcodecs.imwrite(pathToSave, mat);
             }
@@ -100,15 +81,16 @@ public class Segmentation
             normalized.add(normalization(tmp));
         }
 
-//        if (ImageUtils.dumpImg)
-//        {
-//            for (Mat mat : normalized)
-//            {
-//                String pathToSave = ImageUtils.dumpPicName.substring(0, ImageUtils.dumpPicName.indexOf(
-//                        ".")) + normalized.indexOf(mat) + "_processed.png";
-//                Imgcodecs.imwrite(pathToSave, mat);
-//            }
-//        }
+        if (dumpImg)
+        {
+            for (Mat mat : normalized)
+            {
+                //06093_normalized.png
+                String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(
+                        ".")) + normalized.indexOf(mat) + "_normalized.png";
+                Imgcodecs.imwrite(pathToSave, mat);
+            }
+        }
         return normalized;
 
     }

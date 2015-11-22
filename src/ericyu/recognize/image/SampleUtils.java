@@ -28,7 +28,7 @@ public class SampleUtils
         mkDir(new File(Segmentation.unNormalizedDir));
     }
 
-    private static String[] straightImages = new String[]{
+    private static String[] sampleImages = new String[]{
             "CodeImage\\0069.jpg",
             "CodeImage\\0441.jpg",
             "CodeImage\\0472.jpg",
@@ -231,15 +231,15 @@ public class SampleUtils
                 cur.delete();
             }
         }
-        Boolean bak = ImageUtils.dumpImg;
-        ImageUtils.dumpUnNormalizedSamples = true;
-        ImageUtils.dumpImg = false;
-        for (String file : straightImages)
+        Boolean bak = Segmentation.dumpImg;
+        Segmentation.dumpUnNormalizedSamples = true;
+        Segmentation.dumpImg = false;
+        for (String file : sampleImages)
         {
-            Segmentation.main(new String[]{file});
+            segmentationDemo(new String[]{file});
         }
-        ImageUtils.dumpUnNormalizedSamples = false;
-        ImageUtils.dumpImg = bak;
+        Segmentation.dumpUnNormalizedSamples = false;
+        Segmentation.dumpImg = bak;
     }
 
     public static void main(String[] args)
@@ -305,4 +305,19 @@ public class SampleUtils
         return ret;
     }
 
+    public static void segmentationDemo(String[] args)
+    {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+        String imageFile = (args.length == 0 ? "CodeImage\\0687.jpg" : args[0]);
+        Segmentation.dumpPicName = new File(imageFile).getName();
+
+        long startTime = System.currentTimeMillis();
+
+        Mat src = Imgcodecs.imread(imageFile);
+        Segmentation.segment(src, new SegSingleColor());
+        long endTime = System.currentTimeMillis();
+        System.out.println("seg time: " + (endTime - startTime) / 1000.0);
+
+    }
 }

@@ -53,16 +53,16 @@ public class SegSingleColor
 //        Mat ret = erosion(mat_binary_noiseRemoved_removeNonDigit, 3);
 //        ret = dilation(ret, 3);
 
-        if (ImageUtils.dumpImg)
+        if (Segmentation.dumpImg)
         {
-            Imgcodecs.imwrite(ImageUtils.dumpDir + "roi_" + ImageUtils.dumpPicName, src);
-            Imgcodecs.imwrite(ImageUtils.dumpDir + "noiseMoved_" + ImageUtils.dumpPicName, mat_noiseMoved);
-            Imgcodecs.imwrite(ImageUtils.dumpDir + "getTargetColor_" + ImageUtils.dumpPicName, mat_getTargetColor);
+            Imgcodecs.imwrite(Segmentation.dumpDir + "roi_" + Segmentation.dumpPicName, src);
+            Imgcodecs.imwrite(Segmentation.dumpDir + "noiseMoved_" + Segmentation.dumpPicName, mat_noiseMoved);
+            Imgcodecs.imwrite(Segmentation.dumpDir + "getTargetColor_" + Segmentation.dumpPicName, mat_getTargetColor);
 //            Imgcodecs.imwrite(dumpDir + "binary_noiseRemoved_removeNonDigit_" + dumpPicName, mat_binary_noiseRemoved_removeNonDigit);
-            Imgcodecs.imwrite(ImageUtils.dumpDir + "binary_noiseRemoved_" + ImageUtils.dumpPicName, mat_binary_noiseRemoved);
-            Imgcodecs.imwrite(ImageUtils.dumpDir + "colorReduced_" + ImageUtils.dumpPicName, mat_colorReduced);
-            Imgcodecs.imwrite(ImageUtils.dumpDir + "binary_" + ImageUtils.dumpPicName, mat_binary);
-            Imgcodecs.imwrite(ImageUtils.dumpDir + "fixed_" + ImageUtils.dumpPicName, ret);
+            Imgcodecs.imwrite(Segmentation.dumpDir + "binary_noiseRemoved_" + Segmentation.dumpPicName, mat_binary_noiseRemoved);
+            Imgcodecs.imwrite(Segmentation.dumpDir + "colorReduced_" + Segmentation.dumpPicName, mat_colorReduced);
+            Imgcodecs.imwrite(Segmentation.dumpDir + "binary_" + Segmentation.dumpPicName, mat_binary);
+            Imgcodecs.imwrite(Segmentation.dumpDir + "fixed_" + Segmentation.dumpPicName, ret);
         }
         return ret;
     }

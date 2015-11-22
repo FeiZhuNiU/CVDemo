@@ -24,13 +24,6 @@ public class ImageUtils
     private static int[] gammaTable;
     public static String screenCaptureImage = "screenCapture.png";
 
-    public static boolean dumpImg = true;
-    public static String dumpDir = "dump\\";
-    public static String dumpPicName = ".png";
-    public static boolean dumpUnNormalizedSamples = false;
-    public static String sampleImageFormat = "png";
-    public static String normalizedSkeletonDir = "dump\\NormalizedSkeleton";
-
     static
     {
         gammaTable = new int[256];
@@ -93,12 +86,6 @@ public class ImageUtils
     public static Mat color2Binary(Mat src)
     {
         Mat gray = color2Gray(src);
-
-        if (dumpImg)
-        {
-            Imgcodecs.imwrite(dumpDir + "gray_" + dumpPicName, gray);
-        }
-
         Mat binary = gray2Binary(gray);
         return binary;
     }
@@ -433,21 +420,18 @@ public class ImageUtils
     }
 
     /**
-     * strategy: remove the regions where width+height < 16
+     * strategy: remove the regions where width+height < threshold
      *
      * @param src
      * @return
      */
-    public static Mat removeSmallPart(Mat src)
+    public static Mat removeSmallPart(Mat src, int threshold)
     {
-        Mat src_bak = new Mat();
-        src.copyTo(src_bak);
-        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-        Imgproc.findContours(src, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
+        List<MatOfPoint> contours = findContours(src);
         for (int i = 0; i < contours.size(); ++i)
         {
             Rect rect = Imgproc.boundingRect(contours.get(i));
-            if (rect.width + rect.height < 16)
+            if (rect.width + rect.height < threshold)
             {
                 contours.remove(i--);
             }
@@ -462,13 +446,12 @@ public class ImageUtils
                     Rect rect = Imgproc.boundingRect(contour);
                     if (new Point(j, i).inside(rect))
                     {
-                        ret.put(i, j, src_bak.get(i, j));
+                        ret.put(i, j, src.get(i, j));
                         break;
                     }
                 }
             }
         }
-        src_bak.copyTo(src);
         return ret;
     }
 
