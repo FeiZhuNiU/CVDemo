@@ -11,6 +11,13 @@ import java.util.Arrays;
 /**
  * Created by 麟 on 2015/11/25.
  */
+
+/**
+ * This class's goal is to generate a instance that know the position where the flash locate on screen
+ *
+ * It will try to find the position in the default constructor by pre-configured (topLeftCornerColor)
+ * if fails, the origin will be null
+ */
 public class FlashPosition
 {
     /**
@@ -32,7 +39,6 @@ public class FlashPosition
      * return null if target color is not found
      * @return
      */
-
     private Point findPositionOfTargetColor(double[] targetColor)
     {
         Point ret = null;
