@@ -9,7 +9,6 @@ package ericyu.recognize.image;
 
 import org.opencv.core.*;
 import org.opencv.core.Point;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import javax.imageio.ImageIO;
@@ -191,14 +190,12 @@ public class ImageUtils
     /**
      * save current screen to local file system
      */
-    public static void screenCapture(String dst)
+    public static void screenCapture(String dst, int lt_x, int lt_y, int width, int height)
     {
         try
         {
-            int width = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
-            int height = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
-            BufferedImage screen = new Robot().createScreenCapture(new Rectangle(0, 0, width, height));
-            String format = dst.lastIndexOf(".")>0?dst.substring(dst.lastIndexOf(".") + 1, dst.length()):"bmp";
+            BufferedImage screen = new Robot().createScreenCapture(new Rectangle(lt_x,lt_y,width,height));
+            String format = dst.lastIndexOf(".")>0 ? dst.substring(dst.lastIndexOf(".") + 1, dst.length()) : "bmp";
             ImageIO.write(screen, format, new File(dst));
         } catch (Exception e)
         {
@@ -206,6 +203,12 @@ public class ImageUtils
         }
     }
 
+    public static void screenCapture(String dst)
+    {
+        int width = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+        int height = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+        screenCapture(dst,0,0,width,height);
+    }
 
     /**
      * color quantization

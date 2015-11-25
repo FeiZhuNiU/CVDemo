@@ -4,6 +4,7 @@ import ericyu.recognize.image.ImageUtils;
 import ericyu.recognize.image.SegSingleColor;
 import ericyu.recognize.image.Segmentation;
 import ericyu.recognize.recognize.RecogUtils;
+import ericyu.recognize.robot.PositionConstants;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.ml.KNearest;
@@ -20,7 +21,7 @@ public class CvDemo
 
     public static void main(String[] args)
     {
-        if (!initParams(args))
+        if (!init())
         {
             System.out.println("please verify the input params");
             return;
@@ -34,7 +35,11 @@ public class CvDemo
         while (true)
         {
             //get screen shot
-            ImageUtils.screenCapture(ImageUtils.screenCaptureImage);
+            ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
+                                     PositionConstants.origin.x,
+                                     PositionConstants.origin.y,
+                                     PositionConstants.FLASH_WIDTH,
+                                     PositionConstants.FLASH_HEIGHT);
             Mat src = Imgcodecs.imread(ImageUtils.screenCaptureImage);
             //get images to recognize
             List<Mat> digitsToRecog = Segmentation.segmentROI(src, picRect, new SegSingleColor());
@@ -62,6 +67,16 @@ public class CvDemo
         }
     }
 
+    private static boolean init()
+    {
+        picRect = new Rect(PositionConstants.VERIFICATION_CODE_ORIGIN_X,
+                           PositionConstants.VERIFICATION_CODE_ORIGIN_Y,
+                           PositionConstants.VERIFICATION_CODE_WIDTH,
+                           PositionConstants.VERIFICATION_CODE_HEIGHT);
+        return true;
+    }
+
+    @Deprecated
     private static boolean initParams(String[] args)
     {
         int argCnt = args.length;

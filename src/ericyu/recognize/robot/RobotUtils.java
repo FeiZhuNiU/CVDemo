@@ -7,17 +7,12 @@ package ericyu.recognize.robot;
  |           Created by lliyu on 11/2/2015  (lin.yu@oracle.com)              |
  +===========================================================================*/
 
-import ericyu.recognize.image.ImageUtils;
 import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,11 +20,6 @@ public class RobotUtils
 {
 
     public static Map<Integer, Integer> keyMap = new HashMap<Integer, Integer>();
-
-    /**
-     * the order should be b/g/r
-     */
-    private static double[] topLeftCornerColor = {43, 31.0, 25};
 
     static
     {
@@ -90,43 +80,12 @@ public class RobotUtils
         }
     }
 
-    public static Point findPosition()
-    {
-        Point ret = null;
-        ImageUtils.screenCapture("findPosition.bmp");
-        Mat screen = Imgcodecs.imread("findPosition.bmp");
-        boolean hasFound = false;
-        for (int i = 0; i < screen.height(); ++i)
-        {
-            if (hasFound)
-            {
-                break;
-            }
-            for (int j = 0; j < screen.width(); ++j)
-            {
-                if (Arrays.toString(topLeftCornerColor).equals(Arrays.toString(screen.get(i, j))))
-                {
-                    ret = new Point(j, i);
-                    hasFound = true;
-                    break;
-                }
-            }
-        }
-        File file = new File("findPosition.bmp");
-        if (file.exists())
-        {
-            file.delete();
-        }
-        return ret;
-    }
-
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-//        checkColor();
+        checkColor();
 
-        Point point = findPosition();
 //        System.out.println(point.x + "  " + point.y);
 //        clickAt(point.x,point.y);
     }
