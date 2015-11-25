@@ -16,8 +16,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RobotUtils
+public class MyRobot
 {
+    FlashPosition flashPosition;
+
+    public MyRobot(FlashPosition flashPosition)
+    {
+        this.flashPosition = flashPosition;
+    }
 
     public static Map<Integer, Integer> keyMap = new HashMap<Integer, Integer>();
 
@@ -35,7 +41,7 @@ public class RobotUtils
         keyMap.put(9, KeyEvent.VK_9);
     }
 
-    public static void enterVerificationCode(ArrayList<Integer> numbers)
+    public void enterVerificationCode(ArrayList<Integer> numbers)
     {
         if (numbers.size() != 4)
         {
@@ -54,7 +60,7 @@ public class RobotUtils
     {
         try
         {
-            Robot r = new Robot();
+            java.awt.Robot r = new java.awt.Robot();
             r.keyPress(key);
             r.keyRelease(key);
             r.delay(100);
@@ -69,7 +75,7 @@ public class RobotUtils
     {
         try
         {
-            Robot r = new Robot();
+            java.awt.Robot r = new java.awt.Robot();
             r.mouseMove(x, y);
             r.mousePress(InputEvent.BUTTON1_MASK);
             r.mouseRelease(InputEvent.BUTTON1_MASK);
@@ -90,11 +96,14 @@ public class RobotUtils
 //        clickAt(point.x,point.y);
     }
 
+    /**
+     * manually get color if background color is changed
+     */
     private static void checkColor()
     {
         try
         {
-            Robot r = new Robot();
+            java.awt.Robot r = new java.awt.Robot();
             while (true)
             {
                 Point point = MouseInfo.getPointerInfo().getLocation();
@@ -109,21 +118,21 @@ public class RobotUtils
         }
     }
 
-    public static void focusOnVerCodeInputBox()
+    public void focusOnVerCodeInputBox()
     {
-        clickAt(PositionConstants.origin.x + PositionConstants.VERIFICATION_INPUT_X,
-                PositionConstants.origin.y + PositionConstants.VERIFICATION_INPUT_Y);
+        clickAt(flashPosition.origin.x + PositionConstants.VERIFICATION_INPUT_X,
+                flashPosition.origin.y + PositionConstants.VERIFICATION_INPUT_Y);
     }
 
-    public static void confirmVerificationCode()
+    public void confirmVerificationCode()
     {
-        clickAt(PositionConstants.origin.x + PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_X,
-                PositionConstants.origin.y + PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_Y);
+        clickAt(flashPosition.origin.x + PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_X,
+                flashPosition.origin.y + PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_Y);
     }
 
-    public static void refreshVerificationCode()
+    public void refreshVerificationCode()
     {
-        clickAt(PositionConstants.origin.x + PositionConstants.VERIFICATION_REFRESH_BUTTON_X,
-                PositionConstants.origin.y + PositionConstants.VERIFICATION_REFRESH_BUTTON_Y);
+        clickAt(flashPosition.origin.x + PositionConstants.VERIFICATION_REFRESH_BUTTON_X,
+                flashPosition.origin.y + PositionConstants.VERIFICATION_REFRESH_BUTTON_Y);
     }
 }

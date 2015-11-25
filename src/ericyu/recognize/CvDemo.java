@@ -4,8 +4,9 @@ import ericyu.recognize.image.ImageUtils;
 import ericyu.recognize.image.SegSingleColor;
 import ericyu.recognize.image.Segmentation;
 import ericyu.recognize.recognize.RecogUtils;
+import ericyu.recognize.robot.FlashPosition;
 import ericyu.recognize.robot.PositionConstants;
-import ericyu.recognize.robot.RobotUtils;
+import ericyu.recognize.robot.MyRobot;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.ml.KNearest;
@@ -28,33 +29,57 @@ public class CvDemo
             return;
         }
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+        //find flash position
+        FlashPosition flashPosition = findFlashPosition();
+        //generate a robot
+        MyRobot myRobot = new MyRobot(flashPosition);
+
+        //recognize
         ArrayList<Integer> numbers;
-        while(true)
+        while (true)
         {
-            numbers = recogVerificationCode();
-            if(numbers != null)
+            numbers = recogVerificationCode(flashPosition);
+            if (numbers != null)
                 break;
             try
             {
-                RobotUtils.refreshVerificationCode();
+                myRobot.refreshVerificationCode();
                 Thread.sleep(1000);
-            }
-            catch (InterruptedException e)
+            } catch (InterruptedException e)
             {
                 e.printStackTrace();
             }
         }
-        RobotUtils.focusOnVerCodeInputBox();
-        RobotUtils.enterVerificationCode(numbers);
-        RobotUtils.confirmVerificationCode();
+
+        myRobot.focusOnVerCodeInputBox();
+        myRobot.enterVerificationCode(numbers);
+        myRobot.confirmVerificationCode();
 
 
     }
 
+    public static FlashPosition findFlashPosition()
+    {
+        FlashPosition flashPosition;
+        while (true)
+        {
+            flashPosition = new FlashPosition();
+            if (flashPosition.origin != null)
+            {
+                System.out.println("flash origin found: " + flashPosition.origin.x + "," + flashPosition.origin.y);
+                break;
+            }
+            System.out.println("flash not found yet");
+        }
+        return flashPosition;
+    }
+
     /**
      *
+     * @param flashPosition
      */
-    private static ArrayList<Integer> recogVerificationCode()
+    private static ArrayList<Integer> recogVerificationCode(FlashPosition flashPosition)
     {
         //get classifier
         KNearest kNearest = RecogUtils.getKnnClassifier();
@@ -64,10 +89,10 @@ public class CvDemo
 
         //get screen shot
         ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
-                                 PositionConstants.origin.x,
-                                 PositionConstants.origin.y,
-                                 PositionConstants.FLASH_WIDTH,
-                                 PositionConstants.FLASH_HEIGHT);
+                flashPosition.origin.x,
+                flashPosition.origin.y,
+                PositionConstants.FLASH_WIDTH,
+                PositionConstants.FLASH_HEIGHT);
         Mat src = Imgcodecs.imread(ImageUtils.screenCaptureImage);
         //get images to recognize
         List<Mat> digitsToRecog = Segmentation.segmentROI(src, picRect, new SegSingleColor());
@@ -93,9 +118,9 @@ public class CvDemo
     private static boolean init()
     {
         picRect = new Rect(PositionConstants.VERIFICATION_CODE_ORIGIN_X,
-                           PositionConstants.VERIFICATION_CODE_ORIGIN_Y,
-                           PositionConstants.VERIFICATION_CODE_WIDTH,
-                           PositionConstants.VERIFICATION_CODE_HEIGHT);
+                PositionConstants.VERIFICATION_CODE_ORIGIN_Y,
+                PositionConstants.VERIFICATION_CODE_WIDTH,
+                PositionConstants.VERIFICATION_CODE_HEIGHT);
         return true;
     }
 
