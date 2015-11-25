@@ -22,7 +22,7 @@ import java.util.List;
 public class ImageUtils
 {
     private static int[] gammaTable;
-    public static String screenCaptureImage = "screenCapture.png";
+    public static String screenCaptureImage = "screenCapture.bmp";
 
     static
     {
@@ -191,14 +191,15 @@ public class ImageUtils
     /**
      * save current screen to local file system
      */
-    public static void screenCapture()
+    public static void screenCapture(String dst)
     {
         try
         {
             int width = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
             int height = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
             BufferedImage screen = new Robot().createScreenCapture(new Rectangle(0, 0, width, height));
-            ImageIO.write(screen, "png", new File(screenCaptureImage));
+            String format = dst.lastIndexOf(".")>0?dst.substring(dst.lastIndexOf(".") + 1, dst.length()):"bmp";
+            ImageIO.write(screen, format, new File(dst));
         } catch (Exception e)
         {
             e.printStackTrace();

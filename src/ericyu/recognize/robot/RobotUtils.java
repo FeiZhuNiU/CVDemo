@@ -7,10 +7,17 @@ package ericyu.recognize.robot;
  |           Created by lliyu on 11/2/2015  (lin.yu@oracle.com)              |
  +===========================================================================*/
 
+import ericyu.recognize.image.ImageUtils;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
+
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +25,11 @@ public class RobotUtils
 {
 
     public static Map<Integer, Integer> keyMap = new HashMap<Integer, Integer>();
+
+    /**
+     * the order should be b/g/r
+     */
+    private static double[] topLeftCornerColor = {43, 31.0, 25};
 
     static
     {
@@ -31,7 +43,6 @@ public class RobotUtils
         keyMap.put(7, KeyEvent.VK_7);
         keyMap.put(8, KeyEvent.VK_8);
         keyMap.put(9, KeyEvent.VK_9);
-
     }
 
     public static void enterVerificationCode(ArrayList<Integer> numbers)
@@ -57,7 +68,8 @@ public class RobotUtils
             r.keyPress(key);
             r.keyRelease(key);
             r.delay(100);
-        } catch (AWTException e)
+        }
+        catch (AWTException e)
         {
             e.printStackTrace();
         }
@@ -68,10 +80,11 @@ public class RobotUtils
         try
         {
             Robot r = new Robot();
-            r.mouseMove(x,y);
+            r.mouseMove(x, y);
             r.mousePress(InputEvent.BUTTON1_MASK);
             r.mouseRelease(InputEvent.BUTTON1_MASK);
-        } catch (AWTException e)
+        }
+        catch (AWTException e)
         {
             e.printStackTrace();
         }
@@ -79,46 +92,62 @@ public class RobotUtils
 
     public static Point findPosition()
     {
-        try
+        Point ret = null;
+        ImageUtils.screenCapture("findPosition.bmp");
+        Mat screen = Imgcodecs.imread("findPosition.bmp");
+        boolean hasFound = false;
+        for (int i = 0; i < screen.height(); ++i)
         {
-            Robot robot = new Robot();
-            Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-            for(int i = 0; i <dimension.height; ++i)
+            if (hasFound)
             {
-                for(int j = 0 ; j < dimension.width-1; ++j)
+                break;
+            }
+            for (int j = 0; j < screen.width(); ++j)
+            {
+                if (Arrays.toString(topLeftCornerColor).equals(Arrays.toString(screen.get(i, j))))
                 {
-                    if(robot.getPixelColor(j,i) == new Color(25,31,43)/* && robot.getPixelColor(j+1,i) == new Color(25,31,45) && robot.getPixelColor(j,i+1) == new Color(24,33,48)*/)
-                    {
-                        return new Point(j,i);
-                    }
+                    ret = new Point(j, i);
+                    hasFound = true;
+                    break;
                 }
             }
-        } catch (AWTException e)
-        {
-            e.printStackTrace();
         }
-        return null;
+        File file = new File("findPosition.bmp");
+        if (file.exists())
+        {
+            file.delete();
+        }
+        return ret;
     }
 
     public static void main(String[] args)
     {
-//        try
-//        {
-//            Robot r = new Robot();
-//            while(true)
-//            {
-//                Point point = MouseInfo.getPointerInfo().getLocation();
-//                Color color = r.getPixelColor(point.x, point.y);
-//                System.out.println("x:" + point.x + " y:" + point.y + " color: " + color);
-//                r.delay(1000);
-//            }
-//        } catch (AWTException e)
-//        {
-//            e.printStackTrace();
-//        }
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+//        checkColor();
+
         Point point = findPosition();
-        System.out.println(point.x + "  " + point.y);
-        clickAt(point.x,point.y);
+//        System.out.println(point.x + "  " + point.y);
+//        clickAt(point.x,point.y);
+    }
+
+    private static void checkColor()
+    {
+        try
+        {
+            Robot r = new Robot();
+            while (true)
+            {
+                Point point = MouseInfo.getPointerInfo().getLocation();
+                Color color = r.getPixelColor(point.x, point.y);
+                System.out.println("x:" + point.x + " y:" + point.y + " color: " + color);
+                r.delay(1000);
+            }
+        }
+        catch (AWTException e)
+        {
+            e.printStackTrace();
+        }
     }
 
 }

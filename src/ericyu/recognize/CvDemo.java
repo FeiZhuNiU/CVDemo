@@ -34,7 +34,7 @@ public class CvDemo
         while (true)
         {
             //get screen shot
-            ImageUtils.screenCapture();
+            ImageUtils.screenCapture(ImageUtils.screenCaptureImage);
             Mat src = Imgcodecs.imread(ImageUtils.screenCaptureImage);
             //get images to recognize
             List<Mat> digitsToRecog = Segmentation.segmentROI(src, picRect, new SegSingleColor());
