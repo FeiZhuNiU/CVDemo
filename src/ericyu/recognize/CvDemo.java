@@ -20,6 +20,7 @@ import java.util.List;
 public class CvDemo
 {
     private static Rect picRect;
+    private static FlashPosition flashPosition;
 
     public static void main(String[] args)
     {
@@ -28,10 +29,7 @@ public class CvDemo
             System.out.println("please verify the input params");
             return;
         }
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-        //find flash position
-        FlashPosition flashPosition = findFlashPosition();
         //generate a robot
         MyRobot myRobot = new MyRobot(flashPosition);
 
@@ -117,12 +115,17 @@ public class CvDemo
 
     private static boolean init()
     {
-        picRect = new Rect(PositionConstants.VERIFICATION_CODE_ORIGIN_X,
-                PositionConstants.VERIFICATION_CODE_ORIGIN_Y,
+        picRect = new Rect(PositionConstants.VERIFICATION_CODE_LT_X,
+                PositionConstants.VERIFICATION_CODE_LT_Y,
                 PositionConstants.VERIFICATION_CODE_WIDTH,
                 PositionConstants.VERIFICATION_CODE_HEIGHT);
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+        //find flash position
+        flashPosition = findFlashPosition();
         return true;
     }
+
 
     @Deprecated
     private static boolean initParams(String[] args)

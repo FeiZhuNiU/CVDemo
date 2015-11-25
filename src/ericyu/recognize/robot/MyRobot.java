@@ -60,10 +60,10 @@ public class MyRobot
     {
         try
         {
-            java.awt.Robot r = new java.awt.Robot();
+            Robot r = new Robot();
             r.keyPress(key);
             r.keyRelease(key);
-            r.delay(100);
+            r.delay(20);
         }
         catch (AWTException e)
         {
@@ -71,19 +71,27 @@ public class MyRobot
         }
     }
 
+    /**
+     * left click at given position and move back
+     * @param x
+     * @param y
+     */
     public static void clickAt(int x, int y)
     {
         try
         {
-            java.awt.Robot r = new java.awt.Robot();
+            Point curMousePosition = MouseInfo.getPointerInfo().getLocation();
+            Robot r = new Robot();
             r.mouseMove(x, y);
             r.mousePress(InputEvent.BUTTON1_MASK);
             r.mouseRelease(InputEvent.BUTTON1_MASK);
+            r.mouseMove(curMousePosition.x,curMousePosition.y);
         }
         catch (AWTException e)
         {
             e.printStackTrace();
         }
+
     }
 
     public static void main(String[] args)
