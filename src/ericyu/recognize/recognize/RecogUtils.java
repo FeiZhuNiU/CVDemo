@@ -48,7 +48,7 @@ public class RecogUtils
 
         if (!file1.exists() || !file2.exists())
         {
-            System.out.println("train data does not exist");
+            System.out.println("train data not prepared");
             return null;
         }
 

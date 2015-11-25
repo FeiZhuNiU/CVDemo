@@ -5,6 +5,7 @@ import ericyu.recognize.image.SegSingleColor;
 import ericyu.recognize.image.Segmentation;
 import ericyu.recognize.recognize.RecogUtils;
 import ericyu.recognize.robot.PositionConstants;
+import ericyu.recognize.robot.RobotUtils;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.ml.KNearest;
@@ -55,7 +56,12 @@ public class CvDemo
                     numbers.add(num);
                     System.out.println(num);
                 }
-//                return;
+                //TODO: do robot thing here
+                RobotUtils.enterVerificationCode(numbers);
+                RobotUtils.clickAt(PositionConstants.origin.x + PositionConstants.VERIFICATION_CODE_CONFIRM_ORIGIN_X,
+                                   PositionConstants.origin.y + PositionConstants.VERIFICATION_CODE_CONFIRM_ORIGIN_Y);
+
+                return;
             }
             try
             {
