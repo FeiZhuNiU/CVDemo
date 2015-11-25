@@ -109,4 +109,21 @@ public class RobotUtils
         }
     }
 
+    public static void focusOnVerCodeInputBox()
+    {
+        clickAt(PositionConstants.origin.x + PositionConstants.VERIFICATION_INPUT_X,
+                PositionConstants.origin.y + PositionConstants.VERIFICATION_INPUT_Y);
+    }
+
+    public static void confirmVerificationCode()
+    {
+        clickAt(PositionConstants.origin.x + PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_X,
+                PositionConstants.origin.y + PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_Y);
+    }
+
+    public static void refreshVerificationCode()
+    {
+        clickAt(PositionConstants.origin.x + PositionConstants.VERIFICATION_REFRESH_BUTTON_X,
+                PositionConstants.origin.y + PositionConstants.VERIFICATION_REFRESH_BUTTON_Y);
+    }
 }

@@ -36,6 +36,7 @@ public class CvDemo
                 break;
             try
             {
+                RobotUtils.refreshVerificationCode();
                 Thread.sleep(1000);
             }
             catch (InterruptedException e)
@@ -43,9 +44,9 @@ public class CvDemo
                 e.printStackTrace();
             }
         }
+        RobotUtils.focusOnVerCodeInputBox();
         RobotUtils.enterVerificationCode(numbers);
-        RobotUtils.clickAt(PositionConstants.origin.x + PositionConstants.VERIFICATION_CODE_CONFIRM_ORIGIN_X,
-                           PositionConstants.origin.y + PositionConstants.VERIFICATION_CODE_CONFIRM_ORIGIN_Y);
+        RobotUtils.confirmVerificationCode();
 
 
     }
