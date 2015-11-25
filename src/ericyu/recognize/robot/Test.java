@@ -4,7 +4,7 @@ package ericyu.recognize.robot;
  |                         All rights reserved.                              |
  +===========================================================================+
  |  HISTORY                                                                  |
- |           Created by lliyu on 11/25/2015  (yulin.jay@gmail.com)            |
+ |           Created by lliyu on 11/25/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
 import org.opencv.core.Core;

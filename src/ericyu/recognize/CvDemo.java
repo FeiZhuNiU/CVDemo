@@ -28,49 +28,65 @@ public class CvDemo
             return;
         }
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
-        //get classifier
-        KNearest kNearest = RecogUtils.getKnnClassifier();
-//        ANN_MLP ann_mlp = RecogUtils.getAnnClassifier();
-
-        while (true)
+        ArrayList<Integer> numbers;
+        while(true)
         {
-            //get screen shot
-            ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
-                                     PositionConstants.origin.x,
-                                     PositionConstants.origin.y,
-                                     PositionConstants.FLASH_WIDTH,
-                                     PositionConstants.FLASH_HEIGHT);
-            Mat src = Imgcodecs.imread(ImageUtils.screenCaptureImage);
-            //get images to recognize
-            List<Mat> digitsToRecog = Segmentation.segmentROI(src, picRect, new SegSingleColor());
-            //recognize
-            if (digitsToRecog != null && digitsToRecog.size() == 4)
-            {
-                ArrayList<Integer> numbers = new ArrayList<Integer>();
-                for (Mat mat : digitsToRecog)
-                {
-                    Mat toRecog = RecogUtils.getEigenVec(mat, null);
-                    int num = (int) kNearest.findNearest(toRecog, 10, new Mat());
-//                    int num = (int)ann_mlp.predict(toRecog);
-                    numbers.add(num);
-                    System.out.println(num);
-                }
-                //TODO: do robot thing here
-                RobotUtils.enterVerificationCode(numbers);
-                RobotUtils.clickAt(PositionConstants.origin.x + PositionConstants.VERIFICATION_CODE_CONFIRM_ORIGIN_X,
-                                   PositionConstants.origin.y + PositionConstants.VERIFICATION_CODE_CONFIRM_ORIGIN_Y);
-
-                return;
-            }
+            numbers = recogVerificationCode();
+            if(numbers != null)
+                break;
             try
             {
                 Thread.sleep(1000);
-            } catch (InterruptedException e)
+            }
+            catch (InterruptedException e)
             {
                 e.printStackTrace();
             }
         }
+        RobotUtils.enterVerificationCode(numbers);
+        RobotUtils.clickAt(PositionConstants.origin.x + PositionConstants.VERIFICATION_CODE_CONFIRM_ORIGIN_X,
+                           PositionConstants.origin.y + PositionConstants.VERIFICATION_CODE_CONFIRM_ORIGIN_Y);
+
+
+    }
+
+    /**
+     *
+     */
+    private static ArrayList<Integer> recogVerificationCode()
+    {
+        //get classifier
+        KNearest kNearest = RecogUtils.getKnnClassifier();
+//        ANN_MLP ann_mlp = RecogUtils.getAnnClassifier();
+
+        ArrayList<Integer> ret = new ArrayList<Integer>();
+
+        //get screen shot
+        ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
+                                 PositionConstants.origin.x,
+                                 PositionConstants.origin.y,
+                                 PositionConstants.FLASH_WIDTH,
+                                 PositionConstants.FLASH_HEIGHT);
+        Mat src = Imgcodecs.imread(ImageUtils.screenCaptureImage);
+        //get images to recognize
+        List<Mat> digitsToRecog = Segmentation.segmentROI(src, picRect, new SegSingleColor());
+        //recognize
+        if (digitsToRecog != null && digitsToRecog.size() == 4)
+        {
+
+            for (Mat mat : digitsToRecog)
+            {
+                Mat toRecog = RecogUtils.getEigenVec(mat, null);
+                int num = (int) kNearest.findNearest(toRecog, 10, new Mat());
+//                    int num = (int)ann_mlp.predict(toRecog);
+                ret.add(num);
+                System.out.println(num);
+            }
+
+            return ret;
+        }
+
+        return null;
     }
 
     private static boolean init()
