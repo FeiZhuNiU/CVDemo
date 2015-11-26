@@ -1,4 +1,4 @@
-package ericyu.recognize.image;
+package ericyu.chepai.image;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |
@@ -7,7 +7,7 @@ package ericyu.recognize.image;
  |           Created by lliyu on 10/31/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
-import ericyu.recognize.recognize.RecogUtils;
+import ericyu.chepai.recognize.RecogUtils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;

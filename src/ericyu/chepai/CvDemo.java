@@ -1,12 +1,12 @@
-package ericyu.recognize;
+package ericyu.chepai;
 
-import ericyu.recognize.image.ImageUtils;
-import ericyu.recognize.image.SegSingleColor;
-import ericyu.recognize.image.Segmentation;
-import ericyu.recognize.recognize.RecogUtils;
-import ericyu.recognize.robot.FlashPosition;
-import ericyu.recognize.robot.PositionConstants;
-import ericyu.recognize.robot.MyRobot;
+import ericyu.chepai.image.ImageUtils;
+import ericyu.chepai.image.SegSingleColor;
+import ericyu.chepai.image.Segmentation;
+import ericyu.chepai.recognize.RecogUtils;
+import ericyu.chepai.robot.FlashPosition;
+import ericyu.chepai.robot.PositionConstants;
+import ericyu.chepai.robot.MyRobot;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.ml.KNearest;

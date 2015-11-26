@@ -1,6 +1,6 @@
-package ericyu.recognize.robot;
+package ericyu.chepai.robot;
 
-import ericyu.recognize.image.ImageUtils;
+import ericyu.chepai.image.ImageUtils;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 

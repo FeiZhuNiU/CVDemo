@@ -1,4 +1,4 @@
-package ericyu.recognize.robot;
+package ericyu.chepai.robot;
 /*===========================================================================+
  |      Copyright (c) 2014 Oracle Corporation, Redwood Shores, CA, USA       |
  |                         All rights reserved.                              |
@@ -63,7 +63,7 @@ public class MyRobot
             Robot r = new Robot();
             r.keyPress(key);
             r.keyRelease(key);
-            r.delay(20);
+            r.delay(50);
         }
         catch (AWTException e)
         {

@@ -1,4 +1,4 @@
-package ericyu.recognize.robot;
+package ericyu.chepai.robot;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |

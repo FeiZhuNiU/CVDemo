@@ -1,4 +1,4 @@
-package ericyu.recognize.recognize;
+package ericyu.chepai.recognize;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |

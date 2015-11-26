@@ -1,4 +1,4 @@
-package ericyu.recognize.robot;
+package ericyu.chepai.robot;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |
@@ -14,5 +14,7 @@ public class Test
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+
     }
 }
