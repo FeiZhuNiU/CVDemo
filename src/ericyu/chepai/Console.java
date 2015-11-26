@@ -35,14 +35,42 @@ public class Console
         //generate a robot
         MyRobot myRobot = new MyRobot(new Robot(),flashPosition);
 
-        myRobot.focusOnCustomAddMoneyInputBox();
-        myRobot.inputAddMoneyRange(900);
-        myRobot.clickAddMoneyButton();
-        myRobot.wait(2000);
-        myRobot.clickBidButton();
-        myRobot.wait(2000);
+        int moneyAddRange = 900;
+        int waitTime = 2000;
+        while(true)
+        {
 
-        //recognize verification code
+            //add money and bid
+            addMoneyStrategy(myRobot, moneyAddRange, waitTime);
+
+            //recognize verification code and confirm
+            recogAndInputAndConfirmVerificationCode(myRobot);
+            myRobot.wait(500);
+
+            switch (verifyResult(myRobot))
+            {
+                //success
+                case 0:
+                    return;
+                //not in bid range
+                case 1:
+                    moneyAddRange = 300;
+                    waitTime = 10;
+                    break;
+                //wrong verification code
+                case -1:
+                    break;
+            }
+        }
+
+    }
+
+    /**
+     * the method will not return until it has recognized the verification code
+     * @param myRobot
+     */
+    public static void recogAndInputAndConfirmVerificationCode(MyRobot myRobot)
+    {
         ArrayList<Integer> numbers;
         while (true)
         {
@@ -63,10 +91,15 @@ public class Console
         myRobot.focusOnVerCodeInputBox();
         myRobot.enterVerificationCode(numbers);
         myRobot.clickConfirmVerificationCodeButton();
-        myRobot.wait(500);
+    }
 
-        verifyResult(myRobot);
-
+    public static void addMoneyStrategy(MyRobot myRobot, int addMoneyRange, int waitBetweenAddAndBid)
+    {
+        myRobot.focusOnCustomAddMoneyInputBox();
+        myRobot.inputAddMoneyRange(addMoneyRange);
+        myRobot.clickAddMoneyButton();
+        myRobot.wait(waitBetweenAddAndBid);
+        myRobot.clickBidButton();
     }
 
     /**
@@ -78,6 +111,7 @@ public class Console
      */
     private static int verifyResult(MyRobot myRobot)
     {
+        // must get a result in three conditions, or the loop will not stop
         while(true)
         {
             ImageUtils.screenCapture("systemNotification.bmp",
@@ -99,8 +133,6 @@ public class Console
                 return -1;
             }
         }
-
-
     }
 
     public static FlashPosition findFlashPosition()
