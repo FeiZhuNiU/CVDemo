@@ -5,6 +5,7 @@ import ericyu.chepai.image.SegSingleColor;
 import ericyu.chepai.image.Segmentation;
 import ericyu.chepai.recognize.RecogUtils;
 import ericyu.chepai.robot.FlashPosition;
+import ericyu.chepai.robot.OCRUtils;
 import ericyu.chepai.robot.PositionConstants;
 import ericyu.chepai.robot.MyRobot;
 import org.opencv.core.*;
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * Created by 麟 on 2015/10/28.
  */
-public class CvDemo
+public class Console
 {
     private static Rect picRect;
     private static FlashPosition flashPosition;
@@ -31,19 +32,17 @@ public class CvDemo
             return;
         }
 
-        Robot robot = new Robot();
         //generate a robot
-        MyRobot myRobot = new MyRobot(robot,flashPosition);
+        MyRobot myRobot = new MyRobot(new Robot(),flashPosition);
 
         myRobot.focusOnCustomAddMoneyInputBox();
-        myRobot.inputAddedMoney(600);
-        myRobot.pressAddMoneyButton();
+        myRobot.inputAddMoneyRange(900);
+        myRobot.clickAddMoneyButton();
         myRobot.wait(2000);
-        myRobot.pressBidButton();
+        myRobot.clickBidButton();
         myRobot.wait(2000);
 
-
-        //recognize
+        //recognize verification code
         ArrayList<Integer> numbers;
         while (true)
         {
@@ -52,7 +51,7 @@ public class CvDemo
                 break;
             try
             {
-                myRobot.pressRefreshVerificationCode();
+                myRobot.clickRefreshVerificationCodeButton();
                 Thread.sleep(1000);
             } catch (InterruptedException e)
             {
@@ -60,9 +59,46 @@ public class CvDemo
             }
         }
 
+        //enter verification code and submit
         myRobot.focusOnVerCodeInputBox();
         myRobot.enterVerificationCode(numbers);
-        myRobot.pressConfirmVerificationCode();
+        myRobot.clickConfirmVerificationCodeButton();
+        myRobot.wait(500);
+
+        verifyResult(myRobot);
+
+    }
+
+    /**
+     * verify bid result
+     * @param myRobot
+     * @return  0   -> bid success
+     *          1   -> not in bid range
+     *          -1  -> wrong verification code
+     */
+    private static int verifyResult(MyRobot myRobot)
+    {
+        while(true)
+        {
+            ImageUtils.screenCapture("systemNotification.bmp",
+                    flashPosition.origin.x + PositionConstants.SYSTEM_NOTIFICATION_WINDOW_X,
+                    flashPosition.origin.y + PositionConstants.SYSTEM_NOTIFICATION_WINDOW_Y,
+                    PositionConstants.SYSTEM_NOTIFICATION_WINDOW_WIDTH,
+                    PositionConstants.SYSTEM_NOTIFICATION_WINDOW_HEIGHT);
+            String result = OCRUtils.doOCR("systemNotification.bmp");
+            if (result.contains("范围"))
+            {
+                myRobot.clickReBidConfirmButton();
+                return 1;
+            } else if (result.contains("出价威功"))
+            {
+                return 0;
+            } else if (result.contains("验"))
+            {
+                myRobot.clickReEnterVerificationCodeConfirmButton();
+                return -1;
+            }
+        }
 
 
     }
@@ -95,7 +131,7 @@ public class CvDemo
 
         ArrayList<Integer> ret = new ArrayList<Integer>();
 
-        //get screen shot
+        //get screen shot of flash
         ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
                 flashPosition.origin.x,
                 flashPosition.origin.y,
@@ -119,7 +155,6 @@ public class CvDemo
 
             return ret;
         }
-
         return null;
     }
 
@@ -135,45 +170,5 @@ public class CvDemo
         flashPosition = findFlashPosition();
         return true;
     }
-
-
-    @Deprecated
-    private static boolean initParams(String[] args)
-    {
-        int argCnt = args.length;
-        if (argCnt < 4)
-        {
-            System.out.println("input args are not correct.\n" +
-                    "There should be 4 args: \n" +
-                    "x,y,width,height\n" +
-                    " ______________________________________\n" +
-                    "|              ^                       |\n" +
-                    "|              |                       |\n" +
-                    "|  screen      y                       |\n" +
-                    "|              |                       |\n" +
-                    "|              v                       |\n" +
-                    "|<----x-------> __width____            |\n" +
-                    "|          ^   |           |           |\n" +
-                    "|      height  | digits    |           |\n" +
-                    "|          v   |___________|           |\n" +
-                    "|                                      |\n" +
-                    "|______________________________________|");
-            return false;
-        }
-        int x, y, width, height;
-        try
-        {
-            x = Integer.parseInt(args[0]);
-            y = Integer.parseInt(args[1]);
-            width = Integer.parseInt(args[2]);
-            height = Integer.parseInt(args[3]);
-        } catch (Exception e)
-        {
-            return false;
-        }
-        picRect = new Rect(x, y, width, height);
-        return true;
-    }
-
 
 }

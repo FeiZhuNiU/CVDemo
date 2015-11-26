@@ -141,13 +141,13 @@ public class MyRobot
                 PositionConstants.VERIFICATION_INPUT_Y);
     }
 
-    public void pressConfirmVerificationCode()
+    public void clickConfirmVerificationCodeButton()
     {
         clickAt(PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_X,
                 PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_Y);
     }
 
-    public void pressRefreshVerificationCode()
+    public void clickRefreshVerificationCodeButton()
     {
         clickAt(PositionConstants.VERIFICATION_REFRESH_BUTTON_X,
                 PositionConstants.VERIFICATION_REFRESH_BUTTON_Y);
@@ -159,7 +159,7 @@ public class MyRobot
                       PositionConstants.CUSTOM_ADD_MONEY_INPUT_Y);
     }
 
-    public void inputAddedMoney(int range)
+    public void inputAddMoneyRange(int range)
     {
         String money = Integer.toString(range);
         for(int i = 0 ; i < money.length(); ++i)
@@ -168,16 +168,28 @@ public class MyRobot
         }
     }
 
-    public void pressAddMoneyButton()
+    public void clickAddMoneyButton()
     {
         clickAt(PositionConstants.ADD_MONEY_BUTTON_X,
                 PositionConstants.ADD_MONEY_BUTTON_Y);
     }
 
-    public void pressBidButton()
+    public void clickBidButton()
     {
         clickAt(PositionConstants.BID_BUTTON_X,
                 PositionConstants.BID_BUTTON_Y);
+    }
+
+    public void clickReBidConfirmButton()
+    {
+        clickAt(PositionConstants.REBID_CONFIRM_BUTTON_X,
+                PositionConstants.REBID_CONFIRM_BUTTON_Y);
+    }
+
+    public void clickReEnterVerificationCodeConfirmButton()
+    {
+        clickAt(PositionConstants.RE_ENTER_VERIFICATION_CONFIRM_BUTTON_X,
+                PositionConstants.RE_ENTER_VERIFICATION_CONFIRM_BUTTON_Y);
     }
     public void wait(int time)
     {

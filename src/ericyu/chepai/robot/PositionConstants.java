@@ -59,4 +59,25 @@ public class PositionConstants
     public static final int BID_BUTTON_X = 800;
     public static final int BID_BUTTON_Y = 400;
 
+    /**
+     * system notification window
+     */
+    public static final int SYSTEM_NOTIFICATION_WINDOW_X         = 450;
+    public static final int SYSTEM_NOTIFICATION_WINDOW_Y         = 295;
+    public static final int SYSTEM_NOTIFICATION_WINDOW_WIDTH     = 400;
+    public static final int SYSTEM_NOTIFICATION_WINDOW_HEIGHT    = 100;
+
+    /**
+     * rebid confirm button
+     */
+    public static final int REBID_CONFIRM_BUTTON_X = 663;
+    public static final int REBID_CONFIRM_BUTTON_Y = 460;
+
+    /**
+     * re-enter verification code confirm button
+     */
+    public static final int RE_ENTER_VERIFICATION_CONFIRM_BUTTON_X = 663;
+    public static final int RE_ENTER_VERIFICATION_CONFIRM_BUTTON_Y = 460;
+
+
 }

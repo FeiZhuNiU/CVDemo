@@ -7,10 +7,13 @@ import org.opencv.imgcodecs.Imgcodecs;
 import java.awt.*;
 import java.io.File;
 import java.util.Arrays;
-
-/**
- * Created by 麟 on 2015/11/25.
- */
+/*===========================================================================+
+ |      Copyright (c) 2015 Eric Yu                                           |
+ |                         All rights reserved.                              |
+ +===========================================================================+
+ |  HISTORY                                                                  |
+ |           Created by lliyu on 11/25/2015  (yulin.jay@gmail.com)           |
+ +===========================================================================*/
 
 /**
  * This class's goal is to generate a instance that know the position where the flash locate on screen
