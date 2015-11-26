@@ -9,23 +9,54 @@ package ericyu.chepai.robot;
 
 public class PositionConstants
 {
+    /**
+     * flash
+     */
+    public static final int FLASH_WIDTH     = 900;
+    public static final int FLASH_HEIGHT    = 700;
 
-    public static final int FLASH_WIDTH = 900;
-    public static final int FLASH_HEIGHT = 700;
-
+    /**
+     * verification code confirm button
+     */
     public static final int VERIFICATION_CODE_CONFIRM_BUTTON_X = 555;
     public static final int VERIFICATION_CODE_CONFIRM_BUTTON_Y = 465;
 
-    public static final int VERIFICATION_CODE_LT_X =747;
-    public static final int VERIFICATION_CODE_LT_Y =365;
-    public static final int VERIFICATION_CODE_WIDTH=105;
-    public static final int VERIFICATION_CODE_HEIGHT=28;
+    /**
+     * verification code image
+     */
+    public static final int VERIFICATION_CODE_LT_X  = 747;
+    public static final int VERIFICATION_CODE_LT_Y  = 365;
+    public static final int VERIFICATION_CODE_WIDTH = 105;
+    public static final int VERIFICATION_CODE_HEIGHT= 28;
 
-    public static final int VERIFICATION_INPUT_X =660;
-    public static final int VERIFICATION_INPUT_Y =380;
+    /**
+     * verification code input box
+     */
+    public static final int VERIFICATION_INPUT_X = 660;
+    public static final int VERIFICATION_INPUT_Y = 380;
 
-    public static final int VERIFICATION_REFRESH_BUTTON_X=800;
-    public static final int VERIFICATION_REFRESH_BUTTON_Y=375;
+    /**
+     * verification code refresh button
+     */
+    public static final int VERIFICATION_REFRESH_BUTTON_X = 800;
+    public static final int VERIFICATION_REFRESH_BUTTON_Y = 375;
 
+    /**
+     * custom add money range input box
+     */
+    public static final int CUSTOM_ADD_MONEY_INPUT_X = 690;
+    public static final int CUSTOM_ADD_MONEY_INPUT_Y = 298;
+
+    /**
+     * add money button
+     */
+    public static final int ADD_MONEY_BUTTON_X = 800;
+    public static final int ADD_MONEY_BUTTON_Y = 296;
+
+    /**
+     * bid (chujia) button
+     */
+    public static final int BID_BUTTON_X = 800;
+    public static final int BID_BUTTON_Y = 400;
 
 }

@@ -19,9 +19,11 @@ import java.util.Map;
 public class MyRobot
 {
     FlashPosition flashPosition;
+    Robot robot;
 
-    public MyRobot(FlashPosition flashPosition)
+    public MyRobot(Robot robot, FlashPosition flashPosition)
     {
+        this.robot = robot;
         this.flashPosition = flashPosition;
     }
 
@@ -50,48 +52,55 @@ public class MyRobot
 
         for (int num : numbers)
         {
-            pressKey(keyMap.get(num));
+            pressNumber(num);
             System.out.println("robot pressed number " + num);
         }
 
     }
 
-    public static void pressKey(int key)
+    /**
+     * press number and delay 50 ms
+     * @param num
+     */
+    public void pressNumber(int num)
     {
-        try
-        {
-            Robot r = new Robot();
-            r.keyPress(key);
-            r.keyRelease(key);
-            r.delay(50);
-        }
-        catch (AWTException e)
-        {
-            e.printStackTrace();
-        }
+        int key = keyMap.get(num);
+        robot.keyPress(key);
+        robot.keyRelease(key);
+        robot.delay(50);
     }
 
     /**
-     * left click at given position and move back
+     * left click at given (relative) position and move back and wait 100 ms
      * @param x
      * @param y
      */
-    public static void clickAt(int x, int y)
+    public void clickAt(int x, int y)
     {
-        try
-        {
-            Point curMousePosition = MouseInfo.getPointerInfo().getLocation();
-            Robot r = new Robot();
-            r.mouseMove(x, y);
-            r.mousePress(InputEvent.BUTTON1_MASK);
-            r.mouseRelease(InputEvent.BUTTON1_MASK);
-            r.mouseMove(curMousePosition.x,curMousePosition.y);
-        }
-        catch (AWTException e)
-        {
-            e.printStackTrace();
-        }
+        Point curMousePosition = MouseInfo.getPointerInfo().getLocation();
+        robot.mouseMove(x + flashPosition.origin.x, y + flashPosition.origin.y);
+        robot.mousePress(InputEvent.BUTTON1_MASK);
+        robot.mouseRelease(InputEvent.BUTTON1_MASK);
+        robot.mouseMove(curMousePosition.x, curMousePosition.y);
+        robot.delay(100);
+    }
 
+    /**
+     * double click and wait 100 ms
+     * @param x
+     * @param y
+     */
+    public void doubleClickAt(int x, int y)
+    {
+        Point curMousePosition = MouseInfo.getPointerInfo().getLocation();
+        robot.mouseMove(x + flashPosition.origin.x, y + flashPosition.origin.y);
+        robot.mousePress(InputEvent.BUTTON1_MASK);
+        robot.mouseRelease(InputEvent.BUTTON1_MASK);
+        robot.delay(100);
+        robot.mousePress(InputEvent.BUTTON1_MASK);
+        robot.mouseRelease(InputEvent.BUTTON1_MASK);
+        robot.mouseMove(curMousePosition.x, curMousePosition.y);
+        robot.delay(100);
     }
 
     public static void main(String[] args)
@@ -128,19 +137,50 @@ public class MyRobot
 
     public void focusOnVerCodeInputBox()
     {
-        clickAt(flashPosition.origin.x + PositionConstants.VERIFICATION_INPUT_X,
-                flashPosition.origin.y + PositionConstants.VERIFICATION_INPUT_Y);
+        clickAt(PositionConstants.VERIFICATION_INPUT_X,
+                PositionConstants.VERIFICATION_INPUT_Y);
     }
 
-    public void confirmVerificationCode()
+    public void pressConfirmVerificationCode()
     {
-        clickAt(flashPosition.origin.x + PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_X,
-                flashPosition.origin.y + PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_Y);
+        clickAt(PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_X,
+                PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_Y);
     }
 
-    public void refreshVerificationCode()
+    public void pressRefreshVerificationCode()
     {
-        clickAt(flashPosition.origin.x + PositionConstants.VERIFICATION_REFRESH_BUTTON_X,
-                flashPosition.origin.y + PositionConstants.VERIFICATION_REFRESH_BUTTON_Y);
+        clickAt(PositionConstants.VERIFICATION_REFRESH_BUTTON_X,
+                PositionConstants.VERIFICATION_REFRESH_BUTTON_Y);
+    }
+
+    public void focusOnCustomAddMoneyInputBox()
+    {
+        doubleClickAt(PositionConstants.CUSTOM_ADD_MONEY_INPUT_X,
+                      PositionConstants.CUSTOM_ADD_MONEY_INPUT_Y);
+    }
+
+    public void inputAddedMoney(int range)
+    {
+        String money = Integer.toString(range);
+        for(int i = 0 ; i < money.length(); ++i)
+        {
+            pressNumber(Integer.parseInt(money.substring(i, i + 1)));
+        }
+    }
+
+    public void pressAddMoneyButton()
+    {
+        clickAt(PositionConstants.ADD_MONEY_BUTTON_X,
+                PositionConstants.ADD_MONEY_BUTTON_Y);
+    }
+
+    public void pressBidButton()
+    {
+        clickAt(PositionConstants.BID_BUTTON_X,
+                PositionConstants.BID_BUTTON_Y);
+    }
+    public void wait(int time)
+    {
+        robot.delay(time);
     }
 }

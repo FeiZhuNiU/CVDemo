@@ -11,6 +11,7 @@ import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.ml.KNearest;
 
+import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class CvDemo
     private static Rect picRect;
     private static FlashPosition flashPosition;
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws AWTException
     {
         if (!init())
         {
@@ -30,8 +31,17 @@ public class CvDemo
             return;
         }
 
+        Robot robot = new Robot();
         //generate a robot
-        MyRobot myRobot = new MyRobot(flashPosition);
+        MyRobot myRobot = new MyRobot(robot,flashPosition);
+
+        myRobot.focusOnCustomAddMoneyInputBox();
+        myRobot.inputAddedMoney(600);
+        myRobot.pressAddMoneyButton();
+        myRobot.wait(2000);
+        myRobot.pressBidButton();
+        myRobot.wait(2000);
+
 
         //recognize
         ArrayList<Integer> numbers;
@@ -42,7 +52,7 @@ public class CvDemo
                 break;
             try
             {
-                myRobot.refreshVerificationCode();
+                myRobot.pressRefreshVerificationCode();
                 Thread.sleep(1000);
             } catch (InterruptedException e)
             {
@@ -52,7 +62,7 @@ public class CvDemo
 
         myRobot.focusOnVerCodeInputBox();
         myRobot.enterVerificationCode(numbers);
-        myRobot.confirmVerificationCode();
+        myRobot.pressConfirmVerificationCode();
 
 
     }
