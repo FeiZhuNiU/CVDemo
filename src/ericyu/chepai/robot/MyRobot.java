@@ -32,9 +32,9 @@ public class MyRobot
     private FlashPosition flashPosition;
     private Robot robot;
 
-    public static final String NOTIFICATION_RE_BID_OUT_OF_RANGE="²»ÔÚĞŞ¸ÄÇø¼ä·¶Î§ÄÚÖØĞÂ";
-    public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="ÊäÈëÕıÈ·Ğ£ÑéÂë";
-    public static final String NOTIFICATION_BID_SUCCESS="³É¹¦";
+    public static final String NOTIFICATION_RE_BID_OUT_OF_RANGE="ä¸åœ¨ä¿®æ”¹åŒºé—´èŒƒå›´å†…é‡æ–°";
+    public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="è¾“å…¥æ­£ç¡®æ ¡éªŒç ";
+    public static final String NOTIFICATION_BID_SUCCESS="æˆåŠŸ";
 
     public MyRobot(Robot robot)
     {
