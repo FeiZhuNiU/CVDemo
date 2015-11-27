@@ -64,11 +64,8 @@ public class FlashPosition
                 }
             }
         }
-        File file = new File("findPosition.bmp");
-        if (file.exists())
-        {
-            file.delete();
-        }
+        ImageUtils.deleteImage("findPosition.bmp");
+
         origin = ret;
         return ret;
     }

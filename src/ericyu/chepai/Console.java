@@ -36,7 +36,7 @@ public class Console
         MyRobot myRobot = new MyRobot(new Robot(),flashPosition);
 
         int moneyAddRange = 900;
-        int waitTime = 2000;
+        int waitTime = 3000;
         while(true)
         {
 
@@ -45,7 +45,7 @@ public class Console
 
             //recognize verification code and confirm
             recogAndInputAndConfirmVerificationCode(myRobot);
-            myRobot.wait(500);
+            myRobot.wait(10);
 
             switch (verifyResult(myRobot))
             {
@@ -59,6 +59,7 @@ public class Console
                     break;
                 //wrong verification code
                 case -1:
+                    waitTime = 10;
                     break;
             }
         }
@@ -111,28 +112,37 @@ public class Console
      */
     private static int verifyResult(MyRobot myRobot)
     {
+        int ret;
+        String image = "systemNotification.bmp";
+        myRobot.wait(500);
         // must get a result in three conditions, or the loop will not stop
         while(true)
         {
-            ImageUtils.screenCapture("systemNotification.bmp",
+            ImageUtils.screenCapture(image,
                     flashPosition.origin.x + PositionConstants.SYSTEM_NOTIFICATION_WINDOW_X,
                     flashPosition.origin.y + PositionConstants.SYSTEM_NOTIFICATION_WINDOW_Y,
                     PositionConstants.SYSTEM_NOTIFICATION_WINDOW_WIDTH,
                     PositionConstants.SYSTEM_NOTIFICATION_WINDOW_HEIGHT);
-            String result = OCRUtils.doOCR("systemNotification.bmp");
-            if (result.contains("范围"))
+            String result = OCRUtils.doOCR(image);
+
+            if (MyRobot.isOutOfRangeNotification(result))
             {
                 myRobot.clickReBidConfirmButton();
-                return 1;
-            } else if (result.contains("出价威功"))
+                ret = 1;
+                break;
+            } else if (MyRobot.isBidSuccess(result))
             {
-                return 0;
-            } else if (result.contains("验"))
+                ret = 0;
+                break;
+            } else if (MyRobot.isReEnterVerificationCode(result))
             {
                 myRobot.clickReEnterVerificationCodeConfirmButton();
-                return -1;
+                ret = -1;
+                break;
             }
         }
+        ImageUtils.deleteImage(image);
+        return ret;
     }
 
     public static FlashPosition findFlashPosition()

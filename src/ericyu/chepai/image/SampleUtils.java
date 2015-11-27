@@ -277,16 +277,8 @@ public class SampleUtils
         Mat trainData = sampleEntry.getKey();
         Mat trainClass = sampleEntry.getValue();
 
-        File file = new File("resources\\traindata.png");
-        if (file.exists())
-        {
-            file.delete();
-        }
-        file = new File("resources\\trainclasses.png");
-        if (file.exists())
-        {
-            file.delete();
-        }
+        ImageUtils.deleteImage("resources\\traindata.png");
+        ImageUtils.deleteImage("resources\\trainclasses.png");
 
         Imgcodecs.imwrite("resources\\traindata.png", trainData);
         Imgcodecs.imwrite("resources\\trainclasses.png", trainClass);

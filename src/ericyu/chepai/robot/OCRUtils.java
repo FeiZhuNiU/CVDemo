@@ -1,5 +1,6 @@
 package ericyu.chepai.robot;
 
+import ericyu.chepai.image.ImageUtils;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
@@ -12,9 +13,14 @@ import java.io.File;
  |  HISTORY                                                                  |
  |           Created by lliyu on 11/26/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
+
 public class OCRUtils
 {
-
+    /**
+     * OCR target image
+     * @param imageName
+     * @return
+     */
     public static String doOCR(String imageName)
     {
         File imageFile = new File(imageName);
@@ -30,5 +36,37 @@ public class OCRUtils
             e.printStackTrace();
         }
         return "";
+    }
+
+    /**
+     * ocr target RECT of current flash
+     * @param flashPosition
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @return
+     */
+    public static String doOCR(FlashPosition flashPosition, int x, int y, int width,int height)
+    {
+        if(flashPosition == null || flashPosition.origin==null)
+        {
+            return "";
+        }
+
+        String imageName = "temp.bmp";
+        //screen capture
+        ImageUtils.screenCapture(imageName,
+                                 flashPosition.origin.x + x,
+                                 flashPosition.origin.y + y,
+                                 width,
+                                 height);
+        //ocr
+        String ret = doOCR(imageName);
+
+        //clean
+        ImageUtils.deleteImage(imageName);
+
+        return ret;
     }
 }

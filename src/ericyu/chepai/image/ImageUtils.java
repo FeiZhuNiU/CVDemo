@@ -667,4 +667,13 @@ public class ImageUtils
         src_bak.copyTo(src);
         return contours;
     }
+
+    public static void deleteImage(String image)
+    {
+        File file = new File(image);
+        if(file.exists())
+        {
+            file.delete();
+        }
+    }
 }

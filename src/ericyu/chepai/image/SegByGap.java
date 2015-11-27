@@ -16,6 +16,7 @@ import org.opencv.imgcodecs.Imgcodecs;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class SegByGap
         implements SegStrategy
 {

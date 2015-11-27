@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,10 @@ public class MyRobot
 {
     FlashPosition flashPosition;
     Robot robot;
+
+    public static final String NOTIFICATION_RE_BID_OUT_OF_RANGE="不在修改区间范围内重新";
+    public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="输入正确校验码";
+    public static final String NOTIFICATION_BID_SUCCESS="成功";
 
     public MyRobot(Robot robot, FlashPosition flashPosition)
     {
@@ -43,11 +48,12 @@ public class MyRobot
         keyMap.put(9, KeyEvent.VK_9);
     }
 
-    public void enterVerificationCode(ArrayList<Integer> numbers)
+    public boolean enterVerificationCode(ArrayList<Integer> numbers)
     {
         if (numbers.size() != 4)
         {
-            System.out.println("there is no 4robot can not work");
+            System.out.println("there is no 4 numbers, robot can not work");
+            return false;
         }
 
         for (int num : numbers)
@@ -55,6 +61,7 @@ public class MyRobot
             pressNumber(num);
             System.out.println("robot pressed number " + num);
         }
+        return true;
 
     }
 
@@ -191,8 +198,39 @@ public class MyRobot
         clickAt(PositionConstants.RE_ENTER_VERIFICATION_CONFIRM_BUTTON_X,
                 PositionConstants.RE_ENTER_VERIFICATION_CONFIRM_BUTTON_Y);
     }
+
     public void wait(int time)
     {
         robot.delay(time);
+    }
+
+    /**
+     * verify whether OCRed resuly is target String
+     * @param str
+     * @return
+     */
+    public static boolean isOutOfRangeNotification(String str)
+    {
+        System.out.println(NOTIFICATION_RE_BID_OUT_OF_RANGE);
+        return isTargetString(str,NOTIFICATION_RE_BID_OUT_OF_RANGE);
+    }
+    public static boolean isReEnterVerificationCode(String str)
+    {
+        return isTargetString(str,NOTIFICATION_RE_ENTER_VERIFICATION_CODE);
+    }
+    public static boolean isBidSuccess(String str)
+    {
+        return isTargetString(str,NOTIFICATION_BID_SUCCESS);
+    }
+    private static boolean isTargetString(String str, String target)
+    {
+        for(int i = 0 ; i < target.length(); ++i)
+        {
+            if (str.contains(target.substring(i,i+1)))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
