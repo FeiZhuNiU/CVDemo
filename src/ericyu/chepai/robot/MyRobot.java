@@ -282,6 +282,13 @@ public class MyRobot
         robot.delay(50);
     }
 
+    public void inputString(String str)
+    {
+        for(int i = 0 ; i < str.length(); ++i)
+        {
+            pressKey(str.charAt(i));
+        }
+    }
     /**
      * left click at given (relative) position and move back and wait 100 ms
      * @param x
@@ -317,7 +324,7 @@ public class MyRobot
 
     public void focusOnVerCodeInputBox()
     {
-        clickAt(FlashPosition.INPUT_VERIFICATION_X,
+        doubleClickAt(FlashPosition.INPUT_VERIFICATION_X,
                 FlashPosition.INPUT_VERIFICATION_Y);
     }
 
@@ -381,6 +388,24 @@ public class MyRobot
     public void wait(int time)
     {
         robot.delay(time);
+    }
+
+    public void focusOnUsernameInputBox()
+    {
+        doubleClickAt(FlashPosition.INPUT_USERNAME_X,
+                FlashPosition.INPUT_USERNAME_Y);
+    }
+
+    public void focusOnPasswordInputBox()
+    {
+        doubleClickAt(FlashPosition.INPUT_PASSWORD_X,
+                FlashPosition.INPUT_PASSWORD_Y);
+    }
+
+    public void clickSubmitUserButton()
+    {
+        clickAt(FlashPosition.BUTTON_SUBMIT_X,
+                FlashPosition.BUTTON_SUBMIT_Y);
     }
 
     /**

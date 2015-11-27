@@ -1,4 +1,4 @@
-package ericyu.chepai.robot.strategy;
+package ericyu.chepai.robot.bidstrategy;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |

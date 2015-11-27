@@ -7,8 +7,8 @@ package ericyu.chepai;
  |           Created by lliyu on 10/28/2015  (lin.yu@oracle.com)             |
  +===========================================================================*/
 import ericyu.chepai.robot.*;
-import ericyu.chepai.robot.strategy.AmbushAndAidStrategy;
-import ericyu.chepai.robot.strategy.IBidStrategy;
+import ericyu.chepai.robot.bidstrategy.AmbushAndAidStrategy;
+import ericyu.chepai.robot.bidstrategy.IBidStrategy;
 import org.opencv.core.*;
 
 import java.awt.*;

@@ -132,8 +132,8 @@ public class FlashPosition
     /**
      * username and password submit button
      */
-    public static final int BUTTON_SUBMIT_X = 600;
-    public static final int BUTTON_SUBMIT_Y = 275;
+    public static final int BUTTON_SUBMIT_X = 660;
+    public static final int BUTTON_SUBMIT_Y = 345;
 
 
     /**
