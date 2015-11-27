@@ -58,7 +58,7 @@ public class FlashPosition
     /**
      * verification code cancel button
      */
-    public static final int BUTTON_VERIFICATION_CODE_CANCEL_X = 750;
+    public static final int BUTTON_VERIFICATION_CODE_CANCEL_X = 700;
     public static final int BUTTON_VERIFICATION_CODE_CANCEL_Y = 465;
     /**
      * verification code image region
@@ -111,9 +111,12 @@ public class FlashPosition
     public static final int BUTTON_RE_ENTER_VERIFICATION_CONFIRM_Y = 460;
     /**
      * request for verification code too often button
+     * same as verification code cancel button
+     * BUTTON_VERIFICATION_CODE_CANCEL_X
+     * BUTTON_VERIFICATION_CODE_CANCEL_Y
      */
-    public static final int BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_X = 666;
-    public static final int BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_Y = 466;
+    public static final int BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_X = 700;
+    public static final int BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_Y = 465;
     /**
      * lowest deal money region
      */

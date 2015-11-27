@@ -32,7 +32,10 @@ public class MyRobot
     public static final String NOTIFICATION_RE_BID_OUT_OF_RANGE="不在修改区间范围内重新";
     public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="输入正确";
     public static final String NOTIFICATION_BID_SUCCESS="成功";
-    //TODO: this may happen between bid and request for v-code. we should make sure this will not happen
+    /**
+     * we avoid verify this condition by combine it to clickCancelVerificationCodeButton()
+     */
+    @Deprecated
     public static final String NOTIFICATION_REQUEST_VCODE_TOO_OFTEN="过于频繁";
 
     public MyRobot(Robot robot)
@@ -191,11 +194,9 @@ public class MyRobot
                 break;
 
             clickCancelVerificationCodeButton();
-            wait(1000);
-            //TODO verify current page
+            wait(200);
+            //TODO : lan lag ? verify current page
             clickBidButton();
-            wait(3500);
-
         }
 
         //enter verification code and submit
