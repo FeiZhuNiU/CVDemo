@@ -31,6 +31,7 @@ public class Console
     private static boolean init()
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        System.out.println("this line is for test encoding :" + MyRobot.NOTIFICATION_RE_BID_OUT_OF_RANGE);
 
         //generate a robot
         try

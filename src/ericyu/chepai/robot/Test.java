@@ -22,10 +22,10 @@ public class Test
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 //        FlashPosition flashPosition = new FlashPosition();
 //        ImageUtils.screenCapture("test.bmp",
-//                                 flashPosition.origin.x + FlashPosition.LOWEST_DEAL_X,
-//                                 flashPosition.origin.y + FlashPosition.LOWEST_DEAL_Y,
-//                                 FlashPosition.LOWEST_DEAL_WIDTH,
-//                                 FlashPosition.LOWEST_DEAL_HEIGHT);
+//                                 flashPosition.origin.x + FlashPosition.REGION_LOWEST_DEAL_X,
+//                                 flashPosition.origin.y + FlashPosition.REGION_LOWEST_DEAL_Y,
+//                                 FlashPosition.REGION_LOWEST_DEAL_WIDTH,
+//                                 FlashPosition.REGION_LOWEST_DEAL_HEIGHT);
 //        File imageFile = new File("test.bmp");
 //        Tesseract instance = new Tesseract();
 //

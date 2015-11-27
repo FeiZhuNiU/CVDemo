@@ -11,8 +11,6 @@ import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.image.SegSingleColor;
 import ericyu.chepai.image.Segmentation;
 import ericyu.chepai.recognize.RecogUtils;
-import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -22,7 +20,6 @@ import org.opencv.ml.KNearest;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,20 +39,49 @@ public class MyRobot
         findFlashPosition();
     }
 
-    public static Map<Integer, Integer> keyMap = new HashMap<Integer, Integer>();
+    public static Map<Character, Integer> keyMap = new HashMap<Character, Integer>();
 
     static
     {
-        keyMap.put(0, KeyEvent.VK_0);
-        keyMap.put(1, KeyEvent.VK_1);
-        keyMap.put(2, KeyEvent.VK_2);
-        keyMap.put(3, KeyEvent.VK_3);
-        keyMap.put(4, KeyEvent.VK_4);
-        keyMap.put(5, KeyEvent.VK_5);
-        keyMap.put(6, KeyEvent.VK_6);
-        keyMap.put(7, KeyEvent.VK_7);
-        keyMap.put(8, KeyEvent.VK_8);
-        keyMap.put(9, KeyEvent.VK_9);
+        keyMap.put('0', KeyEvent.VK_0);
+        keyMap.put('1', KeyEvent.VK_1);
+        keyMap.put('2', KeyEvent.VK_2);
+        keyMap.put('3', KeyEvent.VK_3);
+        keyMap.put('4', KeyEvent.VK_4);
+        keyMap.put('5', KeyEvent.VK_5);
+        keyMap.put('6', KeyEvent.VK_6);
+        keyMap.put('7', KeyEvent.VK_7);
+        keyMap.put('8', KeyEvent.VK_8);
+        keyMap.put('9', KeyEvent.VK_9);
+
+        keyMap.put('a', KeyEvent.VK_A);
+        keyMap.put('b', KeyEvent.VK_B);
+        keyMap.put('c', KeyEvent.VK_C);
+        keyMap.put('d', KeyEvent.VK_D);
+        keyMap.put('e', KeyEvent.VK_E);
+        keyMap.put('f', KeyEvent.VK_F);
+        keyMap.put('g', KeyEvent.VK_G);
+        keyMap.put('h', KeyEvent.VK_H);
+        keyMap.put('i', KeyEvent.VK_I);
+        keyMap.put('j', KeyEvent.VK_J);
+        keyMap.put('k', KeyEvent.VK_K);
+        keyMap.put('l', KeyEvent.VK_L);
+        keyMap.put('m', KeyEvent.VK_M);
+        keyMap.put('n', KeyEvent.VK_N);
+        keyMap.put('o', KeyEvent.VK_O);
+        keyMap.put('p', KeyEvent.VK_P);
+        keyMap.put('q', KeyEvent.VK_Q);
+        keyMap.put('r', KeyEvent.VK_R);
+        keyMap.put('s', KeyEvent.VK_S);
+        keyMap.put('t', KeyEvent.VK_T);
+        keyMap.put('u', KeyEvent.VK_U);
+        keyMap.put('v', KeyEvent.VK_V);
+        keyMap.put('w', KeyEvent.VK_W);
+        keyMap.put('x', KeyEvent.VK_X);
+        keyMap.put('y', KeyEvent.VK_Y);
+        keyMap.put('z', KeyEvent.VK_Z);
+
+
     }
 
     public static void main(String[] args)
@@ -124,10 +150,10 @@ public class MyRobot
         while(true)
         {
             ImageUtils.screenCapture(image,
-                                     flashPosition.origin.x + FlashPosition.SYSTEM_NOTIFICATION_WINDOW_X,
-                                     flashPosition.origin.y + FlashPosition.SYSTEM_NOTIFICATION_WINDOW_Y,
-                                     FlashPosition.SYSTEM_NOTIFICATION_WINDOW_WIDTH,
-                                     FlashPosition.SYSTEM_NOTIFICATION_WINDOW_HEIGHT);
+                                     flashPosition.origin.x + FlashPosition.REGION_SYSTEM_NOTIFICATION_X,
+                                     flashPosition.origin.y + FlashPosition.REGION_SYSTEM_NOTIFICATION_Y,
+                                     FlashPosition.REGION_SYSTEM_NOTIFICATION_WIDTH,
+                                     FlashPosition.REGION_SYSTEM_NOTIFICATION_HEIGHT);
             String result = OCRUtils.doOCR(image);
 
             if (isOutOfRangeNotification(result))
@@ -195,10 +221,10 @@ public class MyRobot
                 FlashPosition.FLASH_HEIGHT);
         Mat src = Imgcodecs.imread(ImageUtils.screenCaptureImage);
         //get images to recognize
-        Rect picRect = new Rect(FlashPosition.VERIFICATION_CODE_LT_X,
-                           FlashPosition.VERIFICATION_CODE_LT_Y,
-                           FlashPosition.VERIFICATION_CODE_WIDTH,
-                           FlashPosition.VERIFICATION_CODE_HEIGHT);
+        Rect picRect = new Rect(FlashPosition.REGION_VERIFICATION_CODE_LT_X,
+                           FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
+                           FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
+                           FlashPosition.REGION_VERIFICATION_CODE_HEIGHT);
         java.util.List<Mat> digitsToRecog = Segmentation.segmentROI(src, picRect, new SegSingleColor());
         //recognize
         if (digitsToRecog != null && digitsToRecog.size() == 4)
@@ -228,7 +254,7 @@ public class MyRobot
 
         for (int num : numbers)
         {
-            pressNumber(num);
+            pressKey((char)(num+48));
             System.out.println("robot pressed number " + num);
         }
         return true;
@@ -237,13 +263,22 @@ public class MyRobot
 
     /**
      * press number and delay 50 ms
-     * @param num
+     * @param c
      */
-    public void pressNumber(int num)
+    public void pressKey(Character c)
     {
-        int key = keyMap.get(num);
+        boolean isUpper = Character.isUpperCase(c);
+        int key = keyMap.get(Character.toLowerCase(c));
+        if(isUpper)
+        {
+            robot.keyPress(KeyEvent.VK_SHIFT);
+        }
         robot.keyPress(key);
         robot.keyRelease(key);
+        if(isUpper)
+        {
+            robot.keyRelease(KeyEvent.VK_SHIFT);
+        }
         robot.delay(50);
     }
 
@@ -282,32 +317,32 @@ public class MyRobot
 
     public void focusOnVerCodeInputBox()
     {
-        clickAt(FlashPosition.VERIFICATION_INPUT_X,
-                FlashPosition.VERIFICATION_INPUT_Y);
+        clickAt(FlashPosition.INPUT_VERIFICATION_X,
+                FlashPosition.INPUT_VERIFICATION_Y);
     }
 
     public void clickConfirmVerificationCodeButton()
     {
-        clickAt(FlashPosition.VERIFICATION_CODE_CONFIRM_BUTTON_X,
-                FlashPosition.VERIFICATION_CODE_CONFIRM_BUTTON_Y);
+        clickAt(FlashPosition.BUTTON_VERIFICATION_CODE_CONFIRM_X,
+                FlashPosition.BUTTON_VERIFICATION_CODE_CONFIRM_Y);
     }
 
     public void clickCancelVerificationCodeButton()
     {
-        clickAt(FlashPosition.VERIFICATION_CODE_CANCEL_BUTTON_X,
-                FlashPosition.VERIFICATION_CODE_CANCEL_BUTTON_Y);
+        clickAt(FlashPosition.BUTTON_VERIFICATION_CODE_CANCEL_X,
+                FlashPosition.BUTTON_VERIFICATION_CODE_CANCEL_Y);
     }
 
     public void clickRefreshVerificationCodeButton()
     {
-        clickAt(FlashPosition.VERIFICATION_REFRESH_BUTTON_X,
-                FlashPosition.VERIFICATION_REFRESH_BUTTON_Y);
+        clickAt(FlashPosition.BUTTON_VERIFICATION_REFRESH_X,
+                FlashPosition.BUTTON_VERIFICATION_REFRESH_Y);
     }
 
     public void focusOnCustomAddMoneyInputBox()
     {
-        doubleClickAt(FlashPosition.CUSTOM_ADD_MONEY_INPUT_X,
-                      FlashPosition.CUSTOM_ADD_MONEY_INPUT_Y);
+        doubleClickAt(FlashPosition.INPUT_CUSTOM_ADD_MONEY_X,
+                      FlashPosition.INPUT_CUSTOM_ADD_MONEY_Y);
     }
 
     public void inputAddMoneyRange(int range)
@@ -315,32 +350,32 @@ public class MyRobot
         String money = Integer.toString(range);
         for(int i = 0 ; i < money.length(); ++i)
         {
-            pressNumber(Integer.parseInt(money.substring(i, i + 1)));
+            pressKey(money.charAt(i));
         }
     }
 
     public void clickAddMoneyButton()
     {
-        clickAt(FlashPosition.ADD_MONEY_BUTTON_X,
-                FlashPosition.ADD_MONEY_BUTTON_Y);
+        clickAt(FlashPosition.BUTTON_ADD_MONEY_X,
+                FlashPosition.BUTTON_ADD_MONEY_Y);
     }
 
     public void clickBidButton()
     {
-        clickAt(FlashPosition.BID_BUTTON_X,
-                FlashPosition.BID_BUTTON_Y);
+        clickAt(FlashPosition.BUTTON_BID_X,
+                FlashPosition.BUTTON_BID_Y);
     }
 
     public void clickReBidConfirmButton()
     {
-        clickAt(FlashPosition.REBID_CONFIRM_BUTTON_X,
-                FlashPosition.REBID_CONFIRM_BUTTON_Y);
+        clickAt(FlashPosition.BUTTON_REBID_CONFIRM_X,
+                FlashPosition.BUTTON_REBID_CONFIRM_Y);
     }
 
     public void clickReEnterVerificationCodeConfirmButton()
     {
-        clickAt(FlashPosition.RE_ENTER_VERIFICATION_CONFIRM_BUTTON_X,
-                FlashPosition.RE_ENTER_VERIFICATION_CONFIRM_BUTTON_Y);
+        clickAt(FlashPosition.BUTTON_RE_ENTER_VERIFICATION_CONFIRM_X,
+                FlashPosition.BUTTON_RE_ENTER_VERIFICATION_CONFIRM_Y);
     }
 
     public void wait(int time)
@@ -355,7 +390,6 @@ public class MyRobot
      */
     public boolean isOutOfRangeNotification(String str)
     {
-        System.out.println(NOTIFICATION_RE_BID_OUT_OF_RANGE);
         return isTargetString(str,NOTIFICATION_RE_BID_OUT_OF_RANGE);
     }
     public boolean isReEnterVerificationCode(String str)
@@ -381,10 +415,10 @@ public class MyRobot
     public int getLowestDeal()
     {
         String result = OCRUtils.doOCR(flashPosition,
-                                       FlashPosition.LOWEST_DEAL_X,
-                                       FlashPosition.LOWEST_DEAL_Y,
-                                       FlashPosition.LOWEST_DEAL_WIDTH,
-                                       FlashPosition.LOWEST_DEAL_HEIGHT);
+                                       FlashPosition.REGION_LOWEST_DEAL_X,
+                                       FlashPosition.REGION_LOWEST_DEAL_Y,
+                                       FlashPosition.REGION_LOWEST_DEAL_WIDTH,
+                                       FlashPosition.REGION_LOWEST_DEAL_HEIGHT);
         int ret = 0;
         try
         {
