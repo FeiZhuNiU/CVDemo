@@ -22,7 +22,7 @@ public class Console
             System.out.println("init failed!");
             return;
         }
-        AmbushAndAidStrategy bidStrategy = new AmbushAndAidStrategy(robot);
+        IBidStrategy bidStrategy = new AmbushAndAidStrategy(robot);
         bidStrategy.execute();
     }
 

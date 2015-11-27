@@ -22,6 +22,12 @@ public class PositionConstants
     public static final int VERIFICATION_CODE_CONFIRM_BUTTON_Y = 465;
 
     /**
+     * verification code cancel button
+     */
+    public static final int VERIFICATION_CODE_CANCEL_BUTTON_X = 750;
+    public static final int VERIFICATION_CODE_CANCEL_BUTTON_Y = 465;
+
+    /**
      * verification code image
      */
     public static final int VERIFICATION_CODE_LT_X  = 747;

@@ -25,8 +25,8 @@ public class AmbushAndAidStrategy implements IBidStrategy
         {
 
             //add money and bid
-            addMoneyStrategy(moneyAddRange, waitTime);
-
+            addMoneyAndBid(moneyAddRange, waitTime);
+            robot.wait(1000);
             //recognize verification code and confirm
             robot.recogAndInputVerificationCode();
             robot.clickConfirmVerificationCodeButton();
@@ -49,8 +49,8 @@ public class AmbushAndAidStrategy implements IBidStrategy
             }
         }
     }
-    
-    public void addMoneyStrategy(int addMoneyRange, int waitBetweenAddAndBid)
+
+    public void addMoneyAndBid(int addMoneyRange, int waitBetweenAddAndBid)
     {
         robot.focusOnCustomAddMoneyInputBox();
         robot.inputAddMoneyRange(addMoneyRange);

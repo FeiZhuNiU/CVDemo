@@ -158,14 +158,13 @@ public class MyRobot
             numbers = recogVerificationCode();
             if (numbers != null)
                 break;
-            try
-            {
-                clickRefreshVerificationCodeButton();
-                Thread.sleep(1000);
-            } catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
+
+            clickCancelVerificationCodeButton();
+            wait(1000);
+            //TODO verify current page
+            clickBidButton();
+            wait(3500);
+
         }
 
         //enter verification code and submit
@@ -287,6 +286,12 @@ public class MyRobot
     {
         clickAt(PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_X,
                 PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_Y);
+    }
+
+    public void clickCancelVerificationCodeButton()
+    {
+        clickAt(PositionConstants.VERIFICATION_CODE_CANCEL_BUTTON_X,
+                PositionConstants.VERIFICATION_CODE_CANCEL_BUTTON_Y);
     }
 
     public void clickRefreshVerificationCodeButton()
