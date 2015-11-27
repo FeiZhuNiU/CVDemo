@@ -1,4 +1,4 @@
-package ericyu.chepai.robot;
+package ericyu.chepai.robot.strategy;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |

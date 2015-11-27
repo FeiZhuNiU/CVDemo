@@ -1,4 +1,4 @@
-package ericyu.chepai.robot;
+package ericyu.chepai.robot.strategy;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |
@@ -6,6 +6,8 @@ package ericyu.chepai.robot;
  |  HISTORY                                                                  |
  |           Created by lliyu on 11/27/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
+
+import ericyu.chepai.robot.MyRobot;
 
 public class AmbushAndAidStrategy implements IBidStrategy
 {
