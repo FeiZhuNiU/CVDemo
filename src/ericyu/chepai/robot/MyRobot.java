@@ -121,10 +121,10 @@ public class MyRobot
         while(true)
         {
             ImageUtils.screenCapture(image,
-                                     flashPosition.origin.x + PositionConstants.SYSTEM_NOTIFICATION_WINDOW_X,
-                                     flashPosition.origin.y + PositionConstants.SYSTEM_NOTIFICATION_WINDOW_Y,
-                                     PositionConstants.SYSTEM_NOTIFICATION_WINDOW_WIDTH,
-                                     PositionConstants.SYSTEM_NOTIFICATION_WINDOW_HEIGHT);
+                                     flashPosition.origin.x + FlashPosition.SYSTEM_NOTIFICATION_WINDOW_X,
+                                     flashPosition.origin.y + FlashPosition.SYSTEM_NOTIFICATION_WINDOW_Y,
+                                     FlashPosition.SYSTEM_NOTIFICATION_WINDOW_WIDTH,
+                                     FlashPosition.SYSTEM_NOTIFICATION_WINDOW_HEIGHT);
             String result = OCRUtils.doOCR(image);
 
             if (isOutOfRangeNotification(result))
@@ -187,14 +187,14 @@ public class MyRobot
         ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
                 flashPosition.origin.x,
                 flashPosition.origin.y,
-                PositionConstants.FLASH_WIDTH,
-                PositionConstants.FLASH_HEIGHT);
+                FlashPosition.FLASH_WIDTH,
+                FlashPosition.FLASH_HEIGHT);
         Mat src = Imgcodecs.imread(ImageUtils.screenCaptureImage);
         //get images to recognize
-        Rect picRect = new Rect(PositionConstants.VERIFICATION_CODE_LT_X,
-                           PositionConstants.VERIFICATION_CODE_LT_Y,
-                           PositionConstants.VERIFICATION_CODE_WIDTH,
-                           PositionConstants.VERIFICATION_CODE_HEIGHT);
+        Rect picRect = new Rect(FlashPosition.VERIFICATION_CODE_LT_X,
+                           FlashPosition.VERIFICATION_CODE_LT_Y,
+                           FlashPosition.VERIFICATION_CODE_WIDTH,
+                           FlashPosition.VERIFICATION_CODE_HEIGHT);
         java.util.List<Mat> digitsToRecog = Segmentation.segmentROI(src, picRect, new SegSingleColor());
         //recognize
         if (digitsToRecog != null && digitsToRecog.size() == 4)
@@ -278,32 +278,32 @@ public class MyRobot
 
     public void focusOnVerCodeInputBox()
     {
-        clickAt(PositionConstants.VERIFICATION_INPUT_X,
-                PositionConstants.VERIFICATION_INPUT_Y);
+        clickAt(FlashPosition.VERIFICATION_INPUT_X,
+                FlashPosition.VERIFICATION_INPUT_Y);
     }
 
     public void clickConfirmVerificationCodeButton()
     {
-        clickAt(PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_X,
-                PositionConstants.VERIFICATION_CODE_CONFIRM_BUTTON_Y);
+        clickAt(FlashPosition.VERIFICATION_CODE_CONFIRM_BUTTON_X,
+                FlashPosition.VERIFICATION_CODE_CONFIRM_BUTTON_Y);
     }
 
     public void clickCancelVerificationCodeButton()
     {
-        clickAt(PositionConstants.VERIFICATION_CODE_CANCEL_BUTTON_X,
-                PositionConstants.VERIFICATION_CODE_CANCEL_BUTTON_Y);
+        clickAt(FlashPosition.VERIFICATION_CODE_CANCEL_BUTTON_X,
+                FlashPosition.VERIFICATION_CODE_CANCEL_BUTTON_Y);
     }
 
     public void clickRefreshVerificationCodeButton()
     {
-        clickAt(PositionConstants.VERIFICATION_REFRESH_BUTTON_X,
-                PositionConstants.VERIFICATION_REFRESH_BUTTON_Y);
+        clickAt(FlashPosition.VERIFICATION_REFRESH_BUTTON_X,
+                FlashPosition.VERIFICATION_REFRESH_BUTTON_Y);
     }
 
     public void focusOnCustomAddMoneyInputBox()
     {
-        doubleClickAt(PositionConstants.CUSTOM_ADD_MONEY_INPUT_X,
-                      PositionConstants.CUSTOM_ADD_MONEY_INPUT_Y);
+        doubleClickAt(FlashPosition.CUSTOM_ADD_MONEY_INPUT_X,
+                      FlashPosition.CUSTOM_ADD_MONEY_INPUT_Y);
     }
 
     public void inputAddMoneyRange(int range)
@@ -317,26 +317,26 @@ public class MyRobot
 
     public void clickAddMoneyButton()
     {
-        clickAt(PositionConstants.ADD_MONEY_BUTTON_X,
-                PositionConstants.ADD_MONEY_BUTTON_Y);
+        clickAt(FlashPosition.ADD_MONEY_BUTTON_X,
+                FlashPosition.ADD_MONEY_BUTTON_Y);
     }
 
     public void clickBidButton()
     {
-        clickAt(PositionConstants.BID_BUTTON_X,
-                PositionConstants.BID_BUTTON_Y);
+        clickAt(FlashPosition.BID_BUTTON_X,
+                FlashPosition.BID_BUTTON_Y);
     }
 
     public void clickReBidConfirmButton()
     {
-        clickAt(PositionConstants.REBID_CONFIRM_BUTTON_X,
-                PositionConstants.REBID_CONFIRM_BUTTON_Y);
+        clickAt(FlashPosition.REBID_CONFIRM_BUTTON_X,
+                FlashPosition.REBID_CONFIRM_BUTTON_Y);
     }
 
     public void clickReEnterVerificationCodeConfirmButton()
     {
-        clickAt(PositionConstants.RE_ENTER_VERIFICATION_CONFIRM_BUTTON_X,
-                PositionConstants.RE_ENTER_VERIFICATION_CONFIRM_BUTTON_Y);
+        clickAt(FlashPosition.RE_ENTER_VERIFICATION_CONFIRM_BUTTON_X,
+                FlashPosition.RE_ENTER_VERIFICATION_CONFIRM_BUTTON_Y);
     }
 
     public void wait(int time)

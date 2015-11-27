@@ -21,10 +21,10 @@ public class Test
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         FlashPosition flashPosition = new FlashPosition();
         ImageUtils.screenCapture("test.bmp",
-                                 flashPosition.origin.x + PositionConstants.VERIFICATION_CODE_LT_X,
-                                 flashPosition.origin.y + PositionConstants.VERIFICATION_CODE_LT_Y,
-                                 PositionConstants.VERIFICATION_CODE_WIDTH,
-                                 PositionConstants.VERIFICATION_CODE_HEIGHT);
+                                 flashPosition.origin.x + FlashPosition.VERIFICATION_CODE_LT_X,
+                                 flashPosition.origin.y + FlashPosition.VERIFICATION_CODE_LT_Y,
+                                 FlashPosition.VERIFICATION_CODE_WIDTH,
+                                 FlashPosition.VERIFICATION_CODE_HEIGHT);
         File imageFile = new File("test.bmp");
         Tesseract instance = new Tesseract();
 
