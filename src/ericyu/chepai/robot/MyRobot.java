@@ -11,6 +11,8 @@ import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.image.SegSingleColor;
 import ericyu.chepai.image.Segmentation;
 import ericyu.chepai.recognize.RecogUtils;
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -20,6 +22,7 @@ import org.opencv.ml.KNearest;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -373,5 +376,26 @@ public class MyRobot
             }
         }
         return false;
+    }
+
+    public int getLowestDeal()
+    {
+        String result = OCRUtils.doOCR(flashPosition,
+                                       FlashPosition.LOWEST_DEAL_X,
+                                       FlashPosition.LOWEST_DEAL_Y,
+                                       FlashPosition.LOWEST_DEAL_WIDTH,
+                                       FlashPosition.LOWEST_DEAL_HEIGHT);
+        int ret = 0;
+        try
+        {
+            String fixed_result = result.substring(0, 5);
+            ret = Integer.parseInt(fixed_result);
+        }
+        catch (Exception e)
+        {
+//            e.printStackTrace();
+            System.out.println("get Lowest deal failed!");
+        }
+        return ret;
     }
 }

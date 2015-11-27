@@ -104,6 +104,13 @@ public class FlashPosition
      */
     public static final int RE_ENTER_VERIFICATION_CONFIRM_BUTTON_X = 663;
     public static final int RE_ENTER_VERIFICATION_CONFIRM_BUTTON_Y = 460;
+    /**
+     * lowest deal money block
+     */
+    public static final int LOWEST_DEAL_X       = 640;
+    public static final int LOWEST_DEAL_Y       = 245;
+    public static final int LOWEST_DEAL_WIDTH   = 55;
+    public static final int LOWEST_DEAL_HEIGHT  = 23;
 
 
     /**

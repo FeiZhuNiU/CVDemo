@@ -12,6 +12,7 @@ import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import org.opencv.core.Core;
 
+import java.awt.*;
 import java.io.File;
 
 public class Test
@@ -19,23 +20,36 @@ public class Test
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        FlashPosition flashPosition = new FlashPosition();
-        ImageUtils.screenCapture("test.bmp",
-                                 flashPosition.origin.x + FlashPosition.VERIFICATION_CODE_LT_X,
-                                 flashPosition.origin.y + FlashPosition.VERIFICATION_CODE_LT_Y,
-                                 FlashPosition.VERIFICATION_CODE_WIDTH,
-                                 FlashPosition.VERIFICATION_CODE_HEIGHT);
-        File imageFile = new File("test.bmp");
-        Tesseract instance = new Tesseract();
-
-        try
+//        FlashPosition flashPosition = new FlashPosition();
+//        ImageUtils.screenCapture("test.bmp",
+//                                 flashPosition.origin.x + FlashPosition.LOWEST_DEAL_X,
+//                                 flashPosition.origin.y + FlashPosition.LOWEST_DEAL_Y,
+//                                 FlashPosition.LOWEST_DEAL_WIDTH,
+//                                 FlashPosition.LOWEST_DEAL_HEIGHT);
+//        File imageFile = new File("test.bmp");
+//        Tesseract instance = new Tesseract();
+//
+//        try
+//        {
+//            String result = instance.doOCR(imageFile);
+//            System.out.println(result);
+//        }
+//        catch (TesseractException e)
+//        {
+//            e.printStackTrace();
+//        }
+        while(true)
         {
-            String result = instance.doOCR(imageFile);
-            System.out.println(result);
-        }
-        catch (TesseractException e)
-        {
-            e.printStackTrace();
+            try
+            {
+                MyRobot robot = new MyRobot(new Robot());
+                System.out.println(robot.getLowestDeal());
+            }
+            catch (AWTException e)
+            {
+                e.printStackTrace();
+                return;
+            }
         }
 
 

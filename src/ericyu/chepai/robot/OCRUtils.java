@@ -28,7 +28,7 @@ public class OCRUtils
         try
         {
             String result = instance.doOCR(imageFile);
-            System.out.println(result);
+            result = result.trim();
             return result;
         }
         catch (TesseractException e)
