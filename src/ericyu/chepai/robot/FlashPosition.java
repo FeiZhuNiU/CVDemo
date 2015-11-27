@@ -1,12 +1,4 @@
 package ericyu.chepai.robot;
-
-import ericyu.chepai.image.ImageUtils;
-import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
-
-import java.awt.*;
-import java.io.File;
-import java.util.Arrays;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |
@@ -15,8 +7,15 @@ import java.util.Arrays;
  |           Created by lliyu on 11/25/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.image.ImageUtils;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
+import java.awt.*;
+import java.util.Arrays;
+
+
 /**
- * This class's goal is to generate a instance that know the position where the flash locate on screen
+ * Flash position, and all button positions on that flash
  *
  * It will try to find the position in the default constructor by pre-configured (topLeftCornerColor)
  * if fails, the origin will be null
@@ -26,13 +25,16 @@ public class FlashPosition
     /**
      * the order should be b/g/r
      */
-    private static double[] topLeftCornerColor = {43, 31.0, 25};
+    private static final double[] topLeftCornerColor = {43, 31.0, 25};
 
     /**
      * coordinate of top left corner
      */
     public Point origin;
 
+    /**
+     * This constructor meant to get to know the position where the flash locate on screen
+     */
     public FlashPosition()
     {
         origin = findPositionOfTargetColor(topLeftCornerColor);
@@ -111,8 +113,11 @@ public class FlashPosition
     private Point findPositionOfTargetColor(double[] targetColor)
     {
         Point ret = null;
-        ImageUtils.screenCapture("findPosition.bmp");
-        Mat screen = Imgcodecs.imread("findPosition.bmp");
+        String image = "findPosition.bmp";
+
+        ImageUtils.screenCapture(image);
+        Mat screen = Imgcodecs.imread(image);
+
         boolean hasFound = false;
         for (int i = 0; i < screen.height(); ++i)
         {
@@ -130,7 +135,7 @@ public class FlashPosition
                 }
             }
         }
-        ImageUtils.deleteImage("findPosition.bmp");
+        ImageUtils.deleteImage(image);
 
         origin = ret;
         return ret;

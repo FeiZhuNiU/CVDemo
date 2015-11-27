@@ -173,9 +173,10 @@ public class MyRobot
     }
 
     /**
-     *
+     * recognize verification code
+     * @return null if fail
      */
-    private  ArrayList<Integer> recogVerificationCode()
+    public ArrayList<Integer> recogVerificationCode()
     {
         //get classifier
         KNearest kNearest = RecogUtils.getKnnClassifier();
