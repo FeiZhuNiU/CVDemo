@@ -7,9 +7,7 @@ package ericyu.chepai.robot;
  |           Created by lliyu on 11/27/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
-public class BidStrategy
+public interface IBidStrategy
 {
-
-
-
+    void execute();
 }

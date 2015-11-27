@@ -7,29 +7,36 @@ package ericyu.chepai.robot;
  |           Created by lliyu on 11/2/2015  (lin.yu@oracle.com)              |
  +===========================================================================*/
 
+import ericyu.chepai.image.ImageUtils;
+import ericyu.chepai.image.SegSingleColor;
+import ericyu.chepai.image.Segmentation;
+import ericyu.chepai.recognize.RecogUtils;
 import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.Rect;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.ml.KNearest;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MyRobot
 {
-    FlashPosition flashPosition;
-    Robot robot;
+    private FlashPosition flashPosition;
+    private Robot robot;
 
     public static final String NOTIFICATION_RE_BID_OUT_OF_RANGE="不在修改区间范围内重新";
     public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="输入正确校验码";
     public static final String NOTIFICATION_BID_SUCCESS="成功";
 
-    public MyRobot(Robot robot, FlashPosition flashPosition)
+    public MyRobot(Robot robot)
     {
         this.robot = robot;
-        this.flashPosition = flashPosition;
+        findFlashPosition();
     }
 
     public static Map<Integer, Integer> keyMap = new HashMap<Integer, Integer>();
@@ -46,6 +53,166 @@ public class MyRobot
         keyMap.put(7, KeyEvent.VK_7);
         keyMap.put(8, KeyEvent.VK_8);
         keyMap.put(9, KeyEvent.VK_9);
+    }
+
+    public static void main(String[] args)
+    {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+        checkColor();
+
+//        System.out.println(point.x + "  " + point.y);
+//        clickAt(point.x,point.y);
+    }
+
+    /**
+     * manually get color if background color is changed
+     */
+    private static void checkColor()
+    {
+        try
+        {
+            java.awt.Robot r = new java.awt.Robot();
+            while (true)
+            {
+                Point point = MouseInfo.getPointerInfo().getLocation();
+                Color color = r.getPixelColor(point.x, point.y);
+                System.out.println("x:" + point.x + " y:" + point.y + " color: " + color);
+                r.delay(1000);
+            }
+        }
+        catch (AWTException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * return until find flash position
+     * @return
+     */
+    public void findFlashPosition()
+    {
+        while (true)
+        {
+            flashPosition = new FlashPosition();
+            if (flashPosition.origin != null)
+            {
+                System.out.println("flash origin found: " + flashPosition.origin.x + "," + flashPosition.origin.y);
+                break;
+            }
+            System.out.println("flash not found yet");
+        }
+    }
+
+    /**
+     * verify bid result
+     * @return  0   -> bid success
+     *          1   -> not in bid range
+     *          -1  -> wrong verification code
+     */
+    public int verifyResult()
+    {
+        int ret;
+        String image = "systemNotification.bmp";
+        wait(500);
+        // must get a result in three conditions, or the loop will not stop
+        while(true)
+        {
+            ImageUtils.screenCapture(image,
+                                     flashPosition.origin.x + PositionConstants.SYSTEM_NOTIFICATION_WINDOW_X,
+                                     flashPosition.origin.y + PositionConstants.SYSTEM_NOTIFICATION_WINDOW_Y,
+                                     PositionConstants.SYSTEM_NOTIFICATION_WINDOW_WIDTH,
+                                     PositionConstants.SYSTEM_NOTIFICATION_WINDOW_HEIGHT);
+            String result = OCRUtils.doOCR(image);
+
+            if (isOutOfRangeNotification(result))
+            {
+                clickReBidConfirmButton();
+                ret = 1;
+                break;
+            } else if (isBidSuccess(result))
+            {
+                ret = 0;
+                break;
+            } else if (isReEnterVerificationCode(result))
+            {
+                clickReEnterVerificationCodeConfirmButton();
+                ret = -1;
+                break;
+            }
+        }
+        ImageUtils.deleteImage(image);
+        return ret;
+    }
+
+    /**
+     * the method will not return until it has recognized the verification code
+     */
+    public void recogAndInputVerificationCode()
+    {
+        ArrayList<Integer> numbers;
+        while (true)
+        {
+            numbers = recogVerificationCode();
+            if (numbers != null)
+                break;
+            try
+            {
+                clickRefreshVerificationCodeButton();
+                Thread.sleep(1000);
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        //enter verification code and submit
+        focusOnVerCodeInputBox();
+        enterVerificationCode(numbers);
+    }
+
+    /**
+     *
+     */
+    private  ArrayList<Integer> recogVerificationCode()
+    {
+        //get classifier
+        KNearest kNearest = RecogUtils.getKnnClassifier();
+//        ANN_MLP ann_mlp = RecogUtils.getAnnClassifier();
+
+        ArrayList<Integer> ret = new ArrayList<Integer>();
+
+        //get screen shot of flash
+        ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
+                flashPosition.origin.x,
+                flashPosition.origin.y,
+                PositionConstants.FLASH_WIDTH,
+                PositionConstants.FLASH_HEIGHT);
+        Mat src = Imgcodecs.imread(ImageUtils.screenCaptureImage);
+        //get images to recognize
+        Rect picRect = new Rect(PositionConstants.VERIFICATION_CODE_LT_X,
+                           PositionConstants.VERIFICATION_CODE_LT_Y,
+                           PositionConstants.VERIFICATION_CODE_WIDTH,
+                           PositionConstants.VERIFICATION_CODE_HEIGHT);
+        java.util.List<Mat> digitsToRecog = Segmentation.segmentROI(src, picRect, new SegSingleColor());
+        //recognize
+        if (digitsToRecog != null && digitsToRecog.size() == 4)
+        {
+
+            for (Mat mat : digitsToRecog)
+            {
+                Mat toRecog = RecogUtils.getEigenVec(mat, null);
+                int num = (int) kNearest.findNearest(toRecog, 10, new Mat());
+//                    int num = (int)ann_mlp.predict(toRecog);
+                ret.add(num);
+                System.out.println(num);
+            }
+
+            return ret;
+        }
+        return null;
     }
 
     public boolean enterVerificationCode(ArrayList<Integer> numbers)
@@ -108,38 +275,6 @@ public class MyRobot
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
         robot.mouseMove(curMousePosition.x, curMousePosition.y);
         robot.delay(100);
-    }
-
-    public static void main(String[] args)
-    {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
-        checkColor();
-
-//        System.out.println(point.x + "  " + point.y);
-//        clickAt(point.x,point.y);
-    }
-
-    /**
-     * manually get color if background color is changed
-     */
-    private static void checkColor()
-    {
-        try
-        {
-            java.awt.Robot r = new java.awt.Robot();
-            while (true)
-            {
-                Point point = MouseInfo.getPointerInfo().getLocation();
-                Color color = r.getPixelColor(point.x, point.y);
-                System.out.println("x:" + point.x + " y:" + point.y + " color: " + color);
-                r.delay(1000);
-            }
-        }
-        catch (AWTException e)
-        {
-            e.printStackTrace();
-        }
     }
 
     public void focusOnVerCodeInputBox()
@@ -209,20 +344,20 @@ public class MyRobot
      * @param str
      * @return
      */
-    public static boolean isOutOfRangeNotification(String str)
+    public boolean isOutOfRangeNotification(String str)
     {
         System.out.println(NOTIFICATION_RE_BID_OUT_OF_RANGE);
         return isTargetString(str,NOTIFICATION_RE_BID_OUT_OF_RANGE);
     }
-    public static boolean isReEnterVerificationCode(String str)
+    public boolean isReEnterVerificationCode(String str)
     {
         return isTargetString(str,NOTIFICATION_RE_ENTER_VERIFICATION_CODE);
     }
-    public static boolean isBidSuccess(String str)
+    public boolean isBidSuccess(String str)
     {
         return isTargetString(str,NOTIFICATION_BID_SUCCESS);
     }
-    private static boolean isTargetString(String str, String target)
+    private boolean isTargetString(String str, String target)
     {
         for(int i = 0 ; i < target.length(); ++i)
         {

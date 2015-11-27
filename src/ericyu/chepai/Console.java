@@ -1,215 +1,45 @@
 package ericyu.chepai;
-
-import ericyu.chepai.image.ImageUtils;
-import ericyu.chepai.image.SegSingleColor;
-import ericyu.chepai.image.Segmentation;
-import ericyu.chepai.recognize.RecogUtils;
-import ericyu.chepai.robot.FlashPosition;
-import ericyu.chepai.robot.OCRUtils;
-import ericyu.chepai.robot.PositionConstants;
-import ericyu.chepai.robot.MyRobot;
+/*===========================================================================+
+ |      Copyright (c) 2014 Oracle Corporation, Redwood Shores, CA, USA       |
+ |                         All rights reserved.                              |
+ +===========================================================================+
+ |  HISTORY                                                                  |
+ |           Created by lliyu on 10/28/2015  (lin.yu@oracle.com)             |
+ +===========================================================================*/
+import ericyu.chepai.robot.*;
 import org.opencv.core.*;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.ml.KNearest;
 
 import java.awt.*;
-import java.util.*;
-import java.util.List;
 
-/**
- * Created by 麟 on 2015/10/28.
- */
 public class Console
 {
-    private static Rect picRect;
-    private static FlashPosition flashPosition;
+    private static MyRobot robot;
 
-    public static void main(String[] args) throws AWTException
+    public static void main(String[] args)
     {
         if (!init())
         {
-            System.out.println("please verify the input params");
+            System.out.println("init failed!");
             return;
         }
-
-        //generate a robot
-        MyRobot myRobot = new MyRobot(new Robot(),flashPosition);
-
-        int moneyAddRange = 900;
-        int waitTime = 3000;
-        while(true)
-        {
-
-            //add money and bid
-            addMoneyStrategy(myRobot, moneyAddRange, waitTime);
-
-            //recognize verification code and confirm
-            recogAndInputAndConfirmVerificationCode(myRobot);
-            myRobot.wait(10);
-
-            switch (verifyResult(myRobot))
-            {
-                //success
-                case 0:
-                    return;
-                //not in bid range
-                case 1:
-                    moneyAddRange = 300;
-                    waitTime = 10;
-                    break;
-                //wrong verification code
-                case -1:
-                    waitTime = 10;
-                    break;
-            }
-        }
-
-    }
-
-    /**
-     * the method will not return until it has recognized the verification code
-     * @param myRobot
-     */
-    public static void recogAndInputAndConfirmVerificationCode(MyRobot myRobot)
-    {
-        ArrayList<Integer> numbers;
-        while (true)
-        {
-            numbers = recogVerificationCode(flashPosition);
-            if (numbers != null)
-                break;
-            try
-            {
-                myRobot.clickRefreshVerificationCodeButton();
-                Thread.sleep(1000);
-            } catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        //enter verification code and submit
-        myRobot.focusOnVerCodeInputBox();
-        myRobot.enterVerificationCode(numbers);
-        myRobot.clickConfirmVerificationCodeButton();
-    }
-
-    public static void addMoneyStrategy(MyRobot myRobot, int addMoneyRange, int waitBetweenAddAndBid)
-    {
-        myRobot.focusOnCustomAddMoneyInputBox();
-        myRobot.inputAddMoneyRange(addMoneyRange);
-        myRobot.clickAddMoneyButton();
-        myRobot.wait(waitBetweenAddAndBid);
-        myRobot.clickBidButton();
-    }
-
-    /**
-     * verify bid result
-     * @param myRobot
-     * @return  0   -> bid success
-     *          1   -> not in bid range
-     *          -1  -> wrong verification code
-     */
-    private static int verifyResult(MyRobot myRobot)
-    {
-        int ret;
-        String image = "systemNotification.bmp";
-        myRobot.wait(500);
-        // must get a result in three conditions, or the loop will not stop
-        while(true)
-        {
-            ImageUtils.screenCapture(image,
-                    flashPosition.origin.x + PositionConstants.SYSTEM_NOTIFICATION_WINDOW_X,
-                    flashPosition.origin.y + PositionConstants.SYSTEM_NOTIFICATION_WINDOW_Y,
-                    PositionConstants.SYSTEM_NOTIFICATION_WINDOW_WIDTH,
-                    PositionConstants.SYSTEM_NOTIFICATION_WINDOW_HEIGHT);
-            String result = OCRUtils.doOCR(image);
-
-            if (MyRobot.isOutOfRangeNotification(result))
-            {
-                myRobot.clickReBidConfirmButton();
-                ret = 1;
-                break;
-            } else if (MyRobot.isBidSuccess(result))
-            {
-                ret = 0;
-                break;
-            } else if (MyRobot.isReEnterVerificationCode(result))
-            {
-                myRobot.clickReEnterVerificationCodeConfirmButton();
-                ret = -1;
-                break;
-            }
-        }
-        ImageUtils.deleteImage(image);
-        return ret;
-    }
-
-    public static FlashPosition findFlashPosition()
-    {
-        FlashPosition flashPosition;
-        while (true)
-        {
-            flashPosition = new FlashPosition();
-            if (flashPosition.origin != null)
-            {
-                System.out.println("flash origin found: " + flashPosition.origin.x + "," + flashPosition.origin.y);
-                break;
-            }
-            System.out.println("flash not found yet");
-        }
-        return flashPosition;
-    }
-
-    /**
-     *
-     * @param flashPosition
-     */
-    private static ArrayList<Integer> recogVerificationCode(FlashPosition flashPosition)
-    {
-        //get classifier
-        KNearest kNearest = RecogUtils.getKnnClassifier();
-//        ANN_MLP ann_mlp = RecogUtils.getAnnClassifier();
-
-        ArrayList<Integer> ret = new ArrayList<Integer>();
-
-        //get screen shot of flash
-        ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
-                flashPosition.origin.x,
-                flashPosition.origin.y,
-                PositionConstants.FLASH_WIDTH,
-                PositionConstants.FLASH_HEIGHT);
-        Mat src = Imgcodecs.imread(ImageUtils.screenCaptureImage);
-        //get images to recognize
-        List<Mat> digitsToRecog = Segmentation.segmentROI(src, picRect, new SegSingleColor());
-        //recognize
-        if (digitsToRecog != null && digitsToRecog.size() == 4)
-        {
-
-            for (Mat mat : digitsToRecog)
-            {
-                Mat toRecog = RecogUtils.getEigenVec(mat, null);
-                int num = (int) kNearest.findNearest(toRecog, 10, new Mat());
-//                    int num = (int)ann_mlp.predict(toRecog);
-                ret.add(num);
-                System.out.println(num);
-            }
-
-            return ret;
-        }
-        return null;
+        AmbushAndAidStrategy bidStrategy = new AmbushAndAidStrategy(robot);
+        bidStrategy.execute();
     }
 
     private static boolean init()
     {
-        picRect = new Rect(PositionConstants.VERIFICATION_CODE_LT_X,
-                PositionConstants.VERIFICATION_CODE_LT_Y,
-                PositionConstants.VERIFICATION_CODE_WIDTH,
-                PositionConstants.VERIFICATION_CODE_HEIGHT);
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-        //find flash position
-        flashPosition = findFlashPosition();
+        //generate a robot
+        try
+        {
+            robot = new MyRobot(new Robot());
+        }
+        catch (AWTException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 
