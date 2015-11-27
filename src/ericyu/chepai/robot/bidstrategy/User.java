@@ -1,13 +1,17 @@
 package ericyu.chepai.robot.bidstrategy;
+/*===========================================================================+
+ |      Copyright (c) 2014 Oracle Corporation, Redwood Shores, CA, USA       |
+ |                         All rights reserved.                              |
+ +===========================================================================+
+ |  HISTORY                                                                  |
+ |           Created by lliyu on 11/27/2015  (lin.yu@oracle.com)             |
+ +===========================================================================*/
 
 import ericyu.chepai.robot.MyRobot;
 import org.opencv.core.Core;
 
 import java.awt.*;
 
-/**
- * Created by 麟 on 2015/11/27.
- */
 public class User
 {
     private String username;

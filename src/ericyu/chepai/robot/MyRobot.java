@@ -30,8 +30,10 @@ public class MyRobot
     private Robot robot;
 
     public static final String NOTIFICATION_RE_BID_OUT_OF_RANGE="不在修改区间范围内重新";
-    public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="输入正确校验码";
+    public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="输入正确";
     public static final String NOTIFICATION_BID_SUCCESS="成功";
+    //TODO: this may happen between bid and request for v-code. we should make sure this will not happen
+    public static final String NOTIFICATION_REQUEST_VCODE_TOO_OFTEN="过于频繁";
 
     public MyRobot(Robot robot)
     {
@@ -155,7 +157,7 @@ public class MyRobot
                                      FlashPosition.REGION_SYSTEM_NOTIFICATION_WIDTH,
                                      FlashPosition.REGION_SYSTEM_NOTIFICATION_HEIGHT);
             String result = OCRUtils.doOCR(image);
-
+            System.out.println(result);
             if (isOutOfRangeNotification(result))
             {
                 clickReBidConfirmButton();
@@ -349,7 +351,7 @@ public class MyRobot
     public void focusOnCustomAddMoneyInputBox()
     {
         doubleClickAt(FlashPosition.INPUT_CUSTOM_ADD_MONEY_X,
-                      FlashPosition.INPUT_CUSTOM_ADD_MONEY_Y);
+                FlashPosition.INPUT_CUSTOM_ADD_MONEY_Y);
     }
 
     public void inputAddMoneyRange(int range)
@@ -373,16 +375,27 @@ public class MyRobot
                 FlashPosition.BUTTON_BID_Y);
     }
 
+    /**
+     * button for out of range
+     */
     public void clickReBidConfirmButton()
     {
         clickAt(FlashPosition.BUTTON_REBID_CONFIRM_X,
                 FlashPosition.BUTTON_REBID_CONFIRM_Y);
     }
 
+    /**
+     * button for wrong verification code
+     */
     public void clickReEnterVerificationCodeConfirmButton()
     {
         clickAt(FlashPosition.BUTTON_RE_ENTER_VERIFICATION_CONFIRM_X,
                 FlashPosition.BUTTON_RE_ENTER_VERIFICATION_CONFIRM_Y);
+    }
+    public void clickRequestForVCodeTooOftenConfirmButton()
+    {
+        clickAt(FlashPosition.BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_X,
+                FlashPosition.BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_Y);
     }
 
     public void wait(int time)
@@ -424,6 +437,10 @@ public class MyRobot
     public boolean isBidSuccess(String str)
     {
         return isTargetString(str,NOTIFICATION_BID_SUCCESS);
+    }
+    public boolean isRequestVCodeTooOften(String str)
+    {
+        return isTargetString(str,NOTIFICATION_REQUEST_VCODE_TOO_OFTEN);
     }
     private boolean isTargetString(String str, String target)
     {

@@ -110,6 +110,11 @@ public class FlashPosition
     public static final int BUTTON_RE_ENTER_VERIFICATION_CONFIRM_X = 663;
     public static final int BUTTON_RE_ENTER_VERIFICATION_CONFIRM_Y = 460;
     /**
+     * request for verification code too often button
+     */
+    public static final int BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_X = 666;
+    public static final int BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_Y = 466;
+    /**
      * lowest deal money region
      */
     public static final int REGION_LOWEST_DEAL_X = 640;

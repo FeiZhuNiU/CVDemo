@@ -642,7 +642,6 @@ public class ImageUtils
             }
             if (hasFound)
             {
-                hasFound = false;
                 break;
             }
         }

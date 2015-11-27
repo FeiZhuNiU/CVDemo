@@ -31,11 +31,12 @@ public class Console
     private static boolean init()
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        System.out.println("this line is for test encoding :" + MyRobot.NOTIFICATION_RE_BID_OUT_OF_RANGE);
+        System.out.println("this line is for test encoding :" + MyRobot.NOTIFICATION_REQUEST_VCODE_TOO_OFTEN);
 
         //generate a robot
         try
         {
+            //will detect flash position here
             robot = new MyRobot(new Robot());
         }
         catch (AWTException e)

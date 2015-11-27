@@ -21,18 +21,19 @@ public class AmbushAndAidStrategy implements IBidStrategy
     @Override
     public void execute()
     {
-        int moneyAddRange = 900;
+        int moneyAddRange = 600;
         int waitTime = 3000;
         while(true)
         {
 
             //add money and bid
             addMoneyAndBid(moneyAddRange, waitTime);
-            robot.wait(1000);
+            //TODO: how to  make sure it's on verification code view
+            robot.wait(200);
             //recognize verification code and confirm
             robot.recogAndInputVerificationCode();
             robot.clickConfirmVerificationCodeButton();
-            robot.wait(10);
+            robot.wait(200);
 
             switch (robot.verifyResult())
             {
