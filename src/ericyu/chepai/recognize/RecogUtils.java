@@ -41,7 +41,7 @@ public class RecogUtils
      *
      * @return
      */
-    private static Map.Entry<Mat, Mat> loadTrainDataAndTrainClasses()
+    public static Map.Entry<Mat, Mat> loadTrainDataAndTrainClasses()
     {
         File file1 = new File(TRAIN_SAMPLE_PATH);
         File file2 = new File(TRAIN_CLASS_PATH);
@@ -61,40 +61,11 @@ public class RecogUtils
         return new AbstractMap.SimpleEntry<>(trainData, trainClasses);
     }
 
-    /**
-     * @param samples a list of samples
-     * @return <trainData , trainClasses>
-     */
-    public static Map.Entry<Mat, Mat> loadSamplesToTrainDataAndTrainClasses(List<Map.Entry<Mat, Integer>> samples)
-    {
-        Mat trainData = null;
-        Mat trainClasses = null;
-
-        trainData = new Mat(samples.size(), samples.get(0).getKey().rows() * samples.get(0).getKey().cols(),
-                CvType.CV_32FC1);
-        trainClasses = new Mat(samples.size(), 1, CvType.CV_32FC1);
-
-        for (int i = 0; i < samples.size(); ++i)
-        {
-            int curVal = samples.get(i).getValue();
-            Mat curMat = samples.get(i).getKey();
-            trainClasses.put(i, 0, curVal);
-            for (int j = 0; j < trainData.cols(); ++j)
-            {
-                trainData.put(i, j, curMat.get(j / curMat.cols(), j % curMat.cols())[0]);
-            }
-        }
-
-        Map.Entry<Mat, Mat> ret = new AbstractMap.SimpleEntry<>(trainData, trainClasses);
-        RecogUtils.trainData = loadTrainDataAndTrainClasses();
-        return ret;
-    }
-
 
     public static KNearest getKnnClassifier()
     {
         KNearest kNearest = KNearest.create();
-//        Map.Entry<Mat, Mat> trainData = RecogUtils.loadSamplesToTrainDataAndTrainClasses();
+//        Map.Entry<Mat, Mat> trainData = RecogUtils.setTrainDataAndTrainClasses();
         kNearest.train(trainData.getKey(), Ml.ROW_SAMPLE, trainData.getValue());
         return kNearest;
     }
@@ -111,7 +82,7 @@ public class RecogUtils
         ann_mlp.setBackpropMomentumScale(0.1);
         ann_mlp.setBackpropWeightScale(0.1);
 
-//        Map.Entry<Mat, Mat> trainData = RecogUtils.loadSamplesToTrainDataAndTrainClasses();
+//        Map.Entry<Mat, Mat> trainData = RecogUtils.setTrainDataAndTrainClasses();
         ann_mlp.train(trainData.getKey(), Ml.ROW_SAMPLE, trainData.getValue());
 
         return ann_mlp;
