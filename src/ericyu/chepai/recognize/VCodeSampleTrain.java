@@ -27,10 +27,19 @@ import java.util.Map;
 public class VCodeSampleTrain extends SampleTrain
 {
 
+    public VCodeSampleTrain(String trainDataPath, String trainClassPath)
+    {
+        super(trainDataPath, trainClassPath);
+    }
+
     public VCodeSampleTrain(String[] sampleImages)
     {
         super(sampleImages);
-        mkDir(new File(Segmentation.unNormalizedDir));
+    }
+
+    public VCodeSampleTrain(String dir)
+    {
+        super(dir);
     }
 
     /**
@@ -177,7 +186,7 @@ public class VCodeSampleTrain extends SampleTrain
         };
 
         VCodeSampleTrain train = new VCodeSampleTrain(sampleImages);
-        train.dumpTrainData("resources\\traindata.png","resources\\trainclasses.png");
+        train.dumpTrainData(RecogConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,RecogConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH);
 
     }
 

@@ -7,11 +7,12 @@ package ericyu.chepai.robot;
  |           Created by lliyu on 11/2/2015  (lin.yu@oracle.com)              |
  +===========================================================================*/
 
-import com.recognition.software.jdeskew.ImageUtil;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.image.SegSingleColor;
 import ericyu.chepai.image.Segmentation;
-import ericyu.chepai.recognize.RecogUtils;
+import ericyu.chepai.recognize.RecogConstants;
+import ericyu.chepai.recognize.Recognition;
+import ericyu.chepai.recognize.VCodeSampleTrain;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -210,8 +211,10 @@ public class MyRobot
      */
     public ArrayList<Integer> recogVerificationCode()
     {
+        VCodeSampleTrain samples = new VCodeSampleTrain(RecogConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,RecogConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH);
+        Recognition recognition = new Recognition(samples);
         //get classifier
-        KNearest kNearest = RecogUtils.getKnnClassifier();
+        KNearest kNearest = recognition.getKnnClassifier();
 //        ANN_MLP ann_mlp = RecogUtils.getAnnClassifier();
 
         ArrayList<Integer> ret = new ArrayList<Integer>();
@@ -235,7 +238,7 @@ public class MyRobot
 
             for (Mat mat : digitsToRecog)
             {
-                Mat toRecog = RecogUtils.getEigenVec(mat, null);
+                Mat toRecog = recognition.getEigenVec(mat, null);
                 int num = (int) kNearest.findNearest(toRecog, 10, new Mat());
 //                    int num = (int)ann_mlp.predict(toRecog);
                 ret.add(num);

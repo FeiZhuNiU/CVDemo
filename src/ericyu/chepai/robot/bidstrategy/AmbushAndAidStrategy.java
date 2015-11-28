@@ -33,11 +33,11 @@ public class AmbushAndAidStrategy implements IBidStrategy
             //add money and bid
             addMoneyAndBid(moneyAddRange, waitTime);
             //TODO: how to  make sure it's on verification code view
-            robot.wait(200);
+            robot.wait(1000);
             //recognize verification code and confirm
             robot.recogAndInputVerificationCode();
             robot.clickConfirmVerificationCodeButton();
-            robot.wait(200);
+            robot.wait(1000);
 
             switch (robot.verifySystemNotification())
             {

@@ -33,6 +33,21 @@ public abstract class SampleTrain
     protected List<Map.Entry<Mat, Integer>> samples;
     protected Mat trainData;
     protected Mat trainClasses;
+    public String trainDataPath;
+    public String trainClassPath;
+
+    public SampleTrain(String trainDataPath, String trainClassPath)
+    {
+        if(trainDataPath == null ||
+                trainClassPath == null ||
+                !(new File(trainDataPath).exists()) ||
+                !(new File(trainClassPath).exists()))
+        {
+            System.out.println("Trained data does not exist! SampleTrain init failed! Use other constructor first.");
+            return;
+        }
+        loadTrainedDataFromFileSystem(trainDataPath,trainClassPath);
+    }
 
     public SampleTrain(String[] sampleImages)
     {
@@ -136,5 +151,35 @@ public abstract class SampleTrain
 
         Imgcodecs.imwrite(trainDataPath, trainData);
         Imgcodecs.imwrite(trainClassesPath, trainClasses);
+    }
+
+
+    /**
+     * load train data when load class
+     *
+     * @return
+     * @param trainDataPath
+     * @param trainClassPath
+     */
+    public void loadTrainedDataFromFileSystem(String trainDataPath, String trainClassPath)
+    {
+        this.trainDataPath = trainDataPath;
+        this.trainClassPath = trainClassPath;
+
+        File file1 = new File(this.trainDataPath);
+        File file2 = new File(this.trainClassPath);
+
+        if (!file1.exists() || !file2.exists())
+        {
+            System.out.println("train data not prepared. please run train() in SampleTrain.");
+            return ;
+        }
+
+        Mat trainDataColor = Imgcodecs.imread(this.trainDataPath);
+        Mat trainClassesColor = Imgcodecs.imread(this.trainClassPath);
+        trainData = ImageUtils.color2Gray(trainDataColor);
+        trainClasses = ImageUtils.color2Gray(trainClassesColor);
+        trainData.convertTo(trainData, CvType.CV_32FC1);
+        trainClasses.convertTo(trainClasses, CvType.CV_32FC1);
     }
 }
