@@ -28,11 +28,16 @@ public class Recognition
         this.samples = samples;
     }
 
-    public KNearest getKnnClassifier()
+    private KNearest getKnnClassifier()
     {
         KNearest kNearest = KNearest.create();
         kNearest.train(samples.getTrainData(), Ml.ROW_SAMPLE, samples.getTrainClasses());
         return kNearest;
+    }
+    public int recognize(Mat toRecog)
+    {
+        int num = (int) getKnnClassifier().findNearest(toRecog, 10, new Mat());
+        return num;
     }
 
     @Deprecated

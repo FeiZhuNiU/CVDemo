@@ -43,14 +43,11 @@ public class FlashStatusDetector implements Runnable
     }
     private Mat getRightPartOfFlash()
     {
-        String image = "rightPart.bmp";
-        ImageUtils.screenCapture(image,
+        Mat ret = ImageUtils.screenCapture(
                 flashPosition.origin.x + FlashPosition.REGION_FLASH_RIGHT_PART_X,
                 flashPosition.origin.y + FlashPosition.REGION_FLASH_RIGHT_PART_Y,
                 FlashPosition.REGION_FLASH_RIGHT_PART_WIDTH,
                 FlashPosition.REGION_FLASH_RIGHT_PART_HEIGHT);
-        Mat ret = Imgcodecs.imread(image);
-        ImageUtils.deleteImage(image);
         return ret;
     }
 

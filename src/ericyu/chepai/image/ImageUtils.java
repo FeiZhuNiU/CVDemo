@@ -9,6 +9,7 @@ package ericyu.chepai.image;
 
 import org.opencv.core.*;
 import org.opencv.core.Point;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import javax.imageio.ImageIO;
@@ -21,7 +22,6 @@ import java.util.List;
 public class ImageUtils
 {
     private static int[] gammaTable;
-    public static String screenCaptureImage = "screenCapture.bmp";
 
     static
     {
@@ -190,6 +190,24 @@ public class ImageUtils
     /**
      * save current screen to local file system
      */
+    public static Mat screenCapture(int lt_x, int lt_y, int width, int height)
+    {
+        String dst = "screenCapture_tmp.bmp";
+        try
+        {
+            BufferedImage screen = new Robot().createScreenCapture(new Rectangle(lt_x,lt_y,width,height));
+            String format = dst.lastIndexOf(".")>0 ? dst.substring(dst.lastIndexOf(".") + 1, dst.length()) : "bmp";
+            ImageIO.write(screen, format, new File(dst));
+            Mat ret =  Imgcodecs.imread(dst);
+            deleteImage(dst);
+            return ret;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static void screenCapture(String dst, int lt_x, int lt_y, int width, int height)
     {
         try
@@ -210,6 +228,13 @@ public class ImageUtils
         screenCapture(dst,0,0,width,height);
     }
 
+
+    public static Mat screenCapture()
+    {
+        int width = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+        int height = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+        return screenCapture(0,0,width,height);
+    }
     /**
      * color quantization
      *

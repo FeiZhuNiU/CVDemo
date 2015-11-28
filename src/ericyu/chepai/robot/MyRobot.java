@@ -17,7 +17,6 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.ml.KNearest;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -213,20 +212,17 @@ public class MyRobot
     {
         VCodeSampleTrain samples = new VCodeSampleTrain(RecogConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,RecogConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH);
         Recognition recognition = new Recognition(samples);
-        //get classifier
-        KNearest kNearest = recognition.getKnnClassifier();
-//        ANN_MLP ann_mlp = RecogUtils.getAnnClassifier();
 
         ArrayList<Integer> ret = new ArrayList<Integer>();
 
         //get screen shot of flash
-        ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
+        ImageUtils.screenCapture(RecogConstants.screenCaptureImage,
                 flashPosition.origin.x,
                 flashPosition.origin.y,
                 FlashPosition.FLASH_WIDTH,
                 FlashPosition.FLASH_HEIGHT);
-        Mat src = Imgcodecs.imread(ImageUtils.screenCaptureImage);
-        //get images to recognize
+        Mat src = Imgcodecs.imread(RecogConstants.screenCaptureImage);
+                //get images to recognize
         Rect picRect = new Rect(FlashPosition.REGION_VERIFICATION_CODE_LT_X,
                            FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
                            FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
@@ -239,7 +235,7 @@ public class MyRobot
             for (Mat mat : digitsToRecog)
             {
                 Mat toRecog = recognition.getEigenVec(mat, null);
-                int num = (int) kNearest.findNearest(toRecog, 10, new Mat());
+                int num = recognition.recognize(toRecog);
 //                    int num = (int)ann_mlp.predict(toRecog);
                 ret.add(num);
                 System.out.println(num);

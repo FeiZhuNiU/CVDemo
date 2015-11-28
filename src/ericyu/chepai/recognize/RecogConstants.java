@@ -10,4 +10,5 @@ public class RecogConstants
 {
     public static final String V_CODE_SAMPLE_TRAIN_DATA_PATH="resources\\traindata.png";
     public static final String V_CODE_SAMPLE_TRAIN_CLASSES_PATH = "resources\\trainclasses.png";
+    public static String screenCaptureImage = "screenCapture.bmp";
 }

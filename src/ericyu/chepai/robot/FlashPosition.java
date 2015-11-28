@@ -160,10 +160,7 @@ public class FlashPosition
     private Point findPositionOfTargetColor(double[] targetColor)
     {
         Point ret = null;
-        String image = "findPosition.bmp";
-
-        ImageUtils.screenCapture(image);
-        Mat screen = Imgcodecs.imread(image);
+        Mat screen = ImageUtils.screenCapture();
 
         boolean hasFound = false;
         for (int i = 0; i < screen.height(); ++i)
@@ -182,7 +179,6 @@ public class FlashPosition
                 }
             }
         }
-        ImageUtils.deleteImage(image);
 
         origin = ret;
         return ret;
