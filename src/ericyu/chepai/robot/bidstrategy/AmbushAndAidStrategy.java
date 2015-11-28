@@ -21,6 +21,10 @@ public class AmbushAndAidStrategy implements IBidStrategy
     @Override
     public void execute()
     {
+        User user = new User(robot,"12345678","123456");
+        user.login();
+
+        robot.wait(2000);
         int moneyAddRange = 600;
         int waitTime = 3000;
         while(true)
@@ -35,7 +39,7 @@ public class AmbushAndAidStrategy implements IBidStrategy
             robot.clickConfirmVerificationCodeButton();
             robot.wait(200);
 
-            switch (robot.verifyResult())
+            switch (robot.verifySystemNotification())
             {
                 //success
                 case 0:

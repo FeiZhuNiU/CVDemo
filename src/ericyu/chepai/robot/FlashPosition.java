@@ -50,6 +50,15 @@ public class FlashPosition
      */
     public static final int FLASH_WIDTH     = 900;
     public static final int FLASH_HEIGHT    = 700;
+
+    /**
+     *  right part of the flash
+     *  used for detect flash status
+     */
+    public static final int REGION_FLASH_RIGHT_PART_X = 427;
+    public static final int REGION_FLASH_RIGHT_PART_Y = 148;
+    public static final int REGION_FLASH_RIGHT_PART_WIDTH = 300;
+    public static final int REGION_FLASH_RIGHT_PART_HEIGHT = 386;
     /**
      * verification code confirm button
      */

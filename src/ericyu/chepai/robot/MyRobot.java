@@ -7,6 +7,7 @@ package ericyu.chepai.robot;
  |           Created by lliyu on 11/2/2015  (lin.yu@oracle.com)              |
  +===========================================================================*/
 
+import com.recognition.software.jdeskew.ImageUtil;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.image.SegSingleColor;
 import ericyu.chepai.image.Segmentation;
@@ -33,9 +34,8 @@ public class MyRobot
     public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="输入正确";
     public static final String NOTIFICATION_BID_SUCCESS="成功";
     /**
-     * we avoid verify this condition by combine it to clickCancelVerificationCodeButton()
+     * we'd better avoid verify this condition by including it to clickCancelVerificationCodeButton()
      */
-    @Deprecated
     public static final String NOTIFICATION_REQUEST_VCODE_TOO_OFTEN="过于频繁";
 
     public MyRobot(Robot robot)
@@ -146,7 +146,7 @@ public class MyRobot
      *          1   -> not in bid range
      *          -1  -> wrong verification code
      */
-    public int verifyResult()
+    public int verifySystemNotification()
     {
         int ret;
         String image = "systemNotification.bmp";
@@ -194,7 +194,7 @@ public class MyRobot
                 break;
 
             clickCancelVerificationCodeButton();
-            wait(200);
+            wait(300);
             //TODO : lan lag ? verify current page
             clickBidButton();
         }
