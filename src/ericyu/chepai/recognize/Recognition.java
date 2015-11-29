@@ -17,11 +17,12 @@ import org.opencv.ml.Ml;
 
 public class Recognition
 {
-    private SampleTrain samples;
+    public static String screenCaptureImage = "screenCapture.bmp";
+    private SampleTrain trainedData;
 
-    public SampleTrain getSamples()
+    public SampleTrain getTrainedData()
     {
-        return samples;
+        return trainedData;
     }
 
     public enum Classifier
@@ -29,15 +30,15 @@ public class Recognition
         KNN, ANN
     }
 
-    public Recognition(SampleTrain samples)
+    public Recognition(SampleTrain trainedData)
     {
-        this.samples = samples;
+        this.trainedData = trainedData;
     }
 
     private KNearest getKnnClassifier()
     {
         KNearest kNearest = KNearest.create();
-        kNearest.train(samples.getTrainData(), Ml.ROW_SAMPLE, samples.getTrainClass());
+        kNearest.train(trainedData.getTrainData(), Ml.ROW_SAMPLE, trainedData.getTrainClass());
         return kNearest;
     }
     public int recognize(Mat toRecog)
@@ -59,7 +60,7 @@ public class Recognition
         ann_mlp.setBackpropWeightScale(0.1);
 
 //        Map.Entry<Mat, Mat> trainData = RecogUtils.setTrainDataAndTrainClasses();
-        ann_mlp.train(samples.getTrainData(), Ml.ROW_SAMPLE, samples.getTrainClass());
+        ann_mlp.train(trainedData.getTrainData(), Ml.ROW_SAMPLE, trainedData.getTrainClass());
 
         return ann_mlp;
     }

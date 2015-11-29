@@ -11,7 +11,7 @@ import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.image.SegSingleColor;
 import ericyu.chepai.image.Segmentation;
 import ericyu.chepai.train.AllPixelEigenvetorStrategy;
-import ericyu.chepai.recognize.RecogConstants;
+import ericyu.chepai.train.SampleConstants;
 import ericyu.chepai.recognize.Recognition;
 import ericyu.chepai.train.VCodeTrain;
 import org.opencv.core.Core;
@@ -211,8 +211,8 @@ public class MyRobot
     public ArrayList<Integer> recogVerificationCode()
     {
         VCodeTrain samples = new VCodeTrain(
-                RecogConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
-                RecogConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH,
+                SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
+                SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH,
                 new AllPixelEigenvetorStrategy());
 
         Recognition recognition = new Recognition(samples);
@@ -220,12 +220,12 @@ public class MyRobot
         ArrayList<Integer> ret = new ArrayList<Integer>();
 
         //get screen shot of flash
-        ImageUtils.screenCapture(RecogConstants.screenCaptureImage,
+        ImageUtils.screenCapture(Recognition.screenCaptureImage,
                 flashPosition.origin.x,
                 flashPosition.origin.y,
                 FlashPosition.FLASH_WIDTH,
                 FlashPosition.FLASH_HEIGHT);
-        Mat src = ImageUtils.readImage(RecogConstants.screenCaptureImage);
+        Mat src = ImageUtils.readImage(Recognition.screenCaptureImage);
                 //get images to recognize
         Rect picRect = new Rect(FlashPosition.REGION_VERIFICATION_CODE_LT_X,
                            FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
@@ -238,7 +238,7 @@ public class MyRobot
 
             for (Mat mat : digitsToRecog)
             {
-                Mat toRecog = recognition.getSamples().getEigenvetorStrategy().getEigenVec(mat);
+                Mat toRecog = recognition.getTrainedData().getEigenvetorStrategy().getEigenVec(mat);
                 int num = recognition.recognize(toRecog);
 //                    int num = (int)ann_mlp.predict(toRecog);
                 ret.add(num);

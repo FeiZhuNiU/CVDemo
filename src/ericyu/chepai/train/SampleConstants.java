@@ -1,4 +1,4 @@
-package ericyu.chepai.recognize;
+package ericyu.chepai.train;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |
@@ -6,9 +6,8 @@ package ericyu.chepai.recognize;
  |  HISTORY                                                                  |
  |           Created by lliyu on 11/28/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
-public class RecogConstants
+public class SampleConstants
 {
     public static final String V_CODE_SAMPLE_TRAIN_DATA_PATH="resources\\traindata.png";
     public static final String V_CODE_SAMPLE_TRAIN_CLASSES_PATH = "resources\\trainclasses.png";
-    public static String screenCaptureImage = "screenCapture.bmp";
 }

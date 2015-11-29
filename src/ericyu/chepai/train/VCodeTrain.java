@@ -10,7 +10,6 @@ package ericyu.chepai.train;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.image.SegSingleColor;
 import ericyu.chepai.image.Segmentation;
-import ericyu.chepai.recognize.RecogConstants;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -186,7 +185,7 @@ public class VCodeTrain extends SampleTrain
         };
 
         VCodeTrain train = new VCodeTrain(sampleImages, new AllPixelEigenvetorStrategy());
-        train.dumpTrainData(RecogConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,RecogConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH);
+        train.dumpTrainData(SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH, SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH);
 
     }
 
