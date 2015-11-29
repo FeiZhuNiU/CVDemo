@@ -34,8 +34,6 @@ public abstract class SampleTrain
     protected List<Map.Entry<Mat, Integer>> sampleEntries;
     protected Mat trainData;
     protected Mat trainClass;
-    public String trainDataPath;
-    public String trainClassPath;
 
     /**
      * load trained data
@@ -53,8 +51,6 @@ public abstract class SampleTrain
             System.out.println("Trained data does not exist! SampleTrain init failed! Use other constructor first.");
             return;
         }
-        this.trainDataPath = trainDataPath;
-        this.trainClassPath = trainClassPath;
         this.eigenvetorStrategy = eigenvetorStrategy;
         trainData = loadTrainedDataFromFileSystem(trainDataPath);
         trainClass = loadTrainedDataFromFileSystem(trainClassPath);
