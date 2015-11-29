@@ -66,7 +66,7 @@ public class FlashStatusDetector implements Runnable
                     status = Status.NOTIFICATION;
                     break;
             }
-            System.out.println(status);
+//            System.out.println(status);
         }
     }
     private Mat getRightPartOfFlash()
@@ -79,6 +79,10 @@ public class FlashStatusDetector implements Runnable
         return ret;
     }
 
+    /**
+     * capture
+     * @return
+     */
     private Mat generateSample()
     {
         Mat src = getRightPartOfFlash();
@@ -87,10 +91,15 @@ public class FlashStatusDetector implements Runnable
         return binary;
     }
 
+    public Status getStatus()
+    {
+        return status;
+    }
+
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        FlashStatusDetector detector = new FlashStatusDetector(new FlashPosition(),new Recognition(new FlashStatusTrain(SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,new AllPixelEigenvetorStrategy())));
+        FlashStatusDetector detector = new FlashStatusDetector(new FlashPosition(),new Recognition(new FlashStatusTrain()));
 //        detector.generateSample();
         Thread thread = new Thread(detector);
         thread.start();

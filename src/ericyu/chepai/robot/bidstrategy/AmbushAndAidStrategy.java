@@ -36,7 +36,7 @@ public class AmbushAndAidStrategy implements IBidStrategy
             robot.wait(1000);
             //recognize verification code and confirm
             robot.recogAndInputVerificationCode();
-            robot.clickConfirmVerificationCodeButton();
+            robot.clickConfirmVCodeButton();
             robot.wait(1000);
 
             switch (robot.verifySystemNotification())

@@ -43,6 +43,8 @@ public class MyRobot
         this.robot = robot;
         findFlashPosition();
         flashStatusDetector = new FlashStatusDetector(flashPosition,new Recognition(new FlashStatusTrain()));
+        Thread thread = new Thread(flashStatusDetector);
+        thread.start();
     }
 
     public static Map<Character, Integer> keyMap = new HashMap<Character, Integer>();
@@ -201,7 +203,7 @@ public class MyRobot
         }
 
         //enter verification code and submit
-        focusOnVerCodeInputBox();
+        focusOnVCodeInputBox();
         enterVerificationCode(numbers);
     }
 
@@ -253,6 +255,12 @@ public class MyRobot
 
     public boolean enterVerificationCode(ArrayList<Integer> numbers)
     {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.V_CODE)
+        {
+            System.out.println("can not enter verification code because not in FlashStatusDetector.Status.V_CODE");
+            return false;
+        }
+
         if (numbers.size() != 4)
         {
             System.out.println("there is no 4 numbers, robot can not work");
@@ -265,7 +273,6 @@ public class MyRobot
             System.out.println("robot pressed number " + num);
         }
         return true;
-
     }
 
     /**
@@ -329,101 +336,185 @@ public class MyRobot
         robot.delay(100);
     }
 
-    public void focusOnVerCodeInputBox()
+    public boolean focusOnVCodeInputBox()
     {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.V_CODE)
+        {
+            System.out.println("can not focus on V-code Input box because not in FlashStatusDetector.Status.V_CODE");
+            return false;
+        }
         doubleClickAt(FlashPosition.INPUT_VERIFICATION_X,
                 FlashPosition.INPUT_VERIFICATION_Y);
+        return true;
     }
 
-    public void clickConfirmVerificationCodeButton()
+    public boolean clickConfirmVCodeButton()
     {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.V_CODE)
+        {
+            System.out.println("can not click on V-code confirm button because not in FlashStatusDetector.Status.V_CODE");
+            return false;
+        }
         clickAt(FlashPosition.BUTTON_VERIFICATION_CODE_CONFIRM_X,
                 FlashPosition.BUTTON_VERIFICATION_CODE_CONFIRM_Y);
+        return true;
     }
 
-    public void clickCancelVerificationCodeButton()
+    public boolean clickCancelVerificationCodeButton()
     {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.V_CODE)
+        {
+            System.out.println("can not click on V-code cancel button because not in FlashStatusDetector.Status.V_CODE");
+            return false;
+        }
         clickAt(FlashPosition.BUTTON_VERIFICATION_CODE_CANCEL_X,
                 FlashPosition.BUTTON_VERIFICATION_CODE_CANCEL_Y);
+        return true;
     }
 
-    public void clickRefreshVerificationCodeButton()
+    public boolean clickRefreshVCodeButton()
     {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.V_CODE)
+        {
+            System.out.println("can not click on V-code refresh button because not in FlashStatusDetector.Status.V_CODE");
+            return false;
+        }
         clickAt(FlashPosition.BUTTON_VERIFICATION_REFRESH_X,
                 FlashPosition.BUTTON_VERIFICATION_REFRESH_Y);
+        return true;
     }
 
-    public void focusOnCustomAddMoneyInputBox()
+    public boolean focusOnCustomAddMoneyInputBox()
     {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.BID)
+        {
+            System.out.println("can not focus on custom add money input box because not in FlashStatusDetector.Status.BID");
+            return false;
+        }
         doubleClickAt(FlashPosition.INPUT_CUSTOM_ADD_MONEY_X,
                 FlashPosition.INPUT_CUSTOM_ADD_MONEY_Y);
+        return true;
     }
 
-    public void inputAddMoneyRange(int range)
+    public boolean inputAddMoneyRange(int range)
     {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.BID)
+        {
+            System.out.println("can not input add money range because not in FlashStatusDetector.Status.BID");
+            return false;
+        }
         String money = Integer.toString(range);
         for(int i = 0 ; i < money.length(); ++i)
         {
             pressKey(money.charAt(i));
         }
+        return true;
     }
 
-    public void clickAddMoneyButton()
+    public boolean clickAddMoneyButton()
     {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.BID)
+        {
+            System.out.println("can not click AddMoney Button because not in FlashStatusDetector.Status.BID");
+            return false;
+        }
         clickAt(FlashPosition.BUTTON_ADD_MONEY_X,
                 FlashPosition.BUTTON_ADD_MONEY_Y);
+        return true;
     }
 
-    public void clickBidButton()
+    public boolean clickBidButton()
     {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.BID)
+        {
+            System.out.println("can not click bid Button because not in FlashStatusDetector.Status.BID");
+            return false;
+        }
         clickAt(FlashPosition.BUTTON_BID_X,
                 FlashPosition.BUTTON_BID_Y);
+        return true;
     }
 
     /**
      * button for out of range
      */
-    public void clickReBidConfirmButton()
+    public boolean clickReBidConfirmButton()
     {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.NOTIFICATION)
+        {
+            System.out.println("can not click ReBid Confirm Button because not in FlashStatusDetector.Status.NOTIFICATION");
+            return false;
+        }
         clickAt(FlashPosition.BUTTON_REBID_CONFIRM_X,
                 FlashPosition.BUTTON_REBID_CONFIRM_Y);
+        return true;
     }
 
     /**
      * button for wrong verification code
      */
-    public void clickReEnterVerificationCodeConfirmButton()
+    public boolean clickReEnterVerificationCodeConfirmButton()
     {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.NOTIFICATION)
+        {
+            System.out.println("can not click ReEnter V-Code Confirm Button because not in FlashStatusDetector.Status.NOTIFICATION");
+            return false;
+        }
         clickAt(FlashPosition.BUTTON_RE_ENTER_VERIFICATION_CONFIRM_X,
                 FlashPosition.BUTTON_RE_ENTER_VERIFICATION_CONFIRM_Y);
+        return true;
     }
-    public void clickRequestForVCodeTooOftenConfirmButton()
+    public boolean clickRequestForVCodeTooOftenConfirmButton()
     {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.NOTIFICATION)
+        {
+            System.out.println("can not click RequestForVCodeTooOften Confirm Button because not in FlashStatusDetector.Status.NOTIFICATION");
+            return false;
+        }
         clickAt(FlashPosition.BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_X,
                 FlashPosition.BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_Y);
+        return true;
+    }
+
+    public boolean focusOnUsernameInputBox()
+    {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.LOGIN)
+        {
+            System.out.println("can not focus On Username Input Box because not in FlashStatusDetector.Status.LOGIN");
+            return false;
+        }
+        doubleClickAt(FlashPosition.INPUT_USERNAME_X,
+                FlashPosition.INPUT_USERNAME_Y);
+        return true;
+    }
+
+    public boolean focusOnPasswordInputBox()
+    {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.LOGIN)
+        {
+            System.out.println("can not focus On password Input Box because not in FlashStatusDetector.Status.LOGIN");
+            return false;
+        }
+        doubleClickAt(FlashPosition.INPUT_PASSWORD_X,
+                FlashPosition.INPUT_PASSWORD_Y);
+        return false;
+    }
+
+    public boolean clickSubmitUserButton()
+    {
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.LOGIN)
+        {
+            System.out.println("can not click Submit User Button because not in FlashStatusDetector.Status.LOGIN");
+            return false;
+        }
+        clickAt(FlashPosition.BUTTON_SUBMIT_X,
+                FlashPosition.BUTTON_SUBMIT_Y);
+        return true;
     }
 
     public void wait(int time)
     {
         robot.delay(time);
-    }
-
-    public void focusOnUsernameInputBox()
-    {
-        doubleClickAt(FlashPosition.INPUT_USERNAME_X,
-                FlashPosition.INPUT_USERNAME_Y);
-    }
-
-    public void focusOnPasswordInputBox()
-    {
-        doubleClickAt(FlashPosition.INPUT_PASSWORD_X,
-                FlashPosition.INPUT_PASSWORD_Y);
-    }
-
-    public void clickSubmitUserButton()
-    {
-        clickAt(FlashPosition.BUTTON_SUBMIT_X,
-                FlashPosition.BUTTON_SUBMIT_Y);
     }
 
     /**
