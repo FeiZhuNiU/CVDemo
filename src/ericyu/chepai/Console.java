@@ -8,7 +8,8 @@ package ericyu.chepai;
  +===========================================================================*/
 import ericyu.chepai.robot.*;
 import ericyu.chepai.robot.bidstrategy.AmbushAndAidStrategy;
-import ericyu.chepai.robot.bidstrategy.IBidStrategy;
+import ericyu.chepai.robot.bidstrategy.AbstractBidStrategy;
+import ericyu.chepai.robot.bidstrategy.User;
 import org.opencv.core.*;
 
 import java.awt.*;
@@ -24,7 +25,8 @@ public class Console
             System.out.println("init failed!");
             return;
         }
-        IBidStrategy bidStrategy = new AmbushAndAidStrategy(robot);
+        User user = new User("12345678","123456");
+        AbstractBidStrategy bidStrategy = new AmbushAndAidStrategy(user,robot);
         bidStrategy.execute();
     }
 

@@ -7,7 +7,27 @@ package ericyu.chepai.robot.bidstrategy;
  |           Created by lliyu on 11/27/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
-public interface IBidStrategy
+import ericyu.chepai.robot.MyRobot;
+
+abstract public class AbstractBidStrategy
 {
-    void execute();
+    protected User user;
+    protected MyRobot robot;
+
+    public AbstractBidStrategy(User user, MyRobot robot)
+    {
+        this.user = user;
+        this.robot = robot;
+    }
+
+    public abstract void execute();
+
+    public void addMoneyAndBid(int addMoneyRange, int waitBetweenAddAndBid)
+    {
+        robot.focusOnCustomAddMoneyInputBox();
+        robot.inputAddMoneyRange(addMoneyRange);
+        robot.clickAddMoneyButton();
+        robot.wait(waitBetweenAddAndBid);
+        robot.clickBidButton();
+    }
 }

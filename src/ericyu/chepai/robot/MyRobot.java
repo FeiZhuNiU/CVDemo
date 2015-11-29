@@ -333,7 +333,7 @@ public class MyRobot
         robot.mousePress(InputEvent.BUTTON1_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
         robot.mouseMove(curMousePosition.x, curMousePosition.y);
-        robot.delay(100);
+        robot.delay(10);
     }
 
     public boolean focusOnVCodeInputBox()
@@ -362,9 +362,10 @@ public class MyRobot
 
     public boolean clickCancelVerificationCodeButton()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.V_CODE)
+        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.V_CODE &&
+                flashStatusDetector.getStatus()!= FlashStatusDetector.Status.NOTIFICATION)
         {
-            System.out.println("can not click on V-code cancel button because not in FlashStatusDetector.Status.V_CODE");
+            System.out.println("can not click on V-code cancel button because not in FlashStatusDetector.Status.V_CODE || NOTIFICATION");
             return false;
         }
         clickAt(FlashPosition.BUTTON_VERIFICATION_CODE_CANCEL_X,
@@ -497,7 +498,7 @@ public class MyRobot
         }
         doubleClickAt(FlashPosition.INPUT_PASSWORD_X,
                 FlashPosition.INPUT_PASSWORD_Y);
-        return false;
+        return true;
     }
 
     public boolean clickSubmitUserButton()

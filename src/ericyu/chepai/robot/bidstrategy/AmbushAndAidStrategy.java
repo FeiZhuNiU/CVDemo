@@ -9,20 +9,23 @@ package ericyu.chepai.robot.bidstrategy;
 
 import ericyu.chepai.robot.MyRobot;
 
-public class AmbushAndAidStrategy implements IBidStrategy
+public class AmbushAndAidStrategy extends AbstractBidStrategy
 {
-    private MyRobot robot;
 
-    public AmbushAndAidStrategy(MyRobot robot)
+    public AmbushAndAidStrategy(User user, MyRobot robot)
     {
-        this.robot = robot;
+        super(user, robot);
     }
 
     @Override
     public void execute()
     {
-        User user = new User(robot,"12345678","123456");
-        user.login();
+        robot.wait(2000);
+
+        while(!user.login(robot))
+        {
+            System.out.println("login failed!!");
+        }
 
         robot.wait(2000);
         int moneyAddRange = 600;
@@ -43,7 +46,8 @@ public class AmbushAndAidStrategy implements IBidStrategy
             {
                 //success
                 case 0:
-                    return;
+                    System.out.println("bid success!!");
+                    System.exit(0);
                 //not in bid range
                 case 1:
                     moneyAddRange = 300;
@@ -57,12 +61,5 @@ public class AmbushAndAidStrategy implements IBidStrategy
         }
     }
 
-    public void addMoneyAndBid(int addMoneyRange, int waitBetweenAddAndBid)
-    {
-        robot.focusOnCustomAddMoneyInputBox();
-        robot.inputAddMoneyRange(addMoneyRange);
-        robot.clickAddMoneyButton();
-        robot.wait(waitBetweenAddAndBid);
-        robot.clickBidButton();
-    }
+
 }
