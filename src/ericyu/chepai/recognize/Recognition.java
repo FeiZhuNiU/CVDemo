@@ -41,6 +41,13 @@ public class Recognition
         kNearest.train(trainedData.getTrainData(), Ml.ROW_SAMPLE, trainedData.getTrainClass());
         return kNearest;
     }
+
+    /**
+     * @param toRecog generally, this param should be the return value of
+     *                @see ericyu.chepai.train.SampleTrain#process
+     * @param accuracy
+     * @return
+     */
     public int recognize(Mat toRecog, int accuracy)
     {
         Mat eigen = getTrainedData().getEigenvetorStrategy().getEigenVec(toRecog);
