@@ -210,12 +210,11 @@ public class MyRobot
      */
     public ArrayList<Integer> recogVerificationCode()
     {
-        VCodeTrain samples = new VCodeTrain(
-                SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
-                SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH,
-                new AllPixelEigenvetorStrategy());
-
-        Recognition recognition = new Recognition(samples);
+        Recognition recognition = new Recognition(
+                new VCodeTrain(
+                    SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
+                    SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH,
+                    new AllPixelEigenvetorStrategy()));
 
         ArrayList<Integer> ret = new ArrayList<Integer>();
 

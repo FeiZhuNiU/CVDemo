@@ -18,7 +18,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * trainData and trainClass would be set in constructor
+ * 1. use following two constructors to train samples
+ * @see ericyu.chepai.train.SampleTrain#SampleTrain(String[] srcImages, EigenvetorStrategy eigenvetorStrategy)
+ * @see ericyu.chepai.train.SampleTrain#SampleTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
+ *
+ * 2. use following method to dump train data to local file
+ * @see ericyu.chepai.train.SampleTrain#dumpTrainData
+ *
+ * 3. use following construtor to recognize
+ * @see ericyu.chepai.train.SampleTrain#SampleTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
  */
 public abstract class SampleTrain
 {

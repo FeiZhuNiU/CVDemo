@@ -148,6 +148,10 @@ public class VCodeTrain extends SampleTrain
         Segmentation.dumpImg = bak;
     }
 
+    /**
+     * this is a demo shows how to train samples
+     * @param args
+     */
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
