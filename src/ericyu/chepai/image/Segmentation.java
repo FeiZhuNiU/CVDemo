@@ -36,7 +36,7 @@ public class Segmentation
      * @param src      image to segment
      * @param roiRect  ROI (which region of the image want to be recognized)
      * @param strategy segmentation stategy
-     * @return
+     * @return normalized mats
      */
     public static List<Mat> segmentROI(Mat src, Rect roiRect, SegStrategy strategy)
     {

@@ -13,7 +13,6 @@ import ericyu.chepai.image.Segmentation;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
-import org.opencv.imgcodecs.Imgcodecs;
 
 import java.io.*;
 import java.util.AbstractMap;
@@ -27,19 +26,19 @@ import java.util.Map;
 public class VCodeTrain extends SampleTrain
 {
 
-    public VCodeTrain(String trainDataPath, String trainClassPath)
+    public VCodeTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
     {
-        super(trainDataPath, trainClassPath);
+        super(trainDataPath, trainClassPath, eigenvetorStrategy);
     }
 
-    public VCodeTrain(String[] sampleImages)
+    public VCodeTrain(String[] sampleImages, EigenvetorStrategy eigenvetorStrategy)
     {
-        super(sampleImages);
+        super(sampleImages, eigenvetorStrategy);
     }
 
-    public VCodeTrain(String dir)
+    public VCodeTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
     {
-        super(dir);
+        super(dir, eigenvetorStrategy);
     }
 
     /**
@@ -185,7 +184,7 @@ public class VCodeTrain extends SampleTrain
                 "CodeImage\\9566.jpg",
         };
 
-        VCodeTrain train = new VCodeTrain(sampleImages);
+        VCodeTrain train = new VCodeTrain(sampleImages, new AllPixelEigenvetorStrategy());
         train.dumpTrainData(RecogConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,RecogConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH);
 
     }

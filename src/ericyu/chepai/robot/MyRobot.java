@@ -10,13 +10,13 @@ package ericyu.chepai.robot;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.image.SegSingleColor;
 import ericyu.chepai.image.Segmentation;
+import ericyu.chepai.recognize.AllPixelEigenvetorStrategy;
 import ericyu.chepai.recognize.RecogConstants;
 import ericyu.chepai.recognize.Recognition;
 import ericyu.chepai.recognize.VCodeTrain;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
-import org.opencv.imgcodecs.Imgcodecs;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -210,7 +210,11 @@ public class MyRobot
      */
     public ArrayList<Integer> recogVerificationCode()
     {
-        VCodeTrain samples = new VCodeTrain(RecogConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,RecogConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH);
+        VCodeTrain samples = new VCodeTrain(
+                RecogConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
+                RecogConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH,
+                new AllPixelEigenvetorStrategy());
+
         Recognition recognition = new Recognition(samples);
 
         ArrayList<Integer> ret = new ArrayList<Integer>();
@@ -234,7 +238,7 @@ public class MyRobot
 
             for (Mat mat : digitsToRecog)
             {
-                Mat toRecog = recognition.getEigenVec(mat, null);
+                Mat toRecog = recognition.getSamples().getEigenvetorStrategy().getEigenVec(mat);
                 int num = recognition.recognize(toRecog);
 //                    int num = (int)ann_mlp.predict(toRecog);
                 ret.add(num);

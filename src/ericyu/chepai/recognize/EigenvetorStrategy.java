@@ -9,7 +9,7 @@ package ericyu.chepai.recognize;
 
 import org.opencv.core.Mat;
 
-public interface EigenStrategy
+public interface EigenvetorStrategy
 {
     Mat getEigenVec(Mat src);
 }

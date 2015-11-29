@@ -26,6 +26,7 @@ public abstract class SampleTrain
      * path of samples
      */
     protected String[] srcImages;
+    private EigenvetorStrategy eigenvetorStrategy;
     /**
      * key      - sampleData
      * value    - class
@@ -40,8 +41,9 @@ public abstract class SampleTrain
      * load trained data
      * @param trainDataPath
      * @param trainClassPath
+     * @param eigenvetorStrategy
      */
-    public SampleTrain(String trainDataPath, String trainClassPath)
+    public SampleTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
     {
         if(trainDataPath == null ||
                 trainClassPath == null ||
@@ -53,6 +55,7 @@ public abstract class SampleTrain
         }
         this.trainDataPath = trainDataPath;
         this.trainClassPath = trainClassPath;
+        this.eigenvetorStrategy = eigenvetorStrategy;
         trainData = loadTrainedDataFromFileSystem(trainDataPath);
         trainClass = loadTrainedDataFromFileSystem(trainClassPath);
     }
@@ -60,21 +63,25 @@ public abstract class SampleTrain
     /**
      * load and train all samples in srcImages
      * @param srcImages
+     * @param eigenvetorStrategy
      */
-    public SampleTrain(String[] srcImages)
+    public SampleTrain(String[] srcImages, EigenvetorStrategy eigenvetorStrategy)
     {
         this.srcImages = srcImages;
+        this.eigenvetorStrategy = eigenvetorStrategy;
         train();
     }
 
     /**
      * load and train all samples in dir
      * @param dir under where all files are samples
+     * @param eigenvetorStrategy
      */
-    public SampleTrain(String dir)
+    public SampleTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
     {
         File file = new File(dir);
         this.srcImages = file.list();
+        this.eigenvetorStrategy = eigenvetorStrategy;
         train();
     }
 
@@ -100,6 +107,11 @@ public abstract class SampleTrain
         return trainClass;
     }
 
+    public EigenvetorStrategy getEigenvetorStrategy()
+    {
+        return eigenvetorStrategy;
+    }
+
     /**
      * set
      * @see SampleTrain#sampleEntries
@@ -113,19 +125,23 @@ public abstract class SampleTrain
      */
     protected void setTrainDataAndTrainClasses()
     {
-        trainData = new Mat(sampleEntries.size(), sampleEntries.get(0).getKey().rows() * sampleEntries.get(0).getKey().cols(),
-                CvType.CV_32FC1);
+        Mat tmp = sampleEntries.get(0).getKey();
+        int eigenLength = eigenvetorStrategy.getEigenVec(tmp).cols();
+        trainData = new Mat(sampleEntries.size(), eigenLength, CvType.CV_32FC1);
         trainClass = new Mat(sampleEntries.size(), 1, CvType.CV_32FC1);
 
         for (int i = 0; i < sampleEntries.size(); ++i)
         {
-            int curVal = sampleEntries.get(i).getValue();
-            Mat curMat = sampleEntries.get(i).getKey();
-            trainClass.put(i, 0, curVal);
-            for (int j = 0; j < trainData.cols(); ++j)
+            Mat curSample = sampleEntries.get(i).getKey();
+            int curClass = sampleEntries.get(i).getValue();
+            //put trainData
+            Mat curEigen = eigenvetorStrategy.getEigenVec(curSample);
+            for (int j = 0; j < eigenLength; ++j)
             {
-                trainData.put(i, j, curMat.get(j / curMat.cols(), j % curMat.cols())[0]);
+                trainData.put(i, j, curEigen.get(0,j)[0]);
             }
+            //put trainClass
+            trainClass.put(i, 0, curClass);
         }
     }
 

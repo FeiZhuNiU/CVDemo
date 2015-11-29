@@ -2,26 +2,25 @@ package ericyu.chepai.recognize;
 
 import ericyu.chepai.image.ImageUtils;
 import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 
 /**
  * Created by 麟 on 2015/11/29.
  */
 public class FlashStatusTrain extends SampleTrain
 {
-    public FlashStatusTrain(String trainDataPath, String trainClassPath)
+    public FlashStatusTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
     {
-        super(trainDataPath, trainClassPath);
+        super(trainDataPath, trainClassPath, eigenvetorStrategy);
     }
 
-    public FlashStatusTrain(String[] srcImages)
+    public FlashStatusTrain(String[] srcImages, EigenvetorStrategy eigenvetorStrategy)
     {
-        super(srcImages);
+        super(srcImages, eigenvetorStrategy);
     }
 
-    public FlashStatusTrain(String dir)
+    public FlashStatusTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
     {
-        super(dir);
+        super(dir, eigenvetorStrategy);
     }
 
     @Override

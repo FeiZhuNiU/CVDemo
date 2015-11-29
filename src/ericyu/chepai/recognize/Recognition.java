@@ -18,6 +18,11 @@ public class Recognition
 {
     private SampleTrain samples;
 
+    public SampleTrain getSamples()
+    {
+        return samples;
+    }
+
     public enum Classifier
     {
         KNN, ANN
@@ -58,20 +63,4 @@ public class Recognition
         return ann_mlp;
     }
 
-    public Mat getEigenVec(Mat mat, EigenStrategy strategy)
-    {
-        if (strategy == null)
-        {
-            int cols = mat.rows() * mat.cols();
-            Mat ret = new Mat(1, cols, CvType.CV_32FC1);
-            for (int j = 0; j < cols; ++j)
-            {
-                ret.put(0, j, mat.get(j / mat.cols(), j % mat.cols()));
-            }
-            return ret;
-        } else
-        {
-            return strategy.getEigenVec(mat);
-        }
-    }
 }
