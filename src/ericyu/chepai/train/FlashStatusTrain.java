@@ -14,6 +14,11 @@ import java.util.List;
  */
 public class FlashStatusTrain extends SampleTrain
 {
+    public FlashStatusTrain()
+    {
+        super(SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,new AllPixelEigenvetorStrategy());
+    }
+
     public FlashStatusTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
     {
         super(trainDataPath, trainClassPath, eigenvetorStrategy);

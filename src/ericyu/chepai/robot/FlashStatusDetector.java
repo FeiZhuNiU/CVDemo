@@ -50,8 +50,23 @@ public class FlashStatusDetector implements Runnable
         {
             Mat target = getRightPartOfFlash();
             List<Mat> toRecogs = recognition.getTrainedData().process(target);
-            System.out.println(recognition.recognize(toRecogs.get(0),1));
-
+            int result = recognition.recognize(toRecogs.get(0),1);
+            switch (result)
+            {
+                case 1:
+                    status = Status.LOGIN;
+                    break;
+                case 2:
+                    status = Status.BID;
+                    break;
+                case 3:
+                    status = Status.V_CODE;
+                    break;
+                case 4:
+                    status = Status.NOTIFICATION;
+                    break;
+            }
+            System.out.println(status);
         }
     }
     private Mat getRightPartOfFlash()

@@ -9,6 +9,7 @@ package ericyu.chepai.robot;
 
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.train.AllPixelEigenvetorStrategy;
+import ericyu.chepai.train.FlashStatusTrain;
 import ericyu.chepai.train.SampleConstants;
 import ericyu.chepai.recognize.Recognition;
 import ericyu.chepai.train.VCodeTrain;
@@ -27,6 +28,7 @@ public class MyRobot
 {
     private FlashPosition flashPosition;
     private Robot robot;
+    private FlashStatusDetector flashStatusDetector;
 
     public static final String NOTIFICATION_RE_BID_OUT_OF_RANGE="不在修改区间范围内重新";
     public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="输入正确";
@@ -40,6 +42,7 @@ public class MyRobot
     {
         this.robot = robot;
         findFlashPosition();
+        flashStatusDetector = new FlashStatusDetector(flashPosition,new Recognition(new FlashStatusTrain()));
     }
 
     public static Map<Character, Integer> keyMap = new HashMap<Character, Integer>();
