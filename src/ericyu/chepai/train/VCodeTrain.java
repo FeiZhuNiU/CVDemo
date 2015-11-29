@@ -94,7 +94,7 @@ public class VCodeTrain extends SampleTrain
 //                                          "_rotated_" + i * 5 +
 //                                          "_x_" + offset.x +
 //                                          "_y_" + offset.y +
-//                                          ".png", normalized);
+//                                          ".bmp", normalized);
                 samples.add(new AbstractMap.SimpleEntry<>(normalized, curClass));
             }
         }
@@ -106,7 +106,7 @@ public class VCodeTrain extends SampleTrain
      * <p/>
      * e.g.
      * <p/>
-     * 21182_xxx.png   ->   1_21182.png
+     * 21182_xxx.bmp   ->   1_21182.bmp
      * 1 is "2118".charAt(2)
      */
     private void renameUnNormalizedImage()
@@ -121,7 +121,7 @@ public class VCodeTrain extends SampleTrain
             char targetNumber = numbers.charAt(Integer.parseInt(index));
             image.renameTo(
                     new File(Segmentation.unNormalizedDir + "\\" + String.valueOf(
-                            targetNumber) + "_" + numbers + index + ".png"));
+                            targetNumber) + "_" + numbers + index + ".bmp"));
         }
     }
 
@@ -140,9 +140,9 @@ public class VCodeTrain extends SampleTrain
         Boolean bak = Segmentation.dumpImg;
         Segmentation.dumpUnNormalizedSamples = true;
         Segmentation.dumpImg = false;
-        for (String file : srcImages)
+        for (File file : srcImages)
         {
-            segmentationDemo(new String[]{file});
+            segmentationDemo(new String[]{file.toString()});
         }
         Segmentation.dumpUnNormalizedSamples = false;
         Segmentation.dumpImg = bak;
@@ -220,6 +220,12 @@ public class VCodeTrain extends SampleTrain
             String path = image.getAbsolutePath();
             sampleEntries.addAll(generateRotatedSamples(path));
         }
+    }
+
+    @Override
+    public List<Mat> process(Mat src)
+    {
+        return Segmentation.segment(src, new SegSingleColor());
     }
 
     private void segmentationDemo(String[] args)

@@ -11,7 +11,6 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
-import org.opencv.imgcodecs.Imgcodecs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +125,7 @@ public class SegByGap
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         SegByGap segByGap = new SegByGap();
-        Mat test = ImageUtils.readImage("dump\\fixed_.png");
+        Mat test = ImageUtils.readImage("dump\\fixed_.bmp");
         Mat test1 = ImageUtils.color2Gray(test);
         segByGap.doSegmentation(test1);
     }

@@ -25,9 +25,9 @@ public class Segmentation
     public static String unNormalizedDir = "dump\\unNormalized";
     public static boolean dumpImg = true;
     public static String dumpDir = "dump\\";
-    public static String dumpPicName = ".png";
+    public static String dumpPicName = ".bmp";
     public static boolean dumpUnNormalizedSamples = false;
-    public static String sampleImageFormat = "png";
+    public static String sampleImageFormat = "bmp";
     public static String normalizedSkeletonDir = "dump\\NormalizedSkeleton";
 
     /**
@@ -67,10 +67,10 @@ public class Segmentation
         {
             for (Mat mat : unNormalizedDigits)
             {
-                //06093_unNormailized.png   where 3 represents that current digit is 0609[3]
+                //06093_unNormailized.bmp   where 3 represents that current digit is 0609[3]
                 String pathToSave = unNormalizedDir + File.separator +
                         dumpPicName.substring(0, dumpPicName.indexOf(".")) +
-                        unNormalizedDigits.indexOf(mat) + "_unNormalized.png";
+                        unNormalizedDigits.indexOf(mat) + "_unNormalized.bmp";
                 Imgcodecs.imwrite(pathToSave, mat);
             }
         }
@@ -85,9 +85,9 @@ public class Segmentation
         {
             for (Mat mat : normalized)
             {
-                //06093_normalized.png
+                //06093_normalized.bmp
                 String pathToSave = dumpPicName.substring(0, dumpPicName.indexOf(
-                        ".")) + normalized.indexOf(mat) + "_normalized.png";
+                        ".")) + normalized.indexOf(mat) + "_normalized.bmp";
                 Imgcodecs.imwrite(pathToSave, mat);
             }
         }

@@ -8,11 +8,16 @@ package ericyu.chepai.robot;
  |           Created by lliyu on 11/27/2015  (lin.yu@oracle.com)             |
  +===========================================================================*/
 
-import com.recognition.software.jdeskew.ImageUtil;
 import ericyu.chepai.image.ImageUtils;
+import ericyu.chepai.recognize.Recognition;
+import ericyu.chepai.train.AllPixelEigenvetorStrategy;
+import ericyu.chepai.train.FlashStatusTrain;
+import ericyu.chepai.train.SampleConstants;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
+
+import java.util.List;
 
 /**
  * This Thread's duty is to detect current flash status
@@ -21,6 +26,7 @@ public class FlashStatusDetector implements Runnable
 {
     private FlashPosition flashPosition;
     private Status status;
+    private Recognition recognition;
     public enum Status
     {
         NONE,
@@ -30,8 +36,9 @@ public class FlashStatusDetector implements Runnable
         NOTIFICATION
     }
 
-    public FlashStatusDetector(FlashPosition flashPosition)
+    public FlashStatusDetector(FlashPosition flashPosition, Recognition recognition)
     {
+        this.recognition = recognition;
         this.flashPosition = flashPosition;
         status = Status.NONE;
     }
@@ -39,7 +46,13 @@ public class FlashStatusDetector implements Runnable
     @Override
     public void run()
     {
+        while(true)
+        {
+            Mat target = getRightPartOfFlash();
+            List<Mat> toRecogs = recognition.getTrainedData().process(target);
+            System.out.println(recognition.recognize(toRecogs.get(0),1));
 
+        }
     }
     private Mat getRightPartOfFlash()
     {
@@ -62,7 +75,9 @@ public class FlashStatusDetector implements Runnable
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        FlashStatusDetector detector = new FlashStatusDetector(new FlashPosition());
-        detector.generateSample();
+        FlashStatusDetector detector = new FlashStatusDetector(new FlashPosition(),new Recognition(new FlashStatusTrain(SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,new AllPixelEigenvetorStrategy())));
+//        detector.generateSample();
+        Thread thread = new Thread(detector);
+        thread.start();
     }
 }

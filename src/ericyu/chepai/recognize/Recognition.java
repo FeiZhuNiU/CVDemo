@@ -41,9 +41,10 @@ public class Recognition
         kNearest.train(trainedData.getTrainData(), Ml.ROW_SAMPLE, trainedData.getTrainClass());
         return kNearest;
     }
-    public int recognize(Mat toRecog)
+    public int recognize(Mat toRecog, int accuracy)
     {
-        int num = (int) getKnnClassifier().findNearest(toRecog, 10, new Mat());
+        Mat eigen = getTrainedData().getEigenvetorStrategy().getEigenVec(toRecog);
+        int num = (int) getKnnClassifier().findNearest(eigen, accuracy, new Mat());
         return num;
     }
 

@@ -8,8 +8,6 @@ package ericyu.chepai.robot;
  +===========================================================================*/
 
 import ericyu.chepai.image.ImageUtils;
-import ericyu.chepai.image.SegSingleColor;
-import ericyu.chepai.image.Segmentation;
 import ericyu.chepai.train.AllPixelEigenvetorStrategy;
 import ericyu.chepai.train.SampleConstants;
 import ericyu.chepai.recognize.Recognition;
@@ -230,16 +228,17 @@ public class MyRobot
                            FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
                            FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
                            FlashPosition.REGION_VERIFICATION_CODE_HEIGHT);
-        java.util.List<Mat> digitsToRecog = Segmentation.segmentROI(src, picRect, new SegSingleColor());
+        Mat toRecog = src.submat(picRect);
+        java.util.List<Mat> digitsToRecog = recognition.getTrainedData().process(toRecog);
         //recognize
         if (digitsToRecog != null && digitsToRecog.size() == 4)
         {
 
             for (Mat mat : digitsToRecog)
             {
-                Mat toRecog = recognition.getTrainedData().getEigenvetorStrategy().getEigenVec(mat);
-                int num = recognition.recognize(toRecog);
-//                    int num = (int)ann_mlp.predict(toRecog);
+
+                int num = recognition.recognize(mat,10);
+//                    int num = (int)ann_mlp.predict(target);
                 ret.add(num);
                 System.out.println(num);
             }

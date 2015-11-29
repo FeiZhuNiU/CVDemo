@@ -8,6 +8,9 @@ package ericyu.chepai.train;
  +===========================================================================*/
 public class SampleConstants
 {
-    public static final String V_CODE_SAMPLE_TRAIN_DATA_PATH="resources\\traindata.png";
-    public static final String V_CODE_SAMPLE_TRAIN_CLASSES_PATH = "resources\\trainclasses.png";
+    public static final String V_CODE_SAMPLE_TRAIN_DATA_PATH="resources\\traindata.bmp";
+    public static final String V_CODE_SAMPLE_TRAIN_CLASSES_PATH = "resources\\trainclasses.bmp";
+
+    public static final String FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH = "resources\\falshStatusTrainData.bmp";
+    public static final String FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH = "resources\\falshStatusTrainClasses.bmp";
 }

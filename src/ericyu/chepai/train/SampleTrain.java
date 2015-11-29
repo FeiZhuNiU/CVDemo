@@ -14,6 +14,8 @@ import org.opencv.imgcodecs.Imgcodecs;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -33,10 +35,10 @@ public abstract class SampleTrain
     /**
      * path of samples
      */
-    protected String[] srcImages;
+    protected List<File> srcImages;
     private EigenvetorStrategy eigenvetorStrategy;
     /**
-     * key      - sampleData
+     * key      - sampleData (channel should be 1)
      * value    - class
      */
     protected List<Map.Entry<Mat, Integer>> sampleEntries;
@@ -66,12 +68,16 @@ public abstract class SampleTrain
 
     /**
      * load and train all samples in srcImages
-     * @param srcImages
+     * @param images
      * @param eigenvetorStrategy
      */
-    public SampleTrain(String[] srcImages, EigenvetorStrategy eigenvetorStrategy)
+    public SampleTrain(String[] images, EigenvetorStrategy eigenvetorStrategy)
     {
-        this.srcImages = srcImages;
+        this.srcImages = new ArrayList<>();
+        for(String str : images)
+        {
+            srcImages.add(new File(str));
+        }
         this.eigenvetorStrategy = eigenvetorStrategy;
         train();
     }
@@ -84,7 +90,7 @@ public abstract class SampleTrain
     public SampleTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
     {
         File file = new File(dir);
-        this.srcImages = file.list();
+        this.srcImages = Arrays.asList(file.listFiles());
         this.eigenvetorStrategy = eigenvetorStrategy;
         train();
     }
@@ -201,7 +207,6 @@ public abstract class SampleTrain
     private Mat loadTrainedDataFromFileSystem(String dataPath)
     {
         File file = new File(dataPath);
-
         if (!file.exists())
         {
             System.out.println("train data not prepared. please run train() in SampleTrain.");
@@ -213,4 +218,11 @@ public abstract class SampleTrain
         ret.convertTo(ret, CvType.CV_32FC1);
         return ret;
     }
+
+    /**
+     * process src image for recognition
+     * @param src
+     * @return
+     */
+    abstract public List<Mat> process(Mat src);
 }
