@@ -18,24 +18,29 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * trainData and trainClasses would be set in constructor
+ * trainData and trainClass would be set in constructor
  */
 public abstract class SampleTrain
 {
     /**
      * path of samples
      */
-    protected String[] sampleImages;
+    protected String[] srcImages;
     /**
      * key      - sampleData
      * value    - class
      */
-    protected List<Map.Entry<Mat, Integer>> samples;
+    protected List<Map.Entry<Mat, Integer>> sampleEntries;
     protected Mat trainData;
-    protected Mat trainClasses;
+    protected Mat trainClass;
     public String trainDataPath;
     public String trainClassPath;
 
+    /**
+     * load trained data
+     * @param trainDataPath
+     * @param trainClassPath
+     */
     public SampleTrain(String trainDataPath, String trainClassPath)
     {
         if(trainDataPath == null ||
@@ -46,28 +51,42 @@ public abstract class SampleTrain
             System.out.println("Trained data does not exist! SampleTrain init failed! Use other constructor first.");
             return;
         }
-        loadTrainedDataFromFileSystem(trainDataPath,trainClassPath);
+        this.trainDataPath = trainDataPath;
+        this.trainClassPath = trainClassPath;
+        trainData = loadTrainedDataFromFileSystem(trainDataPath);
+        trainClass = loadTrainedDataFromFileSystem(trainClassPath);
     }
 
-    public SampleTrain(String[] sampleImages)
+    /**
+     * load and train all samples in srcImages
+     * @param srcImages
+     */
+    public SampleTrain(String[] srcImages)
     {
-        this.sampleImages = sampleImages;
+        this.srcImages = srcImages;
         train();
     }
 
     /**
+     * load and train all samples in dir
      * @param dir under where all files are samples
      */
     public SampleTrain(String dir)
     {
         File file = new File(dir);
-        this.sampleImages = file.list();
+        this.srcImages = file.list();
         train();
     }
 
+    /**
+     * set following fields
+     * @see SampleTrain#sampleEntries
+     * @see SampleTrain#trainData
+     * @see SampleTrain#trainClass
+     */
     protected void train()
     {
-        samples = generateSamplesClassMap();
+        setSampleEntries();
         setTrainDataAndTrainClasses();
     }
 
@@ -76,31 +95,33 @@ public abstract class SampleTrain
         return trainData;
     }
 
-    public Mat getTrainClasses()
+    public Mat getTrainClass()
     {
-        return trainClasses;
+        return trainClass;
     }
 
     /**
-     * generate list of <sample, class> pairs
+     * set
+     * @see SampleTrain#sampleEntries
      * @return
      */
-    abstract protected List<Map.Entry<Mat, Integer>> generateSamplesClassMap();
+    abstract protected void setSampleEntries();
 
     /**
-     * @return <trainData , trainClasses>
+     * set train data and classes according to samples
+     * @return <trainData , trainClass>
      */
     protected void setTrainDataAndTrainClasses()
     {
-        trainData = new Mat(samples.size(), samples.get(0).getKey().rows() * samples.get(0).getKey().cols(),
+        trainData = new Mat(sampleEntries.size(), sampleEntries.get(0).getKey().rows() * sampleEntries.get(0).getKey().cols(),
                 CvType.CV_32FC1);
-        trainClasses = new Mat(samples.size(), 1, CvType.CV_32FC1);
+        trainClass = new Mat(sampleEntries.size(), 1, CvType.CV_32FC1);
 
-        for (int i = 0; i < samples.size(); ++i)
+        for (int i = 0; i < sampleEntries.size(); ++i)
         {
-            int curVal = samples.get(i).getValue();
-            Mat curMat = samples.get(i).getKey();
-            trainClasses.put(i, 0, curVal);
+            int curVal = sampleEntries.get(i).getValue();
+            Mat curMat = sampleEntries.get(i).getKey();
+            trainClass.put(i, 0, curVal);
             for (int j = 0; j < trainData.cols(); ++j)
             {
                 trainData.put(i, j, curMat.get(j / curMat.cols(), j % curMat.cols())[0]);
@@ -150,36 +171,26 @@ public abstract class SampleTrain
         ImageUtils.deleteImage(trainClassesPath);
 
         Imgcodecs.imwrite(trainDataPath, trainData);
-        Imgcodecs.imwrite(trainClassesPath, trainClasses);
+        Imgcodecs.imwrite(trainClassesPath, trainClass);
     }
 
 
     /**
-     * load train data when load class
-     *
-     * @return
-     * @param trainDataPath
-     * @param trainClassPath
+     * @param dataPath
      */
-    public void loadTrainedDataFromFileSystem(String trainDataPath, String trainClassPath)
+    private Mat loadTrainedDataFromFileSystem(String dataPath)
     {
-        this.trainDataPath = trainDataPath;
-        this.trainClassPath = trainClassPath;
+        File file = new File(dataPath);
 
-        File file1 = new File(this.trainDataPath);
-        File file2 = new File(this.trainClassPath);
-
-        if (!file1.exists() || !file2.exists())
+        if (!file.exists())
         {
             System.out.println("train data not prepared. please run train() in SampleTrain.");
-            return ;
+            return null;
         }
 
-        Mat trainDataColor = Imgcodecs.imread(this.trainDataPath);
-        Mat trainClassesColor = Imgcodecs.imread(this.trainClassPath);
-        trainData = ImageUtils.color2Gray(trainDataColor);
-        trainClasses = ImageUtils.color2Gray(trainClassesColor);
-        trainData.convertTo(trainData, CvType.CV_32FC1);
-        trainClasses.convertTo(trainClasses, CvType.CV_32FC1);
+        Mat data = Imgcodecs.imread(dataPath);
+        Mat ret = ImageUtils.color2Gray(data);
+        ret.convertTo(ret, CvType.CV_32FC1);
+        return ret;
     }
 }

@@ -141,7 +141,7 @@ public class VCodeSampleTrain extends SampleTrain
         Boolean bak = Segmentation.dumpImg;
         Segmentation.dumpUnNormalizedSamples = true;
         Segmentation.dumpImg = false;
-        for (String file : sampleImages)
+        for (String file : srcImages)
         {
             segmentationDemo(new String[]{file});
         }
@@ -190,7 +190,7 @@ public class VCodeSampleTrain extends SampleTrain
 
     }
 
-    protected List<Map.Entry<Mat, Integer>> generateSamplesClassMap()
+    protected void setSampleEntries()
     {
 
         /*
@@ -204,32 +204,26 @@ public class VCodeSampleTrain extends SampleTrain
 //        2.
         renameUnNormalizedImage();
 
-
-        List<Map.Entry<Mat, Integer>> ret = new ArrayList<>();
+        sampleEntries = new ArrayList<>();
         File file = new File(Segmentation.unNormalizedDir);
         File[] files = file.listFiles();
         //if no images in Segmentation.unNormalizedDir, return null
         if(files == null)
         {
-            return null;
+            return;
         }
         for (File image : files)
         {
             String path = image.getAbsolutePath();
-            ret.addAll(generateSampleGroupWithSample(path));
+            sampleEntries.addAll(generateSampleGroupWithSample(path));
         }
-        return ret;
     }
 
     private void segmentationDemo(String[] args)
     {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
         String imageFile = (args.length == 0 ? "CodeImage\\0687.jpg" : args[0]);
         Segmentation.dumpPicName = new File(imageFile).getName();
-
         long startTime = System.currentTimeMillis();
-
         Mat src = Imgcodecs.imread(imageFile);
         Segmentation.segment(src, new SegSingleColor());
         long endTime = System.currentTimeMillis();

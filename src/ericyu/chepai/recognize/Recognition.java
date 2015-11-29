@@ -31,7 +31,7 @@ public class Recognition
     private KNearest getKnnClassifier()
     {
         KNearest kNearest = KNearest.create();
-        kNearest.train(samples.getTrainData(), Ml.ROW_SAMPLE, samples.getTrainClasses());
+        kNearest.train(samples.getTrainData(), Ml.ROW_SAMPLE, samples.getTrainClass());
         return kNearest;
     }
     public int recognize(Mat toRecog)
@@ -53,7 +53,7 @@ public class Recognition
         ann_mlp.setBackpropWeightScale(0.1);
 
 //        Map.Entry<Mat, Mat> trainData = RecogUtils.setTrainDataAndTrainClasses();
-        ann_mlp.train(samples.getTrainData(), Ml.ROW_SAMPLE, samples.getTrainClasses());
+        ann_mlp.train(samples.getTrainData(), Ml.ROW_SAMPLE, samples.getTrainClass());
 
         return ann_mlp;
     }
