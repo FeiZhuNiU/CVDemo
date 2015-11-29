@@ -126,7 +126,7 @@ public class SegByGap
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         SegByGap segByGap = new SegByGap();
-        Mat test = Imgcodecs.imread("dump\\fixed_.png");
+        Mat test = ImageUtils.readImage("dump\\fixed_.png");
         Mat test1 = ImageUtils.color2Gray(test);
         segByGap.doSegmentation(test1);
     }

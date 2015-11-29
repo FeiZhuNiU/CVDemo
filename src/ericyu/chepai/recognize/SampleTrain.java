@@ -188,7 +188,7 @@ public abstract class SampleTrain
             return null;
         }
 
-        Mat data = Imgcodecs.imread(dataPath);
+        Mat data = ImageUtils.readImage(dataPath);
         Mat ret = ImageUtils.color2Gray(data);
         ret.convertTo(ret, CvType.CV_32FC1);
         return ret;

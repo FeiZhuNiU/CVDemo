@@ -24,20 +24,20 @@ import java.util.Map;
 /**
  * this class is for generate train data and classes
  */
-public class VCodeSampleTrain extends SampleTrain
+public class VCodeTrain extends SampleTrain
 {
 
-    public VCodeSampleTrain(String trainDataPath, String trainClassPath)
+    public VCodeTrain(String trainDataPath, String trainClassPath)
     {
         super(trainDataPath, trainClassPath);
     }
 
-    public VCodeSampleTrain(String[] sampleImages)
+    public VCodeTrain(String[] sampleImages)
     {
         super(sampleImages);
     }
 
-    public VCodeSampleTrain(String dir)
+    public VCodeTrain(String dir)
     {
         super(dir);
     }
@@ -48,7 +48,7 @@ public class VCodeSampleTrain extends SampleTrain
      * @param imagePath input image (should NOT be normalized AND NOT be enlarged!)
      * @return          list where save the generated samples
      */
-    private List<Map.Entry<Mat, Integer>> generateSampleGroupWithSample(String imagePath)
+    private List<Map.Entry<Mat, Integer>> generateRotatedSamples(String imagePath)
     {
         List<Map.Entry<Mat, Integer>> samples = new ArrayList<>();
         Point[] offsets = new Point[]{
@@ -63,7 +63,7 @@ public class VCodeSampleTrain extends SampleTrain
                 new Point(1, 1)
         };
 
-        Mat src = Imgcodecs.imread(imagePath);
+        Mat src = ImageUtils.readImage(imagePath);
         Mat digit = ImageUtils.color2Gray(src);
 
         /**
@@ -185,7 +185,7 @@ public class VCodeSampleTrain extends SampleTrain
                 "CodeImage\\9566.jpg",
         };
 
-        VCodeSampleTrain train = new VCodeSampleTrain(sampleImages);
+        VCodeTrain train = new VCodeTrain(sampleImages);
         train.dumpTrainData(RecogConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,RecogConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH);
 
     }
@@ -215,7 +215,7 @@ public class VCodeSampleTrain extends SampleTrain
         for (File image : files)
         {
             String path = image.getAbsolutePath();
-            sampleEntries.addAll(generateSampleGroupWithSample(path));
+            sampleEntries.addAll(generateRotatedSamples(path));
         }
     }
 
@@ -224,7 +224,7 @@ public class VCodeSampleTrain extends SampleTrain
         String imageFile = (args.length == 0 ? "CodeImage\\0687.jpg" : args[0]);
         Segmentation.dumpPicName = new File(imageFile).getName();
         long startTime = System.currentTimeMillis();
-        Mat src = Imgcodecs.imread(imageFile);
+        Mat src = ImageUtils.readImage(imageFile);
         Segmentation.segment(src, new SegSingleColor());
         long endTime = System.currentTimeMillis();
         System.out.println("seg time: " + (endTime - startTime) / 1000.0);

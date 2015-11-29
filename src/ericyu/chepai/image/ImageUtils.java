@@ -198,7 +198,7 @@ public class ImageUtils
             BufferedImage screen = new Robot().createScreenCapture(new Rectangle(lt_x,lt_y,width,height));
             String format = dst.lastIndexOf(".")>0 ? dst.substring(dst.lastIndexOf(".") + 1, dst.length()) : "bmp";
             ImageIO.write(screen, format, new File(dst));
-            Mat ret =  Imgcodecs.imread(dst);
+            Mat ret = readImage(dst);
             deleteImage(dst);
             return ret;
         } catch (Exception e)
@@ -206,6 +206,11 @@ public class ImageUtils
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static Mat readImage(String dst)
+    {
+        return Imgcodecs.imread(dst);
     }
 
     public static void screenCapture(String dst, int lt_x, int lt_y, int width, int height)

@@ -12,7 +12,7 @@ import ericyu.chepai.image.SegSingleColor;
 import ericyu.chepai.image.Segmentation;
 import ericyu.chepai.recognize.RecogConstants;
 import ericyu.chepai.recognize.Recognition;
-import ericyu.chepai.recognize.VCodeSampleTrain;
+import ericyu.chepai.recognize.VCodeTrain;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -210,7 +210,7 @@ public class MyRobot
      */
     public ArrayList<Integer> recogVerificationCode()
     {
-        VCodeSampleTrain samples = new VCodeSampleTrain(RecogConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,RecogConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH);
+        VCodeTrain samples = new VCodeTrain(RecogConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,RecogConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH);
         Recognition recognition = new Recognition(samples);
 
         ArrayList<Integer> ret = new ArrayList<Integer>();
@@ -221,7 +221,7 @@ public class MyRobot
                 flashPosition.origin.y,
                 FlashPosition.FLASH_WIDTH,
                 FlashPosition.FLASH_HEIGHT);
-        Mat src = Imgcodecs.imread(RecogConstants.screenCaptureImage);
+        Mat src = ImageUtils.readImage(RecogConstants.screenCaptureImage);
                 //get images to recognize
         Rect picRect = new Rect(FlashPosition.REGION_VERIFICATION_CODE_LT_X,
                            FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
