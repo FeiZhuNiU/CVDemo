@@ -7,6 +7,7 @@ package ericyu.chepai.recognize;
  |           Created by lliyu on 10/30/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.train.SampleTrain;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;

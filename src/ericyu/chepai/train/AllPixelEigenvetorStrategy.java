@@ -1,4 +1,4 @@
-package ericyu.chepai.recognize;
+package ericyu.chepai.train;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;

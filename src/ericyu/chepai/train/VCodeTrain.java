@@ -1,4 +1,4 @@
-package ericyu.chepai.recognize;
+package ericyu.chepai.train;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |
@@ -10,6 +10,7 @@ package ericyu.chepai.recognize;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.image.SegSingleColor;
 import ericyu.chepai.image.Segmentation;
+import ericyu.chepai.recognize.RecogConstants;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
