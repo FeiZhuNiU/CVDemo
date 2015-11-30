@@ -7,7 +7,7 @@ package ericyu.chepai.recognize;
  |           Created by lliyu on 10/30/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
-import ericyu.chepai.train.SampleTrain;
+import ericyu.chepai.train.AbstractSampleTrain;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
@@ -18,9 +18,9 @@ import org.opencv.ml.Ml;
 public class Recognition
 {
     public static String screenCaptureImage = "screenCapture.bmp";
-    private SampleTrain trainedData;
+    private AbstractSampleTrain trainedData;
 
-    public SampleTrain getTrainedData()
+    public AbstractSampleTrain getTrainedData()
     {
         return trainedData;
     }
@@ -30,7 +30,7 @@ public class Recognition
         KNN, ANN
     }
 
-    public Recognition(SampleTrain trainedData)
+    public Recognition(AbstractSampleTrain trainedData)
     {
         this.trainedData = trainedData;
     }
@@ -44,7 +44,7 @@ public class Recognition
 
     /**
      * @param toRecog generally, this param should be the return value of
-     *                @see ericyu.chepai.train.SampleTrain#process
+     *                @see AbstractSampleTrain#process
      * @param accuracy
      * @return
      */

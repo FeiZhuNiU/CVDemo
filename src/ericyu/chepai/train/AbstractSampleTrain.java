@@ -21,16 +21,16 @@ import java.util.Map;
 
 /**
  * 1. use following two constructors to train samples
- * @see ericyu.chepai.train.SampleTrain#SampleTrain(String[] srcImages, EigenvetorStrategy eigenvetorStrategy)
- * @see ericyu.chepai.train.SampleTrain#SampleTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
+ * @see AbstractSampleTrain#AbstractSampleTrain(String[] srcImages, EigenvetorStrategy eigenvetorStrategy)
+ * @see AbstractSampleTrain#AbstractSampleTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
  *
  * 2. use following method to dump train data to local file
- * @see ericyu.chepai.train.SampleTrain#dumpTrainData
+ * @see AbstractSampleTrain#dumpTrainData
  *
  * 3. use following construtor to recognize
- * @see ericyu.chepai.train.SampleTrain#SampleTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
+ * @see AbstractSampleTrain#AbstractSampleTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
  */
-public abstract class SampleTrain
+public abstract class AbstractSampleTrain
 {
     /**
      * path of samples
@@ -51,7 +51,7 @@ public abstract class SampleTrain
      * @param trainClassPath
      * @param eigenvetorStrategy
      */
-    public SampleTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
+    public AbstractSampleTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
     {
         if(trainDataPath == null ||
                 trainClassPath == null ||
@@ -71,7 +71,7 @@ public abstract class SampleTrain
      * @param images
      * @param eigenvetorStrategy
      */
-    public SampleTrain(String[] images, EigenvetorStrategy eigenvetorStrategy)
+    public AbstractSampleTrain(String[] images, EigenvetorStrategy eigenvetorStrategy)
     {
         this.srcImages = new ArrayList<>();
         for(String str : images)
@@ -87,7 +87,7 @@ public abstract class SampleTrain
      * @param dir under where all files are samples
      * @param eigenvetorStrategy
      */
-    public SampleTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
+    public AbstractSampleTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
     {
         File file = new File(dir);
         this.srcImages = Arrays.asList(file.listFiles());
@@ -97,9 +97,9 @@ public abstract class SampleTrain
 
     /**
      * set following fields
-     * @see SampleTrain#sampleEntries
-     * @see SampleTrain#trainData
-     * @see SampleTrain#trainClass
+     * @see AbstractSampleTrain#sampleEntries
+     * @see AbstractSampleTrain#trainData
+     * @see AbstractSampleTrain#trainClass
      */
     protected void train()
     {
@@ -124,7 +124,7 @@ public abstract class SampleTrain
 
     /**
      * set
-     * @see SampleTrain#sampleEntries
+     * @see AbstractSampleTrain#sampleEntries
      * @return
      */
     abstract protected void setSampleEntries();

@@ -1,5 +1,6 @@
 package ericyu.chepai.robot;
 
+import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.image.ImageUtils;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;

@@ -7,6 +7,8 @@ package ericyu.chepai.robot;
  |           Created by lliyu on 11/2/2015  (lin.yu@oracle.com)              |
  +===========================================================================*/
 
+import ericyu.chepai.flash.FlashPosition;
+import ericyu.chepai.flash.FlashStatusDetector;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.train.AllPixelEigenvetorStrategy;
 import ericyu.chepai.train.FlashStatusTrain;
@@ -393,7 +395,7 @@ public class MyRobot
             return false;
         }
         doubleClickAt(FlashPosition.INPUT_CUSTOM_ADD_MONEY_X,
-                FlashPosition.INPUT_CUSTOM_ADD_MONEY_Y);
+                      FlashPosition.INPUT_CUSTOM_ADD_MONEY_Y);
         return true;
     }
 
@@ -485,7 +487,7 @@ public class MyRobot
             return false;
         }
         doubleClickAt(FlashPosition.INPUT_USERNAME_X,
-                FlashPosition.INPUT_USERNAME_Y);
+                      FlashPosition.INPUT_USERNAME_Y);
         return true;
     }
 
@@ -497,7 +499,7 @@ public class MyRobot
             return false;
         }
         doubleClickAt(FlashPosition.INPUT_PASSWORD_X,
-                FlashPosition.INPUT_PASSWORD_Y);
+                      FlashPosition.INPUT_PASSWORD_Y);
         return true;
     }
 

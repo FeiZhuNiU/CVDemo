@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by 麟 on 2015/11/29.
  */
-public class FlashStatusTrain extends SampleTrain
+public class FlashStatusTrain extends AbstractSampleTrain
 {
     public FlashStatusTrain()
     {

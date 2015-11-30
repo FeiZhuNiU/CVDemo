@@ -20,7 +20,7 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
     @Override
     public void execute()
     {
-        robot.wait(2000);
+        robot.wait(3000);
 
         while(!user.login(robot))
         {

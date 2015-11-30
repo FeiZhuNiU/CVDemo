@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * this class is for generate train data and classes
  */
-public class VCodeTrain extends SampleTrain
+public class VCodeTrain extends AbstractSampleTrain
 {
 
     public VCodeTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)

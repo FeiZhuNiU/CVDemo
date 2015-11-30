@@ -1,4 +1,4 @@
-package ericyu.chepai.robot;
+package ericyu.chepai.flash;
 
 /*===========================================================================+
  |      Copyright (c) 2014 Oracle Corporation, Redwood Shores, CA, USA       |
@@ -10,13 +10,12 @@ package ericyu.chepai.robot;
 
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.recognize.Recognition;
-import ericyu.chepai.train.AllPixelEigenvetorStrategy;
 import ericyu.chepai.train.FlashStatusTrain;
-import ericyu.chepai.train.SampleConstants;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +23,7 @@ import java.util.List;
  */
 public class FlashStatusDetector implements Runnable
 {
+    private List<IStatusObserver> observers;
     private FlashPosition flashPosition;
     private Status status;
     private Recognition recognition;
@@ -43,30 +43,68 @@ public class FlashStatusDetector implements Runnable
         status = Status.NONE;
     }
 
+    public void notifyStatusObservers()
+    {
+        if (observers!=null)
+        {
+            for(IStatusObserver observer : observers)
+            {
+                System.out.println("send notification to " + observer.getClass().getName());
+                observer.reactOnStatusChanged();
+            }
+        }
+    }
+
+    public void addStatusObserver(IStatusObserver observer)
+    {
+        if(observers == null)
+        {
+            observers = new ArrayList<>();
+        }
+        observers.add(observer);
+    }
+
+    public void removeStatusObserver(IStatusObserver observer)
+    {
+        if(observers != null)
+        {
+            observers.remove(observer);
+        }
+    }
+
     @Override
     public void run()
     {
         while(true)
         {
+            FlashStatusDetector.Status originStatus = status;
+            FlashStatusDetector.Status curStatus = Status.NONE;
+
             Mat target = getRightPartOfFlash();
             List<Mat> toRecogs = recognition.getTrainedData().process(target);
             int result = recognition.recognize(toRecogs.get(0),1);
             switch (result)
             {
                 case 1:
-                    status = Status.LOGIN;
+                    curStatus = Status.LOGIN;
                     break;
                 case 2:
-                    status = Status.BID;
+                    curStatus = Status.BID;
                     break;
                 case 3:
-                    status = Status.V_CODE;
+                    curStatus = Status.V_CODE;
                     break;
                 case 4:
-                    status = Status.NOTIFICATION;
+                    curStatus = Status.NOTIFICATION;
                     break;
             }
-//            System.out.println(status);
+            if (curStatus != originStatus)
+            {
+                System.out.println("FlashStatus has changed to " + curStatus);
+                setStatus(curStatus);
+                notifyStatusObservers();
+            }
+
         }
     }
     private Mat getRightPartOfFlash()
@@ -79,21 +117,16 @@ public class FlashStatusDetector implements Runnable
         return ret;
     }
 
-    /**
-     * capture
-     * @return
-     */
-    private Mat generateSample()
+
+    public void setStatus(Status status)
     {
-        Mat src = getRightPartOfFlash();
-        Mat binary = ImageUtils.color2Binary(src);
-        Imgcodecs.imwrite("test.bmp",binary);
-        return binary;
+        this.status = status;
     }
 
     public Status getStatus()
     {
         return status;
+
     }
 
     public static void main(String[] args)
@@ -103,5 +136,17 @@ public class FlashStatusDetector implements Runnable
 //        detector.generateSample();
         Thread thread = new Thread(detector);
         thread.start();
+    }
+
+    /**
+     * capture
+     * @return
+     */
+    private Mat generateSample()
+    {
+        Mat src = getRightPartOfFlash();
+        Mat binary = ImageUtils.color2Binary(src);
+        Imgcodecs.imwrite("test.bmp", binary);
+        return binary;
     }
 }
