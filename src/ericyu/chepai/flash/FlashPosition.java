@@ -14,6 +14,8 @@ import java.util.Arrays;
 
 
 /**
+ * Singleton
+ *
  * Flash position, and all button positions on that flash
  *
  * Constant naming rule:
@@ -26,6 +28,16 @@ import java.util.Arrays;
  */
 public class FlashPosition
 {
+    private static FlashPosition flashPosition;
+    public static FlashPosition getInstance()
+    {
+        if(flashPosition == null)
+        {
+            flashPosition = new FlashPosition();
+        }
+        return flashPosition;
+    }
+
     /**
      * the order should be b/g/r
      */
@@ -39,7 +51,7 @@ public class FlashPosition
     /**
      * This constructor meant to get to know the position where the flash locate on screen
      */
-    public FlashPosition()
+    private FlashPosition()
     {
         findFlashPosition();
     }

@@ -43,7 +43,7 @@ public class Test
         {
             try
             {
-                MyRobot robot = new MyRobot(new Robot(),new FlashPosition());
+                MyRobot robot = new MyRobot(new Robot(),FlashPosition.getInstance());
                 System.out.println(robot.getLowestDeal());
             }
             catch (AWTException e)

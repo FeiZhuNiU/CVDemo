@@ -47,7 +47,7 @@ public class Console
         //generate a robot
         try
         {
-            flashPosition = new FlashPosition();
+            flashPosition = FlashPosition.getInstance();
             user = new User("12345678","123456");
             //will detect flash position here
             robot = new MyRobot(new Robot(),flashPosition);
