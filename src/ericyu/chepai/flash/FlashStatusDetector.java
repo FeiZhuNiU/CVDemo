@@ -73,6 +73,9 @@ public class FlashStatusDetector implements Runnable
         }
     }
 
+    /**
+     * detect current Flash status every 100 ms
+     */
     @Override
     public void run()
     {
@@ -99,6 +102,7 @@ public class FlashStatusDetector implements Runnable
                     curStatus = Status.NOTIFICATION;
                     break;
             }
+            // if status changed, send notification
             if (curStatus != originStatus)
             {
                 Logger.log(status,"FlashStatus ready to change to " + curStatus);
@@ -126,8 +130,7 @@ public class FlashStatusDetector implements Runnable
         return ret;
     }
 
-
-    public void setStatus(Status status)
+    private void setStatus(Status status)
     {
         this.status = status;
     }
