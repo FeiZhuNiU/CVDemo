@@ -27,17 +27,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Robot
+ */
 public class MyRobot implements IStatusObserver
 {
     private FlashPosition flashPosition;
     private Robot robot;
     private FlashStatusDetector.Status flashStatus;
 
+    /**
+     * Strings for recognize system notifications
+     */
     public static final String NOTIFICATION_RE_BID_OUT_OF_RANGE="不在修改区间范围内重新";
     public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="输入正确";
     public static final String NOTIFICATION_BID_SUCCESS="成功";
     /**
-     * we'd better avoid verify this condition by including it to clickCancelVerificationCodeButton()
+     * we currently avoid verify this condition by including it to {@link #clickCancelVerificationCodeButton}
      */
     public static final String NOTIFICATION_REQUEST_VCODE_TOO_OFTEN="过于频繁";
 
@@ -89,8 +95,6 @@ public class MyRobot implements IStatusObserver
         keyMap.put('x', KeyEvent.VK_X);
         keyMap.put('y', KeyEvent.VK_Y);
         keyMap.put('z', KeyEvent.VK_Z);
-
-
     }
 
     /**
@@ -130,7 +134,7 @@ public class MyRobot implements IStatusObserver
      * verify bid result
      * @return  0   -> bid success
      *          1   -> not in bid range
-     *          2  -> wrong verification code
+     *          2   -> wrong verification code
      *          -1  -> failed
      */
     public int verifySystemNotification()
@@ -201,7 +205,6 @@ public class MyRobot implements IStatusObserver
         {
             ret = 0;
         }
-
 
         return ret;
     }

@@ -15,6 +15,11 @@ import org.opencv.ml.ANN_MLP;
 import org.opencv.ml.KNearest;
 import org.opencv.ml.Ml;
 
+/**
+ * Recognition
+ * core API:
+ * @see #recognize
+ */
 public class Recognition
 {
     private AbstractSampleTrain trainedData;
@@ -42,9 +47,8 @@ public class Recognition
     }
 
     /**
-     * @param toRecog generally, this param should be the return value of
-     *                @see AbstractSampleTrain#process
-     * @param accuracy
+     * @param toRecog generally, this param should be the return value of {@link AbstractSampleTrain#process}
+     * @param accuracy a param for KNN classifier
      * @return
      */
     public int recognize(Mat toRecog, int accuracy)

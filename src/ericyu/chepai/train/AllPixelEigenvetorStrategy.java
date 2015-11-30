@@ -1,11 +1,14 @@
 package ericyu.chepai.train;
-
+/*===========================================================================+
+ |      Copyright (c) 2015 Eric Yu                                           |
+ |                         All rights reserved.                              |
+ +===========================================================================+
+ |  HISTORY                                                                  |
+ |           Created by lliyu on 11/29/2015  (yulin.jay@gmail.com)           |
+ +===========================================================================*/
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-/**
- * Created by 麟 on 2015/11/29.
- */
 public class AllPixelEigenvetorStrategy implements EigenvetorStrategy
 {
     @Override

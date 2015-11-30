@@ -20,10 +20,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This Thread's duty is to detect current flash status
+ * A detector to monitor flash status
+ *
+ * recognize current status by the right part of the flash
+ * TrainClass: {@link ericyu.chepai.train.FlashStatusTrain}
+ * detectRate: {@value #detectRate}
+ *
+ * TODO: singleton??
  */
 public class FlashStatusDetector implements Runnable
 {
+    private static int detectRate = 100;
     private List<IStatusObserver> observers;
     private FlashPosition flashPosition;
     private Status status;
@@ -74,7 +81,7 @@ public class FlashStatusDetector implements Runnable
     }
 
     /**
-     * detect current Flash status every 100 ms
+     * detect current Flash status every {@value #detectRate} ms
      */
     @Override
     public void run()
@@ -112,7 +119,7 @@ public class FlashStatusDetector implements Runnable
             }
             try
             {
-                Thread.sleep(100);
+                Thread.sleep(detectRate);
             }
             catch (InterruptedException e)
             {

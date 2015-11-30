@@ -21,15 +21,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Class for train samples and process src image for recognition {@link #process}
+ *
  * 1. use following two constructors to train samples
- * @see AbstractSampleTrain#AbstractSampleTrain(String[] srcImages, EigenvetorStrategy eigenvetorStrategy)
- * @see AbstractSampleTrain#AbstractSampleTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
+ * @see #AbstractSampleTrain(String[] srcImages, EigenvetorStrategy eigenvetorStrategy)
+ * @see #AbstractSampleTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
  *
  * 2. use following method to dump train data to local file
- * @see AbstractSampleTrain#dumpTrainData
+ * @see #dumpTrainData
  *
  * 3. use following construtor to recognize
- * @see AbstractSampleTrain#AbstractSampleTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
+ * @see #AbstractSampleTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
  */
 public abstract class AbstractSampleTrain
 {

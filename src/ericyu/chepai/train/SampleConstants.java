@@ -6,6 +6,10 @@ package ericyu.chepai.train;
  |  HISTORY                                                                  |
  |           Created by lliyu on 11/28/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
+
+/**
+ * Class for train constants
+ */
 public class SampleConstants
 {
     public static final String V_CODE_SAMPLE_TRAIN_DATA_PATH="resources\\traindata.bmp";

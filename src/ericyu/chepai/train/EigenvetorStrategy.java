@@ -9,6 +9,9 @@ package ericyu.chepai.train;
 
 import org.opencv.core.Mat;
 
+/**
+ * interface for different eigenVector strategy
+ */
 public interface EigenvetorStrategy
 {
     Mat getEigenVec(Mat src);

@@ -1,4 +1,11 @@
 package ericyu.chepai.train;
+/*===========================================================================+
+ |      Copyright (c) 2015 Eric Yu                                           |
+ |                         All rights reserved.                              |
+ +===========================================================================+
+ |  HISTORY                                                                  |
+ |           Created by lliyu on 11/29/2015  (yulin.jay@gmail.com)           |
+ +===========================================================================*/
 
 import ericyu.chepai.image.ImageUtils;
 import org.opencv.core.Core;
@@ -9,9 +16,6 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by 麟 on 2015/11/29.
- */
 public class FlashStatusTrain extends AbstractSampleTrain
 {
     public FlashStatusTrain()

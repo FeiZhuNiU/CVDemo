@@ -17,15 +17,15 @@ import java.util.Arrays;
 /**
  * Singleton
  *
- * Flash position, and all button positions on that flash
+ * contains all button positions on that flash
  *
  * Constant naming rule:
  * INPUT_...
  * REGION_...
  * BUTTON_...
  *
- * It will try to find the position in the default constructor by pre-configured (topLeftCornerColor)
- * if fails, the origin will be null
+ * It will try to find the position in the constructor {@link #FlashPosition}
+ * by pre-configured color:{@link #topLeftCornerColor}
  */
 public class FlashPosition
 {
