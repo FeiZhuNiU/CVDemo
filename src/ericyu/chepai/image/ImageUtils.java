@@ -194,7 +194,7 @@ public class ImageUtils
      */
     public static Mat screenCapture(int lt_x, int lt_y, int width, int height)
     {
-        String dst = screenCaptureImage;
+        String dst = "screenCapture_tmp.bmp";
         try
         {
             BufferedImage screen = new Robot().createScreenCapture(new Rectangle(lt_x,lt_y,width,height));

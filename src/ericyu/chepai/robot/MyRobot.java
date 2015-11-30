@@ -13,6 +13,7 @@ import ericyu.chepai.flash.FlashStatusDetector;
 import ericyu.chepai.flash.IStatusObserver;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.train.AllPixelEigenvetorStrategy;
+import ericyu.chepai.train.RefreshButtonTrain;
 import ericyu.chepai.train.SampleConstants;
 import ericyu.chepai.recognize.Recognition;
 import ericyu.chepai.train.VCodeTrain;
@@ -167,6 +168,41 @@ public class MyRobot implements IStatusObserver
             }
         }
         ImageUtils.deleteImage(image);
+        return ret;
+    }
+
+    /**
+     * @return  -1  -> no ready
+     *          0   -> not exists
+     *          1   -> exists
+     */
+    public int isRefreshVCodeButtonExist()
+    {
+        if(flashStatus != FlashStatusDetector.Status.V_CODE)
+        {
+            Logger.log(flashStatus,"not ready to find refresh button.");
+            return -1;
+        }
+        int ret;
+        Mat toReg = ImageUtils.screenCapture(flashPosition.origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
+                                 flashPosition.origin.y + FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
+                                 FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
+                                 FlashPosition.REGION_VERIFICATION_CODE_HEIGHT);
+        Recognition recognition = new Recognition(new RefreshButtonTrain(SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH,
+                                                                         SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH,
+                                                                         new AllPixelEigenvetorStrategy()));
+
+        int result = recognition.recognize(toReg,1);
+        if(result == 1)
+        {
+            ret = 1;
+        }
+        else
+        {
+            ret = 0;
+        }
+
+
         return ret;
     }
 
