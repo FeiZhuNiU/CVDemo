@@ -237,6 +237,6 @@ public class VCodeTrain extends AbstractSampleTrain
         Mat src = ImageUtils.readImage(imageFile);
         Segmentation.segment(src, new SegSingleColor());
         long endTime = System.currentTimeMillis();
-        Logger.log(null, "seg time: " + (endTime - startTime) / 1000.0);
+        Logger.log(Logger.Level.INFO, null, "seg time: " + (endTime - startTime) / 1000.0);
     }
 }

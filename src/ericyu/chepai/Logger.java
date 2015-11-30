@@ -13,14 +13,20 @@ import java.text.SimpleDateFormat;
 
 public class Logger
 {
+    public enum Level
+    {
+        INFO,
+        WARNING,
+        ERROR     //cause strategy failure
+    }
     private static String getCurrentTime()
     {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return df.format(System.currentTimeMillis());
     }
-    public static void log(FlashStatusDetector.Status status, String message)
+    public static void log(Level level, FlashStatusDetector.Status status, String message)
     {
-        System.out.println("["+ getCurrentTime() +"] [Status:" + status + "] : " + message);
+        System.out.println(level + ": ["+ getCurrentTime() +"] [FlashStatus:" + status + "] : " + message);
 
     }
 }

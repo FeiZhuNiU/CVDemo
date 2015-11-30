@@ -39,7 +39,7 @@ public class SegSingleColor
         Mat mat_getTargetColor = ImageUtils.getTargetColor(mat_colorReduced_noiseremoved, 2);
         if (mat_getTargetColor == null)
         {
-            Logger.log(null, "get target color failed, there may be no digit");
+            Logger.log(Logger.Level.WARNING, null, "get target color failed, there may be no digit");
             return null;
         }
 
@@ -74,7 +74,7 @@ public class SegSingleColor
         Mat preprocessed = preProcess(src);
         if (src == null)
         {
-            Logger.log(null,"preprocess failed");
+            Logger.log(Logger.Level.WARNING, null,"preprocess failed");
             return null;
         }
         List<Rect> digitRects = getDigitRects(preprocessed);

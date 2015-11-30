@@ -25,7 +25,7 @@ public class SegByGap
     {
         if (src == null || src.type() != CvType.CV_8UC1)
         {
-            Logger.log(null,"the input Mat is null or its type is not CvType.CV_8UC1");
+            Logger.log(Logger.Level.WARNING, null,"the input Mat is null or its type is not CvType.CV_8UC1");
             return null;
         }
         List<Rect> ret = new ArrayList<Rect>();

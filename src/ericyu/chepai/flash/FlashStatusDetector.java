@@ -57,7 +57,7 @@ public class FlashStatusDetector implements Runnable
         {
             for(IStatusObserver observer : observers)
             {
-                Logger.log(status, "send notification to " + observer.getClass().getName());
+                Logger.log(Logger.Level.INFO, status, "send notification to " + observer.getClass().getSimpleName());
                 observer.flashStatusChanged(status);
             }
         }
@@ -112,9 +112,9 @@ public class FlashStatusDetector implements Runnable
             // if status changed, send notification
             if (curStatus != originStatus)
             {
-                Logger.log(status,"FlashStatus ready to change to " + curStatus);
+                Logger.log(Logger.Level.INFO, status,"FlashStatus ready to change to " + curStatus);
                 setStatus(curStatus);
-                Logger.log(status, "FlashStatus changed to " + curStatus);
+                Logger.log(Logger.Level.INFO, status, "FlashStatus changed to " + curStatus);
                 notifyStatusObservers(curStatus);
             }
             try

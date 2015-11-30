@@ -31,7 +31,7 @@ public class Console
     {
         if (!init())
         {
-            Logger.log(flashStatusDetector.getStatus(), "init failed!");
+            Logger.log(Logger.Level.ERROR, flashStatusDetector.getStatus(), "init failed!");
             return;
         }
 
@@ -41,7 +41,7 @@ public class Console
     private static boolean init()
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        Logger.log(null, "this line is for test encoding :" + MyRobot.NOTIFICATION_REQUEST_VCODE_TOO_OFTEN);
+        Logger.log(Logger.Level.INFO, null, "this line is for test encoding :" + MyRobot.NOTIFICATION_REQUEST_VCODE_TOO_OFTEN);
 
         //generate a robot
         try

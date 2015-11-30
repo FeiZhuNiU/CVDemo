@@ -59,9 +59,9 @@ public class FlashPosition
 
     private void findFlashPosition()
     {
-        Logger.log(null,"finding Flash window ... ");
+        Logger.log(Logger.Level.INFO, null,"finding Flash window ... ");
         while ((origin = findPositionOfTargetColor(topLeftCornerColor)) == null);
-        Logger.log(null,"find the flash window : left top at (" + origin.x + "," + origin.y + ")");
+        Logger.log(Logger.Level.INFO, null,"find the flash window : left top at (" + origin.x + "," + origin.y + ")");
     }
 
     /**

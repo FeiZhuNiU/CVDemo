@@ -119,7 +119,7 @@ public class MyRobot implements IStatusObserver
             {
                 Point point = MouseInfo.getPointerInfo().getLocation();
                 Color color = r.getPixelColor(point.x, point.y);
-                Logger.log(null, "x:" + point.x + " y:" + point.y + " color: " + color);
+                Logger.log(Logger.Level.INFO, null, "x:" + point.x + " y:" + point.y + " color: " + color);
                 r.delay(2000);
             }
         }
@@ -141,7 +141,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.NOTIFICATION)
         {
-            Logger.log(flashStatus, "can not verify notification.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not verify notification.");
             return -1;
         }
         int ret;
@@ -184,7 +184,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.V_CODE)
         {
-            Logger.log(flashStatus,"not ready to find refresh button.");
+            Logger.log(Logger.Level.WARNING, flashStatus,"not ready to find refresh button.");
             return -1;
         }
         int ret;
@@ -241,7 +241,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.V_CODE)
         {
-            Logger.log(flashStatus, "can not get verification Code.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not get verification Code.");
             return null;
         }
 
@@ -284,20 +284,20 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.V_CODE)
         {
-            Logger.log(flashStatus, "can not enter verification code.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not enter verification code.");
             return false;
         }
 
         if (numbers.size() != 4)
         {
-            Logger.log(flashStatus, "there is no 4 numbers, robot can not work.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "there is no 4 numbers, robot can not work.");
             return false;
         }
 
         for (int num : numbers)
         {
             pressKey((char) (num + 48));
-            Logger.log(flashStatus, "robot pressed number " + num);
+            Logger.log(Logger.Level.INFO, flashStatus, "robot pressed number " + num);
         }
         return true;
     }
@@ -367,7 +367,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.V_CODE)
         {
-            Logger.log(flashStatus, "can not focus on V-code Input box.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not focus on V-code Input box.");
             return false;
         }
         doubleClickAt(FlashPosition.INPUT_VERIFICATION_X,
@@ -379,7 +379,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.V_CODE)
         {
-            Logger.log(flashStatus, "can not click on V-code confirm button.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not click on V-code confirm button.");
             return false;
         }
         clickAt(FlashPosition.BUTTON_VERIFICATION_CODE_CONFIRM_X,
@@ -392,7 +392,7 @@ public class MyRobot implements IStatusObserver
         if(flashStatus != FlashStatusDetector.Status.V_CODE &&
                 flashStatus != FlashStatusDetector.Status.NOTIFICATION)
         {
-            Logger.log(flashStatus, "can not click on V-code cancel button.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not click on V-code cancel button.");
             return false;
         }
         clickAt(FlashPosition.BUTTON_VERIFICATION_CODE_CANCEL_X,
@@ -404,7 +404,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.V_CODE)
         {
-            Logger.log(flashStatus, "can not click on V-code refresh button.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not click on V-code refresh button.");
             return false;
         }
         clickAt(FlashPosition.BUTTON_VERIFICATION_REFRESH_X,
@@ -416,7 +416,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.BID)
         {
-            Logger.log(flashStatus, "can not focus on custom add money input box.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not focus on custom add money input box.");
             return false;
         }
         doubleClickAt(FlashPosition.INPUT_CUSTOM_ADD_MONEY_X,
@@ -428,7 +428,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.BID)
         {
-            Logger.log(flashStatus, "can not input add money range.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not input add money range.");
             return false;
         }
         String money = Integer.toString(range);
@@ -443,7 +443,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.BID)
         {
-            Logger.log(flashStatus, "can not click AddMoney Button.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not click AddMoney Button.");
             return false;
         }
         clickAt(FlashPosition.BUTTON_ADD_MONEY_X,
@@ -455,7 +455,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.BID)
         {
-            Logger.log(flashStatus, "can not click bid Button.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not click bid Button.");
             return false;
         }
         clickAt(FlashPosition.BUTTON_BID_X,
@@ -470,7 +470,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.NOTIFICATION)
         {
-            Logger.log(flashStatus, "can not click ReBid Confirm Button.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not click ReBid Confirm Button.");
             return false;
         }
         clickAt(FlashPosition.BUTTON_REBID_CONFIRM_X,
@@ -485,7 +485,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.NOTIFICATION)
         {
-            Logger.log(flashStatus, "can not click ReEnter V-Code Confirm Button.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not click ReEnter V-Code Confirm Button.");
             return false;
         }
         clickAt(FlashPosition.BUTTON_RE_ENTER_VERIFICATION_CONFIRM_X,
@@ -496,7 +496,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.NOTIFICATION)
         {
-            Logger.log(flashStatus, "can not click RequestForVCodeTooOften Confirm Button.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not click RequestForVCodeTooOften Confirm Button.");
             return false;
         }
         clickAt(FlashPosition.BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_X,
@@ -508,7 +508,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.LOGIN)
         {
-            Logger.log(flashStatus, "can not focus On Username Input Box.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not focus On Username Input Box.");
             return false;
         }
         doubleClickAt(FlashPosition.INPUT_USERNAME_X,
@@ -520,7 +520,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.LOGIN)
         {
-            Logger.log(flashStatus, "can not focus On password Input Box.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not focus On password Input Box.");
             return false;
         }
         doubleClickAt(FlashPosition.INPUT_PASSWORD_X,
@@ -532,7 +532,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.LOGIN)
         {
-            Logger.log(flashStatus, "can not click Submit User Button.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not click Submit User Button.");
             return false;
         }
         clickAt(FlashPosition.BUTTON_SUBMIT_X,
@@ -586,7 +586,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.BID && flashStatus != FlashStatusDetector.Status.V_CODE)
         {
-            Logger.log(flashStatus, "can not get lowest deal.");
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not get lowest deal.");
             return 0;
         }
         String result = OCRUtils.doOCR(flashPosition,
@@ -602,7 +602,7 @@ public class MyRobot implements IStatusObserver
         }
         catch (Exception e)
         {
-            Logger.log(flashStatus, "get current Lowest deal failed!");
+            Logger.log(Logger.Level.WARNING, flashStatus, "get current Lowest deal failed!");
         }
         return ret;
     }

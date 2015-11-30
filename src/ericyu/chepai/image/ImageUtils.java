@@ -523,7 +523,7 @@ public class ImageUtils
 
         if (colorMap.size() < level + 1)
         {
-            Logger.log(null, "color quantity is not enough, maybe the picture is blank.");
+            Logger.log(Logger.Level.WARNING, null, "color quantity is not enough, maybe the picture is blank.");
             return null;
         }
 

@@ -31,7 +31,7 @@ public class OCRUtils
         {
             String result = instance.doOCR(imageFile);
             result = result.trim();
-            Logger.log(null,"tesseract : " + result);
+            Logger.log(Logger.Level.INFO, null,"tesseract : " + result);
             return result;
         }
         catch (TesseractException e)

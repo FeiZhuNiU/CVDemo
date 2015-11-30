@@ -60,7 +60,7 @@ public class Segmentation
 
         if (unNormalizedDigits == null || unNormalizedDigits.size() == 0)
         {
-            Logger.log(null,"doSegmentation in strategy fails");
+            Logger.log(Logger.Level.WARNING, null,"doSegmentation in strategy fails");
             return null;
         }
 

@@ -46,7 +46,7 @@ public class FlashStatusTrain extends AbstractSampleTrain
         {
             Mat curData = ImageUtils.readImage(file.toString());
             int curClass = Integer.valueOf(file.getName().substring(0,1));
-            sampleEntries.add(new AbstractMap.SimpleEntry(curData,curClass));
+            sampleEntries.add(new AbstractMap.SimpleEntry<>(curData,curClass));
         }
     }
 

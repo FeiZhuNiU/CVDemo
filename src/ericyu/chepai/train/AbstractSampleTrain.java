@@ -61,7 +61,7 @@ public abstract class AbstractSampleTrain
                 !(new File(trainDataPath).exists()) ||
                 !(new File(trainClassPath).exists()))
         {
-            Logger.log(null, "Trained data does not exist! SampleTrain init failed! Use other constructor first.");
+            Logger.log(Logger.Level.ERROR, null, "Trained data does not exist! SampleTrain init failed! Use other constructor first.");
             return;
         }
         this.eigenvetorStrategy = eigenvetorStrategy;
@@ -186,10 +186,10 @@ public abstract class AbstractSampleTrain
             objOut.writeObject(obj);
             objOut.flush();
             objOut.close();
-            Logger.log(null, "write object success!");
+            Logger.log(Logger.Level.INFO, null, "write object success!");
         } catch (Exception e)
         {
-            Logger.log(null, "write object failed");
+            Logger.log(Logger.Level.WARNING, null, "write object failed");
             e.printStackTrace();
         }
     }
@@ -212,7 +212,7 @@ public abstract class AbstractSampleTrain
         File file = new File(dataPath);
         if (!file.exists())
         {
-            Logger.log(null, "train data not prepared. please run train() in SampleTrain.");
+            Logger.log(Logger.Level.ERROR, null, "train data not prepared. please run train() in SampleTrain.");
             return null;
         }
 

@@ -25,7 +25,7 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
 
         while(!user.login(robot))
         {
-            Logger.log(flashStatus,"login failed!!");
+            Logger.log(Logger.Level.WARNING, flashStatus,"login failed!!");
             robot.wait(1000);
         }
 
@@ -48,17 +48,17 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
             {
                 //success
                 case 0:
-                    Logger.log(flashStatus, "bid success!!");
+                    Logger.log(Logger.Level.INFO, flashStatus, "bid success!!");
                     System.exit(0);
                 //not in bid range
                 case 1:
-                    Logger.log(flashStatus,"bid out of range");
+                    Logger.log(Logger.Level.INFO, flashStatus,"bid out of range");
                     moneyAddRange = 300;
                     waitTime = 10;
                     break;
                 //wrong verification code
                 case 2:
-                    Logger.log(flashStatus,"wrong verification code!!");
+                    Logger.log(Logger.Level.INFO, flashStatus,"wrong verification code!!");
                     waitTime = 10;
                     break;
             }
