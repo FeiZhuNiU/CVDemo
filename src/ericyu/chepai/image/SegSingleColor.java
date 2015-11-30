@@ -7,6 +7,7 @@ package ericyu.chepai.image;
  |           Created by lliyu on 11/17/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.Logger;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
@@ -38,7 +39,7 @@ public class SegSingleColor
         Mat mat_getTargetColor = ImageUtils.getTargetColor(mat_colorReduced_noiseremoved, 2);
         if (mat_getTargetColor == null)
         {
-            System.out.println("get target color failed, there may be no digit");
+            Logger.log(null, "get target color failed, there may be no digit");
             return null;
         }
 
@@ -73,7 +74,7 @@ public class SegSingleColor
         Mat preprocessed = preProcess(src);
         if (src == null)
         {
-            System.out.println("preprocess failed");
+            Logger.log(null,"preprocess failed");
             return null;
         }
         List<Rect> digitRects = getDigitRects(preprocessed);

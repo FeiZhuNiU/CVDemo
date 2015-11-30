@@ -7,6 +7,7 @@ package ericyu.chepai.image;
  |           Created by lliyu on 10/30/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.Logger;
 import org.opencv.core.*;
 import org.opencv.core.Point;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -21,6 +22,7 @@ import java.util.List;
 
 public class ImageUtils
 {
+    public static String screenCaptureImage = "screenCapture.bmp";
     private static int[] gammaTable;
 
     static
@@ -192,7 +194,7 @@ public class ImageUtils
      */
     public static Mat screenCapture(int lt_x, int lt_y, int width, int height)
     {
-        String dst = "screenCapture_tmp.bmp";
+        String dst = screenCaptureImage;
         try
         {
             BufferedImage screen = new Robot().createScreenCapture(new Rectangle(lt_x,lt_y,width,height));
@@ -454,7 +456,7 @@ public class ImageUtils
     }
 
     /**
-     * strategy: remove the regions where width+height < threshold
+     * strategy: remove the pixels' info (where width+height < threshold) from mat
      *
      * @param src
      * @return
@@ -521,7 +523,7 @@ public class ImageUtils
 
         if (colorMap.size() < level + 1)
         {
-            System.out.println("color quantity is not enough, maybe the picture is blank.");
+            Logger.log(null, "color quantity is not enough, maybe the picture is blank.");
             return null;
         }
 
@@ -573,7 +575,6 @@ public class ImageUtils
         Mat r = Imgproc.getRotationMatrix2D(point, angle, 1.0);
         Imgproc.warpAffine(src, ret, r, new Size(src.height(), src.height()));
         return ret;
-
     }
 
     public static Mat transition(Mat src, int x, int y)

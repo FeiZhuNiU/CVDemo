@@ -7,6 +7,7 @@ package ericyu.chepai.image;
  |           Created by lliyu on 11/17/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.Logger;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -24,7 +25,7 @@ public class SegByGap
     {
         if (src == null || src.type() != CvType.CV_8UC1)
         {
-            System.out.println("the input Mat is null or its type is not CvType.CV_8UC1");
+            Logger.log(null,"the input Mat is null or its type is not CvType.CV_8UC1");
             return null;
         }
         List<Rect> ret = new ArrayList<Rect>();

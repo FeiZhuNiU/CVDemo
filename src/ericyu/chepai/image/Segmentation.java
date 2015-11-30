@@ -7,6 +7,7 @@ package ericyu.chepai.image;
  |           Created by lliyu on 11/17/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.Logger;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import org.opencv.core.Size;
@@ -59,7 +60,7 @@ public class Segmentation
 
         if (unNormalizedDigits == null || unNormalizedDigits.size() == 0)
         {
-            System.out.println("doSegmentation in strategy fails");
+            Logger.log(null,"doSegmentation in strategy fails");
             return null;
         }
 

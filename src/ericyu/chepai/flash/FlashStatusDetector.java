@@ -8,6 +8,7 @@ package ericyu.chepai.flash;
  |           Created by lliyu on 11/27/2015  (lin.yu@oracle.com)             |
  +===========================================================================*/
 
+import ericyu.chepai.Logger;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.recognize.Recognition;
 import ericyu.chepai.train.FlashStatusTrain;
@@ -49,7 +50,7 @@ public class FlashStatusDetector implements Runnable
         {
             for(IStatusObserver observer : observers)
             {
-                System.out.println("send notification to " + observer.getClass().getName());
+                Logger.log(status, "send notification to " + observer.getClass().getName());
                 observer.flashStatusChanged(status);
             }
         }
@@ -100,8 +101,9 @@ public class FlashStatusDetector implements Runnable
             }
             if (curStatus != originStatus)
             {
-                System.out.println("FlashStatus has changed to " + curStatus);
+                Logger.log(status,"FlashStatus ready to change to " + curStatus);
                 setStatus(curStatus);
+                Logger.log(status, "FlashStatus changed to " + curStatus);
                 notifyStatusObservers(curStatus);
             }
             try

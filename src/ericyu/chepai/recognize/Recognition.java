@@ -17,7 +17,6 @@ import org.opencv.ml.Ml;
 
 public class Recognition
 {
-    public static String screenCaptureImage = "screenCapture.bmp";
     private AbstractSampleTrain trainedData;
 
     public AbstractSampleTrain getTrainedData()

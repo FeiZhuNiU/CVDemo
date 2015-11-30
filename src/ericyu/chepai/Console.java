@@ -20,7 +20,6 @@ import java.awt.*;
 
 public class Console
 {
-    private static FlashPosition flashPosition;
 
     private static MyRobot robot;
     private static AbstractBidStrategy bidStrategy;
@@ -32,7 +31,7 @@ public class Console
     {
         if (!init())
         {
-            System.out.println("init failed!");
+            Logger.log(flashStatusDetector.getStatus(), "init failed!");
             return;
         }
 
@@ -42,12 +41,13 @@ public class Console
     private static boolean init()
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        System.out.println("this line is for test encoding :" + MyRobot.NOTIFICATION_REQUEST_VCODE_TOO_OFTEN);
+        Logger.log(null, "this line is for test encoding :" + MyRobot.NOTIFICATION_REQUEST_VCODE_TOO_OFTEN);
 
         //generate a robot
         try
         {
-            flashPosition = FlashPosition.getInstance();
+            //init flash position
+            FlashPosition flashPosition = FlashPosition.getInstance();
             user = new User("12345678","123456");
             //will detect flash position here
             robot = new MyRobot(new Robot());

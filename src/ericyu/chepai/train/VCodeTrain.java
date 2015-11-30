@@ -7,6 +7,7 @@ package ericyu.chepai.train;
  |           Created by lliyu on 10/31/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.Logger;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.image.SegSingleColor;
 import ericyu.chepai.image.Segmentation;
@@ -236,7 +237,6 @@ public class VCodeTrain extends AbstractSampleTrain
         Mat src = ImageUtils.readImage(imageFile);
         Segmentation.segment(src, new SegSingleColor());
         long endTime = System.currentTimeMillis();
-        System.out.println("seg time: " + (endTime - startTime) / 1000.0);
-
+        Logger.log(null, "seg time: " + (endTime - startTime) / 1000.0);
     }
 }

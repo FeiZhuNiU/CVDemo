@@ -7,6 +7,7 @@ package ericyu.chepai.flash;
  |           Created by lliyu on 11/25/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.Logger;
 import ericyu.chepai.image.ImageUtils;
 import org.opencv.core.Mat;
 import java.awt.*;
@@ -58,9 +59,9 @@ public class FlashPosition
 
     private void findFlashPosition()
     {
-        System.out.println("finding Flash window ... ");
+        Logger.log(null,"finding Flash window ... ");
         while ((origin = findPositionOfTargetColor(topLeftCornerColor)) == null);
-        System.out.println("find the flash window : left top at (" + origin.x + "," + origin.y + ")");
+        Logger.log(null,"find the flash window : left top at (" + origin.x + "," + origin.y + ")");
     }
 
     /**

@@ -7,7 +7,6 @@ package ericyu.chepai.robot.bidstrategy;
  |           Created by lliyu on 11/27/2015  (lin.yu@oracle.com)             |
  +===========================================================================*/
 
-import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.robot.MyRobot;
 import org.opencv.core.Core;
 

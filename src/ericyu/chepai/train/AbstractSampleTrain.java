@@ -6,6 +6,7 @@ package ericyu.chepai.train;
  |  HISTORY                                                                  |
  |           Created by lliyu on 11/28/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
+import ericyu.chepai.Logger;
 import ericyu.chepai.image.ImageUtils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -58,7 +59,7 @@ public abstract class AbstractSampleTrain
                 !(new File(trainDataPath).exists()) ||
                 !(new File(trainClassPath).exists()))
         {
-            System.out.println("Trained data does not exist! SampleTrain init failed! Use other constructor first.");
+            Logger.log(null, "Trained data does not exist! SampleTrain init failed! Use other constructor first.");
             return;
         }
         this.eigenvetorStrategy = eigenvetorStrategy;
@@ -183,10 +184,10 @@ public abstract class AbstractSampleTrain
             objOut.writeObject(obj);
             objOut.flush();
             objOut.close();
-            System.out.println("write object success!");
+            Logger.log(null, "write object success!");
         } catch (Exception e)
         {
-            System.out.println("write object failed");
+            Logger.log(null, "write object failed");
             e.printStackTrace();
         }
     }
@@ -209,7 +210,7 @@ public abstract class AbstractSampleTrain
         File file = new File(dataPath);
         if (!file.exists())
         {
-            System.out.println("train data not prepared. please run train() in SampleTrain.");
+            Logger.log(null, "train data not prepared. please run train() in SampleTrain.");
             return null;
         }
 

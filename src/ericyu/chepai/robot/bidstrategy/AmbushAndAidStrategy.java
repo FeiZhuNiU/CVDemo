@@ -7,6 +7,7 @@ package ericyu.chepai.robot.bidstrategy;
  |           Created by lliyu on 11/27/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.Logger;
 import ericyu.chepai.robot.MyRobot;
 
 public class AmbushAndAidStrategy extends AbstractBidStrategy
@@ -24,7 +25,8 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
 
         while(!user.login(robot))
         {
-            System.out.println("login failed!!");
+            Logger.log(flashStatus,"login failed!!");
+            robot.wait(1000);
         }
 
         robot.wait(5000);
@@ -46,15 +48,17 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
             {
                 //success
                 case 0:
-                    System.out.println("bid success!!");
+                    Logger.log(flashStatus, "bid success!!");
                     System.exit(0);
                 //not in bid range
                 case 1:
+                    Logger.log(flashStatus,"bid out of range");
                     moneyAddRange = 300;
                     waitTime = 10;
                     break;
                 //wrong verification code
-                case -1:
+                case 2:
+                    Logger.log(flashStatus,"wrong verification code!!");
                     waitTime = 10;
                     break;
             }
