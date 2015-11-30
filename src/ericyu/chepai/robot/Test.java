@@ -8,13 +8,9 @@ package ericyu.chepai.robot;
  +===========================================================================*/
 
 import ericyu.chepai.flash.FlashPosition;
-import ericyu.chepai.image.ImageUtils;
-import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
 import org.opencv.core.Core;
 
 import java.awt.*;
-import java.io.File;
 
 public class Test
 {
@@ -44,7 +40,7 @@ public class Test
             try
             {
                 MyRobot robot = new MyRobot(new Robot(),FlashPosition.getInstance());
-                System.out.println(robot.getLowestDeal());
+                System.out.println(robot.getCurrentLowestDeal());
             }
             catch (AWTException e)
             {

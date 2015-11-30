@@ -47,7 +47,7 @@ public class MyRobot implements IStatusObserver
         flashStatus = FlashStatusDetector.Status.NONE;
     }
 
-    public static Map<Character, Integer> keyMap = new HashMap<Character, Integer>();
+    public static Map<Character, Integer> keyMap = new HashMap<>();
 
     static
     {
@@ -92,14 +92,14 @@ public class MyRobot implements IStatusObserver
 
     }
 
+    /**
+     * manually get color
+     * @param args
+     */
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
         checkColor();
-
-//        System.out.println(point.x + "  " + point.y);
-//        clickAt(point.x,point.y);
     }
 
     /**
@@ -129,13 +129,18 @@ public class MyRobot implements IStatusObserver
      * verify bid result
      * @return  0   -> bid success
      *          1   -> not in bid range
-     *          -1  -> wrong verification code
+     *          2  -> wrong verification code
+     *          -1  -> failed
      */
     public int verifySystemNotification()
     {
+        if(flashStatus != FlashStatusDetector.Status.NOTIFICATION)
+        {
+            System.out.println("can not verify notification. (status not correct)");
+            return -1;
+        }
         int ret;
         String image = "systemNotification.bmp";
-        wait(500);
         // must get a result in three conditions, or the loop will not stop
         while(true)
         {
@@ -151,14 +156,14 @@ public class MyRobot implements IStatusObserver
                 clickReBidConfirmButton();
                 ret = 1;
                 break;
-            } else if (isBidSuccess(result))
+            } else if (isBidSuccessNotification(result))
             {
                 ret = 0;
                 break;
-            } else if (isReEnterVerificationCode(result))
+            } else if (isWrongVCodeNotification(result))
             {
                 clickReEnterVerificationCodeConfirmButton();
-                ret = -1;
+                ret = 2;
                 break;
             }
         }
@@ -169,6 +174,7 @@ public class MyRobot implements IStatusObserver
     /**
      * the method will not return until it has recognized the verification code
      */
+    @Deprecated
     public void recogAndInputVerificationCode()
     {
         ArrayList<Integer> numbers;
@@ -195,27 +201,28 @@ public class MyRobot implements IStatusObserver
      */
     public ArrayList<Integer> recogVerificationCode()
     {
+        if(flashStatus != FlashStatusDetector.Status.V_CODE)
+        {
+            System.out.println("can not get verification Code. (status not correct)");
+            return null;
+        }
+
+        ArrayList<Integer> ret = new ArrayList<>();
+
         Recognition recognition = new Recognition(
                 new VCodeTrain(
                     SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
                     SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH,
                     new AllPixelEigenvetorStrategy()));
 
-        ArrayList<Integer> ret = new ArrayList<Integer>();
-
-        //get screen shot of flash
         ImageUtils.screenCapture(Recognition.screenCaptureImage,
-                flashPosition.origin.x,
-                flashPosition.origin.y,
-                FlashPosition.FLASH_WIDTH,
-                FlashPosition.FLASH_HEIGHT);
-        Mat src = ImageUtils.readImage(Recognition.screenCaptureImage);
-                //get images to recognize
-        Rect picRect = new Rect(FlashPosition.REGION_VERIFICATION_CODE_LT_X,
-                           FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
-                           FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
-                           FlashPosition.REGION_VERIFICATION_CODE_HEIGHT);
-        Mat toRecog = src.submat(picRect);
+                                 flashPosition.origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
+                                 flashPosition.origin.y + FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
+                                 FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
+                                 FlashPosition.REGION_VERIFICATION_CODE_HEIGHT);
+
+        Mat toRecog = ImageUtils.readImage(Recognition.screenCaptureImage);
+
         java.util.List<Mat> digitsToRecog = recognition.getTrainedData().process(toRecog);
         //recognize
         if (digitsToRecog != null && digitsToRecog.size() == 4)
@@ -509,15 +516,15 @@ public class MyRobot implements IStatusObserver
     {
         return isTargetString(str,NOTIFICATION_RE_BID_OUT_OF_RANGE);
     }
-    public boolean isReEnterVerificationCode(String str)
+    public boolean isWrongVCodeNotification(String str)
     {
         return isTargetString(str,NOTIFICATION_RE_ENTER_VERIFICATION_CODE);
     }
-    public boolean isBidSuccess(String str)
+    public boolean isBidSuccessNotification(String str)
     {
         return isTargetString(str,NOTIFICATION_BID_SUCCESS);
     }
-    public boolean isRequestVCodeTooOften(String str)
+    public boolean isRequestVCodeTooOftenNotification(String str)
     {
         return isTargetString(str,NOTIFICATION_REQUEST_VCODE_TOO_OFTEN);
     }
@@ -533,8 +540,17 @@ public class MyRobot implements IStatusObserver
         return false;
     }
 
-    public int getLowestDeal()
+    /**
+     * use tesseract to recognize current lowest bid money
+     * @return 0 if failed
+     */
+    public int getCurrentLowestDeal()
     {
+        if(flashStatus != FlashStatusDetector.Status.BID && flashStatus != FlashStatusDetector.Status.V_CODE)
+        {
+            System.out.println("can not get lowest deal. (status is not BID or V_CODE)");
+            return 0;
+        }
         String result = OCRUtils.doOCR(flashPosition,
                                        FlashPosition.REGION_LOWEST_DEAL_X,
                                        FlashPosition.REGION_LOWEST_DEAL_Y,
@@ -548,8 +564,7 @@ public class MyRobot implements IStatusObserver
         }
         catch (Exception e)
         {
-//            e.printStackTrace();
-            System.out.println("get Lowest deal failed!");
+            System.out.println("get current Lowest deal failed!");
         }
         return ret;
     }
