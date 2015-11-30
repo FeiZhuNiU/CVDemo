@@ -41,7 +41,14 @@ public class FlashPosition
      */
     public FlashPosition()
     {
-        origin = findPositionOfTargetColor(topLeftCornerColor);
+        findFlashPosition();
+    }
+
+    private void findFlashPosition()
+    {
+        System.out.println("finding Flash window ... ");
+        while ((origin = findPositionOfTargetColor(topLeftCornerColor)) == null);
+        System.out.println("find the flash window : left top at (" + origin.x + "," + origin.y + ")");
     }
 
     /**

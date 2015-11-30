@@ -40,10 +40,11 @@ public class MyRobot implements IStatusObserver
      */
     public static final String NOTIFICATION_REQUEST_VCODE_TOO_OFTEN="过于频繁";
 
-    public MyRobot(Robot robot)
+    public MyRobot(Robot robot, FlashPosition flashPosition)
     {
         this.robot = robot;
-        findFlashPosition();
+        this.flashPosition = flashPosition;
+        flashStatus = FlashStatusDetector.Status.NONE;
     }
 
     public static Map<Character, Integer> keyMap = new HashMap<Character, Integer>();
@@ -123,24 +124,6 @@ public class MyRobot implements IStatusObserver
         }
     }
 
-
-    /**
-     * return until find flash position
-     * @return
-     */
-    public void findFlashPosition()
-    {
-        while (true)
-        {
-            flashPosition = new FlashPosition();
-            if (flashPosition.origin != null)
-            {
-                System.out.println("flash origin found: " + flashPosition.origin.x + "," + flashPosition.origin.y);
-                break;
-            }
-            System.out.println("flash not found yet");
-        }
-    }
 
     /**
      * verify bid result

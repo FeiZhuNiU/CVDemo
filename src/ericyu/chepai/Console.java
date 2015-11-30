@@ -20,10 +20,13 @@ import java.awt.*;
 
 public class Console
 {
+    private static FlashPosition flashPosition;
+
     private static MyRobot robot;
-    private static FlashStatusDetector flashStatusDetector;
     private static AbstractBidStrategy bidStrategy;
-    private User user;
+    private static FlashStatusDetector flashStatusDetector;
+
+    private static User user;
 
     public static void main(String[] args)
     {
@@ -44,11 +47,12 @@ public class Console
         //generate a robot
         try
         {
-            User user = new User("12345678","123456");
+            flashPosition = new FlashPosition();
+            user = new User("12345678","123456");
             //will detect flash position here
-            robot = new MyRobot(new Robot());
+            robot = new MyRobot(new Robot(),flashPosition);
             bidStrategy = new AmbushAndAidStrategy(user,robot);
-            flashStatusDetector = new FlashStatusDetector(new FlashPosition(),new Recognition(new FlashStatusTrain()));
+            flashStatusDetector = new FlashStatusDetector(flashPosition,new Recognition(new FlashStatusTrain()));
             flashStatusDetector.addStatusObserver(robot);
             flashStatusDetector.addStatusObserver(bidStrategy);
             Thread detectorThread = new Thread(flashStatusDetector);

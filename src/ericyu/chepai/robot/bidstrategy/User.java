@@ -7,6 +7,7 @@ package ericyu.chepai.robot.bidstrategy;
  |           Created by lliyu on 11/27/2015  (lin.yu@oracle.com)             |
  +===========================================================================*/
 
+import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.robot.MyRobot;
 import org.opencv.core.Core;
 
@@ -44,6 +45,6 @@ public class User
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         User user = new User("12345678","123456");
-        user.login(new MyRobot(new Robot()));
+        user.login(new MyRobot(new Robot(), new FlashPosition()));
     }
 }

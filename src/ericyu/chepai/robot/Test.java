@@ -7,6 +7,7 @@ package ericyu.chepai.robot;
  |           Created by lliyu on 11/25/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.image.ImageUtils;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -42,7 +43,7 @@ public class Test
         {
             try
             {
-                MyRobot robot = new MyRobot(new Robot());
+                MyRobot robot = new MyRobot(new Robot(),new FlashPosition());
                 System.out.println(robot.getLowestDeal());
             }
             catch (AWTException e)
