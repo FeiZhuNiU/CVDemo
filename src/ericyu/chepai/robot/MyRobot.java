@@ -150,7 +150,6 @@ public class MyRobot implements IStatusObserver
                                      FlashPosition.REGION_SYSTEM_NOTIFICATION_WIDTH,
                                      FlashPosition.REGION_SYSTEM_NOTIFICATION_HEIGHT);
             String result = OCRUtils.doOCR(image);
-            System.out.println(result);
             if (isOutOfRangeNotification(result))
             {
                 clickReBidConfirmButton();

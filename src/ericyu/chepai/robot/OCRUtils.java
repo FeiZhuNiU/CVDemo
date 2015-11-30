@@ -1,5 +1,6 @@
 package ericyu.chepai.robot;
 
+import ericyu.chepai.Logger;
 import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.image.ImageUtils;
 import net.sourceforge.tess4j.Tesseract;
@@ -30,6 +31,7 @@ public class OCRUtils
         {
             String result = instance.doOCR(imageFile);
             result = result.trim();
+            Logger.log(null,"tesseract : " + result);
             return result;
         }
         catch (TesseractException e)
