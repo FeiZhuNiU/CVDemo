@@ -50,9 +50,9 @@ public class Console
             flashPosition = FlashPosition.getInstance();
             user = new User("12345678","123456");
             //will detect flash position here
-            robot = new MyRobot(new Robot(),flashPosition);
+            robot = new MyRobot(new Robot());
             bidStrategy = new AmbushAndAidStrategy(user,robot);
-            flashStatusDetector = new FlashStatusDetector(flashPosition,new Recognition(new FlashStatusTrain()));
+            flashStatusDetector = new FlashStatusDetector(new Recognition(new FlashStatusTrain()));
             flashStatusDetector.addStatusObserver(robot);
             flashStatusDetector.addStatusObserver(bidStrategy);
             Thread detectorThread = new Thread(flashStatusDetector);

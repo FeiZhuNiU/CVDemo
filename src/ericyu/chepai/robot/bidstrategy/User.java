@@ -45,6 +45,6 @@ public class User
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         User user = new User("12345678","123456");
-        user.login(new MyRobot(new Robot(), FlashPosition.getInstance()));
+        user.login(new MyRobot(new Robot()));
     }
 }

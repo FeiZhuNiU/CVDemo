@@ -17,7 +17,6 @@ import ericyu.chepai.recognize.Recognition;
 import ericyu.chepai.train.VCodeTrain;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Rect;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -40,10 +39,10 @@ public class MyRobot implements IStatusObserver
      */
     public static final String NOTIFICATION_REQUEST_VCODE_TOO_OFTEN="过于频繁";
 
-    public MyRobot(Robot robot, FlashPosition flashPosition)
+    public MyRobot(Robot robot)
     {
         this.robot = robot;
-        this.flashPosition = flashPosition;
+        this.flashPosition = FlashPosition.getInstance();
         flashStatus = FlashStatusDetector.Status.NONE;
     }
 
