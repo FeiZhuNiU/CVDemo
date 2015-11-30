@@ -50,7 +50,7 @@ public class FlashStatusTrain extends AbstractSampleTrain
     public List<Mat> process(Mat src)
     {
         List<Mat> ret = new ArrayList<>();
-        ret.add(ImageUtils.color2Binary(src));
+        ret.add(ImageUtils.color2Binary(src,90));
         return ret;
     }
 

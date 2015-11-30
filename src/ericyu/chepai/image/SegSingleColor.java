@@ -43,7 +43,7 @@ public class SegSingleColor
             return null;
         }
 
-        Mat mat_binary = ImageUtils.color2Binary(mat_getTargetColor);
+        Mat mat_binary = ImageUtils.color2Binary(mat_getTargetColor,90);
 
         Mat mat_binary_noiseRemoved = ImageUtils.removeNoise(mat_binary, 3);
 

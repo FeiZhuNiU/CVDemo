@@ -13,4 +13,7 @@ public class SampleConstants
 
     public static final String FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH = "resources\\falshStatusTrainData.bmp";
     public static final String FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH = "resources\\falshStatusTrainClasses.bmp";
+
+    public static final String REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH = "resources\\refreshButtonTrainData.bmp";
+    public static final String REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH = "resources\\refreshButtonTrainClasses.bmp";
 }

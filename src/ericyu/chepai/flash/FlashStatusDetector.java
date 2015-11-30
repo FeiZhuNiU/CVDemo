@@ -145,9 +145,9 @@ public class FlashStatusDetector implements Runnable
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         FlashStatusDetector detector = new FlashStatusDetector(new Recognition(new FlashStatusTrain()));
-//        detector.generateSample();
-        Thread thread = new Thread(detector);
-        thread.start();
+        detector.generateSample();
+//        Thread thread = new Thread(detector);
+//        thread.start();
     }
 
     /**
@@ -156,8 +156,14 @@ public class FlashStatusDetector implements Runnable
      */
     private Mat generateSample()
     {
-        Mat src = getRightPartOfFlash();
-        Mat binary = ImageUtils.color2Binary(src);
+//        Mat src = getRightPartOfFlash();
+        Mat src = ImageUtils.screenCapture(
+                FlashPosition.getInstance().origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
+                FlashPosition.getInstance().origin.y + FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
+                FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
+                FlashPosition.REGION_VERIFICATION_CODE_HEIGHT
+                );
+        Mat binary = ImageUtils.color2Binary(src,220);
         Imgcodecs.imwrite("test.bmp", binary);
         return binary;
     }
