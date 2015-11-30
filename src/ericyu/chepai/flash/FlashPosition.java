@@ -9,7 +9,6 @@ package ericyu.chepai.flash;
 
 import ericyu.chepai.image.ImageUtils;
 import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 import java.awt.*;
 import java.util.Arrays;
 

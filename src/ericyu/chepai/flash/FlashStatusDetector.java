@@ -104,7 +104,14 @@ public class FlashStatusDetector implements Runnable
                 setStatus(curStatus);
                 notifyStatusObservers(curStatus);
             }
-
+            try
+            {
+                Thread.sleep(100);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
     private Mat getRightPartOfFlash()

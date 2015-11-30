@@ -9,9 +9,9 @@ package ericyu.chepai.robot;
 
 import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.flash.FlashStatusDetector;
+import ericyu.chepai.flash.IStatusObserver;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.train.AllPixelEigenvetorStrategy;
-import ericyu.chepai.train.FlashStatusTrain;
 import ericyu.chepai.train.SampleConstants;
 import ericyu.chepai.recognize.Recognition;
 import ericyu.chepai.train.VCodeTrain;
@@ -26,11 +26,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyRobot
+public class MyRobot implements IStatusObserver
 {
     private FlashPosition flashPosition;
     private Robot robot;
-    private FlashStatusDetector flashStatusDetector;
+    private FlashStatusDetector.Status flashStatus;
 
     public static final String NOTIFICATION_RE_BID_OUT_OF_RANGE="不在修改区间范围内重新";
     public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="输入正确";
@@ -44,9 +44,6 @@ public class MyRobot
     {
         this.robot = robot;
         findFlashPosition();
-        flashStatusDetector = new FlashStatusDetector(flashPosition,new Recognition(new FlashStatusTrain()));
-        Thread thread = new Thread(flashStatusDetector);
-        thread.start();
     }
 
     public static Map<Character, Integer> keyMap = new HashMap<Character, Integer>();
@@ -257,7 +254,7 @@ public class MyRobot
 
     public boolean enterVerificationCode(ArrayList<Integer> numbers)
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.V_CODE)
+        if(flashStatus != FlashStatusDetector.Status.V_CODE)
         {
             System.out.println("can not enter verification code because not in FlashStatusDetector.Status.V_CODE");
             return false;
@@ -340,7 +337,7 @@ public class MyRobot
 
     public boolean focusOnVCodeInputBox()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.V_CODE)
+        if(flashStatus != FlashStatusDetector.Status.V_CODE)
         {
             System.out.println("can not focus on V-code Input box because not in FlashStatusDetector.Status.V_CODE");
             return false;
@@ -352,7 +349,7 @@ public class MyRobot
 
     public boolean clickConfirmVCodeButton()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.V_CODE)
+        if(flashStatus != FlashStatusDetector.Status.V_CODE)
         {
             System.out.println("can not click on V-code confirm button because not in FlashStatusDetector.Status.V_CODE");
             return false;
@@ -364,8 +361,8 @@ public class MyRobot
 
     public boolean clickCancelVerificationCodeButton()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.V_CODE &&
-                flashStatusDetector.getStatus()!= FlashStatusDetector.Status.NOTIFICATION)
+        if(flashStatus != FlashStatusDetector.Status.V_CODE &&
+                flashStatus != FlashStatusDetector.Status.NOTIFICATION)
         {
             System.out.println("can not click on V-code cancel button because not in FlashStatusDetector.Status.V_CODE || NOTIFICATION");
             return false;
@@ -377,7 +374,7 @@ public class MyRobot
 
     public boolean clickRefreshVCodeButton()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.V_CODE)
+        if(flashStatus != FlashStatusDetector.Status.V_CODE)
         {
             System.out.println("can not click on V-code refresh button because not in FlashStatusDetector.Status.V_CODE");
             return false;
@@ -389,7 +386,7 @@ public class MyRobot
 
     public boolean focusOnCustomAddMoneyInputBox()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.BID)
+        if(flashStatus != FlashStatusDetector.Status.BID)
         {
             System.out.println("can not focus on custom add money input box because not in FlashStatusDetector.Status.BID");
             return false;
@@ -401,7 +398,7 @@ public class MyRobot
 
     public boolean inputAddMoneyRange(int range)
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.BID)
+        if(flashStatus != FlashStatusDetector.Status.BID)
         {
             System.out.println("can not input add money range because not in FlashStatusDetector.Status.BID");
             return false;
@@ -416,7 +413,7 @@ public class MyRobot
 
     public boolean clickAddMoneyButton()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.BID)
+        if(flashStatus != FlashStatusDetector.Status.BID)
         {
             System.out.println("can not click AddMoney Button because not in FlashStatusDetector.Status.BID");
             return false;
@@ -428,7 +425,7 @@ public class MyRobot
 
     public boolean clickBidButton()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.BID)
+        if(flashStatus != FlashStatusDetector.Status.BID)
         {
             System.out.println("can not click bid Button because not in FlashStatusDetector.Status.BID");
             return false;
@@ -443,7 +440,7 @@ public class MyRobot
      */
     public boolean clickReBidConfirmButton()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.NOTIFICATION)
+        if(flashStatus != FlashStatusDetector.Status.NOTIFICATION)
         {
             System.out.println("can not click ReBid Confirm Button because not in FlashStatusDetector.Status.NOTIFICATION");
             return false;
@@ -458,7 +455,7 @@ public class MyRobot
      */
     public boolean clickReEnterVerificationCodeConfirmButton()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.NOTIFICATION)
+        if(flashStatus != FlashStatusDetector.Status.NOTIFICATION)
         {
             System.out.println("can not click ReEnter V-Code Confirm Button because not in FlashStatusDetector.Status.NOTIFICATION");
             return false;
@@ -469,7 +466,7 @@ public class MyRobot
     }
     public boolean clickRequestForVCodeTooOftenConfirmButton()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.NOTIFICATION)
+        if(flashStatus != FlashStatusDetector.Status.NOTIFICATION)
         {
             System.out.println("can not click RequestForVCodeTooOften Confirm Button because not in FlashStatusDetector.Status.NOTIFICATION");
             return false;
@@ -481,7 +478,7 @@ public class MyRobot
 
     public boolean focusOnUsernameInputBox()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.LOGIN)
+        if(flashStatus != FlashStatusDetector.Status.LOGIN)
         {
             System.out.println("can not focus On Username Input Box because not in FlashStatusDetector.Status.LOGIN");
             return false;
@@ -493,7 +490,7 @@ public class MyRobot
 
     public boolean focusOnPasswordInputBox()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.LOGIN)
+        if(flashStatus != FlashStatusDetector.Status.LOGIN)
         {
             System.out.println("can not focus On password Input Box because not in FlashStatusDetector.Status.LOGIN");
             return false;
@@ -505,7 +502,7 @@ public class MyRobot
 
     public boolean clickSubmitUserButton()
     {
-        if(flashStatusDetector.getStatus()!= FlashStatusDetector.Status.LOGIN)
+        if(flashStatus != FlashStatusDetector.Status.LOGIN)
         {
             System.out.println("can not click Submit User Button because not in FlashStatusDetector.Status.LOGIN");
             return false;
@@ -572,5 +569,11 @@ public class MyRobot
             System.out.println("get Lowest deal failed!");
         }
         return ret;
+    }
+
+    @Override
+    public void flashStatusChanged(FlashStatusDetector.Status status)
+    {
+        flashStatus = status;
     }
 }
