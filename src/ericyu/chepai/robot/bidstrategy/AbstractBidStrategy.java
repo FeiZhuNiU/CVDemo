@@ -7,10 +7,14 @@ package ericyu.chepai.robot.bidstrategy;
  |           Created by lliyu on 11/27/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.flash.FlashStatusDetector;
+import ericyu.chepai.flash.IStatusObserver;
 import ericyu.chepai.robot.MyRobot;
 
-abstract public class AbstractBidStrategy
+abstract public class AbstractBidStrategy implements IStatusObserver
 {
+    protected FlashStatusDetector.Status flashStatus;
+
     protected User user;
     protected MyRobot robot;
 
@@ -29,5 +33,11 @@ abstract public class AbstractBidStrategy
         robot.clickAddMoneyButton();
         robot.wait(waitBetweenAddAndBid);
         robot.clickBidButton();
+    }
+
+    @Override
+    public void flashStatusChanged(FlashStatusDetector.Status status)
+    {
+        flashStatus = status;
     }
 }

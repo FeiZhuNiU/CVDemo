@@ -43,14 +43,14 @@ public class FlashStatusDetector implements Runnable
         status = Status.NONE;
     }
 
-    public void notifyStatusObservers()
+    public void notifyStatusObservers(Status status)
     {
         if (observers!=null)
         {
             for(IStatusObserver observer : observers)
             {
                 System.out.println("send notification to " + observer.getClass().getName());
-                observer.reactOnStatusChanged();
+                observer.flashStatusChanged(status);
             }
         }
     }
@@ -102,7 +102,7 @@ public class FlashStatusDetector implements Runnable
             {
                 System.out.println("FlashStatus has changed to " + curStatus);
                 setStatus(curStatus);
-                notifyStatusObservers();
+                notifyStatusObservers(curStatus);
             }
 
         }

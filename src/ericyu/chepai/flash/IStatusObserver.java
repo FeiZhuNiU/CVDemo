@@ -9,5 +9,5 @@ package ericyu.chepai.flash;
 
 public interface IStatusObserver
 {
-    void reactOnStatusChanged();
+    void flashStatusChanged(FlashStatusDetector.Status status);
 }
