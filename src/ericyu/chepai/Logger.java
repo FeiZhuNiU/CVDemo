@@ -9,7 +9,6 @@ package ericyu.chepai;
 
 import ericyu.chepai.flash.FlashStatusDetector;
 
-import java.text.SimpleDateFormat;
 
 public class Logger
 {
@@ -19,14 +18,9 @@ public class Logger
         WARNING,
         ERROR     //cause strategy failure
     }
-    private static String getCurrentTime()
-    {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return df.format(System.currentTimeMillis());
-    }
+
     public static void log(Level level, FlashStatusDetector.Status status, String message)
     {
-        System.out.println(level + ": ["+ getCurrentTime() +"] [FlashStatus:" + status + "] : " + message);
-
+        System.out.println(level + ": ["+ Date.getCurrentTime() +"] [FlashStatus:" + status + "] : " + message);
     }
 }

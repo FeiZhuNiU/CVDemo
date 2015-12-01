@@ -35,7 +35,7 @@ public class Console
             return;
         }
 
-        bidStrategy.execute();
+        bidStrategy = new AmbushAndAidStrategy(user,robot);
     }
 
     private static boolean init()

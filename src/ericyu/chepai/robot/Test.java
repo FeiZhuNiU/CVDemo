@@ -9,7 +9,11 @@ package ericyu.chepai.robot;
 
 import org.opencv.core.Core;
 
-import java.awt.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class Test
 {
@@ -34,20 +38,25 @@ public class Test
 //        {
 //            e.printStackTrace();
 //        }
-        while(true)
-        {
-            try
-            {
-                MyRobot robot = new MyRobot(new Robot());
-                System.out.println(robot.getCurrentLowestDeal());
-            }
-            catch (AWTException e)
-            {
-                e.printStackTrace();
-                return;
-            }
-        }
+//        while(true)
+//        {
+//            try
+//            {
+//                MyRobot robot = new MyRobot(new Robot());
+//                System.out.println(robot.getCurrentLowestDeal());
+//            }
+//            catch (AWTException e)
+//            {
+//                e.printStackTrace();
+//                return;
+//            }
+//        }
+        Integer[] array = new Integer[]{1,2,3,4};
 
+        List<Integer> tmp = Arrays.asList(array);
+
+        Object o =  tmp;
+        System.out.println(o);
 
     }
 }

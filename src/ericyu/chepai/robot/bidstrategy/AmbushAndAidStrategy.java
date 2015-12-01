@@ -19,50 +19,50 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
     }
 
     @Override
-    public void execute()
+    public void setStrategy()
     {
-        robot.wait(2000);
 
-        while(!user.login(robot))
-        {
-            Logger.log(Logger.Level.WARNING, flashStatus,"login failed!!");
-            robot.wait(1000);
-        }
+        addAction(new FocusOnUsernameInputBox());
+//        addAction(new InputUserName(user.getUsername()));
+//        addAction(new FocusOnPasswordInputBox());
+//        addAction(new InputPassword(user.getPassword()));
+//        addAction(new ClickLogin());
 
-        robot.wait(5000);
-        int moneyAddRange = 600;
-        int waitTime = 3000;
-        while(true)
-        {
 
-            //add money and bid
-            addMoneyAndBid(moneyAddRange, waitTime);
-            //TODO: how to  make sure it's on verification code view
-            robot.wait(1000);
-            //recognize verification code and confirm
-            robot.recogAndInputVerificationCode();
-            robot.clickConfirmVCodeButton();
-            robot.wait(1000);
-
-            switch (robot.verifySystemNotification())
-            {
-                //success
-                case 0:
-                    Logger.log(Logger.Level.INFO, flashStatus, "bid success!!");
-                    System.exit(0);
-                //not in bid range
-                case 1:
-                    Logger.log(Logger.Level.INFO, flashStatus,"bid out of range");
-                    moneyAddRange = 300;
-                    waitTime = 10;
-                    break;
-                //wrong verification code
-                case 2:
-                    Logger.log(Logger.Level.INFO, flashStatus,"wrong verification code!!");
-                    waitTime = 10;
-                    break;
-            }
-        }
+//        robot.wait(5000);
+//        int moneyAddRange = 600;
+//        int waitTime = 3000;
+//        while(true)
+//        {
+//
+//            //add money and bid
+//            addMoneyAndBid(moneyAddRange, waitTime);
+//            //TODO: how to  make sure it's on verification code view
+//            robot.wait(1000);
+//            //recognize verification code and confirm
+//            robot.recogAndInputVerificationCode();
+//            robot.clickConfirmVCodeButton();
+//            robot.wait(1000);
+//
+//            switch (robot.verifySystemNotification())
+//            {
+//                //success
+//                case 0:
+//                    Logger.log(Logger.Level.INFO, flashStatus, "bid success!!");
+//                    System.exit(0);
+//                //not in bid range
+//                case 1:
+//                    Logger.log(Logger.Level.INFO, flashStatus,"bid out of range");
+//                    moneyAddRange = 300;
+//                    waitTime = 10;
+//                    break;
+//                //wrong verification code
+//                case 2:
+//                    Logger.log(Logger.Level.INFO, flashStatus,"wrong verification code!!");
+//                    waitTime = 10;
+//                    break;
+//            }
+//        }
     }
 
 
