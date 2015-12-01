@@ -42,13 +42,13 @@ public class Console
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Logger.log(Logger.Level.INFO, null, "this line is for test encoding :" + MyRobot.NOTIFICATION_REQUEST_VCODE_TOO_OFTEN);
 
-        //generate a robot
+
         try
         {
-            //init flash position
+            //init flash position            //will detect flash position here
             FlashPosition flashPosition = FlashPosition.getInstance();
             user = new User("12345678","123456");
-            //will detect flash position here
+            //generate a robot
             robot = new MyRobot(new Robot());
             bidStrategy = new AmbushAndAidStrategy(user,robot);
             flashStatusDetector = new FlashStatusDetector(new Recognition(new FlashStatusTrain()));
