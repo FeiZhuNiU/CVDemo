@@ -7,6 +7,7 @@ package ericyu.chepai.robot.bidstrategy;
  |           Created by lliyu on 11/27/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.DateUtil;
 import ericyu.chepai.Logger;
 import ericyu.chepai.robot.MyRobot;
 
@@ -31,6 +32,11 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         addAction(new InputAddMoneyRange(500));
         addAction(new ClickAddMoneyButton());
         addAction(new ClickBidButton());
+        addAction(new RecogAndEnterVCode());
+//        addAction(new WaitUntil(DateUtil.getDateLongValue(21,5,40)));
+        addAction(new WaitUntil(System.currentTimeMillis()+20000));
+        addAction(new ClickVCodeConfirmButton());
+        
         stop();
 
 

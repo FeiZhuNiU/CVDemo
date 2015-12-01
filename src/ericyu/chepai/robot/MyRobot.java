@@ -19,6 +19,7 @@ import ericyu.chepai.recognize.Recognition;
 import ericyu.chepai.train.VCodeTrain;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -176,7 +177,7 @@ public class MyRobot implements IStatusObserver
     }
 
     /**
-     * @return  -1  -> no ready
+     * @return  -1  -> not in right status
      *          0   -> not exists
      *          1   -> exists
      */
@@ -195,14 +196,18 @@ public class MyRobot implements IStatusObserver
         Recognition recognition = new Recognition(new RefreshButtonTrain(SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH,
                                                                          SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH,
                                                                          new AllPixelEigenvetorStrategy()));
+        toReg = recognition.getTrainedData().process(toReg).get(0);
+//        Imgcodecs.imwrite("dump.bmp",toReg);
 
         int result = recognition.recognize(toReg,1);
         if(result == 1)
         {
+            Logger.log(Logger.Level.INFO, flashStatus, "refresh button exists");
             ret = 1;
         }
         else
         {
+            Logger.log(Logger.Level.INFO, flashStatus, "refresh button does not exist");
             ret = 0;
         }
 
@@ -272,9 +277,8 @@ public class MyRobot implements IStatusObserver
                 int num = recognition.recognize(mat,10);
 //                    int num = (int)ann_mlp.predict(target);
                 ret.add(num);
-                System.out.println(num);
             }
-
+            Logger.log(Logger.Level.INFO, flashStatus, "recognized : " + ret);
             return ret;
         }
         return null;
@@ -297,7 +301,6 @@ public class MyRobot implements IStatusObserver
         for (int num : numbers)
         {
             pressKey((char) (num + 48));
-            Logger.log(Logger.Level.INFO, flashStatus, "robot pressed number " + num);
         }
         return true;
     }
@@ -565,7 +568,7 @@ public class MyRobot implements IStatusObserver
     }
 
     /**
-     * verify whether OCRed resuly is target String
+     * verify whether OCRed result is target String
      * @param str
      * @return
      */
@@ -581,6 +584,7 @@ public class MyRobot implements IStatusObserver
     {
         return isTargetString(str,NOTIFICATION_BID_SUCCESS);
     }
+    @Deprecated
     public boolean isRequestVCodeTooOftenNotification(String str)
     {
         return isTargetString(str,NOTIFICATION_REQUEST_VCODE_TOO_OFTEN);

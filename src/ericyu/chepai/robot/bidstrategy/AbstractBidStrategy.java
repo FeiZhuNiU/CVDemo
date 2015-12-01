@@ -7,16 +7,14 @@ package ericyu.chepai.robot.bidstrategy;
  |           Created by lliyu on 11/27/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.DateUtil;
 import ericyu.chepai.Logger;
 import ericyu.chepai.flash.FlashStatusDetector;
 import ericyu.chepai.flash.IStatusObserver;
 import ericyu.chepai.robot.MyRobot;
 
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.*;
 
 abstract public class AbstractBidStrategy implements IStatusObserver
@@ -59,16 +57,6 @@ abstract public class AbstractBidStrategy implements IStatusObserver
     public void stop()
     {
         strategy.shutdown(); //avoid submit
-//        try
-//        {
-//            strategy.awaitTermination(10000,TimeUnit.MILLISECONDS);
-//        }
-//        catch (InterruptedException e)
-//        {
-//            e.printStackTrace();
-//        }
-//        strategy.shutdownNow();
-
     }
 
 
@@ -86,6 +74,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         public WaitUntil(long targetTime)
         {
             this.targetTime = targetTime;
+            Logger.log(Logger.Level.INFO, flashStatus, "wait until " + DateUtil.formatLongValueToDate(targetTime));
         }
 
         @Override
@@ -95,6 +84,8 @@ abstract public class AbstractBidStrategy implements IStatusObserver
             {
                 if(System.currentTimeMillis() >= targetTime)
                     break;
+                Logger.log(Logger.Level.INFO, flashStatus,(targetTime - System.currentTimeMillis()) + "ms to go");
+                robot.wait(100);
             }
             return new AbstractMap.SimpleEntry<>(true, null);
         }
@@ -247,36 +238,82 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         }
     }
 
-//    protected class RecognizeVCode implements Callable<Map.Entry<Boolean,Object>> {}
-//    {
-//
-//        @Override
-//        public Map.Entry<Boolean, Object> call() throws Exception
-//        {
-//
-//            ArrayList<Integer> vcode = robot.recogVerificationCode();
-//            if(vcode == null || vcode.size() ==0)
-//            {
-//                return new AbstractMap.SimpleEntry<Boolean, Object>(false,null);
-//            }
-//            return new AbstractMap.SimpleEntry<Boolean, Object>(true,vcode);
-//        }
-//    }
-
-
-
-
-
-    @Deprecated
-    public void addMoneyAndBid(int addMoneyRange, int waitBetweenAddAndBid)
+    /**
+     * including refresh condition
+     */
+    protected class RecogAndEnterVCode implements Callable<Map.Entry<Boolean,Object>>
     {
-        robot.focusOnCustomAddMoneyInputBox();
-        robot.inputAddMoneyRange(addMoneyRange);
-        robot.clickAddMoneyButton();
-        robot.wait(waitBetweenAddAndBid);
-        robot.clickBidButton();
+
+        @Override
+        public Map.Entry<Boolean, Object> call() throws Exception
+        {
+            ArrayList<Integer> vcode;
+            // in case the load of v-code costs some time
+            robot.wait(200);
+            while (true)
+            {
+                vcode = robot.recogVerificationCode();
+                if(vcode == null || vcode.size() ==0)
+                {
+                    switch (robot.isRefreshVCodeButtonExist())
+                    {
+                        //not in right status
+                        case -1:
+                            robot.wait(200);
+                            break;
+                        //not exist
+                        case 0:
+                            while(!robot.clickCancelVerificationCodeButton());
+                            while(true)
+                            {
+                                while(!robot.clickBidButton());
+                                robot.wait(100);
+                                if(flashStatus == FlashStatusDetector.Status.NOTIFICATION)
+                                {
+                                    while(!robot.clickRequestForVCodeTooOftenConfirmButton());
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+                            break;
+                        //exist
+                        case 1:
+                            robot.clickRefreshVCodeButton();
+                            robot.wait(200);
+                            break;
+                    }
+
+                }
+                else
+                {
+                    robot.focusOnVCodeInputBox();
+                    robot.enterVerificationCode(vcode);
+                    break;
+                }
+            }
+
+            return new AbstractMap.SimpleEntry<Boolean, Object>(true,vcode);
+        }
     }
 
+    protected class ClickVCodeConfirmButton implements Callable<Map.Entry<Boolean,Object>>
+    {
+
+        @Override
+        public Map.Entry<Boolean, Object> call() throws Exception
+        {
+            while (true)
+            {
+                if (robot.clickConfirmVCodeButton())
+                    break;
+                robot.wait(100);
+            }
+            return new AbstractMap.SimpleEntry<>(true, null);
+        }
+    }
     @Override
     public void flashStatusChanged(FlashStatusDetector.Status status)
     {

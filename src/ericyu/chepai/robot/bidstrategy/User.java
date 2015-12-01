@@ -32,23 +32,6 @@ public class User
         this.password = password;
     }
 
-//    public boolean login(MyRobot robot)
-//    {
-//        boolean ret;
-//        ret = robot.focusOnUsernameInputBox();
-//        if(ret)
-//        {
-//            robot.inputString(username);
-//            ret = robot.focusOnPasswordInputBox();
-//        }
-//        if(ret)
-//        {
-//            robot.inputString(password);
-//            ret = robot.clickLoginButton();
-//        }
-//        return ret;
-//    }
-
     public static void main(String[] args) throws AWTException
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

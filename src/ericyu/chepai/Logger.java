@@ -21,6 +21,6 @@ public class Logger
 
     public static void log(Level level, FlashStatusDetector.Status status, String message)
     {
-        System.out.println(level + ": ["+ Date.getCurrentTime() +"] [FlashStatus:" + status + "] : " + message);
+        System.out.println(level + ": ["+ DateUtil.getCurrentTime() +"] [FlashStatus:" + status + "] : " + message);
     }
 }
