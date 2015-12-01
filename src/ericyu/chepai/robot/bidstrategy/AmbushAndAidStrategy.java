@@ -23,10 +23,11 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
     {
 
         addAction(new FocusOnUsernameInputBox());
-//        addAction(new InputUserName(user.getUsername()));
-//        addAction(new FocusOnPasswordInputBox());
-//        addAction(new InputPassword(user.getPassword()));
-//        addAction(new ClickLogin());
+        addAction(new InputUserName(user.getUsername()));
+        addAction(new FocusOnPasswordInputBox());
+        addAction(new InputPassword(user.getPassword()));
+        addAction(new ClickLogin());
+        stop();
 
 
 //        robot.wait(5000);

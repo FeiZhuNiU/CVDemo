@@ -53,8 +53,24 @@ abstract public class AbstractBidStrategy implements IStatusObserver
     protected void addAction(Callable<Map.Entry<Boolean,Object>> action)
     {
         results.add(strategy.submit(action));
-        Logger.log(Logger.Level.INFO, flashStatus, "prepare strategy: add action [" + action.getClass().getSimpleName() + "]");
+        Logger.log(Logger.Level.INFO, flashStatus,
+                   "prepare strategy: add action [" + action.getClass().getSimpleName() + "]");
     }
+    public void stop()
+    {
+        strategy.shutdown(); //avoid submit
+//        try
+//        {
+//            strategy.awaitTermination(10000,TimeUnit.MILLISECONDS);
+//        }
+//        catch (InterruptedException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        strategy.shutdownNow();
+
+    }
+
 
 
     /**
