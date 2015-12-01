@@ -35,7 +35,7 @@ public class User
         if(ret)
         {
             robot.inputString(password);
-            ret = robot.clickSubmitUserButton();
+            ret = robot.clickLoginButton();
         }
         return ret;
     }

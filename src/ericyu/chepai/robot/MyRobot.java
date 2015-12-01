@@ -166,7 +166,7 @@ public class MyRobot implements IStatusObserver
                 break;
             } else if (isWrongVCodeNotification(result))
             {
-                clickReEnterVerificationCodeConfirmButton();
+                clickReEnterVCodeConfirmButton();
                 ret = 2;
                 break;
             }
@@ -320,6 +320,7 @@ public class MyRobot implements IStatusObserver
         {
             robot.keyRelease(KeyEvent.VK_SHIFT);
         }
+        Logger.log(Logger.Level.INFO, flashStatus,"robot pressed " + c);
         robot.delay(50);
     }
 
@@ -342,6 +343,7 @@ public class MyRobot implements IStatusObserver
         robot.mousePress(InputEvent.BUTTON1_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
         robot.mouseMove(curMousePosition.x, curMousePosition.y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot clicked at (" + x + "," + y + ")");
         robot.delay(100);
     }
 
@@ -360,6 +362,7 @@ public class MyRobot implements IStatusObserver
         robot.mousePress(InputEvent.BUTTON1_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
         robot.mouseMove(curMousePosition.x, curMousePosition.y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot double clicked at (" + x + "," + y + ")");
         robot.delay(10);
     }
 
@@ -372,6 +375,7 @@ public class MyRobot implements IStatusObserver
         }
         doubleClickAt(FlashPosition.INPUT_VERIFICATION_X,
                 FlashPosition.INPUT_VERIFICATION_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot focused on V-code input box");
         return true;
     }
 
@@ -384,6 +388,8 @@ public class MyRobot implements IStatusObserver
         }
         clickAt(FlashPosition.BUTTON_VERIFICATION_CODE_CONFIRM_X,
                 FlashPosition.BUTTON_VERIFICATION_CODE_CONFIRM_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot clicked V-code confirm button");
+
         return true;
     }
 
@@ -397,6 +403,7 @@ public class MyRobot implements IStatusObserver
         }
         clickAt(FlashPosition.BUTTON_VERIFICATION_CODE_CANCEL_X,
                 FlashPosition.BUTTON_VERIFICATION_CODE_CANCEL_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot clicked V-code cancel button");
         return true;
     }
 
@@ -409,6 +416,7 @@ public class MyRobot implements IStatusObserver
         }
         clickAt(FlashPosition.BUTTON_VERIFICATION_REFRESH_X,
                 FlashPosition.BUTTON_VERIFICATION_REFRESH_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot clicked refresh V-code button");
         return true;
     }
 
@@ -421,6 +429,7 @@ public class MyRobot implements IStatusObserver
         }
         doubleClickAt(FlashPosition.INPUT_CUSTOM_ADD_MONEY_X,
                       FlashPosition.INPUT_CUSTOM_ADD_MONEY_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot focused on custom add money range input box.");
         return true;
     }
 
@@ -436,6 +445,7 @@ public class MyRobot implements IStatusObserver
         {
             pressKey(money.charAt(i));
         }
+        Logger.log(Logger.Level.INFO, flashStatus, "robot has input added money range: " + money);
         return true;
     }
 
@@ -448,6 +458,7 @@ public class MyRobot implements IStatusObserver
         }
         clickAt(FlashPosition.BUTTON_ADD_MONEY_X,
                 FlashPosition.BUTTON_ADD_MONEY_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot clicked add money button");
         return true;
     }
 
@@ -460,6 +471,7 @@ public class MyRobot implements IStatusObserver
         }
         clickAt(FlashPosition.BUTTON_BID_X,
                 FlashPosition.BUTTON_BID_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot clicked bid button");
         return true;
     }
 
@@ -475,13 +487,14 @@ public class MyRobot implements IStatusObserver
         }
         clickAt(FlashPosition.BUTTON_REBID_CONFIRM_X,
                 FlashPosition.BUTTON_REBID_CONFIRM_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot clicked rebid confirm button");
         return true;
     }
 
     /**
      * button for wrong verification code
      */
-    public boolean clickReEnterVerificationCodeConfirmButton()
+    public boolean clickReEnterVCodeConfirmButton()
     {
         if(flashStatus != FlashStatusDetector.Status.NOTIFICATION)
         {
@@ -490,6 +503,7 @@ public class MyRobot implements IStatusObserver
         }
         clickAt(FlashPosition.BUTTON_RE_ENTER_VERIFICATION_CONFIRM_X,
                 FlashPosition.BUTTON_RE_ENTER_VERIFICATION_CONFIRM_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot clicked re-enter V-code confirm button");
         return true;
     }
     public boolean clickRequestForVCodeTooOftenConfirmButton()
@@ -501,6 +515,7 @@ public class MyRobot implements IStatusObserver
         }
         clickAt(FlashPosition.BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_X,
                 FlashPosition.BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot clicked request for V-code too often confirm button");
         return true;
     }
 
@@ -513,6 +528,7 @@ public class MyRobot implements IStatusObserver
         }
         doubleClickAt(FlashPosition.INPUT_USERNAME_X,
                       FlashPosition.INPUT_USERNAME_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot focused on username input box.");
         return true;
     }
 
@@ -525,10 +541,11 @@ public class MyRobot implements IStatusObserver
         }
         doubleClickAt(FlashPosition.INPUT_PASSWORD_X,
                       FlashPosition.INPUT_PASSWORD_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot focused on password input box.");
         return true;
     }
 
-    public boolean clickSubmitUserButton()
+    public boolean clickLoginButton()
     {
         if(flashStatus != FlashStatusDetector.Status.LOGIN)
         {
@@ -537,12 +554,14 @@ public class MyRobot implements IStatusObserver
         }
         clickAt(FlashPosition.BUTTON_SUBMIT_X,
                 FlashPosition.BUTTON_SUBMIT_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot clicked on login button.");
         return true;
     }
 
     public void wait(int time)
     {
         robot.delay(time);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot waited " + time + "ms.");
     }
 
     /**
