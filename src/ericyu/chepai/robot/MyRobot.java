@@ -136,7 +136,8 @@ public class MyRobot implements IStatusObserver
      * @return  0   -> bid success
      *          1   -> not in bid range
      *          2   -> wrong verification code
-     *          -1  -> failed
+     *          3   -> handling bid
+     *          -1  -> not right status
      */
     public int verifySystemNotification()
     {
@@ -169,6 +170,10 @@ public class MyRobot implements IStatusObserver
             {
                 clickReEnterVCodeConfirmButton();
                 ret = 2;
+                break;
+            } else
+            {
+                ret = 3;
                 break;
             }
         }

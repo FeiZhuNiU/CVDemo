@@ -243,13 +243,12 @@ abstract public class AbstractBidStrategy implements IStatusObserver
      */
     protected class RecogAndEnterVCode implements Callable<Map.Entry<Boolean,Object>>
     {
-
         @Override
         public Map.Entry<Boolean, Object> call() throws Exception
         {
             ArrayList<Integer> vcode;
             // in case the load of v-code costs some time
-            robot.wait(200);
+            robot.wait(1001);
             while (true)
             {
                 vcode = robot.recogVerificationCode();
@@ -259,7 +258,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                     {
                         //not in right status
                         case -1:
-                            robot.wait(200);
+                            robot.wait(201);
                             break;
                         //not exist
                         case 0:
@@ -267,7 +266,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                             while(true)
                             {
                                 while(!robot.clickBidButton());
-                                robot.wait(100);
+                                robot.wait(101);
                                 if(flashStatus == FlashStatusDetector.Status.NOTIFICATION)
                                 {
                                     while(!robot.clickRequestForVCodeTooOftenConfirmButton());
@@ -282,7 +281,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                         //exist
                         case 1:
                             robot.clickRefreshVCodeButton();
-                            robot.wait(200);
+                            robot.wait(202);
                             break;
                     }
 
@@ -309,11 +308,53 @@ abstract public class AbstractBidStrategy implements IStatusObserver
             {
                 if (robot.clickConfirmVCodeButton())
                     break;
-                robot.wait(100);
+                robot.wait(102);
             }
             return new AbstractMap.SimpleEntry<>(true, null);
         }
     }
+
+    protected class RecogResult implements Callable<Map.Entry<Boolean,Object>>
+    {
+        @Override
+        public Map.Entry<Boolean, Object> call() throws Exception
+        {
+            Integer result = null;
+            boolean done = false;
+            while (true)
+            {
+                if(done)
+                    break;
+                switch (robot.verifySystemNotification())
+                {
+                    // not right status
+                    case -1:
+                    //handling bid
+                    case 3:
+                        robot.wait(203);
+                        break;
+                    //bid success
+                    case 0:
+                        System.exit(0);
+                        break;
+                    // not in bid range
+                    case 1:
+                        done = true;
+                        result = 1;
+                        break;
+                    //wrong v-code
+                    case 2:
+                        done = true;
+                        result = 2;
+                        break;
+                }
+            }
+            return new AbstractMap.SimpleEntry<Boolean,Object>(true, result);
+        }
+    }
+
+
+
     @Override
     public void flashStatusChanged(FlashStatusDetector.Status status)
     {

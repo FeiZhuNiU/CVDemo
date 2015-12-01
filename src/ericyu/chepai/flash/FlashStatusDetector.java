@@ -89,7 +89,7 @@ public class FlashStatusDetector implements Runnable
         while(true)
         {
             FlashStatusDetector.Status originStatus = status;
-            FlashStatusDetector.Status curStatus = Status.NONE;
+            FlashStatusDetector.Status curStatus;
 
             Mat target = getRightPartOfFlash();
             List<Mat> toRecogs = recognition.getTrainedData().process(target);
@@ -107,6 +107,9 @@ public class FlashStatusDetector implements Runnable
                     break;
                 case 4:
                     curStatus = Status.NOTIFICATION;
+                    break;
+                default:
+                    curStatus = Status.NONE;
                     break;
             }
             // if status changed, send notification

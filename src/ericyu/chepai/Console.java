@@ -49,13 +49,14 @@ public class Console
             FlashPosition flashPosition = FlashPosition.getInstance();
             user = new User("12345678","123456");
             //generate a robot
+            flashStatusDetector = new FlashStatusDetector(new Recognition(new FlashStatusTrain()));
             robot = new MyRobot(new Robot());
             bidStrategy = new AmbushAndAidStrategy(user,robot);
-            flashStatusDetector = new FlashStatusDetector(new Recognition(new FlashStatusTrain()));
             flashStatusDetector.addStatusObserver(robot);
             flashStatusDetector.addStatusObserver(bidStrategy);
             Thread detectorThread = new Thread(flashStatusDetector);
             detectorThread.start();
+
         }
         catch (AWTException e)
         {
