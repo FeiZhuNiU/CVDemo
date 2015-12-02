@@ -42,8 +42,8 @@ public class FlashPosition
     /**
      * the order should be b/g/r
      */
-//    private static final double[] topLeftCornerColor = {43, 31.0, 25};
-    private static final double[] topLeftCornerColor = {72, 34, 16}; //51hupai
+    private static final double[] topLeftCornerColor = {43, 31.0, 25};
+//    private static final double[] topLeftCornerColor = {72, 34, 16}; //51hupai
 
     /**
      * coordinate of top left corner

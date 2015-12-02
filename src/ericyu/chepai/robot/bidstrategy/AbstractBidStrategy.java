@@ -329,8 +329,6 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                 {
                     // not right status
                     case -1:
-                    //handling bid
-                    case 3:
                         robot.wait(203);
                         break;
                     //bid success

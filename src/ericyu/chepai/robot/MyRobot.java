@@ -136,7 +136,6 @@ public class MyRobot implements IStatusObserver
      * @return  0   -> bid success
      *          1   -> not in bid range
      *          2   -> wrong verification code
-     *          3   -> handling bid
      *          -1  -> not right status
      */
     public int verifySystemNotification()
@@ -152,10 +151,10 @@ public class MyRobot implements IStatusObserver
         while(true)
         {
             ImageUtils.screenCapture(image,
-                                     flashPosition.origin.x + FlashPosition.REGION_SYSTEM_NOTIFICATION_X,
-                                     flashPosition.origin.y + FlashPosition.REGION_SYSTEM_NOTIFICATION_Y,
-                                     FlashPosition.REGION_SYSTEM_NOTIFICATION_WIDTH,
-                                     FlashPosition.REGION_SYSTEM_NOTIFICATION_HEIGHT);
+                    flashPosition.origin.x + FlashPosition.REGION_SYSTEM_NOTIFICATION_X,
+                    flashPosition.origin.y + FlashPosition.REGION_SYSTEM_NOTIFICATION_Y,
+                    FlashPosition.REGION_SYSTEM_NOTIFICATION_WIDTH,
+                    FlashPosition.REGION_SYSTEM_NOTIFICATION_HEIGHT);
             String result = OCRUtils.doOCR(image);
             if (isOutOfRangeNotification(result))
             {
@@ -173,8 +172,8 @@ public class MyRobot implements IStatusObserver
                 break;
             } else
             {
-                ret = 3;
-                break;
+                // do nothing
+                //is handling bid. go on loop
             }
         }
         ImageUtils.deleteImage(image);
