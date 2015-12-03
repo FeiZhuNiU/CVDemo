@@ -34,6 +34,7 @@ public class Console
             Logger.log(Logger.Level.ERROR, flashStatusDetector.getStatus(), "init failed!");
             return;
         }
+        bidStrategy.execute();
 
     }
 
@@ -48,14 +49,16 @@ public class Console
             //init flash position            //will detect flash position here
             FlashPosition flashPosition = FlashPosition.getInstance();
             user = new User("12345678","123456");
-            //generate a robot
+
             flashStatusDetector = new FlashStatusDetector(new Recognition(new FlashStatusTrain()));
+            Thread detectorThread = new Thread(flashStatusDetector);
+            detectorThread.start();
+
             robot = new MyRobot(new Robot());
             bidStrategy = new AmbushAndAidStrategy(user,robot);
             flashStatusDetector.addStatusObserver(robot);
             flashStatusDetector.addStatusObserver(bidStrategy);
-            Thread detectorThread = new Thread(flashStatusDetector);
-            detectorThread.start();
+
 
         }
         catch (AWTException e)

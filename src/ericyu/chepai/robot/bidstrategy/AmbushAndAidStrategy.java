@@ -22,22 +22,39 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
     }
 
     @Override
-    public void setStrategy()
+    public void execute()
     {
+        //--------------------------------------------------
+        //login
+        //0
         addAction(new FocusOnUsernameInputBox());
+        //1
         addAction(new InputUserName(user.getUsername()));
+        //2
         addAction(new FocusOnPasswordInputBox());
+        //3
         addAction(new InputPassword(user.getPassword()));
+        //4
         addAction(new ClickLogin());
+        //----------------------------------------------------
+        //bid
+        //5
         addAction(new FocusOnAddRangeBox());
-        addAction(new InputAddMoneyRange(500));
+        //6
+        addAction(new InputAddMoneyRange(300));
+        //7
         addAction(new ClickAddMoneyButton());
+        //8
         addAction(new ClickBidButton());
+
+        //--------------------------------------------------
+        //V-code
+        //9
         addAction(new RecogAndEnterVCode());
 
 
 //        addAction(new WaitUntil(DateUtil.getDateLongValue(21,5,40)));
-        addAction(new WaitUntil(System.currentTimeMillis()+20000));
+        addAction(new WaitUntil(System.currentTimeMillis()+5000));
         addAction(new ClickVCodeConfirmButton());
         addAction(new RecogResult());
 //        try

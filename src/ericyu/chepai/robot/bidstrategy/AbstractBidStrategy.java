@@ -13,8 +13,9 @@ import ericyu.chepai.flash.FlashStatusDetector;
 import ericyu.chepai.flash.IStatusObserver;
 import ericyu.chepai.robot.MyRobot;
 
-
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.*;
 
 abstract public class AbstractBidStrategy implements IStatusObserver
@@ -36,7 +37,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
      * Boolean  -> whether the action successfully done
      * Object   -> return value if needed
      */
-    protected List<Future<Map.Entry<Boolean,Object>>> results;
+    protected ArrayList<Future<Map.Entry<Boolean,Object>>> results;
 
     public AbstractBidStrategy(User user, MyRobot robot)
     {
@@ -45,7 +46,6 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         this.startTime = System.currentTimeMillis();
         this.user = user;
         this.robot = robot;
-        setStrategy();
     }
 
     protected void addAction(Callable<Map.Entry<Boolean,Object>> action)
@@ -54,17 +54,17 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         Logger.log(Logger.Level.INFO, flashStatus,
                    "prepare strategy: add action [" + action.getClass().getSimpleName() + "]");
     }
+
+    @Deprecated
     public void stop()
     {
         strategy.shutdown(); //avoid submit
     }
 
-
-
     /**
      * add actions here
      */
-    public abstract void setStrategy();
+    public abstract void execute();
 
 
     protected class WaitUntil implements Callable<Map.Entry<Boolean,Object>>
@@ -100,7 +100,6 @@ abstract public class AbstractBidStrategy implements IStatusObserver
             {
                 if(robot.focusOnUsernameInputBox())
                     break;
-                robot.wait(1000);
             }
             return new AbstractMap.SimpleEntry<>(true, null);
         }
@@ -132,7 +131,6 @@ abstract public class AbstractBidStrategy implements IStatusObserver
             {
                 if(robot.focusOnPasswordInputBox())
                     break;
-                robot.wait(1000);
             }
             return new AbstractMap.SimpleEntry<>(true, null);
         }
@@ -164,7 +162,6 @@ abstract public class AbstractBidStrategy implements IStatusObserver
             {
                 if(robot.clickLoginButton())
                     break;
-                robot.wait(100);
             }
             return new AbstractMap.SimpleEntry<>(true, null);
         }
@@ -180,7 +177,6 @@ abstract public class AbstractBidStrategy implements IStatusObserver
             {
                 if(robot.focusOnCustomAddMoneyInputBox())
                     break;
-                robot.wait(1000);
             }
             return new AbstractMap.SimpleEntry<>(true, null);
         }
@@ -216,7 +212,6 @@ abstract public class AbstractBidStrategy implements IStatusObserver
             {
                 if(robot.clickAddMoneyButton())
                     break;
-                robot.wait(100);
             }
             return new AbstractMap.SimpleEntry<>(true, null);
         }
@@ -232,7 +227,20 @@ abstract public class AbstractBidStrategy implements IStatusObserver
             {
                 if (robot.clickBidButton())
                     break;
-                robot.wait(100);
+            }
+            return new AbstractMap.SimpleEntry<>(true, null);
+        }
+    }
+
+    protected class ClickVCodeCancelButton implements Callable<Map.Entry<Boolean,Object>>
+    {
+        @Override
+        public Map.Entry<Boolean, Object> call() throws Exception
+        {
+            while (true)
+            {
+                if (robot.clickCancelVCodeButton())
+                    break;
             }
             return new AbstractMap.SimpleEntry<>(true, null);
         }
@@ -262,7 +270,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                             break;
                         //not exist
                         case 0:
-                            while(!robot.clickCancelVerificationCodeButton());
+                            while(!robot.clickCancelVCodeButton());
                             while(true)
                             {
                                 while(!robot.clickBidButton());
@@ -288,12 +296,11 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                 }
                 else
                 {
-                    robot.focusOnVCodeInputBox();
-                    robot.enterVerificationCode(vcode);
+                    while (!robot.focusOnVCodeInputBox());
+                    while (!robot.enterVerificationCode(vcode));
                     break;
                 }
             }
-
             return new AbstractMap.SimpleEntry<Boolean, Object>(true,vcode);
         }
     }
@@ -308,10 +315,27 @@ abstract public class AbstractBidStrategy implements IStatusObserver
             {
                 if (robot.clickConfirmVCodeButton())
                     break;
-                robot.wait(102);
             }
             return new AbstractMap.SimpleEntry<>(true, null);
         }
+    }
+
+    public Map.Entry<Boolean,Object> getResultAt(int index)
+    {
+        try
+        {
+            return results.get(index).get();
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        } catch (ExecutionException e)
+        {
+            Logger.log(Logger.Level.ERROR, flashStatus, "Get future result failed! (index: "+index+")");
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+
     }
 
     protected class RecogResult implements Callable<Map.Entry<Boolean,Object>>
@@ -337,11 +361,13 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                         break;
                     // not in bid range
                     case 1:
+                        while(!robot.clickReBidConfirmButton());
                         done = true;
                         result = 1;
                         break;
                     //wrong v-code
                     case 2:
+                        while (!robot.clickReEnterVCodeConfirmButton());
                         done = true;
                         result = 2;
                         break;

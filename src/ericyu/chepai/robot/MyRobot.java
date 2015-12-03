@@ -19,7 +19,6 @@ import ericyu.chepai.recognize.Recognition;
 import ericyu.chepai.train.VCodeTrain;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -44,7 +43,7 @@ public class MyRobot implements IStatusObserver
     public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="输入正确";
     public static final String NOTIFICATION_BID_SUCCESS="成功";
     /**
-     * we currently avoid verify this condition by including it to {@link #clickCancelVerificationCodeButton}
+     * we currently avoid verify this condition by including it to {@link #clickCancelVCodeButton}
      */
     public static final String NOTIFICATION_REQUEST_VCODE_TOO_OFTEN="过于频繁";
 
@@ -158,7 +157,7 @@ public class MyRobot implements IStatusObserver
             String result = OCRUtils.doOCR(image);
             if (isOutOfRangeNotification(result))
             {
-                clickReBidConfirmButton();
+//                clickReBidConfirmButton();
                 ret = 1;
                 break;
             } else if (isBidSuccessNotification(result))
@@ -167,7 +166,7 @@ public class MyRobot implements IStatusObserver
                 break;
             } else if (isWrongVCodeNotification(result))
             {
-                clickReEnterVCodeConfirmButton();
+//                clickReEnterVCodeConfirmButton();
                 ret = 2;
                 break;
             } else
@@ -231,7 +230,7 @@ public class MyRobot implements IStatusObserver
             if (numbers != null)
                 break;
 
-            clickCancelVerificationCodeButton();
+            clickCancelVCodeButton();
             wait(300);
             //TODO : lan lag ? verify current page
             clickBidButton();
@@ -400,7 +399,7 @@ public class MyRobot implements IStatusObserver
         return true;
     }
 
-    public boolean clickCancelVerificationCodeButton()
+    public boolean clickCancelVCodeButton()
     {
         if(flashStatus != FlashStatusDetector.Status.V_CODE &&
                 flashStatus != FlashStatusDetector.Status.NOTIFICATION)
