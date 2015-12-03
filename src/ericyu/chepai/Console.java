@@ -35,6 +35,7 @@ public class Console
             return;
         }
         bidStrategy.execute();
+        bidStrategy.printResult();
 
     }
 

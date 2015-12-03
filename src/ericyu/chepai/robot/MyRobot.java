@@ -40,8 +40,9 @@ public class MyRobot implements IStatusObserver
      * Strings for recognize system notifications
      */
     public static final String NOTIFICATION_RE_BID_OUT_OF_RANGE="不在修改区间范围内重新";
-    public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="输入正确";
+    public static final String NOTIFICATION_RE_ENTER_VERIFICATION_CODE="输正确";
     public static final String NOTIFICATION_BID_SUCCESS="成功";
+    public static final String NOTIFICATION_WAITING_BID_QUEUE="等待进队列";
     /**
      * we currently avoid verify this condition by including it to {@link #clickCancelVCodeButton}
      */
@@ -135,6 +136,7 @@ public class MyRobot implements IStatusObserver
      * @return  0   -> bid success
      *          1   -> not in bid range
      *          2   -> wrong verification code
+     *          3   -> waiting bid queue
      *          -1  -> not right status
      */
     public int verifySystemNotification()
@@ -168,6 +170,10 @@ public class MyRobot implements IStatusObserver
             {
 //                clickReEnterVCodeConfirmButton();
                 ret = 2;
+                break;
+            } else if (isWaitingBidQueueNotification(result))
+            {
+                ret = 3;
                 break;
             } else
             {
@@ -591,6 +597,10 @@ public class MyRobot implements IStatusObserver
     public boolean isRequestVCodeTooOftenNotification(String str)
     {
         return isTargetString(str,NOTIFICATION_REQUEST_VCODE_TOO_OFTEN);
+    }
+    public boolean isWaitingBidQueueNotification(String str)
+    {
+        return isTargetString(str,NOTIFICATION_WAITING_BID_QUEUE);
     }
     private boolean isTargetString(String str, String target)
     {

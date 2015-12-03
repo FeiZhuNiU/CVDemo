@@ -353,6 +353,8 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                 {
                     // not right status
                     case -1:
+                    //waiting bid queue
+                    case 3:
                         robot.wait(203);
                         break;
                     //bid success
@@ -377,6 +379,20 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         }
     }
 
+
+    public void printResult()
+    {
+        try
+        {
+            System.out.println(results.get(results.size()-1).get().getValue());
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        } catch (ExecutionException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
 
     @Override
