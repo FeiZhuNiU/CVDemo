@@ -375,6 +375,18 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                         break;
                 }
             }
+
+            if(result>=1)
+            {
+                addAction(new FocusOnAddRangeBox());
+                addAction(new InputAddMoneyRange(300));
+                addAction(new ClickAddMoneyButton());
+                addAction(new ClickBidButton());
+
+                addAction(new RecogAndEnterVCode());
+                addAction(new ClickVCodeConfirmButton());
+                addAction(new RecogResult());
+            }
             return new AbstractMap.SimpleEntry<Boolean,Object>(true, result);
         }
     }

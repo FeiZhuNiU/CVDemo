@@ -41,7 +41,7 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //5
         addAction(new FocusOnAddRangeBox());
         //6
-        addAction(new InputAddMoneyRange(300));
+        addAction(new InputAddMoneyRange(600));
         //7
         addAction(new ClickAddMoneyButton());
         //8
@@ -55,8 +55,12 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
 
 //        addAction(new WaitUntil(DateUtil.getDateLongValue(21,5,40)));
         addAction(new WaitUntil(System.currentTimeMillis()+5000));
+
         addAction(new ClickVCodeConfirmButton());
+
         addAction(new RecogResult());
+
+
 //        try
 //        {
 //            System.out.println(results.get(0).get().getValue());
@@ -69,7 +73,7 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
 //        }
 
 
-        stop();
+//        stop();
 
 
 //        robot.wait(5000);
