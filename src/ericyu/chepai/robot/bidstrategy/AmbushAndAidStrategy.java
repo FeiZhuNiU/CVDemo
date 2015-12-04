@@ -41,7 +41,7 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //5
         addAction(new FocusOnAddRangeBox());
         //6
-        addAction(new InputAddMoneyRange(600));
+        addAction(new InputAddMoneyRange(BidStrategyConstants.ADD_MONEY_RANGE));
         //7
         addAction(new ClickAddMoneyButton());
         //8
@@ -53,7 +53,9 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         addAction(new RecogAndEnterVCode());
 
 
-//        addAction(new WaitUntil(DateUtil.getDateLongValue(21,5,40)));
+//        addAction(new WaitUntil(DateUtil.getDateLongValue(BidStrategyConstants.V_CODE_CONFIRM_HOUR,
+//                                                          BidStrategyConstants.V_CODE_CONFIRM_MINUTE,
+//                                                          BidStrategyConstants.V_CODE_CONFIRM_SECOND)));
         addAction(new WaitUntil(System.currentTimeMillis()+5000));
 
         addAction(new ClickVCodeConfirmButton());

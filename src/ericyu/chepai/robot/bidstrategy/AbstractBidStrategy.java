@@ -100,6 +100,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
             {
                 if(robot.focusOnUsernameInputBox())
                     break;
+                robot.wait(1002);
             }
             return new AbstractMap.SimpleEntry<>(true, null);
         }
@@ -177,6 +178,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
             {
                 if(robot.focusOnCustomAddMoneyInputBox())
                     break;
+                robot.wait(1001);
             }
             return new AbstractMap.SimpleEntry<>(true, null);
         }
