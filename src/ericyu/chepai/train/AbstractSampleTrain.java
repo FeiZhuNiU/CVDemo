@@ -24,13 +24,13 @@ import java.util.Map;
  * Class for train samples and process src image for recognition {@link #process}
  *
  * 1. use following two constructors to train samples
- * @see #AbstractSampleTrain(String[] srcImages, EigenvetorStrategy eigenvetorStrategy)
- * @see #AbstractSampleTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
+ * @see #AbstractSampleTrain(String[] images, EigenvetorStrategy eigenvetorStrategy, String trainDataPath, String trainClassPath)
+ * @see #AbstractSampleTrain(String dir, EigenvetorStrategy eigenvetorStrategy, String trainDataPath, String trainClassPath)
  *
- * 2. use following method to dump train data to local file
- * @see #dumpTrainData
+ * 2. use {@link #train()} to generate train data
+ * 3. use {@link #dumpTrainData()} to dump train data to local file
  *
- * 3. use following construtor to recognize
+ * 4. use following construtor to recognize
  * @see #AbstractSampleTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
  */
 public abstract class AbstractSampleTrain
@@ -47,6 +47,9 @@ public abstract class AbstractSampleTrain
     protected List<Map.Entry<Mat, Integer>> sampleEntries;
     protected Mat trainData;
     protected Mat trainClass;
+
+    protected String trainDataPath;
+    protected String trainClassesPath;
 
     /**
      * load trained data
@@ -74,15 +77,14 @@ public abstract class AbstractSampleTrain
      * @param images
      * @param eigenvetorStrategy
      */
-    public AbstractSampleTrain(String[] images, EigenvetorStrategy eigenvetorStrategy)
+    public AbstractSampleTrain(String[] images, EigenvetorStrategy eigenvetorStrategy,String trainDataPath, String trainClassPath)
     {
+        init(eigenvetorStrategy,trainDataPath,trainClassPath);
         this.srcImages = new ArrayList<>();
         for(String str : images)
         {
             srcImages.add(new File(str));
         }
-        this.eigenvetorStrategy = eigenvetorStrategy;
-        train();
     }
 
     /**
@@ -90,12 +92,18 @@ public abstract class AbstractSampleTrain
      * @param dir under where all files are samples
      * @param eigenvetorStrategy
      */
-    public AbstractSampleTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
+    public AbstractSampleTrain(String dir, EigenvetorStrategy eigenvetorStrategy, String trainDataPath, String trainClassPath)
     {
+        init(eigenvetorStrategy,trainDataPath,trainClassPath);
         File file = new File(dir);
         this.srcImages = Arrays.asList(file.listFiles());
+    }
+
+    private void init(EigenvetorStrategy eigenvetorStrategy, String trainDataPath, String trainClassPath)
+    {
+        this.trainDataPath = trainDataPath;
+        this.trainClassesPath = trainClassPath;
         this.eigenvetorStrategy = eigenvetorStrategy;
-        train();
     }
 
     /**
@@ -194,7 +202,7 @@ public abstract class AbstractSampleTrain
         }
     }
 
-    public void dumpTrainData(String trainDataPath, String trainClassesPath)
+    public void dumpTrainData()
     {
         ImageUtils.deleteImage(trainDataPath);
         ImageUtils.deleteImage(trainClassesPath);

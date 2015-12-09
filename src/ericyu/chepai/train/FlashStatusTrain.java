@@ -18,24 +18,27 @@ import java.util.List;
 
 public class FlashStatusTrain extends AbstractSampleTrain
 {
-    public FlashStatusTrain()
-    {
-        super(SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH, new AllPixelEigenvetorStrategy());
-    }
-
-    public FlashStatusTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
+    public FlashStatusTrain(String trainDataPath,
+                            String trainClassPath,
+                            EigenvetorStrategy eigenvetorStrategy)
     {
         super(trainDataPath, trainClassPath, eigenvetorStrategy);
     }
 
-    public FlashStatusTrain(String[] srcImages, EigenvetorStrategy eigenvetorStrategy)
+    public FlashStatusTrain(String[] images,
+                            EigenvetorStrategy eigenvetorStrategy,
+                            String trainDataPath,
+                            String trainClassPath)
     {
-        super(srcImages, eigenvetorStrategy);
+        super(images, eigenvetorStrategy, trainDataPath, trainClassPath);
     }
 
-    public FlashStatusTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
+    public FlashStatusTrain(String dir,
+                            EigenvetorStrategy eigenvetorStrategy,
+                            String trainDataPath,
+                            String trainClassPath)
     {
-        super(dir, eigenvetorStrategy);
+        super(dir, eigenvetorStrategy, trainDataPath, trainClassPath);
     }
 
     @Override
@@ -64,8 +67,9 @@ public class FlashStatusTrain extends AbstractSampleTrain
 
         String sampleDir = "FlashStatusImage";
 
-        FlashStatusTrain train = new FlashStatusTrain(sampleDir, new AllPixelEigenvetorStrategy());
-        train.dumpTrainData(SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH, SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH);
+        FlashStatusTrain train = new FlashStatusTrain(sampleDir, new AllPixelEigenvetorStrategy(), SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH, SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH);
+        train.train();
+        train.dumpTrainData();
 
     }
 }

@@ -32,15 +32,18 @@ public class VCodeTrain extends AbstractSampleTrain
         super(trainDataPath, trainClassPath, eigenvetorStrategy);
     }
 
-    public VCodeTrain(String[] sampleImages, EigenvetorStrategy eigenvetorStrategy)
+    public VCodeTrain(String[] images, EigenvetorStrategy eigenvetorStrategy, String trainDataPath,
+                      String trainClassPath)
     {
-        super(sampleImages, eigenvetorStrategy);
+        super(images, eigenvetorStrategy, trainDataPath, trainClassPath);
     }
 
-    public VCodeTrain(String dir, EigenvetorStrategy eigenvetorStrategy)
+    public VCodeTrain(String dir, EigenvetorStrategy eigenvetorStrategy, String trainDataPath,
+                      String trainClassPath)
     {
-        super(dir, eigenvetorStrategy);
+        super(dir, eigenvetorStrategy, trainDataPath, trainClassPath);
     }
+
 
     /**
      * generate rotated samples (normalized)
@@ -189,8 +192,12 @@ public class VCodeTrain extends AbstractSampleTrain
                 "CodeImage\\9566.jpg",
         };
 
-        VCodeTrain train = new VCodeTrain(sampleImages, new AllPixelEigenvetorStrategy());
-        train.dumpTrainData(SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH, SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH);
+        VCodeTrain train = new VCodeTrain(sampleImages,
+                                          new AllPixelEigenvetorStrategy(),
+                                          SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
+                                          SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH);
+        train.train();
+        train.dumpTrainData();
 
     }
 
