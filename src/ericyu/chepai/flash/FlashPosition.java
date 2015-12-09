@@ -172,6 +172,11 @@ public class FlashPosition
     public static final int BUTTON_SUBMIT_X = 660;
     public static final int BUTTON_SUBMIT_Y = 345;
 
+    /**
+     * add 300 button
+     */
+    public static final int BUTTON_ADD_300_X = 650;
+    public static final int BUTTON_ADD_300_Y = 363;
 
     /**
      * return null if target color is not found

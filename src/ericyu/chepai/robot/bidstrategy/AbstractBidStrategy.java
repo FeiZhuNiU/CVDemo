@@ -285,7 +285,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         {
             ArrayList<Integer> vcode;
             // in case the load of v-code costs some time
-            robot.wait(1001);
+            robot.wait(1003);
             while (true)
             {
                 vcode = robot.recogVerificationCode();
@@ -367,6 +367,21 @@ abstract public class AbstractBidStrategy implements IStatusObserver
 
     }
 
+    protected class ClickAdd300Button implements Callable<Map.Entry<Boolean,Object>>
+    {
+
+        @Override
+        public Map.Entry<Boolean, Object> call() throws Exception
+        {
+            while (true)
+            {
+                if (robot.clickAdd300Button())
+                    break;
+            }
+            return new AbstractMap.SimpleEntry<>(true, null);
+        }
+    }
+
     protected class RecogResult implements Callable<Map.Entry<Boolean,Object>>
     {
         @Override
@@ -407,9 +422,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
 
             if(result>=1)
             {
-                addAction(new FocusOnAddRangeBox());
-                addAction(new InputAddMoneyRange(300));
-                addAction(new ClickAddMoneyButton());
+                addAction(new ClickAdd300Button());
                 addAction(new ClickBidButton());
 
                 addAction(new RecogAndEnterVCode());

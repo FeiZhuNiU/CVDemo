@@ -481,9 +481,23 @@ public class MyRobot implements IStatusObserver
         }
         clickAt(FlashPosition.BUTTON_ADD_MONEY_X,
                 FlashPosition.BUTTON_ADD_MONEY_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot clicked add money button");
         //set bid money when click add money range button
         bidMoney = getCurrentLowestDeal() + BidStrategyConstants.ADD_MONEY_RANGE;
-        Logger.log(Logger.Level.INFO, flashStatus, "robot clicked add money button");
+        Logger.log(Logger.Level.INFO, flashStatus, "bid money : " + bidMoney);
+        return true;
+    }
+
+    public boolean clickAdd300Button()
+    {
+        if(flashStatus != FlashStatusDetector.Status.BID)
+        {
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not click add 300 Button.");
+            return false;
+        }
+        clickAt(FlashPosition.BUTTON_ADD_300_X,
+                FlashPosition.BUTTON_ADD_300_Y);
+        Logger.log(Logger.Level.INFO, flashStatus, "robot clicked add 300 button");
         return true;
     }
 
