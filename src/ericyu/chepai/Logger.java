@@ -12,6 +12,11 @@ import com.aliyun.oss.model.*;
 import ericyu.chepai.flash.FlashStatusDetector;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,19 +26,22 @@ public class Logger
     private static String accessKeyId = "Ndg6XzPda5JTNFpa";
     private static String accessKeySecret = "qHZ3Q5oJCCMv9Xrfwr2b6KVjwre0Zc";
     private static String endPoint  = "http://oss-cn-shanghai.aliyuncs.com";
+    private static String logFile;
+    static
+    {
+        try
+        {
+            logFile = InetAddress.getLocalHost().getHostName() + "_BidLog.txt";
+        }
+        catch (UnknownHostException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     private static String bucketName = "feizhuniu";
 
-    private Level level;
-    private FlashStatusDetector.Status status;
-    private String message;
-
-    public Logger(Level level, FlashStatusDetector.Status status, String message)
-    {
-        this.level = level;
-        this.status = status;
-        this.message = message;
-    }
+    private static List<String> history = new ArrayList<>();
 
     public enum Level
     {
@@ -44,8 +52,41 @@ public class Logger
 
     public static void log(Level level, FlashStatusDetector.Status status, String message)
     {
-        System.out.println(level + ": ["+ DateUtil.getCurrentTime() +"] [FlashStatus:" + status + "] : " + message);
-//        sendToDataServer(level,status,message);
+        final String log = level + ": ["+ DateUtil.getCurrentTime() +"] [FlashStatus:" + status + "] : " + message;
+        System.out.println(log);
+        history.add(log);
+    }
+
+    public static void dumpHistory()
+    {
+        FileWriter writer = null;
+        try
+        {
+            writer = new FileWriter(new File(logFile));
+            for(String log : history)
+            {
+                writer.write(log);
+            }
+            writer.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if(writer!=null)
+            {
+                try
+                {
+                    writer.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private static void sendToDataServer(File file)
@@ -82,6 +123,6 @@ public class Logger
 
     public static void main(String[] args)
     {
-        getAllDataFromServer();
+        deleteAllData(bucketName);
     }
 }
