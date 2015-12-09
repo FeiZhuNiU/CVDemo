@@ -11,7 +11,7 @@ package ericyu.chepai.flash;
 import ericyu.chepai.Logger;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.recognize.Recognition;
-import ericyu.chepai.train.AllPixelEigenvetorStrategy;
+import ericyu.chepai.train.AllPixelEigenvectorStrategy;
 import ericyu.chepai.train.FlashStatusTrain;
 import ericyu.chepai.train.SampleConstants;
 import org.opencv.core.Core;
@@ -158,7 +158,7 @@ public class FlashStatusDetector implements Runnable
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         FlashStatusDetector detector = new FlashStatusDetector(new Recognition(new FlashStatusTrain(SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,
                                                                                                     SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,
-                                                                                                    new AllPixelEigenvetorStrategy())));
+                                                                                                    new AllPixelEigenvectorStrategy())));
         detector.generateSample();
 //        Thread thread = new Thread(detector);
 //        thread.start();

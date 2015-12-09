@@ -67,11 +67,11 @@ abstract public class AbstractBidStrategy implements IStatusObserver
     public abstract void execute();
 
 
-    protected class WaitUntil implements Callable<Map.Entry<Boolean,Object>>
+    protected class WaitUntilTargetTime implements Callable<Map.Entry<Boolean,Object>>
     {
         private long targetTime;
 
-        public WaitUntil(long targetTime)
+        public WaitUntilTargetTime(long targetTime)
         {
             this.targetTime = targetTime;
             Logger.log(Logger.Level.INFO, flashStatus, "wait until " + DateUtil.formatLongValueToDate(targetTime));
@@ -85,6 +85,33 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                 if(System.currentTimeMillis() >= targetTime)
                     break;
                 Logger.log(Logger.Level.INFO, flashStatus,(targetTime - System.currentTimeMillis()) + "ms to go");
+                robot.wait(100);
+            }
+            return new AbstractMap.SimpleEntry<>(true, null);
+        }
+    }
+
+    protected class WaitUntilBidDiffLessThan implements Callable<Map.Entry<Boolean,Object>>
+    {
+        private int bid;
+        private int delta;
+
+        public WaitUntilBidDiffLessThan(int delta)
+        {
+            this.bid = robot.getBidMoney();
+            this.delta = delta;
+            Logger.log(Logger.Level.INFO, flashStatus, "wait until bid diff less than " + delta + ", bid: " + bid);
+        }
+
+        @Override
+        public Map.Entry<Boolean, Object> call() throws Exception
+        {
+            while(true)
+            {
+                int tmp = robot.getCurrentLowestDeal();
+                if(Math.abs(bid - tmp) <= delta)
+                    break;
+                Logger.log(Logger.Level.INFO, flashStatus,"bid: " + bid + ", current lowest deal: " + tmp);
                 robot.wait(100);
             }
             return new AbstractMap.SimpleEntry<>(true, null);

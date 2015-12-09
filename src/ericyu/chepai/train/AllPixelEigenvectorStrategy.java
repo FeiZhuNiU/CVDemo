@@ -9,7 +9,7 @@ package ericyu.chepai.train;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-public class AllPixelEigenvetorStrategy implements EigenvetorStrategy
+public class AllPixelEigenvectorStrategy implements IEigenvectorStrategy
 {
     @Override
     public Mat getEigenVec(Mat mat)

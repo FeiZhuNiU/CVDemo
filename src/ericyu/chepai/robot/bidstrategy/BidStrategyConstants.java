@@ -43,10 +43,10 @@ public class BidStrategyConstants
                 properties.put(key,value);
             }
 
-            ADD_MONEY_RANGE = Integer.parseInt(properties.get(ADD_MONEY_RANGE_KEY));
-            V_CODE_CONFIRM_HOUR = Integer.parseInt(properties.get(V_CODE_CONFIRM_HOUR_KEY));
-            V_CODE_CONFIRM_MINUTE = Integer.parseInt(properties.get(V_CODE_CONFIRM_MINUTE_KEY));
-            V_CODE_CONFIRM_SECOND = Integer.parseInt(properties.get(V_CODE_CONFIRM_SECOND_KEY));
+            ADD_MONEY_RANGE = Integer.parseInt(properties.get(ADD_MONEY_RANGE_KEY).trim());
+            V_CODE_CONFIRM_HOUR = Integer.parseInt(properties.get(V_CODE_CONFIRM_HOUR_KEY).trim());
+            V_CODE_CONFIRM_MINUTE = Integer.parseInt(properties.get(V_CODE_CONFIRM_MINUTE_KEY).trim());
+            V_CODE_CONFIRM_SECOND = Integer.parseInt(properties.get(V_CODE_CONFIRM_SECOND_KEY).trim());
 
         }
         catch (Exception e)

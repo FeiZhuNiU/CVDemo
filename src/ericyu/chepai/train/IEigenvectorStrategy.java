@@ -12,7 +12,7 @@ import org.opencv.core.Mat;
 /**
  * interface for different eigenVector strategy
  */
-public interface EigenvetorStrategy
+public interface IEigenvectorStrategy
 {
     Mat getEigenVec(Mat src);
 }

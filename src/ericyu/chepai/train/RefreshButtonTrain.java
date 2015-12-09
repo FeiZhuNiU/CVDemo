@@ -20,18 +20,18 @@ public class RefreshButtonTrain extends AbstractSampleTrain
 {
 
     public RefreshButtonTrain(String trainDataPath, String trainClassPath,
-                              EigenvetorStrategy eigenvetorStrategy)
+                              IEigenvectorStrategy eigenvetorStrategy)
     {
         super(trainDataPath, trainClassPath, eigenvetorStrategy);
     }
 
-    public RefreshButtonTrain(String[] images, EigenvetorStrategy eigenvetorStrategy, String trainDataPath,
+    public RefreshButtonTrain(String[] images, IEigenvectorStrategy eigenvetorStrategy, String trainDataPath,
                               String trainClassPath)
     {
         super(images, eigenvetorStrategy, trainDataPath, trainClassPath);
     }
 
-    public RefreshButtonTrain(String dir, EigenvetorStrategy eigenvetorStrategy, String trainDataPath,
+    public RefreshButtonTrain(String dir, IEigenvectorStrategy eigenvetorStrategy, String trainDataPath,
                               String trainClassPath)
     {
         super(dir, eigenvetorStrategy, trainDataPath, trainClassPath);
@@ -64,7 +64,7 @@ public class RefreshButtonTrain extends AbstractSampleTrain
         String sampleDir = "RefreshImage";
 
         FlashStatusTrain train = new FlashStatusTrain(sampleDir,
-                                                      new AllPixelEigenvetorStrategy(),
+                                                      new AllPixelEigenvectorStrategy(),
                                                       SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH,
                                                       SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH);
         train.train();

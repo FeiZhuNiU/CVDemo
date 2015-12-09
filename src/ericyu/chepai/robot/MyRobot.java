@@ -12,7 +12,8 @@ import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.flash.FlashStatusDetector;
 import ericyu.chepai.flash.IStatusObserver;
 import ericyu.chepai.image.ImageUtils;
-import ericyu.chepai.train.AllPixelEigenvetorStrategy;
+import ericyu.chepai.robot.bidstrategy.BidStrategyConstants;
+import ericyu.chepai.train.AllPixelEigenvectorStrategy;
 import ericyu.chepai.train.RefreshButtonTrain;
 import ericyu.chepai.train.SampleConstants;
 import ericyu.chepai.recognize.Recognition;
@@ -35,6 +36,15 @@ public class MyRobot implements IStatusObserver
     private FlashPosition flashPosition;
     private Robot robot;
     private FlashStatusDetector.Status flashStatus;
+    /**
+     * bid money. set when click add money range button
+     */
+    private int bidMoney;
+
+    public int getBidMoney()
+    {
+        return bidMoney;
+    }
 
     /**
      * Strings for recognize system notifications
@@ -204,10 +214,11 @@ public class MyRobot implements IStatusObserver
                                  FlashPosition.REGION_VERIFICATION_CODE_HEIGHT);
         Recognition recognition = new Recognition(new RefreshButtonTrain(SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH,
                                                                          SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH,
-                                                                         new AllPixelEigenvetorStrategy()));
+                                                                         new AllPixelEigenvectorStrategy()));
         toReg = recognition.getTrainedData().process(toReg).get(0);
 //        Imgcodecs.imwrite("dump.bmp",toReg);
 
+        //TODO: magic number (1 -> refresh button exists)
         int result = recognition.recognize(toReg,1);
         if(result == 1)
         {
@@ -265,7 +276,7 @@ public class MyRobot implements IStatusObserver
                 new VCodeTrain(
                     SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
                     SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH,
-                    new AllPixelEigenvetorStrategy()));
+                    new AllPixelEigenvectorStrategy()));
 
         ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
                                  flashPosition.origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
@@ -470,6 +481,8 @@ public class MyRobot implements IStatusObserver
         }
         clickAt(FlashPosition.BUTTON_ADD_MONEY_X,
                 FlashPosition.BUTTON_ADD_MONEY_Y);
+        //set bid money when click add money range button
+        bidMoney = getCurrentLowestDeal() + BidStrategyConstants.ADD_MONEY_RANGE;
         Logger.log(Logger.Level.INFO, flashStatus, "robot clicked add money button");
         return true;
     }
@@ -634,7 +647,7 @@ public class MyRobot implements IStatusObserver
         try
         {
             String fixed_result = result.substring(0, 5);
-            ret = Integer.parseInt(fixed_result);
+            ret = Integer.parseInt(fixed_result.trim());
         }
         catch (Exception e)
         {

@@ -20,13 +20,13 @@ public class FlashStatusTrain extends AbstractSampleTrain
 {
     public FlashStatusTrain(String trainDataPath,
                             String trainClassPath,
-                            EigenvetorStrategy eigenvetorStrategy)
+                            IEigenvectorStrategy eigenvetorStrategy)
     {
         super(trainDataPath, trainClassPath, eigenvetorStrategy);
     }
 
     public FlashStatusTrain(String[] images,
-                            EigenvetorStrategy eigenvetorStrategy,
+                            IEigenvectorStrategy eigenvetorStrategy,
                             String trainDataPath,
                             String trainClassPath)
     {
@@ -34,7 +34,7 @@ public class FlashStatusTrain extends AbstractSampleTrain
     }
 
     public FlashStatusTrain(String dir,
-                            EigenvetorStrategy eigenvetorStrategy,
+                            IEigenvectorStrategy eigenvetorStrategy,
                             String trainDataPath,
                             String trainClassPath)
     {
@@ -67,7 +67,7 @@ public class FlashStatusTrain extends AbstractSampleTrain
 
         String sampleDir = "FlashStatusImage";
 
-        FlashStatusTrain train = new FlashStatusTrain(sampleDir, new AllPixelEigenvetorStrategy(), SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH, SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH);
+        FlashStatusTrain train = new FlashStatusTrain(sampleDir, new AllPixelEigenvectorStrategy(), SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH, SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH);
         train.train();
         train.dumpTrainData();
 

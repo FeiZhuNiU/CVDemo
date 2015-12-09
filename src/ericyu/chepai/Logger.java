@@ -57,6 +57,9 @@ public class Logger
         history.add(log);
     }
 
+    /**
+     * dump history at the end
+     */
     public static void dumpHistory()
     {
         FileWriter writer = null;

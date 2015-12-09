@@ -13,7 +13,7 @@ import ericyu.chepai.robot.*;
 import ericyu.chepai.robot.bidstrategy.AmbushAndAidStrategy;
 import ericyu.chepai.robot.bidstrategy.AbstractBidStrategy;
 import ericyu.chepai.robot.bidstrategy.User;
-import ericyu.chepai.train.AllPixelEigenvetorStrategy;
+import ericyu.chepai.train.AllPixelEigenvectorStrategy;
 import ericyu.chepai.train.FlashStatusTrain;
 import ericyu.chepai.train.SampleConstants;
 import org.opencv.core.*;
@@ -56,7 +56,7 @@ public class Console
 
             flashStatusDetector = new FlashStatusDetector(new Recognition(new FlashStatusTrain(SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,
                                                                                                SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,
-                                                                                               new AllPixelEigenvetorStrategy())));
+                                                                                               new AllPixelEigenvectorStrategy())));
             Thread detectorThread = new Thread(flashStatusDetector);
             detectorThread.start();
 

@@ -7,11 +7,7 @@ package ericyu.chepai.robot.bidstrategy;
  |           Created by lliyu on 11/27/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
-import ericyu.chepai.DateUtil;
-import ericyu.chepai.Logger;
 import ericyu.chepai.robot.MyRobot;
-
-import java.util.concurrent.ExecutionException;
 
 public class AmbushAndAidStrategy extends AbstractBidStrategy
 {
@@ -56,7 +52,7 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
 //        addAction(new WaitUntil(DateUtil.getDateLongValue(BidStrategyConstants.V_CODE_CONFIRM_HOUR,
 //                                                          BidStrategyConstants.V_CODE_CONFIRM_MINUTE,
 //                                                          BidStrategyConstants.V_CODE_CONFIRM_SECOND)));
-        addAction(new WaitUntil(System.currentTimeMillis()+5000));
+        addAction(new WaitUntilTargetTime(System.currentTimeMillis()+5000));
 
         addAction(new ClickVCodeConfirmButton());
 

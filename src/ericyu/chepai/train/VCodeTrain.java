@@ -27,18 +27,18 @@ import java.util.Map;
 public class VCodeTrain extends AbstractSampleTrain
 {
 
-    public VCodeTrain(String trainDataPath, String trainClassPath, EigenvetorStrategy eigenvetorStrategy)
+    public VCodeTrain(String trainDataPath, String trainClassPath, IEigenvectorStrategy eigenvetorStrategy)
     {
         super(trainDataPath, trainClassPath, eigenvetorStrategy);
     }
 
-    public VCodeTrain(String[] images, EigenvetorStrategy eigenvetorStrategy, String trainDataPath,
+    public VCodeTrain(String[] images, IEigenvectorStrategy eigenvetorStrategy, String trainDataPath,
                       String trainClassPath)
     {
         super(images, eigenvetorStrategy, trainDataPath, trainClassPath);
     }
 
-    public VCodeTrain(String dir, EigenvetorStrategy eigenvetorStrategy, String trainDataPath,
+    public VCodeTrain(String dir, IEigenvectorStrategy eigenvetorStrategy, String trainDataPath,
                       String trainClassPath)
     {
         super(dir, eigenvetorStrategy, trainDataPath, trainClassPath);
@@ -194,7 +194,7 @@ public class VCodeTrain extends AbstractSampleTrain
         };
 
         VCodeTrain train = new VCodeTrain(sampleImages,
-                                          new AllPixelEigenvetorStrategy(),
+                                          new AllPixelEigenvectorStrategy(),
                                           SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
                                           SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH);
         train.train();
