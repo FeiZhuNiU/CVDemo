@@ -46,3 +46,4 @@ dump/
 *.bmp
 !/FlashStatusImage/*
 !/RefreshImage/*
+*.txt

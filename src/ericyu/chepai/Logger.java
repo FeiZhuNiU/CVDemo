@@ -65,10 +65,15 @@ public class Logger
         FileWriter writer = null;
         try
         {
+            String preline = "";
             writer = new FileWriter(new File(logFile));
             for(String log : history)
             {
-                writer.write(log + "\n");
+                if(!log.equals(preline))
+                {
+                    writer.write(log + "\n");
+                }
+                preline = log;
             }
             writer.close();
         }
