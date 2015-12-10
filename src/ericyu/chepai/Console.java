@@ -54,9 +54,7 @@ public class Console
             FlashPosition flashPosition = FlashPosition.getInstance();
             user = new User("12345678","123456");
 
-            flashStatusDetector = new FlashStatusDetector(new Recognition(new FlashStatusTrain(SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,
-                                                                                               SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,
-                                                                                               new AllPixelEigenvectorStrategy())));
+            flashStatusDetector = new FlashStatusDetector();
             Thread detectorThread = new Thread(flashStatusDetector);
             detectorThread.start();
 

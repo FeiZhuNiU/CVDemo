@@ -284,21 +284,21 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         public Map.Entry<Boolean, Object> call() throws Exception
         {
             ArrayList<Integer> vcode;
-            // in case the load of v-code costs some time
-            robot.wait(1003);
             while (true)
             {
                 vcode = robot.recogVerificationCode();
                 if(vcode == null || vcode.size() ==0)
                 {
-                    switch (robot.isRefreshVCodeButtonExist())
+                    switch (robot.getVCodeRegionStatus())
                     {
                         //not in right status
                         case -1:
-                            robot.wait(201);
+                        //blank
+                        case 3:
+                            robot.wait(101);
                             break;
-                        //not exist
-                        case 0:
+                        //cross sign
+                        case 2:
                             while(!robot.clickCancelVCodeButton());
                             while(true)
                             {
@@ -315,10 +315,10 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                             }
 
                             break;
-                        //exist
+                        //refresh button exist
                         case 1:
                             robot.clickRefreshVCodeButton();
-                            robot.wait(202);
+//                            robot.wait(202);
                             break;
                     }
 

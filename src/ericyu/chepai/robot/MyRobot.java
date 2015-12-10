@@ -196,18 +196,19 @@ public class MyRobot implements IStatusObserver
     }
 
     /**
-     * @return  -1  -> not in right status
-     *          0   -> not exists
+     * @return  -1  -> not in right flash status
      *          1   -> exists
+     *          2   -> cross sign
+     *          3   -> blank
      */
-    public int isRefreshVCodeButtonExist()
+    public int getVCodeRegionStatus()
     {
         if(flashStatus != FlashStatusDetector.Status.V_CODE)
         {
             Logger.log(Logger.Level.WARNING, flashStatus,"not ready to find refresh button.");
             return -1;
         }
-        int ret;
+        int ret = 0;
         Mat toReg = ImageUtils.screenCapture(flashPosition.origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
                                  flashPosition.origin.y + FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
                                  FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
@@ -222,13 +223,18 @@ public class MyRobot implements IStatusObserver
         int result = recognition.recognize(toReg,1);
         if(result == 1)
         {
-            Logger.log(Logger.Level.INFO, flashStatus, "refresh button exists");
+            Logger.log(Logger.Level.INFO, flashStatus, "refresh button exists.");
             ret = 1;
         }
-        else
+        else if (result == 2)
         {
-            Logger.log(Logger.Level.INFO, flashStatus, "refresh button does not exist");
-            ret = 0;
+            Logger.log(Logger.Level.INFO, flashStatus, "cross sign in VCode region.");
+            ret = 2;
+        }
+        else if (result == 3)
+        {
+            Logger.log(Logger.Level.INFO, flashStatus, "blank in VCode region.");
+            ret = 3;
         }
 
         return ret;
@@ -397,7 +403,7 @@ public class MyRobot implements IStatusObserver
             return false;
         }
         doubleClickAt(FlashPosition.INPUT_VERIFICATION_X,
-                FlashPosition.INPUT_VERIFICATION_Y);
+                      FlashPosition.INPUT_VERIFICATION_Y);
         Logger.log(Logger.Level.INFO, flashStatus, "robot focused on V-code input box");
         return true;
     }

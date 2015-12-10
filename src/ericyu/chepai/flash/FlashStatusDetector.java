@@ -46,9 +46,11 @@ public class FlashStatusDetector implements Runnable
         NOTIFICATION
     }
 
-    public FlashStatusDetector(Recognition recognition)
+    public FlashStatusDetector()
     {
-        this.recognition = recognition;
+        this.recognition = new Recognition(new FlashStatusTrain(SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,
+                                                                SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,
+                                                                new AllPixelEigenvectorStrategy()));
         this.flashPosition = FlashPosition.getInstance();
         status = Status.NONE;
     }
@@ -156,9 +158,7 @@ public class FlashStatusDetector implements Runnable
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        FlashStatusDetector detector = new FlashStatusDetector(new Recognition(new FlashStatusTrain(SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,
-                                                                                                    SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,
-                                                                                                    new AllPixelEigenvectorStrategy())));
+        FlashStatusDetector detector = new FlashStatusDetector();
         detector.generateSample();
 //        Thread thread = new Thread(detector);
 //        thread.start();
