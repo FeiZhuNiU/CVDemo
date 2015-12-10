@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class FlashStatusDetector implements Runnable
 {
-    private static int detectRate = 100;
+    private static int detectRate = 50;
     private List<IStatusObserver> observers;
     private FlashPosition flashPosition;
     private Status status;
@@ -159,9 +159,9 @@ public class FlashStatusDetector implements Runnable
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         FlashStatusDetector detector = new FlashStatusDetector();
-        detector.generateSample();
-//        Thread thread = new Thread(detector);
-//        thread.start();
+//        detector.generateSample();
+        Thread thread = new Thread(detector);
+        thread.start();
     }
 
     /**

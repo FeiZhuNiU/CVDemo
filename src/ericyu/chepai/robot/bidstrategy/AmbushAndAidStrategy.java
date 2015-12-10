@@ -7,6 +7,8 @@ package ericyu.chepai.robot.bidstrategy;
  |           Created by lliyu on 11/27/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.Configuration;
+import ericyu.chepai.DateUtil;
 import ericyu.chepai.robot.MyRobot;
 
 public class AmbushAndAidStrategy extends AbstractBidStrategy
@@ -37,7 +39,12 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //5
         addAction(new FocusOnAddRangeBox());
         //6
-        addAction(new InputAddMoneyRange(BidStrategyConstants.ADD_MONEY_RANGE));
+        addAction(new InputAddMoneyRange(Configuration.ADD_MONEY_RANGE));
+
+
+        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(DateUtil.getCurrentHour(),
+                                                                    DateUtil.getCurrentMinute(),
+                                                                    Configuration.ADD_MONEY_SECOND)));
         //7
         addAction(new ClickAddMoneyButton());
         //8
@@ -52,7 +59,9 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
 //        addAction(new WaitUntil(DateUtil.getDateLongValue(BidStrategyConstants.V_CODE_CONFIRM_HOUR,
 //                                                          BidStrategyConstants.V_CODE_CONFIRM_MINUTE,
 //                                                          BidStrategyConstants.V_CODE_CONFIRM_SECOND)));
-        addAction(new WaitUntilTargetTime(System.currentTimeMillis()+5000));
+        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(DateUtil.getCurrentHour(),
+                                                                    DateUtil.getCurrentMinute(),
+                                                                    Configuration.V_CODE_CONFIRM_SECOND)));
 
         addAction(new ClickVCodeConfirmButton());
 

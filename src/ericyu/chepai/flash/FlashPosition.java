@@ -7,6 +7,7 @@ package ericyu.chepai.flash;
  |           Created by lliyu on 11/25/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.Configuration;
 import ericyu.chepai.Logger;
 import ericyu.chepai.image.ImageUtils;
 import org.opencv.core.Mat;
@@ -42,8 +43,12 @@ public class FlashPosition
     /**
      * the order should be b/g/r
      */
-    private static final double[] topLeftCornerColor = {43, 31.0, 25};
-//    private static final double[] topLeftCornerColor = {72, 34, 16}; //51hupai
+    private static final double[] topLeftCornerColor = {Configuration.LEFTTOP_COLOR_B,
+                                                        Configuration.LEFTTOP_COLOR_G,
+                                                        Configuration.LEFTTOP_COLOR_R};
+    private static final double[] topLeftCornerColorOffset_10_10 = {Configuration.LEFTTOP_COLOR_OFFSET_B,
+                                                                    Configuration.LEFTTOP_COLOR_OFFSET_G,
+                                                                    Configuration.LEFTTOP_COLOR_OFFSET_R};
 
     /**
      * coordinate of top left corner
@@ -61,7 +66,7 @@ public class FlashPosition
     private void findFlashPosition()
     {
         Logger.log(Logger.Level.INFO, null,"finding Flash window ... ");
-        while ((origin = findPositionOfTargetColor(topLeftCornerColor)) == null);
+        while ((origin = findLeftTopPosition()) == null);
         Logger.log(Logger.Level.INFO, null,"find the flash window : left top at (" + origin.x + "," + origin.y + ")");
     }
 
@@ -182,7 +187,7 @@ public class FlashPosition
      * return null if target color is not found
      * @return
      */
-    private Point findPositionOfTargetColor(double[] targetColor)
+    private Point findLeftTopPosition()
     {
         Point ret = null;
         Mat screen = ImageUtils.screenCapture();
@@ -196,7 +201,8 @@ public class FlashPosition
             }
             for (int j = 0; j < screen.width(); ++j)
             {
-                if (Arrays.toString(targetColor).equals(Arrays.toString(screen.get(i, j))))
+                if (Arrays.toString(topLeftCornerColor).equals(Arrays.toString(screen.get(i, j))) &&
+                        Arrays.toString(topLeftCornerColorOffset_10_10).equals(Arrays.toString(screen.get(i+10, j+10))))
                 {
                     ret = new Point(j, i);
                     hasFound = true;
