@@ -31,7 +31,7 @@ public class Logger
     {
         try
         {
-            logFile = InetAddress.getLocalHost().getHostName() + DateUtil.formatLongValueToDate(System.currentTimeMillis())+"_BidLog.txt";
+            logFile = InetAddress.getLocalHost().getHostName() + DateUtil.getCurrentTimeForFileName()+"_BidLog.txt";
         }
         catch (UnknownHostException e)
         {

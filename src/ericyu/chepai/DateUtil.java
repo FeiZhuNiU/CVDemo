@@ -17,6 +17,12 @@ public class DateUtil
         return df.format(System.currentTimeMillis());
     }
 
+    public static String getCurrentTimeForFileName()
+    {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        return df.format(System.currentTimeMillis());
+    }
+
     public static String formatLongValueToDate(long val)
     {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
