@@ -68,7 +68,7 @@ public class Logger
             writer = new FileWriter(new File(logFile));
             for(String log : history)
             {
-                writer.write(log);
+                writer.write(log + "\n");
             }
             writer.close();
         }
