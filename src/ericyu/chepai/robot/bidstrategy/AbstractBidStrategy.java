@@ -28,6 +28,11 @@ abstract public class AbstractBidStrategy implements IStatusObserver
     protected MyRobot robot;
 
     /**
+     * latest bid time
+     */
+    protected long latestBidTime;
+
+    /**
      * observer
      */
     protected FlashStatusDetector.Status flashStatus;
@@ -111,7 +116,15 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                 int tmp = robot.getCurrentLowestDeal();
                 if(Math.abs(bid - tmp) <= delta)
                     break;
-                Logger.log(Logger.Level.INFO, flashStatus,"bid: " + bid + ", current lowest deal: " + tmp);
+                Logger.log(Logger.Level.INFO, flashStatus, "bid: " + bid + ", current lowest deal: " + tmp);
+                if(System.currentTimeMillis() >= latestBidTime)
+                {
+                    while (!robot.clickCancelVCodeButton());
+                    while (!robot.clickAdd300Button());
+                    while (!robot.clickBidButton());
+                    recogAndEnterVCode();
+                    break;
+                }
                 robot.wait(100);
             }
             return new AbstractMap.SimpleEntry<>(true, null);
@@ -283,55 +296,61 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         @Override
         public Map.Entry<Boolean, Object> call() throws Exception
         {
-            ArrayList<Integer> vcode;
-            while (true)
-            {
-                vcode = robot.recogVerificationCode();
-                if(vcode == null || vcode.size() ==0)
-                {
-                    switch (robot.getVCodeRegionStatus())
-                    {
-                        //not in right status
-                        case -1:
-                        //blank
-                        case 3:
-                            robot.wait(101);
-                            break;
-                        //cross sign
-                        case 2:
-                            while(!robot.clickCancelVCodeButton());
-                            while(true)
-                            {
-                                while(!robot.clickBidButton());
-                                robot.wait(101);
-                                if(flashStatus == FlashStatusDetector.Status.NOTIFICATION)
-                                {
-                                    while(!robot.clickRequestForVCodeTooOftenConfirmButton());
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-
-                            break;
-                        //refresh button exist
-                        case 1:
-                            robot.clickRefreshVCodeButton();
-//                            robot.wait(202);
-                            break;
-                    }
-
-                }
-                else
-                {
-                    while (!robot.focusOnVCodeInputBox());
-                    while (!robot.enterVerificationCode(vcode));
-                    break;
-                }
-            }
+            ArrayList<Integer> vcode = recogAndEnterVCode();
             return new AbstractMap.SimpleEntry<Boolean, Object>(true,vcode);
         }
+    }
+
+    protected ArrayList<Integer> recogAndEnterVCode()
+    {
+        ArrayList<Integer> vcode;
+        while (true)
+        {
+            vcode = robot.recogVerificationCode();
+            if(vcode == null || vcode.size() ==0)
+            {
+                switch (robot.getVCodeRegionStatus())
+                {
+                    //not in right status
+                    case -1:
+                    //blank
+                    case 3:
+                        robot.wait(101);
+                        break;
+                    //cross sign
+                    case 2:
+                        while(!robot.clickCancelVCodeButton());
+                        while(true)
+                        {
+                            while(!robot.clickBidButton());
+                            robot.wait(101);
+                            if(flashStatus == FlashStatusDetector.Status.NOTIFICATION)
+                            {
+                                while(!robot.clickRequestForVCodeTooOftenConfirmButton());
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+
+                        break;
+                    //refresh button exist
+                    case 1:
+                        robot.clickRefreshVCodeButton();
+//                            robot.wait(202);
+                        break;
+                }
+
+            }
+            else
+            {
+                while (!robot.focusOnVCodeInputBox());
+                while (!robot.enterVerificationCode(vcode));
+                break;
+            }
+        }
+        return vcode;
     }
 
     protected class ClickVCodeConfirmButton implements Callable<Map.Entry<Boolean,Object>>
