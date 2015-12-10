@@ -30,6 +30,8 @@ public class Configuration
     private static final String LEFTTOP_COLOR_OFFSET_G_KEY = "teftTopColorOffset_10_10_G";
     private static final String LEFTTOP_COLOR_OFFSET_B_KEY = "teftTopColorOffset_10_10_B";
     private static final String LATEST_BID_TIME_KEY = "latestBidTime";
+    private static final String USERNAME_KEY = "username";
+    private static final String PASSWORD_KEY = "password";
 
 
     public static int ADD_MONEY_RANGE;
@@ -45,8 +47,11 @@ public class Configuration
     public static int LEFTTOP_COLOR_OFFSET_G;
     public static int LEFTTOP_COLOR_OFFSET_B;
     public static int LATEST_BID_TIME;
+    public static String USERNAME;
+    public static String PASSWORD;
 
-    public static HashMap<String,String> properties = new HashMap<>();
+
+    public static HashMap<String, String> properties = new HashMap<>();
 
     static
     {
@@ -59,7 +64,7 @@ public class Configuration
             {
                 String key = (String) keyEumeration.nextElement();
                 String value = property.getProperty(key);
-                properties.put(key,value);
+                properties.put(key, value);
             }
 
             ADD_MONEY_RANGE = Integer.parseInt(properties.get(ADD_MONEY_RANGE_KEY).trim());
@@ -78,6 +83,9 @@ public class Configuration
             LEFTTOP_COLOR_OFFSET_R = Integer.parseInt(properties.get(LEFTTOP_COLOR_OFFSET_R_KEY).trim());
             LEFTTOP_COLOR_OFFSET_G = Integer.parseInt(properties.get(LEFTTOP_COLOR_OFFSET_G_KEY).trim());
             LEFTTOP_COLOR_OFFSET_B = Integer.parseInt(properties.get(LEFTTOP_COLOR_OFFSET_B_KEY).trim());
+
+            USERNAME = properties.get(USERNAME_KEY).trim();
+            PASSWORD = properties.get(PASSWORD_KEY).trim();
 
         }
         catch (Exception e)

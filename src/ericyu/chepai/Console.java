@@ -52,7 +52,7 @@ public class Console
         {
             //init flash position            //will detect flash position here
             FlashPosition flashPosition = FlashPosition.getInstance();
-            user = new User("12345678","123456");
+            user = new User(Configuration.USERNAME, Configuration.PASSWORD);
 
             flashStatusDetector = new FlashStatusDetector();
             Thread detectorThread = new Thread(flashStatusDetector);
@@ -62,7 +62,6 @@ public class Console
             bidStrategy = new AmbushAndAidStrategy(user,robot);
             flashStatusDetector.addStatusObserver(robot);
             flashStatusDetector.addStatusObserver(bidStrategy);
-
 
         }
         catch (AWTException e)
