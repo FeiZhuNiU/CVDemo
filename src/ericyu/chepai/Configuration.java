@@ -7,7 +7,6 @@ package ericyu.chepai;
  |           Created by lliyu on 11/30/2015  (yulin.jay@gmail.com)            |
  +===========================================================================*/
 
-import ericyu.chepai.Logger;
 import ericyu.chepai.flash.FlashStatusDetector;
 
 import java.io.FileInputStream;
@@ -22,14 +21,13 @@ public class Configuration
     private static final String V_CODE_CONFIRM_MINUTE_KEY = "vCodeConfirmTimeMinute";
     private static final String V_CODE_CONFIRM_SECOND_KEY = "vCodeConfirmTimeSecond";
     private static final String ADD_MONEY_SECOND_KEY = "addMoneyTimeSecond";
-    private static final String LATEST_BID_SECOND_KEY = "latestBidTimeSecond";
     private static final String LEFTTOP_COLOR_R_KEY = "teftTopColorR";
     private static final String LEFTTOP_COLOR_G_KEY = "teftTopColorG";
     private static final String LEFTTOP_COLOR_B_KEY = "teftTopColorB";
     private static final String LEFTTOP_COLOR_OFFSET_R_KEY = "teftTopColorOffset_10_10_R";
     private static final String LEFTTOP_COLOR_OFFSET_G_KEY = "teftTopColorOffset_10_10_G";
     private static final String LEFTTOP_COLOR_OFFSET_B_KEY = "teftTopColorOffset_10_10_B";
-    private static final String LATEST_BID_TIME_KEY = "latestBidTime";
+    private static final String LATEST_BID_TIME_SECOND_KEY = "latestBidTimeSecond";
     private static final String USERNAME_KEY = "username";
     private static final String PASSWORD_KEY = "password";
 
@@ -39,14 +37,13 @@ public class Configuration
     public static int V_CODE_CONFIRM_MINUTE;
     public static int V_CODE_CONFIRM_SECOND;
     public static int ADD_MONEY_SECOND;
-    public static int LATEST_BID_SECOND;
     public static int LEFTTOP_COLOR_R;
     public static int LEFTTOP_COLOR_G;
     public static int LEFTTOP_COLOR_B;
     public static int LEFTTOP_COLOR_OFFSET_R;
     public static int LEFTTOP_COLOR_OFFSET_G;
     public static int LEFTTOP_COLOR_OFFSET_B;
-    public static int LATEST_BID_TIME;
+    public static int LATEST_BID_TIME_SECOND;
     public static String USERNAME;
     public static String PASSWORD;
 
@@ -72,9 +69,8 @@ public class Configuration
             V_CODE_CONFIRM_MINUTE = Integer.parseInt(properties.get(V_CODE_CONFIRM_MINUTE_KEY).trim());
             V_CODE_CONFIRM_SECOND = Integer.parseInt(properties.get(V_CODE_CONFIRM_SECOND_KEY).trim());
             ADD_MONEY_SECOND = Integer.parseInt(properties.get(ADD_MONEY_SECOND_KEY).trim());
-            LATEST_BID_SECOND = Integer.parseInt(properties.get(LATEST_BID_SECOND_KEY).trim());
 
-            LATEST_BID_TIME = Integer.parseInt(properties.get(LATEST_BID_TIME_KEY).trim());
+            LATEST_BID_TIME_SECOND = Integer.parseInt(properties.get(LATEST_BID_TIME_SECOND_KEY).trim());
 
             LEFTTOP_COLOR_R = Integer.parseInt(properties.get(LEFTTOP_COLOR_R_KEY).trim());
             LEFTTOP_COLOR_G = Integer.parseInt(properties.get(LEFTTOP_COLOR_G_KEY).trim());

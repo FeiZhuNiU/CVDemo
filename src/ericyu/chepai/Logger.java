@@ -31,7 +31,7 @@ public class Logger
     {
         try
         {
-            logFile = InetAddress.getLocalHost().getHostName() + "_BidLog.txt";
+            logFile = InetAddress.getLocalHost().getHostName() + DateUtil.formatLongValueToDate(System.currentTimeMillis())+"_BidLog.txt";
         }
         catch (UnknownHostException e)
         {
@@ -60,7 +60,7 @@ public class Logger
     /**
      * dump history at the end
      */
-    public static void dumpHistory()
+    private static void dumpHistory()
     {
         FileWriter writer = null;
         try
@@ -92,6 +92,11 @@ public class Logger
         }
     }
 
+    public static void sendLog()
+    {
+        dumpHistory();
+        sendToDataServer(new File(logFile));
+    }
     private static void sendToDataServer(File file)
     {
         OSSClient client = new OSSClient(endPoint,accessKeyId,accessKeySecret);

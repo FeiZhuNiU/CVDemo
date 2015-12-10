@@ -422,6 +422,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                         break;
                     //bid success
                     case 0:
+                        Logger.sendLog();
                         System.exit(0);
                         break;
                     // not in bid range

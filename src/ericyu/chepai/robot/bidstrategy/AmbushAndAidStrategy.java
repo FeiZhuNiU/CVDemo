@@ -19,7 +19,7 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         super(user, robot);
         latestBidTime = DateUtil.getDateLongValue(DateUtil.getCurrentHour(),
                                                   DateUtil.getCurrentMinute(),
-                                                  Configuration.LATEST_BID_TIME);
+                                                  Configuration.LATEST_BID_TIME_SECOND);
     }
 
     @Override
@@ -66,7 +66,6 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
                                                                     DateUtil.getCurrentMinute(),
                                                                     Configuration.V_CODE_CONFIRM_SECOND)));
 
-        //TODO: LATEST_BID_TIME
         addAction(new WaitUntilBidDiffLessThan(400));
 
         addAction(new ClickVCodeConfirmButton());
