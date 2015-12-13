@@ -10,14 +10,13 @@ package ericyu.chepai.flash;
 import ericyu.chepai.Configuration;
 import ericyu.chepai.Logger;
 import ericyu.chepai.image.ImageUtils;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import java.awt.*;
 import java.util.Arrays;
 
 
 /**
- * Singleton
- *
  * contains all button positions on that flash
  *
  * Constant naming rule:
@@ -25,45 +24,68 @@ import java.util.Arrays;
  * REGION_...
  * BUTTON_...
  *
- * It will try to find the position in the constructor {@link #FlashPosition}
+ * It will try to find the position in {@link #setOrigin}
  * by pre-configured color:{@link #topLeftCornerColor}
  */
 public class FlashPosition
 {
-    private static FlashPosition flashPosition;
-    public static FlashPosition getInstance()
-    {
-        if(flashPosition == null)
-        {
-            flashPosition = new FlashPosition();
-        }
-        return flashPosition;
-    }
-
-    /**
-     * the order should be b/g/r
-     */
-    private static final double[] topLeftCornerColor = {Configuration.LEFTTOP_COLOR_B,
-                                                        Configuration.LEFTTOP_COLOR_G,
-                                                        Configuration.LEFTTOP_COLOR_R};
-    private static final double[] topLeftCornerColorOffset_10_10 = {Configuration.LEFTTOP_COLOR_OFFSET_B,
-                                                                    Configuration.LEFTTOP_COLOR_OFFSET_G,
-                                                                    Configuration.LEFTTOP_COLOR_OFFSET_R};
 
     /**
      * coordinate of top left corner
      */
-    public Point origin;
+    public static Point origin;
 
     /**
-     * This constructor meant to get to know the position where the flash locate on screen
+     * the order should be b/g/r
      */
-    private FlashPosition()
+    private static final double[] topLeftCornerColor;
+    private static final double[] topLeftCornerColorOffset_10_10;
+    private static int detectRate = 100;
+    static
     {
-        findFlashPosition();
+        topLeftCornerColor = new double[]{Configuration.LEFTTOP_COLOR_B,
+                Configuration.LEFTTOP_COLOR_G,
+                Configuration.LEFTTOP_COLOR_R};
+        topLeftCornerColorOffset_10_10 = new double[]{Configuration.LEFTTOP_COLOR_OFFSET_B,
+                Configuration.LEFTTOP_COLOR_OFFSET_G,
+                Configuration.LEFTTOP_COLOR_OFFSET_R};
+//        setOrigin();
     }
 
-    private void findFlashPosition()
+    public static class FlashPositionDetector implements Runnable
+    {
+
+        @Override
+        public void run()
+        {
+            while (true)
+            {
+                System.out.println("1111");
+                Point detected = findLeftTopPosition();
+                if(detected != null)
+                {
+                    if(detected.x != origin.x || detected.y != origin.y)
+                    {
+                        origin = detected;
+                        Logger.log(Logger.Level.INFO, null, "flash position has changed to " + origin.x + "," + origin.y + "!");
+                    }
+                }
+                try
+                {
+                    Thread.sleep(detectRate);
+                } catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    /**
+     * set origin until origin is found
+     */
+    public static void setOrigin()
     {
         Logger.log(Logger.Level.INFO, null,"finding Flash window ... ");
         while ((origin = findLeftTopPosition()) == null);
@@ -187,7 +209,7 @@ public class FlashPosition
      * return null if target color is not found
      * @return
      */
-    private Point findLeftTopPosition()
+    private static Point findLeftTopPosition()
     {
         Point ret = null;
         Mat screen = ImageUtils.screenCapture();
@@ -213,5 +235,13 @@ public class FlashPosition
 
         origin = ret;
         return ret;
+    }
+
+    public static void main(String[] args)
+    {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        FlashPositionDetector detector = new FlashPosition.FlashPositionDetector();
+        Thread flashPositionDetector = new Thread(detector);
+        flashPositionDetector.start();
     }
 }

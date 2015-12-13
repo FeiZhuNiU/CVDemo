@@ -43,16 +43,15 @@ public class OCRUtils
 
     /**
      * ocr target RECT of current flash
-     * @param flashPosition
      * @param x
      * @param y
      * @param width
      * @param height
      * @return
      */
-    public static String doOCR(FlashPosition flashPosition, int x, int y, int width,int height)
+    public static String doOCR(int x, int y, int width,int height)
     {
-        if(flashPosition == null || flashPosition.origin==null)
+        if(FlashPosition.origin==null)
         {
             return "";
         }
@@ -60,8 +59,8 @@ public class OCRUtils
         String imageName = "temp.bmp";
         //screen capture
         ImageUtils.screenCapture(imageName,
-                                 flashPosition.origin.x + x,
-                                 flashPosition.origin.y + y,
+                                 FlashPosition.origin.x + x,
+                                 FlashPosition.origin.y + y,
                                  width,
                                  height);
         //ocr

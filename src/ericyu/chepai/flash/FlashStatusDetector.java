@@ -34,7 +34,6 @@ public class FlashStatusDetector implements Runnable
 {
     private static int detectRate = 50;
     private List<IStatusObserver> observers;
-    private FlashPosition flashPosition;
     private Status status;
     private Recognition recognition;
     public enum Status
@@ -51,7 +50,6 @@ public class FlashStatusDetector implements Runnable
         this.recognition = new Recognition(new FlashStatusTrain(SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,
                                                                 SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,
                                                                 new AllPixelEigenvectorStrategy()));
-        this.flashPosition = FlashPosition.getInstance();
         status = Status.NONE;
     }
 
@@ -137,8 +135,8 @@ public class FlashStatusDetector implements Runnable
     private Mat getRightPartOfFlash()
     {
         Mat ret = ImageUtils.screenCapture(
-                flashPosition.origin.x + FlashPosition.REGION_FLASH_RIGHT_PART_X,
-                flashPosition.origin.y + FlashPosition.REGION_FLASH_RIGHT_PART_Y,
+                FlashPosition.origin.x + FlashPosition.REGION_FLASH_RIGHT_PART_X,
+                FlashPosition.origin.y + FlashPosition.REGION_FLASH_RIGHT_PART_Y,
                 FlashPosition.REGION_FLASH_RIGHT_PART_WIDTH,
                 FlashPosition.REGION_FLASH_RIGHT_PART_HEIGHT);
         return ret;
@@ -172,8 +170,8 @@ public class FlashStatusDetector implements Runnable
     {
 //        Mat src = getRightPartOfFlash();
         Mat src = ImageUtils.screenCapture(
-                FlashPosition.getInstance().origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
-                FlashPosition.getInstance().origin.y + FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
+                FlashPosition.origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
+                FlashPosition.origin.y + FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
                 FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
                 FlashPosition.REGION_VERIFICATION_CODE_HEIGHT
                 );

@@ -26,20 +26,20 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
     public void execute()
     {
         //--------------------------------------------------
-        //login
-        //0
-        addAction(new FocusOnUsernameInputBox());
-        //1
-        addAction(new InputUserName(user.getUsername()));
-        //2
-        addAction(new FocusOnPasswordInputBox());
-        //3
-        addAction(new InputPassword(user.getPassword()));
-        //4
-        addAction(new ClickLogin());
-        //----------------------------------------------------
-        //bid
-        //5
+//        //login
+//        //0
+//        addAction(new FocusOnUsernameInputBox());
+//        //1
+//        addAction(new InputUserName(user.getUsername()));
+//        //2
+//        addAction(new FocusOnPasswordInputBox());
+//        //3
+//        addAction(new InputPassword(user.getPassword()));
+//        //4
+//        addAction(new ClickLogin());
+//        //----------------------------------------------------
+//        //bid
+//        //5
         addAction(new FocusOnAddRangeBox());
         //6
         addAction(new InputAddMoneyRange(Configuration.ADD_MONEY_RANGE));

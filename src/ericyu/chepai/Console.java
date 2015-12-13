@@ -50,10 +50,11 @@ public class Console
 
         try
         {
-            //init flash position            //will detect flash position here
-            FlashPosition flashPosition = FlashPosition.getInstance();
             user = new User(Configuration.USERNAME, Configuration.PASSWORD);
 
+//            Thread flashPositionDetector = new Thread(new FlashPosition.FlashPositionDetector());
+//            flashPositionDetector.start();
+            FlashPosition.setOrigin();
             flashStatusDetector = new FlashStatusDetector();
             Thread detectorThread = new Thread(flashStatusDetector);
             detectorThread.start();

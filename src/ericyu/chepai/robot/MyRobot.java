@@ -33,7 +33,6 @@ import java.util.Map;
  */
 public class MyRobot implements IStatusObserver
 {
-    private FlashPosition flashPosition;
     private Robot robot;
     private FlashStatusDetector.Status flashStatus;
     /**
@@ -61,7 +60,6 @@ public class MyRobot implements IStatusObserver
     public MyRobot(Robot robot)
     {
         this.robot = robot;
-        this.flashPosition = FlashPosition.getInstance();
         flashStatus = FlashStatusDetector.Status.NONE;
     }
 
@@ -162,8 +160,8 @@ public class MyRobot implements IStatusObserver
         while(true)
         {
             ImageUtils.screenCapture(image,
-                    flashPosition.origin.x + FlashPosition.REGION_SYSTEM_NOTIFICATION_X,
-                    flashPosition.origin.y + FlashPosition.REGION_SYSTEM_NOTIFICATION_Y,
+                    FlashPosition.origin.x + FlashPosition.REGION_SYSTEM_NOTIFICATION_X,
+                    FlashPosition.origin.y + FlashPosition.REGION_SYSTEM_NOTIFICATION_Y,
                     FlashPosition.REGION_SYSTEM_NOTIFICATION_WIDTH,
                     FlashPosition.REGION_SYSTEM_NOTIFICATION_HEIGHT);
             String result = OCRUtils.doOCR(image);
@@ -209,8 +207,8 @@ public class MyRobot implements IStatusObserver
             return -1;
         }
         int ret = 0;
-        Mat toReg = ImageUtils.screenCapture(flashPosition.origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
-                                 flashPosition.origin.y + FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
+        Mat toReg = ImageUtils.screenCapture(FlashPosition.origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
+                                 FlashPosition.origin.y + FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
                                  FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
                                  FlashPosition.REGION_VERIFICATION_CODE_HEIGHT);
         Recognition recognition = new Recognition(new RefreshButtonTrain(SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH,
@@ -285,8 +283,8 @@ public class MyRobot implements IStatusObserver
                     new AllPixelEigenvectorStrategy()));
 
         ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
-                                 flashPosition.origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
-                                 flashPosition.origin.y + FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
+                                 FlashPosition.origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
+                                 FlashPosition.origin.y + FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
                                  FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
                                  FlashPosition.REGION_VERIFICATION_CODE_HEIGHT);
 
@@ -368,7 +366,7 @@ public class MyRobot implements IStatusObserver
     public void clickAt(int x, int y)
     {
         Point curMousePosition = MouseInfo.getPointerInfo().getLocation();
-        robot.mouseMove(x + flashPosition.origin.x, y + flashPosition.origin.y);
+        robot.mouseMove(x + FlashPosition.origin.x, y + FlashPosition.origin.y);
         robot.mousePress(InputEvent.BUTTON1_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
         robot.mouseMove(curMousePosition.x, curMousePosition.y);
@@ -384,7 +382,7 @@ public class MyRobot implements IStatusObserver
     public void doubleClickAt(int x, int y)
     {
         Point curMousePosition = MouseInfo.getPointerInfo().getLocation();
-        robot.mouseMove(x + flashPosition.origin.x, y + flashPosition.origin.y);
+        robot.mouseMove(x + FlashPosition.origin.x, y + FlashPosition.origin.y);
         robot.mousePress(InputEvent.BUTTON1_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
         robot.delay(100);
@@ -658,8 +656,7 @@ public class MyRobot implements IStatusObserver
             Logger.log(Logger.Level.WARNING, flashStatus, "can not get lowest deal.");
             return 0;
         }
-        String result = OCRUtils.doOCR(flashPosition,
-                                       FlashPosition.REGION_LOWEST_DEAL_X,
+        String result = OCRUtils.doOCR(FlashPosition.REGION_LOWEST_DEAL_X,
                                        FlashPosition.REGION_LOWEST_DEAL_Y,
                                        FlashPosition.REGION_LOWEST_DEAL_WIDTH,
                                        FlashPosition.REGION_LOWEST_DEAL_HEIGHT);
