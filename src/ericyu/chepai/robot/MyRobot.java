@@ -487,7 +487,7 @@ public class MyRobot implements IStatusObserver
                 FlashPosition.BUTTON_ADD_MONEY_Y);
         Logger.log(Logger.Level.INFO, flashStatus, "robot clicked add money button");
         //set bid money when click add money range button
-        bidMoney = getCurrentLowestDeal() + Configuration.ADD_MONEY_RANGE;
+        bidMoney = getCurrentLowestDeal() + Configuration.addMoneyRange;
         Logger.log(Logger.Level.INFO, flashStatus, "bid money : " + bidMoney);
         return true;
     }

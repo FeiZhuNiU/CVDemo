@@ -30,22 +30,27 @@ public class Configuration
     private static final String LATEST_BID_TIME_SECOND_KEY = "latestBidTimeSecond";
     private static final String USERNAME_KEY = "username";
     private static final String PASSWORD_KEY = "password";
+    private static final String LEFTTOP_X_KEY="lt_x";
+    private static final String LEFTTOP_Y_KEY="lt_y";
 
 
-    public static int ADD_MONEY_RANGE;
-    public static int V_CODE_CONFIRM_HOUR;
-    public static int V_CODE_CONFIRM_MINUTE;
-    public static int V_CODE_CONFIRM_SECOND;
-    public static int ADD_MONEY_SECOND;
-    public static int LEFTTOP_COLOR_R;
-    public static int LEFTTOP_COLOR_G;
-    public static int LEFTTOP_COLOR_B;
-    public static int LEFTTOP_COLOR_OFFSET_R;
-    public static int LEFTTOP_COLOR_OFFSET_G;
-    public static int LEFTTOP_COLOR_OFFSET_B;
-    public static int LATEST_BID_TIME_SECOND;
-    public static String USERNAME;
-    public static String PASSWORD;
+    public static int leftTopX;
+    public static int leftTopY;
+
+    public static int addMoneyRange;
+    public static int vCodeConfirmHour;
+    public static int vCodeConfirmMinute;
+    public static int vCodeConfirmSecond;
+    public static int addMoneySecond;
+    public static int lefttopColorR;
+    public static int lefttopColorG;
+    public static int lefttopColorB;
+    public static int lefttopColorOffsetR;
+    public static int lefttopColorOffsetG;
+    public static int lefttopColorOffsetB;
+    public static int latestBidTimeSecond;
+    public static String username;
+    public static String password;
 
 
     public static HashMap<String, String> properties = new HashMap<>();
@@ -64,24 +69,27 @@ public class Configuration
                 properties.put(key, value);
             }
 
-            ADD_MONEY_RANGE = Integer.parseInt(properties.get(ADD_MONEY_RANGE_KEY).trim());
-            V_CODE_CONFIRM_HOUR = Integer.parseInt(properties.get(V_CODE_CONFIRM_HOUR_KEY).trim());
-            V_CODE_CONFIRM_MINUTE = Integer.parseInt(properties.get(V_CODE_CONFIRM_MINUTE_KEY).trim());
-            V_CODE_CONFIRM_SECOND = Integer.parseInt(properties.get(V_CODE_CONFIRM_SECOND_KEY).trim());
-            ADD_MONEY_SECOND = Integer.parseInt(properties.get(ADD_MONEY_SECOND_KEY).trim());
+            addMoneyRange = Integer.parseInt(properties.get(ADD_MONEY_RANGE_KEY).trim());
+            vCodeConfirmHour = Integer.parseInt(properties.get(V_CODE_CONFIRM_HOUR_KEY).trim());
+            vCodeConfirmMinute = Integer.parseInt(properties.get(V_CODE_CONFIRM_MINUTE_KEY).trim());
+            vCodeConfirmSecond = Integer.parseInt(properties.get(V_CODE_CONFIRM_SECOND_KEY).trim());
+            addMoneySecond = Integer.parseInt(properties.get(ADD_MONEY_SECOND_KEY).trim());
 
-            LATEST_BID_TIME_SECOND = Integer.parseInt(properties.get(LATEST_BID_TIME_SECOND_KEY).trim());
+            latestBidTimeSecond = Integer.parseInt(properties.get(LATEST_BID_TIME_SECOND_KEY).trim());
 
-            LEFTTOP_COLOR_R = Integer.parseInt(properties.get(LEFTTOP_COLOR_R_KEY).trim());
-            LEFTTOP_COLOR_G = Integer.parseInt(properties.get(LEFTTOP_COLOR_G_KEY).trim());
-            LEFTTOP_COLOR_B = Integer.parseInt(properties.get(LEFTTOP_COLOR_B_KEY).trim());
+            lefttopColorR = Integer.parseInt(properties.get(LEFTTOP_COLOR_R_KEY).trim());
+            lefttopColorG = Integer.parseInt(properties.get(LEFTTOP_COLOR_G_KEY).trim());
+            lefttopColorB = Integer.parseInt(properties.get(LEFTTOP_COLOR_B_KEY).trim());
 
-            LEFTTOP_COLOR_OFFSET_R = Integer.parseInt(properties.get(LEFTTOP_COLOR_OFFSET_R_KEY).trim());
-            LEFTTOP_COLOR_OFFSET_G = Integer.parseInt(properties.get(LEFTTOP_COLOR_OFFSET_G_KEY).trim());
-            LEFTTOP_COLOR_OFFSET_B = Integer.parseInt(properties.get(LEFTTOP_COLOR_OFFSET_B_KEY).trim());
+            lefttopColorOffsetR = Integer.parseInt(properties.get(LEFTTOP_COLOR_OFFSET_R_KEY).trim());
+            lefttopColorOffsetG = Integer.parseInt(properties.get(LEFTTOP_COLOR_OFFSET_G_KEY).trim());
+            lefttopColorOffsetB = Integer.parseInt(properties.get(LEFTTOP_COLOR_OFFSET_B_KEY).trim());
 
-            USERNAME = properties.get(USERNAME_KEY).trim();
-            PASSWORD = properties.get(PASSWORD_KEY).trim();
+            username = properties.get(USERNAME_KEY).trim();
+            password = properties.get(PASSWORD_KEY).trim();
+
+            leftTopX = Integer.parseInt(properties.get(LEFTTOP_X_KEY).trim());
+            leftTopY = Integer.parseInt(properties.get(LEFTTOP_Y_KEY).trim());
 
         }
         catch (Exception e)

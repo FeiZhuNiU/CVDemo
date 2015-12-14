@@ -8,14 +8,10 @@ package ericyu.chepai;
  +===========================================================================*/
 import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.flash.FlashStatusDetector;
-import ericyu.chepai.recognize.Recognition;
 import ericyu.chepai.robot.*;
 import ericyu.chepai.robot.bidstrategy.AmbushAndAidStrategy;
 import ericyu.chepai.robot.bidstrategy.AbstractBidStrategy;
 import ericyu.chepai.robot.bidstrategy.User;
-import ericyu.chepai.train.AllPixelEigenvectorStrategy;
-import ericyu.chepai.train.FlashStatusTrain;
-import ericyu.chepai.train.SampleConstants;
 import org.opencv.core.*;
 
 import java.awt.*;
@@ -50,11 +46,11 @@ public class Console
 
         try
         {
-            user = new User(Configuration.USERNAME, Configuration.PASSWORD);
+            user = new User(Configuration.username, Configuration.password);
 
 //            Thread flashPositionDetector = new Thread(new FlashPosition.FlashPositionDetector());
 //            flashPositionDetector.start();
-            FlashPosition.setOrigin();
+//            FlashPosition.setOrigin();
             flashStatusDetector = new FlashStatusDetector();
             Thread detectorThread = new Thread(flashStatusDetector);
             detectorThread.start();

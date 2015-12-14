@@ -43,12 +43,13 @@ public class FlashPosition
     private static int detectRate = 100;
     static
     {
-        topLeftCornerColor = new double[]{Configuration.LEFTTOP_COLOR_B,
-                Configuration.LEFTTOP_COLOR_G,
-                Configuration.LEFTTOP_COLOR_R};
-        topLeftCornerColorOffset_10_10 = new double[]{Configuration.LEFTTOP_COLOR_OFFSET_B,
-                Configuration.LEFTTOP_COLOR_OFFSET_G,
-                Configuration.LEFTTOP_COLOR_OFFSET_R};
+        topLeftCornerColor = new double[]{Configuration.lefttopColorB,
+                Configuration.lefttopColorG,
+                Configuration.lefttopColorR};
+        topLeftCornerColorOffset_10_10 = new double[]{Configuration.lefttopColorOffsetB,
+                Configuration.lefttopColorOffsetG,
+                Configuration.lefttopColorOffsetR};
+        origin = new Point(Configuration.leftTopX,Configuration.leftTopY);
 //        setOrigin();
     }
 

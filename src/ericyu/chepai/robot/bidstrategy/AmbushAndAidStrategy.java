@@ -19,35 +19,34 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         super(user, robot);
         latestBidTime = DateUtil.getDateLongValue(DateUtil.getCurrentHour(),
                                                   DateUtil.getCurrentMinute(),
-                                                  Configuration.LATEST_BID_TIME_SECOND);
+                                                  Configuration.latestBidTimeSecond);
     }
 
     @Override
     public void execute()
     {
         //--------------------------------------------------
-//        //login
-//        //0
-//        addAction(new FocusOnUsernameInputBox());
-//        //1
-//        addAction(new InputUserName(user.getUsername()));
-//        //2
-//        addAction(new FocusOnPasswordInputBox());
-//        //3
-//        addAction(new InputPassword(user.getPassword()));
-//        //4
-//        addAction(new ClickLogin());
-//        //----------------------------------------------------
-//        //bid
-//        //5
+        //login
+        //0
+        addAction(new FocusOnUsernameInputBox());
+        //1
+        addAction(new InputUserName(user.getUsername()));
+        //2
+        addAction(new FocusOnPasswordInputBox());
+        //3
+        addAction(new InputPassword(user.getPassword()));
+        //4
+        addAction(new ClickLogin());
+        //----------------------------------------------------
+        //bid
+        //5
         addAction(new FocusOnAddRangeBox());
         //6
-        addAction(new InputAddMoneyRange(Configuration.ADD_MONEY_RANGE));
-
+        addAction(new InputAddMoneyRange(Configuration.addMoneyRange));
 
         addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(DateUtil.getCurrentHour(),
                                                                     DateUtil.getCurrentMinute(),
-                                                                    Configuration.ADD_MONEY_SECOND)));
+                                                                    Configuration.addMoneySecond)));
         //7
         addAction(new ClickAddMoneyButton());
         //8
@@ -59,12 +58,12 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         addAction(new RecogAndEnterVCode());
 
 
-//        addAction(new WaitUntil(DateUtil.getDateLongValue(BidStrategyConstants.V_CODE_CONFIRM_HOUR,
-//                                                          BidStrategyConstants.V_CODE_CONFIRM_MINUTE,
-//                                                          BidStrategyConstants.V_CODE_CONFIRM_SECOND)));
+//        addAction(new WaitUntil(DateUtil.getDateLongValue(BidStrategyConstants.vCodeConfirmHour,
+//                                                          BidStrategyConstants.vCodeConfirmMinute,
+//                                                          BidStrategyConstants.vCodeConfirmSecond)));
         addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(DateUtil.getCurrentHour(),
                                                                     DateUtil.getCurrentMinute(),
-                                                                    Configuration.V_CODE_CONFIRM_SECOND)));
+                                                                    Configuration.vCodeConfirmSecond)));
 
         addAction(new WaitUntilBidDiffLessThan(400));
 
