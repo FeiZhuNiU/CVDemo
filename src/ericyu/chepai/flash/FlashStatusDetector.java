@@ -170,10 +170,10 @@ public class FlashStatusDetector implements Runnable
     {
 //        Mat src = getRightPartOfFlash();
         Mat src = ImageUtils.screenCapture(
-                FlashPosition.origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
-                FlashPosition.origin.y + FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
-                FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
-                FlashPosition.REGION_VERIFICATION_CODE_HEIGHT
+                FlashPosition.origin.x + FlashPosition.REGION_VCODE_X,
+                FlashPosition.origin.y + FlashPosition.REGION_VCODE_Y,
+                FlashPosition.REGION_VCODE_WIDTH,
+                FlashPosition.REGION_VCODE_HEIGHT
                 );
         Mat binary = ImageUtils.color2Binary(src,220);
         Imgcodecs.imwrite("test.bmp", binary);

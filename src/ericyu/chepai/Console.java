@@ -34,7 +34,7 @@ public class Console
         }
         bidStrategy.execute();
         // for test
-        bidStrategy.printResult();
+//        bidStrategy.printResult();
 
     }
 

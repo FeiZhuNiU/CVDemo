@@ -7,6 +7,7 @@ package ericyu.chepai.robot.bidstrategy;
  |           Created by lliyu on 11/27/2015  (lin.yu@oracle.com)             |
  +===========================================================================*/
 
+import ericyu.chepai.Logger;
 import org.opencv.core.Core;
 
 import java.awt.*;
@@ -30,6 +31,7 @@ public class User
     {
         this.username = username;
         this.password = password;
+        Logger.log(Logger.Level.INFO, null, "user created! username: " + username + "/ password: " + password);
     }
 
     public static void main(String[] args) throws AWTException

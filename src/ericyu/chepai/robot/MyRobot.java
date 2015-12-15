@@ -207,10 +207,10 @@ public class MyRobot implements IStatusObserver
             return -1;
         }
         int ret = 0;
-        Mat toReg = ImageUtils.screenCapture(FlashPosition.origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
-                                 FlashPosition.origin.y + FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
-                                 FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
-                                 FlashPosition.REGION_VERIFICATION_CODE_HEIGHT);
+        Mat toReg = ImageUtils.screenCapture(FlashPosition.origin.x + FlashPosition.REGION_VCODE_X,
+                                 FlashPosition.origin.y + FlashPosition.REGION_VCODE_Y,
+                                 FlashPosition.REGION_VCODE_WIDTH,
+                                 FlashPosition.REGION_VCODE_HEIGHT);
         Recognition recognition = new Recognition(new RefreshButtonTrain(SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH,
                                                                          SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH,
                                                                          new AllPixelEigenvectorStrategy()));
@@ -283,10 +283,10 @@ public class MyRobot implements IStatusObserver
                     new AllPixelEigenvectorStrategy()));
 
         ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
-                                 FlashPosition.origin.x + FlashPosition.REGION_VERIFICATION_CODE_LT_X,
-                                 FlashPosition.origin.y + FlashPosition.REGION_VERIFICATION_CODE_LT_Y,
-                                 FlashPosition.REGION_VERIFICATION_CODE_WIDTH,
-                                 FlashPosition.REGION_VERIFICATION_CODE_HEIGHT);
+                                 FlashPosition.origin.x + FlashPosition.REGION_VCODE_X,
+                                 FlashPosition.origin.y + FlashPosition.REGION_VCODE_Y,
+                                 FlashPosition.REGION_VCODE_WIDTH,
+                                 FlashPosition.REGION_VCODE_HEIGHT);
 
         Mat toRecog = ImageUtils.readImage(ImageUtils.screenCaptureImage);
 
@@ -400,8 +400,8 @@ public class MyRobot implements IStatusObserver
             Logger.log(Logger.Level.WARNING, flashStatus, "can not focus on V-code Input box.");
             return false;
         }
-        doubleClickAt(FlashPosition.INPUT_VERIFICATION_X,
-                      FlashPosition.INPUT_VERIFICATION_Y);
+        doubleClickAt(FlashPosition.INPUT_VCODE_X,
+                      FlashPosition.INPUT_VCODE_Y);
         Logger.log(Logger.Level.INFO, flashStatus, "robot focused on V-code input box");
         return true;
     }
@@ -413,8 +413,8 @@ public class MyRobot implements IStatusObserver
             Logger.log(Logger.Level.WARNING, flashStatus, "can not click on V-code confirm button.");
             return false;
         }
-        clickAt(FlashPosition.BUTTON_VERIFICATION_CODE_CONFIRM_X,
-                FlashPosition.BUTTON_VERIFICATION_CODE_CONFIRM_Y);
+        clickAt(FlashPosition.BUTTON_VCODE_CONFIRM_X,
+                FlashPosition.BUTTON_VCODE_CONFIRM_Y);
         Logger.log(Logger.Level.INFO, flashStatus, "robot clicked V-code confirm button");
 
         return true;
@@ -428,8 +428,8 @@ public class MyRobot implements IStatusObserver
             Logger.log(Logger.Level.WARNING, flashStatus, "can not click on V-code cancel button.");
             return false;
         }
-        clickAt(FlashPosition.BUTTON_VERIFICATION_CODE_CANCEL_X,
-                FlashPosition.BUTTON_VERIFICATION_CODE_CANCEL_Y);
+        clickAt(FlashPosition.BUTTON_VCODE_CANCEL_X,
+                FlashPosition.BUTTON_VCODE_CANCEL_Y);
         Logger.log(Logger.Level.INFO, flashStatus, "robot clicked V-code cancel button");
         return true;
     }
@@ -441,8 +441,8 @@ public class MyRobot implements IStatusObserver
             Logger.log(Logger.Level.WARNING, flashStatus, "can not click on V-code refresh button.");
             return false;
         }
-        clickAt(FlashPosition.BUTTON_VERIFICATION_REFRESH_X,
-                FlashPosition.BUTTON_VERIFICATION_REFRESH_Y);
+        clickAt(FlashPosition.BUTTON_VCODE_REFRESH_X,
+                FlashPosition.BUTTON_VCODE_REFRESH_Y);
         Logger.log(Logger.Level.INFO, flashStatus, "robot clicked refresh V-code button");
         return true;
     }
@@ -544,8 +544,8 @@ public class MyRobot implements IStatusObserver
             Logger.log(Logger.Level.WARNING, flashStatus, "can not click ReEnter V-Code Confirm Button.");
             return false;
         }
-        clickAt(FlashPosition.BUTTON_RE_ENTER_VERIFICATION_CONFIRM_X,
-                FlashPosition.BUTTON_RE_ENTER_VERIFICATION_CONFIRM_Y);
+        clickAt(FlashPosition.BUTTON_RE_ENTER_VCODE_CONFIRM_X,
+                FlashPosition.BUTTON_RE_ENTER_VCODE_CONFIRM_Y);
         Logger.log(Logger.Level.INFO, flashStatus, "robot clicked re-enter V-code confirm button");
         return true;
     }
@@ -595,8 +595,8 @@ public class MyRobot implements IStatusObserver
             Logger.log(Logger.Level.WARNING, flashStatus, "can not click Submit User Button.");
             return false;
         }
-        clickAt(FlashPosition.BUTTON_SUBMIT_X,
-                FlashPosition.BUTTON_SUBMIT_Y);
+        clickAt(FlashPosition.BUTTON_LOGIN_X,
+                FlashPosition.BUTTON_LOGIN_Y);
         Logger.log(Logger.Level.INFO, flashStatus, "robot clicked on login button.");
         return true;
     }
