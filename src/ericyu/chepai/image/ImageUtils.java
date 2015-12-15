@@ -102,7 +102,8 @@ public class ImageUtils
     {
         Mat binary = new Mat(gray.rows(), gray.cols(), CvType.CV_8UC1);
 
-        Imgproc.threshold(gray, binary, threshold, 255, Imgproc.THRESH_BINARY_INV);
+//        Imgproc.threshold(gray, binary, threshold, 255, Imgproc.THRESH_BINARY_INV);
+        Imgproc.threshold(gray, binary, 255, 255, Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
         return binary;
     }
 

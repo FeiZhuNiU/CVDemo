@@ -10,6 +10,8 @@ package ericyu.chepai.train;
 import ericyu.chepai.image.ImageUtils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 import java.io.File;
 import java.util.AbstractMap;
@@ -18,6 +20,12 @@ import java.util.List;
 
 public class FlashStatusTrain extends AbstractSampleTrain
 {
+    @Deprecated
+    public FlashStatusTrain()
+    {
+        super();
+    }
+
     public FlashStatusTrain(String trainDataPath,
                             String trainClassPath,
                             IEigenvectorStrategy eigenvetorStrategy)
@@ -53,13 +61,6 @@ public class FlashStatusTrain extends AbstractSampleTrain
         }
     }
 
-    @Override
-    public List<Mat> process(Mat src)
-    {
-        List<Mat> ret = new ArrayList<>();
-        ret.add(ImageUtils.color2Binary(src,90));
-        return ret;
-    }
 
     public static void main(String[] args)
     {
@@ -67,7 +68,7 @@ public class FlashStatusTrain extends AbstractSampleTrain
 
         String sampleDir = "FlashStatusImage";
 
-        FlashStatusTrain train = new FlashStatusTrain(sampleDir, new AllPixelEigenvectorStrategy(), SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH, SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH);
+        FlashStatusTrain train = new FlashStatusTrain(sampleDir, new RegionPixelEigenVecStrategy(10,10), SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH, SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH);
         train.train();
         train.dumpTrainData();
 

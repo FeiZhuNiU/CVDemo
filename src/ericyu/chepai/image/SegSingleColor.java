@@ -102,7 +102,7 @@ public class SegSingleColor
             //get rect bound of contour
             Rect rect = Imgproc.boundingRect(contours.get(i));
             //give up small rects which we assert they are not digits
-            if (rect.width + rect.height > 15)
+            if (rect.width + rect.height > 16)
                 boundRects.add(rect);
         }
 

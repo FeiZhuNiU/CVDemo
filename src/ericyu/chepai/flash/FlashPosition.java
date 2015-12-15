@@ -62,7 +62,6 @@ public class FlashPosition
         {
             while (true)
             {
-                System.out.println("1111");
                 Point detected = findLeftTopPosition();
                 if(detected != null)
                 {

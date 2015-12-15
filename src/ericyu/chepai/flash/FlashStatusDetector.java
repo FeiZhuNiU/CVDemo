@@ -13,6 +13,7 @@ import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.recognize.Recognition;
 import ericyu.chepai.train.AllPixelEigenvectorStrategy;
 import ericyu.chepai.train.FlashStatusTrain;
+import ericyu.chepai.train.RegionPixelEigenVecStrategy;
 import ericyu.chepai.train.SampleConstants;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -49,7 +50,7 @@ public class FlashStatusDetector implements Runnable
     {
         this.recognition = new Recognition(new FlashStatusTrain(SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,
                                                                 SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,
-                                                                new AllPixelEigenvectorStrategy()));
+                                                                new RegionPixelEigenVecStrategy(10,10)));
         status = Status.NONE;
     }
 

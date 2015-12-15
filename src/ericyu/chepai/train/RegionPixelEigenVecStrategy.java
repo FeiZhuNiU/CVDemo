@@ -11,6 +11,9 @@ import org.opencv.core.Mat;
 
 public class RegionPixelEigenVecStrategy implements IEigenvectorStrategy
 {
+    /**
+     * region
+     */
     private int rows;
     private int cols;
 
@@ -32,13 +35,14 @@ public class RegionPixelEigenVecStrategy implements IEigenvectorStrategy
 
         int[][] count = new int[rows][cols];
 
-        for (int i = 0 ; i < row ; ++i)
+        // TODO:
+        for (int i = 0 ; i < row-1 ; ++i)
         {
-            for (int j = 0; j < col; ++j)
+            for (int j = 0; j < col-1; ++j)
             {
                 if(src.get(i,j)[0] > 0)
                 {
-                    ++count[i/rows][j/cols];
+                    ++count[i*rows/row][j*cols/col];
                 }
             }
         }
@@ -47,7 +51,7 @@ public class RegionPixelEigenVecStrategy implements IEigenvectorStrategy
         {
             for (int j = 0; j < cols; ++j)
             {
-                ret.put(i,j,count[i][j]);
+                ret.put(0,i*rows + j ,count[i][j]);
             }
         }
         return ret;

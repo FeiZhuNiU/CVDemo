@@ -19,6 +19,12 @@ import java.util.List;
 public class RefreshButtonTrain extends AbstractSampleTrain
 {
 
+    @Deprecated
+    public RefreshButtonTrain()
+    {
+        super();
+    }
+
     public RefreshButtonTrain(String trainDataPath, String trainClassPath,
                               IEigenvectorStrategy eigenvetorStrategy)
     {
@@ -49,22 +55,14 @@ public class RefreshButtonTrain extends AbstractSampleTrain
         }
     }
 
-    @Override
-    public List<Mat> process(Mat src)
-    {
-        List<Mat> ret = new ArrayList<>();
-        ret.add(ImageUtils.color2Binary(src, 210));
-        return ret;
-    }
-
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
         String sampleDir = "RefreshImage";
 
-        FlashStatusTrain train = new FlashStatusTrain(sampleDir,
-                                                      new AllPixelEigenvectorStrategy(),
+        RefreshButtonTrain train = new RefreshButtonTrain(sampleDir,
+                                                      new RegionPixelEigenVecStrategy(2,10),
                                                       SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH,
                                                       SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH);
         train.train();

@@ -13,11 +13,8 @@ import ericyu.chepai.flash.FlashStatusDetector;
 import ericyu.chepai.flash.IStatusObserver;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.Configuration;
-import ericyu.chepai.train.AllPixelEigenvectorStrategy;
-import ericyu.chepai.train.RefreshButtonTrain;
-import ericyu.chepai.train.SampleConstants;
+import ericyu.chepai.train.*;
 import ericyu.chepai.recognize.Recognition;
-import ericyu.chepai.train.VCodeTrain;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
@@ -110,10 +107,12 @@ public class MyRobot implements IStatusObserver
      * manually get color
      * @param args
      */
-    public static void main(String[] args)
+    public static void main(String[] args) throws AWTException
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        checkColor();
+//        checkColor();
+
+        new MyRobot(new Robot()).recogVerificationCode();
     }
 
     /**
@@ -213,7 +212,7 @@ public class MyRobot implements IStatusObserver
                                  FlashPosition.REGION_VCODE_HEIGHT);
         Recognition recognition = new Recognition(new RefreshButtonTrain(SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH,
                                                                          SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH,
-                                                                         new AllPixelEigenvectorStrategy()));
+                                                                         new RegionPixelEigenVecStrategy(2,10)));
         toReg = recognition.getTrainedData().process(toReg).get(0);
 //        Imgcodecs.imwrite("dump.bmp",toReg);
 
