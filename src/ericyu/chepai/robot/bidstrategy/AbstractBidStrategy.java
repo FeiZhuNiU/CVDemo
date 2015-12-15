@@ -85,11 +85,11 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         @Override
         public Map.Entry<Boolean,Object> call() throws Exception
         {
+            Logger.log(Logger.Level.INFO, flashStatus,("wait until " + DateUtil.formatLongValueToDate(targetTime) + ", " + (targetTime - System.currentTimeMillis())) + "ms to go");
             while(true)
             {
                 if(System.currentTimeMillis() >= targetTime)
                     break;
-                Logger.log(Logger.Level.INFO, flashStatus,(targetTime - System.currentTimeMillis()) + "ms to go");
                 robot.wait(100);
             }
             return new AbstractMap.SimpleEntry<>(true, null);
@@ -105,12 +105,12 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         {
             this.bid = robot.getBidMoney();
             this.delta = delta;
-            Logger.log(Logger.Level.INFO, flashStatus, "wait until bid diff less than " + delta + ", bid: " + bid);
         }
 
         @Override
         public Map.Entry<Boolean, Object> call() throws Exception
         {
+            Logger.log(Logger.Level.INFO, flashStatus, "wait until bid diff less than " + delta + ", bid: " + bid);
             while(true)
             {
                 int tmp = robot.getCurrentLowestDeal();

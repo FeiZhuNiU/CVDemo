@@ -5,6 +5,8 @@ import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.image.ImageUtils;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
 
 import java.io.File;
 
@@ -58,11 +60,20 @@ public class OCRUtils
 
         String imageName = "temp.bmp";
         //screen capture
-        ImageUtils.screenCapture(imageName,
-                                 FlashPosition.origin.x + x,
-                                 FlashPosition.origin.y + y,
-                                 width,
-                                 height);
+//        ImageUtils.screenCapture(imageName,
+//                                 FlashPosition.origin.x + x,
+//                                 FlashPosition.origin.y + y,
+//                                 width,
+//                                 height);
+        Mat mat = ImageUtils.screenCapture(
+                FlashPosition.origin.x + x,
+                FlashPosition.origin.y + y,
+                width,
+                height
+        );
+        Mat binary = ImageUtils.color2Binary(mat,0);
+        Imgcodecs.imwrite(imageName,binary);
+
         //ocr
         String ret = doOCR(imageName);
 

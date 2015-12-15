@@ -17,8 +17,8 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
     public AmbushAndAidStrategy(User user, MyRobot robot)
     {
         super(user, robot);
-        latestBidTime = DateUtil.getDateLongValue(DateUtil.getCurrentHour(),
-                                                  DateUtil.getCurrentMinute(),
+        latestBidTime = DateUtil.getDateLongValue(Configuration.bidTimeHour,
+                                                  Configuration.bidTimeMinute,
                                                   Configuration.latestBidTimeSecond);
     }
 
@@ -44,8 +44,8 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //6
         addAction(new InputAddMoneyRange(Configuration.addMoneyRange));
 
-        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(DateUtil.getCurrentHour(),
-                                                                    DateUtil.getCurrentMinute(),
+        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
+                                                                    Configuration.bidTimeMinute,
                                                                     Configuration.addMoneySecond)));
         //7
         addAction(new ClickAddMoneyButton());
@@ -57,12 +57,8 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //9
         addAction(new RecogAndEnterVCode());
 
-
-//        addAction(new WaitUntil(DateUtil.getDateLongValue(BidStrategyConstants.vCodeConfirmHour,
-//                                                          BidStrategyConstants.vCodeConfirmMinute,
-//                                                          BidStrategyConstants.vCodeConfirmSecond)));
-        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(DateUtil.getCurrentHour(),
-                                                                    DateUtil.getCurrentMinute(),
+        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
+                                                                    Configuration.bidTimeMinute,
                                                                     Configuration.vCodeConfirmSecond)));
 
         addAction(new WaitUntilBidDiffLessThan(400));

@@ -24,8 +24,8 @@ public class Configuration
      * bid strategy related
      */
     public static int addMoneyRange;
-    public static int vCodeConfirmHour;
-    public static int vCodeConfirmMinute;
+    public static int bidTimeHour;
+    public static int bidTimeMinute;
     public static int vCodeConfirmSecond;
     public static int addMoneySecond;
     public static int latestBidTimeSecond;
@@ -118,11 +118,12 @@ public class Configuration
      * bid strategy related
      */
     private static final String ADD_MONEY_RANGE_KEY = "addMoneyRange";
-    private static final String V_CODE_CONFIRM_HOUR_KEY = "vCodeConfirmTimeHour";
-    private static final String V_CODE_CONFIRM_MINUTE_KEY = "vCodeConfirmTimeMinute";
+    private static final String BID_TIME_HOUR_KEY = "bidTimeHour";
+    private static final String BID_TIME_MINUTE_KEY = "bidTimeMinute";
     private static final String V_CODE_CONFIRM_SECOND_KEY = "vCodeConfirmTimeSecond";
     private static final String ADD_MONEY_SECOND_KEY = "addMoneyTimeSecond";
     private static final String LATEST_BID_TIME_SECOND_KEY = "latestBidTimeSecond";
+
     /**
      * flash related
      */
@@ -222,8 +223,8 @@ public class Configuration
             password = properties.get(PASSWORD_KEY).trim();
 
             addMoneyRange = Integer.parseInt(properties.get(ADD_MONEY_RANGE_KEY).trim());
-            vCodeConfirmHour = Integer.parseInt(properties.get(V_CODE_CONFIRM_HOUR_KEY).trim());
-            vCodeConfirmMinute = Integer.parseInt(properties.get(V_CODE_CONFIRM_MINUTE_KEY).trim());
+            bidTimeHour = Integer.parseInt(properties.get(BID_TIME_HOUR_KEY).trim());
+            bidTimeMinute = Integer.parseInt(properties.get(BID_TIME_MINUTE_KEY).trim());
             vCodeConfirmSecond = Integer.parseInt(properties.get(V_CODE_CONFIRM_SECOND_KEY).trim());
             addMoneySecond = Integer.parseInt(properties.get(ADD_MONEY_SECOND_KEY).trim());
             latestBidTimeSecond = Integer.parseInt(properties.get(LATEST_BID_TIME_SECOND_KEY).trim());

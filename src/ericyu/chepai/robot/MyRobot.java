@@ -112,7 +112,12 @@ public class MyRobot implements IStatusObserver
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 //        checkColor();
 
-        new MyRobot(new Robot()).recogVerificationCode();
+
+//        new MyRobot(new Robot()).recogVerificationCode();
+        while(true)
+        {
+            new MyRobot(new Robot()).getCurrentLowestDeal();
+        }
     }
 
     /**
@@ -650,11 +655,11 @@ public class MyRobot implements IStatusObserver
      */
     public int getCurrentLowestDeal()
     {
-        if(flashStatus != FlashStatusDetector.Status.BID && flashStatus != FlashStatusDetector.Status.V_CODE)
-        {
-            Logger.log(Logger.Level.WARNING, flashStatus, "can not get lowest deal.");
-            return 0;
-        }
+//        if(flashStatus != FlashStatusDetector.Status.BID && flashStatus != FlashStatusDetector.Status.V_CODE)
+//        {
+//            Logger.log(Logger.Level.WARNING, flashStatus, "can not get lowest deal.");
+//            return 0;
+//        }
         String result = OCRUtils.doOCR(FlashPosition.REGION_LOWEST_DEAL_X,
                                        FlashPosition.REGION_LOWEST_DEAL_Y,
                                        FlashPosition.REGION_LOWEST_DEAL_WIDTH,
@@ -669,6 +674,7 @@ public class MyRobot implements IStatusObserver
         {
             Logger.log(Logger.Level.WARNING, flashStatus, "get current Lowest deal failed!");
         }
+        Logger.log(Logger.Level.INFO, flashStatus, "current Lowest deal: " + ret);
         return ret;
     }
 
