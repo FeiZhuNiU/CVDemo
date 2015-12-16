@@ -43,7 +43,7 @@ public class Test
 //            try
 //            {
 //                MyRobot robot = new MyRobot(new Robot());
-//                System.out.println(robot.getCurrentLowestDeal());
+//                System.out.println(robot.recogCurrentLowestDeal());
 //            }
 //            catch (AWTException e)
 //            {

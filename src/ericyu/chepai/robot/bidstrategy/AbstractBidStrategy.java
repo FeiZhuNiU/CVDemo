@@ -113,16 +113,17 @@ abstract public class AbstractBidStrategy implements IStatusObserver
             Logger.log(Logger.Level.INFO, flashStatus, "wait until bid diff less than " + delta + ", bid: " + bid);
             while(true)
             {
-                int tmp = robot.getCurrentLowestDeal();
-                if(Math.abs(bid - tmp) <= delta)
+                int current = robot.getCurrentLowestBid();
+                if(Math.abs(bid - current) <= delta)
                     break;
-                Logger.log(Logger.Level.INFO, flashStatus, "bid: " + bid + ", current lowest deal: " + tmp);
+                Logger.log(Logger.Level.INFO, flashStatus, "bid: " + bid + ", current lowest bid: " + current);
                 if(System.currentTimeMillis() >= latestBidTime)
                 {
-                    while (!robot.clickCancelVCodeButton());
-                    while (!robot.clickAdd300Button());
-                    while (!robot.clickBidButton());
-                    recogAndEnterVCode();
+                    Logger.log(Logger.Level.INFO, flashStatus, "latest bid time arrived! must Bid!");
+//                    while (!robot.clickCancelVCodeButton());
+//                    while (!robot.clickAdd300Button());
+//                    while (!robot.clickBidButton());
+//                    recogAndEnterVCode();
                     break;
                 }
                 robot.wait(100);

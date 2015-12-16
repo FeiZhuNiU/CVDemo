@@ -60,6 +60,9 @@ public class Console
             flashStatusDetector.addStatusObserver(robot);
             flashStatusDetector.addStatusObserver(bidStrategy);
 
+            Thread lowestBidDetector = new Thread(robot.new LowestBidDetector());
+            lowestBidDetector.start();
+
         }
         catch (AWTException e)
         {

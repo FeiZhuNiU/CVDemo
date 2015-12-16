@@ -108,6 +108,7 @@ public class Configuration
     public static int add300ButtonX;
     public static int add300ButtonY;
 
+    public static int startBid;
 
 
 
@@ -201,6 +202,8 @@ public class Configuration
 
     private static final String BUTTON_ADD_300_X_KEY = "add300ButtonX";
     private static final String BUTTON_ADD_300_Y_KEY = "add300ButtonY";
+
+    private static final String START_BID_KEY="startBid";
 
 
     public static HashMap<String, String> properties = new HashMap<>();
@@ -304,6 +307,8 @@ public class Configuration
 
             add300ButtonX = Integer.parseInt(properties.get(BUTTON_ADD_300_X_KEY).trim());
             add300ButtonY = Integer.parseInt(properties.get(BUTTON_ADD_300_Y_KEY).trim());
+
+            startBid = Integer.parseInt(properties.get(START_BID_KEY).trim());
 
 
 

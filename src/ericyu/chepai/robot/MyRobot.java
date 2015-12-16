@@ -113,16 +113,13 @@ public class MyRobot implements IStatusObserver
 //        checkColor();
 
         //check vcode recognition effect
-        while(true)
-        {
-            new MyRobot(new Robot()).recogVerificationCode();
-        }
-
-
 //        while(true)
 //        {
-//            new MyRobot(new Robot()).getCurrentLowestDeal();
+//            new MyRobot(new Robot()).recogVerificationCode();
 //        }
+
+        Thread thread = new Thread((new MyRobot(new Robot())).new LowestBidDetector());
+        thread.start();
     }
 
     /**
@@ -147,6 +144,97 @@ public class MyRobot implements IStatusObserver
         }
     }
 
+    // currently, the value lag around 1 second
+    private int currentLowestBid = Configuration.startBid;
+
+    public int getCurrentLowestBid()
+    {
+        return currentLowestBid;
+    }
+
+    public class LowestBidDetector implements Runnable
+    {
+        /**
+         * use tesseract to recognize current lowest bid money
+         * @return 0 if failed
+         */
+        public int recogCurrentLowestDeal()
+        {
+            //comment when test
+            if(flashStatus != FlashStatusDetector.Status.BID && flashStatus != FlashStatusDetector.Status.V_CODE)
+            {
+                return 0;
+            }
+            String result = OCRUtils.doOCR(FlashPosition.REGION_LOWEST_DEAL_X,
+                    FlashPosition.REGION_LOWEST_DEAL_Y,
+                    FlashPosition.REGION_LOWEST_DEAL_WIDTH,
+                    FlashPosition.REGION_LOWEST_DEAL_HEIGHT);
+            int ret = 0;
+            try
+            {
+                String fixed_result = result.substring(0, 5);
+                ret = Integer.parseInt(fixed_result.trim());
+            }
+            catch (Exception e)
+            {
+//                Logger.log(Logger.Level.WARNING, flashStatus, "get current Lowest deal failed!");
+            }
+//            Logger.log(Logger.Level.INFO, flashStatus, "current Lowest deal: " + ret);
+            return ret;
+        }
+
+        @Override
+        public void run()
+        {
+            int lastRecognized = 0;
+            int diffCnt = 0;
+            while (true)
+            {
+                int bak = currentLowestBid;
+                int recognized = recogCurrentLowestDeal();
+                if(recognized != 0)
+                {
+                    if (recognized != lastRecognized)
+                    {
+                        int next = recognized;
+                        if (recognized > currentLowestBid + 200)
+                        {
+                            diffCnt ++;
+                            if (diffCnt == 2)
+                            {
+                                next = recognized;
+                                diffCnt = 0;
+                            }
+                            else{
+                                next = 0;
+                            }
+                        }
+                        currentLowestBid = Math.max(currentLowestBid + 100, next);
+                    }
+                }
+                else
+                {
+                    if (lastRecognized != 0)
+                    {
+                        currentLowestBid +=100;
+                    }
+                }
+                lastRecognized = recognized;
+
+                if (currentLowestBid != bak)
+                {
+                    Logger.log(Logger.Level.INFO, flashStatus, "Current lowest bid changed to " + currentLowestBid);
+                }
+                try
+                {
+                    Thread.sleep(10);
+                } catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     /**
      * verify bid result
@@ -277,11 +365,11 @@ public class MyRobot implements IStatusObserver
      */
     public ArrayList<Integer> recogVerificationCode()
     {
-//        if(flashStatus != FlashStatusDetector.Status.V_CODE)
-//        {
-//            Logger.log(Logger.Level.WARNING, flashStatus, "can not get verification Code.");
-//            return null;
-//        }
+        if(flashStatus != FlashStatusDetector.Status.V_CODE)
+        {
+            Logger.log(Logger.Level.WARNING, flashStatus, "can not get verification Code.");
+            return null;
+        }
 
         try
         {
@@ -507,7 +595,7 @@ public class MyRobot implements IStatusObserver
                 FlashPosition.BUTTON_ADD_MONEY_Y);
         Logger.log(Logger.Level.INFO, flashStatus, "robot clicked add money button");
         //set bid money when click add money range button
-        bidMoney = getCurrentLowestDeal() + Configuration.addMoneyRange;
+        bidMoney = getCurrentLowestBid() + Configuration.addMoneyRange;
         Logger.log(Logger.Level.INFO, flashStatus, "bid money : " + bidMoney);
         return true;
     }
@@ -665,34 +753,6 @@ public class MyRobot implements IStatusObserver
         return false;
     }
 
-    /**
-     * use tesseract to recognize current lowest bid money
-     * @return 0 if failed
-     */
-    public int getCurrentLowestDeal()
-    {
-        if(flashStatus != FlashStatusDetector.Status.BID && flashStatus != FlashStatusDetector.Status.V_CODE)
-        {
-            Logger.log(Logger.Level.WARNING, flashStatus, "can not get lowest deal.");
-            return 0;
-        }
-        String result = OCRUtils.doOCR(FlashPosition.REGION_LOWEST_DEAL_X,
-                                       FlashPosition.REGION_LOWEST_DEAL_Y,
-                                       FlashPosition.REGION_LOWEST_DEAL_WIDTH,
-                                       FlashPosition.REGION_LOWEST_DEAL_HEIGHT);
-        int ret = 0;
-        try
-        {
-            String fixed_result = result.substring(0, 5);
-            ret = Integer.parseInt(fixed_result.trim());
-        }
-        catch (Exception e)
-        {
-            Logger.log(Logger.Level.WARNING, flashStatus, "get current Lowest deal failed!");
-        }
-        Logger.log(Logger.Level.INFO, flashStatus, "current Lowest deal: " + ret);
-        return ret;
-    }
 
     @Override
     public void flashStatusChanged(FlashStatusDetector.Status status)
