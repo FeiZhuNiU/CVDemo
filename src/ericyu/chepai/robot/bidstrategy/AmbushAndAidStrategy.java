@@ -28,15 +28,15 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //--------------------------------------------------
         //login
         //0
-        addAction(new FocusOnUsernameInputBox());
-        //1
-        addAction(new InputUserName(user.getUsername()));
-        //2
-        addAction(new FocusOnPasswordInputBox());
-        //3
-        addAction(new InputPassword(user.getPassword()));
-        //4
-        addAction(new ClickLogin());
+//        addAction(new FocusOnUsernameInputBox());
+//        //1
+//        addAction(new InputUserName(user.getUsername()));
+//        //2
+//        addAction(new FocusOnPasswordInputBox());
+//        //3
+//        addAction(new InputPassword(user.getPassword()));
+//        //4
+//        addAction(new ClickLogin());
         //----------------------------------------------------
         //bid
         //5
@@ -44,9 +44,9 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //6
         addAction(new InputAddMoneyRange(Configuration.addMoneyRange));
 
-        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
-                                                                    Configuration.bidTimeMinute,
-                                                                    Configuration.addMoneySecond)));
+//        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
+//                                                                    Configuration.bidTimeMinute,
+//                                                                    Configuration.addMoneySecond)));
         //7
         addAction(new ClickAddMoneyButton());
         //8
@@ -57,15 +57,15 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //9
         addAction(new RecogAndEnterVCode());
 
-        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
-                                                                    Configuration.bidTimeMinute,
-                                                                    Configuration.vCodeConfirmSecond)));
+//        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
+//                                                                    Configuration.bidTimeMinute,
+//                                                                    Configuration.vCodeConfirmSecond)));
 
         addAction(new WaitUntilBidDiffLessThan(400));
 
         addAction(new ClickVCodeConfirmButton());
 
-        addAction(new RecogResult());
+        addAction(new BuQiang());
 
 
 //        try

@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class FlashStatusDetector implements Runnable
 {
-    private static int detectRate = 50;
+    private static int detectRate = 100;
     private List<IStatusObserver> observers;
     private Status status;
     private Recognition recognition;

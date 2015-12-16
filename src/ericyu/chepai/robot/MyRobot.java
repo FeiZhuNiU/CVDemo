@@ -516,7 +516,7 @@ public class MyRobot implements IStatusObserver
     {
         if(flashStatus != FlashStatusDetector.Status.BID)
         {
-            Logger.log(Logger.Level.WARNING, flashStatus, "can not click add 300 Button.");
+//            Logger.log(Logger.Level.WARNING, flashStatus, "can not click add 300 Button.");
             return false;
         }
         clickAt(FlashPosition.BUTTON_ADD_300_X,

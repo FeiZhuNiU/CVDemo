@@ -315,7 +315,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                     case -1:
                     //blank
                     case 3:
-                        robot.wait(101);
+                        robot.wait(51);
                         break;
                     //cross sign
                     case 2:
@@ -323,7 +323,9 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                         while(true)
                         {
                             while(!robot.clickBidButton());
-                            robot.wait(101);
+                            //wait until status has changed
+                            while(flashStatus== FlashStatusDetector.Status.BID);
+                            //check status
                             if(flashStatus == FlashStatusDetector.Status.NOTIFICATION)
                             {
                                 while(!robot.clickRequestForVCodeTooOftenConfirmButton());
@@ -338,7 +340,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                     //refresh button exist
                     case 1:
                         robot.clickRefreshVCodeButton();
-//                            robot.wait(202);
+                        robot.wait(52);
                         break;
                 }
 
@@ -401,6 +403,28 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         }
     }
 
+
+    /**
+     * no matter what the notification is, rebid!
+     */
+    protected class BuQiang implements Callable<Map.Entry<Boolean,Object>>
+    {
+
+        @Override
+        public Map.Entry<Boolean, Object> call() throws Exception
+        {
+            addAction(new ClickReBidConfirmButton());
+            addAction(new ClickAdd300Button());
+            addAction(new ClickBidButton());
+
+            addAction(new RecogAndEnterVCode());
+            addAction(new ClickVCodeConfirmButton());
+            addAction(new BuQiang());
+            return new AbstractMap.SimpleEntry<>(true, null);
+        }
+    }
+
+
     protected class RecogResult implements Callable<Map.Entry<Boolean,Object>>
     {
         @Override
@@ -450,6 +474,23 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                 addAction(new RecogResult());
             }
             return new AbstractMap.SimpleEntry<Boolean,Object>(true, result);
+        }
+    }
+
+    /**
+     * tricky: for not recognizing waiting in queue status. We keep on clicking until it gets to bid status
+     */
+    protected class ClickReBidConfirmButton implements Callable<Map.Entry<Boolean,Object>>
+    {
+
+        @Override
+        public Map.Entry<Boolean, Object> call() throws Exception
+        {
+            while ( flashStatus!= FlashStatusDetector.Status.BID)
+            {
+                robot.clickReBidConfirmButton();
+            }
+            return new AbstractMap.SimpleEntry<>(true, null);
         }
     }
 
