@@ -255,6 +255,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
                 if(robot.clickAddMoneyButton())
                     break;
             }
+            robot.wait(99);
             return new AbstractMap.SimpleEntry<>(true, null);
         }
     }
@@ -297,6 +298,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         public Map.Entry<Boolean, Object> call() throws Exception
         {
             ArrayList<Integer> vcode = recogAndEnterVCode();
+            robot.wait(100);
             return new AbstractMap.SimpleEntry<Boolean, Object>(true,vcode);
         }
     }
@@ -478,7 +480,7 @@ abstract public class AbstractBidStrategy implements IStatusObserver
     }
 
     /**
-     * tricky: for not recognizing waiting in queue status. We keep on clicking until it gets to bid status
+     * tricky: for not recognizing waiting in queue status. We keep on clicking until it turns to bid status
      */
     protected class ClickReBidConfirmButton implements Callable<Map.Entry<Boolean,Object>>
     {
