@@ -30,6 +30,7 @@ public class VCodeTrain extends AbstractSampleTrain
 
     static
     {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         vCodeTrain = new VCodeTrain(
                 SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
                 SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH,
@@ -40,7 +41,6 @@ public class VCodeTrain extends AbstractSampleTrain
     {
         return vCodeTrain;
     }
-
     //TODO: why this constructor will cause memory leak
     private VCodeTrain(String trainDataPath, String trainClassPath, IEigenvectorStrategy eigenvetorStrategy)
     {

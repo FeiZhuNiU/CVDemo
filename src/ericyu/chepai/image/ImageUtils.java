@@ -87,8 +87,12 @@ public class ImageUtils
     public static Mat color2Binary(Mat src, int threshold)
     {
         Mat gray = color2Gray(src);
-        Mat binary = gray2Binary(gray, threshold);
-        return binary;
+        return gray2Binary(gray, threshold);
+    }
+    public static Mat color2Binary(Mat src)
+    {
+        Mat gray = color2Gray(src);
+        return gray2Binary(gray);
     }
 
     public static Mat color2Gray(Mat src)
@@ -102,7 +106,12 @@ public class ImageUtils
     {
         Mat binary = new Mat(gray.rows(), gray.cols(), CvType.CV_8UC1);
 
-//        Imgproc.threshold(gray, binary, threshold, 255, Imgproc.THRESH_BINARY_INV);
+        Imgproc.threshold(gray, binary, threshold, 255, Imgproc.THRESH_BINARY_INV);
+        return binary;
+    }
+    public static Mat gray2Binary(Mat gray)
+    {
+        Mat binary = new Mat(gray.rows(), gray.cols(), CvType.CV_8UC1);
         Imgproc.threshold(gray, binary, 255, 255, Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
         return binary;
     }

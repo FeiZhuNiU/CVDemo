@@ -71,7 +71,7 @@ public class OCRUtils
                 width,
                 height
         );
-        Mat binary = ImageUtils.color2Binary(mat,0);
+        Mat binary = ImageUtils.color2Binary(mat);
         Imgcodecs.imwrite(imageName,binary);
 
         //ocr

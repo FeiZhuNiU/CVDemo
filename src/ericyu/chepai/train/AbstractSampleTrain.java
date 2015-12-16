@@ -254,7 +254,7 @@ public abstract class AbstractSampleTrain
         List<Mat> ret = new ArrayList<>();
         Mat temp = ImageUtils.reduceColor(src,1);
         Mat gray = ImageUtils.color2Gray(temp);
-        Mat binary = ImageUtils.gray2Binary(gray,0);
+        Mat binary = ImageUtils.gray2Binary(gray);
         ret.add(binary);
         return ret;
     }
