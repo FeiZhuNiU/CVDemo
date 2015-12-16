@@ -11,7 +11,7 @@ import org.opencv.core.Mat;
 
 import java.util.List;
 
-public interface SegStrategy
+public interface ISegStrategy
 {
 
     /**

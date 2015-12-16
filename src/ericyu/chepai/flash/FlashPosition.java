@@ -40,7 +40,7 @@ public class FlashPosition
      */
     private static final double[] topLeftCornerColor;
     private static final double[] topLeftCornerColorOffset_10_10;
-    private static int detectRate = 100;
+    private static int detectRate = 100; // ms
     static
     {
         topLeftCornerColor = new double[]{Configuration.lefttopColorB,

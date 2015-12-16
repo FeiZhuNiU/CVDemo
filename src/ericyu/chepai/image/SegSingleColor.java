@@ -20,7 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class SegSingleColor
-        implements SegStrategy
+        implements ISegStrategy
 {
     /**
      * process the color image to a binary one with least noise

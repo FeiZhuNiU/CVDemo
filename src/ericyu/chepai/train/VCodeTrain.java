@@ -26,8 +26,23 @@ import java.util.Map;
  */
 public class VCodeTrain extends AbstractSampleTrain
 {
+    private static VCodeTrain vCodeTrain;
 
-    public VCodeTrain(String trainDataPath, String trainClassPath, IEigenvectorStrategy eigenvetorStrategy)
+    static
+    {
+        vCodeTrain = new VCodeTrain(
+                SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
+                SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH,
+                new AllPixelEigenvectorStrategy());
+    }
+
+    public static VCodeTrain getInstance()
+    {
+        return vCodeTrain;
+    }
+
+    //TODO: why this constructor will cause memory leak
+    private VCodeTrain(String trainDataPath, String trainClassPath, IEigenvectorStrategy eigenvetorStrategy)
     {
         super(trainDataPath, trainClassPath, eigenvetorStrategy);
     }

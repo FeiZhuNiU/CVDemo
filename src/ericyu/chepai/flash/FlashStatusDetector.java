@@ -11,7 +11,6 @@ package ericyu.chepai.flash;
 import ericyu.chepai.Logger;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.recognize.Recognition;
-import ericyu.chepai.train.AllPixelEigenvectorStrategy;
 import ericyu.chepai.train.FlashStatusTrain;
 import ericyu.chepai.train.RegionPixelEigenVecStrategy;
 import ericyu.chepai.train.SampleConstants;
@@ -95,7 +94,7 @@ public class FlashStatusDetector implements Runnable
             FlashStatusDetector.Status curStatus;
 
             Mat target = getRightPartOfFlash();
-            List<Mat> toRecogs = recognition.getTrainedData().process(target);
+            List<Mat> toRecogs = recognition.getTraining().process(target);
             int result = recognition.recognize(toRecogs.get(0),1);
             switch (result)
             {

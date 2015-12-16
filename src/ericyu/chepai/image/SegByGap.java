@@ -18,7 +18,7 @@ import java.util.List;
 
 @Deprecated
 public class SegByGap
-        implements SegStrategy
+        implements ISegStrategy
 {
     @Override
     public List<Mat> doSegmentation(Mat src)

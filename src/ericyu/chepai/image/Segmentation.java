@@ -39,7 +39,7 @@ public class Segmentation
      * @param strategy segmentation stategy
      * @return normalized mats
      */
-    public static List<Mat> segmentROI(Mat src, Rect roiRect, SegStrategy strategy)
+    public static List<Mat> segmentROI(Mat src, Rect roiRect, ISegStrategy strategy)
     {
         Mat roi = src.submat(roiRect);
         return segment(roi, strategy);
@@ -49,12 +49,12 @@ public class Segmentation
      * main logic for segmentation
      *
      * @param src      image to segment
-     * @param strategy ROI (which region of the image want to be recognized)
+     * @param strategy implementation of {@link ISegStrategy}
      * @return return null if fails
      */
-    public static List<Mat> segment(Mat src, SegStrategy strategy)
+    public static List<Mat> segment(Mat src, ISegStrategy strategy)
     {
-        System.out.println("process Segmentation... ");
+        Logger.log(Logger.Level.INFO, null, "process Segmentation... ");
 
         List<Mat> unNormalizedDigits = strategy.doSegmentation(src);
 

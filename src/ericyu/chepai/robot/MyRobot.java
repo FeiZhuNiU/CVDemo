@@ -112,8 +112,13 @@ public class MyRobot implements IStatusObserver
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 //        checkColor();
 
+        //check vcode recognition effect
+        while(true)
+        {
+            new MyRobot(new Robot()).recogVerificationCode();
+        }
 
-        new MyRobot(new Robot()).recogVerificationCode();
+
 //        while(true)
 //        {
 //            new MyRobot(new Robot()).getCurrentLowestDeal();
@@ -218,7 +223,7 @@ public class MyRobot implements IStatusObserver
         Recognition recognition = new Recognition(new RefreshButtonTrain(SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH,
                                                                          SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH,
                                                                          new RegionPixelEigenVecStrategy(2,10)));
-        toReg = recognition.getTrainedData().process(toReg).get(0);
+        toReg = recognition.getTraining().process(toReg).get(0);
 //        Imgcodecs.imwrite("dump.bmp",toReg);
 
         //TODO: magic number (1 -> refresh button exists)
@@ -272,19 +277,26 @@ public class MyRobot implements IStatusObserver
      */
     public ArrayList<Integer> recogVerificationCode()
     {
-        if(flashStatus != FlashStatusDetector.Status.V_CODE)
-        {
-            Logger.log(Logger.Level.WARNING, flashStatus, "can not get verification Code.");
-            return null;
-        }
+//        if(flashStatus != FlashStatusDetector.Status.V_CODE)
+//        {
+//            Logger.log(Logger.Level.WARNING, flashStatus, "can not get verification Code.");
+//            return null;
+//        }
 
+        try
+        {
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
         ArrayList<Integer> ret = new ArrayList<>();
 
-        Recognition recognition = new Recognition(
-                new VCodeTrain(
-                    SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
-                    SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH,
-                    new AllPixelEigenvectorStrategy()));
+        long start = System.currentTimeMillis();
+        Recognition recognition = new Recognition(VCodeTrain.getInstance());
+        long mid = System.currentTimeMillis();
+        System.out.println("load sample consumed: " + (mid - start) / 1000.0);
 
         ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
                                  FlashPosition.origin.x + FlashPosition.REGION_VCODE_X,
@@ -294,7 +306,9 @@ public class MyRobot implements IStatusObserver
 
         Mat toRecog = ImageUtils.readImage(ImageUtils.screenCaptureImage);
 
-        java.util.List<Mat> digitsToRecog = recognition.getTrainedData().process(toRecog);
+        java.util.List<Mat> digitsToRecog = recognition.getTraining().process(toRecog);
+        long mid2 = System.currentTimeMillis();
+        System.out.println("segmentation consumed: " + (mid2 - mid) / 1000.0);
         //recognize
         if (digitsToRecog != null && digitsToRecog.size() == 4)
         {
@@ -307,6 +321,8 @@ public class MyRobot implements IStatusObserver
                 ret.add(num);
             }
             Logger.log(Logger.Level.INFO, flashStatus, "recognized : " + ret);
+            long mid3 = System.currentTimeMillis();
+            System.out.println("recognition consumed: " + (mid3 - mid2) / 1000.0);
             return ret;
         }
         return null;

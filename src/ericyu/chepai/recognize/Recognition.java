@@ -22,11 +22,11 @@ import org.opencv.ml.Ml;
  */
 public class Recognition
 {
-    private AbstractSampleTrain trainedData;
+    private AbstractSampleTrain training;
 
-    public AbstractSampleTrain getTrainedData()
+    public AbstractSampleTrain getTraining()
     {
-        return trainedData;
+        return training;
     }
 
     public enum Classifier
@@ -34,15 +34,15 @@ public class Recognition
         KNN, ANN
     }
 
-    public Recognition(AbstractSampleTrain trainedData)
+    public Recognition(AbstractSampleTrain training)
     {
-        this.trainedData = trainedData;
+        this.training = training;
     }
 
     private KNearest getKnnClassifier()
     {
         KNearest kNearest = KNearest.create();
-        kNearest.train(trainedData.getTrainData(), Ml.ROW_SAMPLE, trainedData.getTrainClass());
+        kNearest.train(training.getTrainData(), Ml.ROW_SAMPLE, training.getTrainClass());
         return kNearest;
     }
 
@@ -53,7 +53,7 @@ public class Recognition
      */
     public int recognize(Mat toRecog, int accuracy)
     {
-        Mat eigen = getTrainedData().getEigenvetorStrategy().getEigenVec(toRecog);
+        Mat eigen = getTraining().getEigenvetorStrategy().getEigenVec(toRecog);
         int num = (int) getKnnClassifier().findNearest(eigen, accuracy, new Mat());
         return num;
     }
@@ -71,7 +71,7 @@ public class Recognition
         ann_mlp.setBackpropWeightScale(0.1);
 
 //        Map.Entry<Mat, Mat> trainData = RecogUtils.setTrainDataAndTrainClasses();
-        ann_mlp.train(trainedData.getTrainData(), Ml.ROW_SAMPLE, trainedData.getTrainClass());
+        ann_mlp.train(training.getTrainData(), Ml.ROW_SAMPLE, training.getTrainClass());
 
         return ann_mlp;
     }

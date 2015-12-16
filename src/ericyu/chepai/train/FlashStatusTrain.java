@@ -65,9 +65,7 @@ public class FlashStatusTrain extends AbstractSampleTrain
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
         String sampleDir = "FlashStatusImage";
-
         FlashStatusTrain train = new FlashStatusTrain(sampleDir, new RegionPixelEigenVecStrategy(10,10), SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH, SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH);
         train.train();
         train.dumpTrainData();
