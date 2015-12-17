@@ -65,15 +65,23 @@ public class OCRUtils
 //                                 FlashPosition.origin.y + y,
 //                                 width,
 //                                 height);
-        Mat mat = ImageUtils.screenCapture(
+        Mat mat;
+        while((mat = ImageUtils.screenCapture(
                 FlashPosition.origin.x + x,
                 FlashPosition.origin.y + y,
                 width,
-                height
-        );
+                height)) == null);
         Mat binary = ImageUtils.color2Binary(mat);
         Imgcodecs.imwrite(imageName,binary);
 
+        //in case the file has not be completely written
+        try
+        {
+            Thread.sleep(300);
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
         //ocr
         String ret = doOCR(imageName);
 

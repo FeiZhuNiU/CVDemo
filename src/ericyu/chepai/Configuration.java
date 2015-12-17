@@ -29,6 +29,7 @@ public class Configuration
     public static int vCodeConfirmSecond;
     public static int addMoneySecond;
     public static int latestBidTimeSecond;
+    public static int bidDiff;
 
 
     /**
@@ -109,6 +110,7 @@ public class Configuration
     public static int add300ButtonY;
 
     public static int startBid;
+    public static int exitTimeMinute;
 
 
 
@@ -124,6 +126,7 @@ public class Configuration
     private static final String V_CODE_CONFIRM_SECOND_KEY = "vCodeConfirmTimeSecond";
     private static final String ADD_MONEY_SECOND_KEY = "addMoneyTimeSecond";
     private static final String LATEST_BID_TIME_SECOND_KEY = "latestBidTimeSecond";
+    private static final String BID_DIFF_KEY="bidDiff";
 
     /**
      * flash related
@@ -204,6 +207,7 @@ public class Configuration
     private static final String BUTTON_ADD_300_Y_KEY = "add300ButtonY";
 
     private static final String START_BID_KEY="startBid";
+    private static final String EXIT_TIME_MINUTE_KEY="exitTimeMinute";
 
 
     public static HashMap<String, String> properties = new HashMap<>();
@@ -231,6 +235,7 @@ public class Configuration
             vCodeConfirmSecond = Integer.parseInt(properties.get(V_CODE_CONFIRM_SECOND_KEY).trim());
             addMoneySecond = Integer.parseInt(properties.get(ADD_MONEY_SECOND_KEY).trim());
             latestBidTimeSecond = Integer.parseInt(properties.get(LATEST_BID_TIME_SECOND_KEY).trim());
+            bidDiff = Integer.parseInt(properties.get(BID_DIFF_KEY).trim());
 
             lefttopColorR = Integer.parseInt(properties.get(LEFTTOP_COLOR_R_KEY).trim());
             lefttopColorG = Integer.parseInt(properties.get(LEFTTOP_COLOR_G_KEY).trim());
@@ -309,6 +314,8 @@ public class Configuration
             add300ButtonY = Integer.parseInt(properties.get(BUTTON_ADD_300_Y_KEY).trim());
 
             startBid = Integer.parseInt(properties.get(START_BID_KEY).trim());
+            exitTimeMinute = Integer.parseInt(properties.get(EXIT_TIME_MINUTE_KEY).trim());
+
 
 
 

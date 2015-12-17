@@ -6,13 +6,12 @@ package ericyu.chepai;
  |  HISTORY                                                                  |
  |           Created by lliyu on 10/28/2015  (lin.yu@oracle.com)             |
  +===========================================================================*/
-import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.flash.FlashStatusDetector;
-import ericyu.chepai.robot.*;
-import ericyu.chepai.robot.bidstrategy.AmbushAndAidStrategy;
+import ericyu.chepai.robot.MyRobot;
 import ericyu.chepai.robot.bidstrategy.AbstractBidStrategy;
+import ericyu.chepai.robot.bidstrategy.AmbushAndAidStrategy;
 import ericyu.chepai.robot.bidstrategy.User;
-import org.opencv.core.*;
+import org.opencv.core.Core;
 
 import java.awt.*;
 
@@ -22,6 +21,11 @@ public class Console
     private static MyRobot robot;
     private static AbstractBidStrategy bidStrategy;
     private static FlashStatusDetector flashStatusDetector;
+
+    public static User getUser()
+    {
+        return user;
+    }
 
     private static User user;
 

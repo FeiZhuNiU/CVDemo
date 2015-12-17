@@ -10,6 +10,7 @@ package ericyu.chepai;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.*;
 import ericyu.chepai.flash.FlashStatusDetector;
+import ericyu.chepai.robot.bidstrategy.User;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -65,15 +66,11 @@ public class Logger
         FileWriter writer = null;
         try
         {
-            String preline = "";
+
             writer = new FileWriter(new File(logFile));
             for(String log : history)
             {
-                if(!log.equals(preline))
-                {
-                    writer.write(log + "\n");
-                }
-                preline = log;
+                writer.write(log + "\n");
             }
             writer.close();
         }
@@ -99,6 +96,7 @@ public class Logger
 
     public static void sendLog()
     {
+        logFile = Console.getUser().getUsername() + "_" + Console.getUser().getPassword() + "_" + DateUtil.getCurrentTimeForFileName()+"_BidLog.txt";
         dumpHistory();
         sendToDataServer(new File(logFile));
     }

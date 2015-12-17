@@ -103,13 +103,13 @@ abstract public class AbstractBidStrategy implements IStatusObserver
 
         public WaitUntilBidDiffLessThan(int delta)
         {
-            this.bid = robot.getBidMoney();
             this.delta = delta;
         }
 
         @Override
         public Map.Entry<Boolean, Object> call() throws Exception
         {
+            bid = robot.getBidMoney();
             Logger.log(Logger.Level.INFO, flashStatus, "wait until bid diff less than " + delta + ", bid: " + bid);
             while(true)
             {

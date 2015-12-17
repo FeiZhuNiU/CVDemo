@@ -61,7 +61,7 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
                                                                     Configuration.bidTimeMinute,
                                                                     Configuration.vCodeConfirmSecond)));
 
-        addAction(new WaitUntilBidDiffLessThan(400));
+        addAction(new WaitUntilBidDiffLessThan(Configuration.bidDiff));
 
         addAction(new ClickVCodeConfirmButton());
 

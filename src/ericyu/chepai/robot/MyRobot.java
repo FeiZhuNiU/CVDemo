@@ -156,7 +156,7 @@ public class MyRobot implements IStatusObserver
     {
         /**
          * use tesseract to recognize current lowest bid money
-         * @return 0 if failed
+         * @return  0   -> ocr failed
          */
         public int recogCurrentLowestDeal()
         {
@@ -224,13 +224,6 @@ public class MyRobot implements IStatusObserver
                 if (currentLowestBid != bak)
                 {
                     Logger.log(Logger.Level.INFO, flashStatus, "Current lowest bid changed to " + currentLowestBid);
-                }
-                try
-                {
-                    Thread.sleep(10);
-                } catch (InterruptedException e)
-                {
-                    e.printStackTrace();
                 }
             }
         }
@@ -712,7 +705,7 @@ public class MyRobot implements IStatusObserver
     public void wait(int time)
     {
         robot.delay(time);
-        Logger.log(Logger.Level.INFO, flashStatus, "robot waited " + time + "ms.");
+//        Logger.log(Logger.Level.INFO, flashStatus, "robot waited " + time + "ms.");
     }
 
     /**

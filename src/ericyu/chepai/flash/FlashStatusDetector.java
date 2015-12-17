@@ -8,6 +8,7 @@ package ericyu.chepai.flash;
  |           Created by lliyu on 11/27/2015  (lin.yu@oracle.com)             |
  +===========================================================================*/
 
+import ericyu.chepai.DateUtil;
 import ericyu.chepai.Logger;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.recognize.Recognition;
@@ -122,6 +123,14 @@ public class FlashStatusDetector implements Runnable
                 Logger.log(Logger.Level.INFO, status, "FlashStatus changed to " + curStatus);
                 notifyStatusObservers(curStatus);
             }
+            // system exit
+
+            if (System.currentTimeMillis() > DateUtil.getDateLongValue(-1,9,5))
+            {
+                Logger.sendLog();
+                System.exit(0);
+            }
+
             try
             {
                 Thread.sleep(detectRate);
