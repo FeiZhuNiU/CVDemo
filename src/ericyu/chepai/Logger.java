@@ -12,9 +12,7 @@ import com.aliyun.oss.model.*;
 import ericyu.chepai.flash.FlashStatusDetector;
 import ericyu.chepai.robot.bidstrategy.User;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -109,19 +107,29 @@ public class Logger
 
     }
 
-    public static void getAllDataFromServer()
+    public static void getAllDataFromServer() throws Exception
     {
         OSSClient client = new OSSClient(endPoint,accessKeyId,accessKeySecret);
 
         ObjectListing listing = client.listObjects(bucketName);
         for(OSSObjectSummary ossObjectSummary : listing.getObjectSummaries())
         {
-            GetObjectRequest getObjectRequest = new GetObjectRequest(bucketName, ossObjectSummary.getKey());
-            ObjectMetadata objectMetadata = client.getObject(getObjectRequest,new File("dataFromServer_" + ossObjectSummary.getKey() + ".txt"));
+            OSSObject object = client.getObject(bucketName,ossObjectSummary.getKey());
+            ObjectMetadata meta = object.getObjectMetadata();
+            InputStream objectContent = object.getObjectContent();
+            OutputStream os = new FileOutputStream(object.getKey());
+            byte[] buffer = new byte[10];
+            while((objectContent.read(buffer))!=-1){
+                os.write(buffer);
+            }
+            os.close();
+
+            objectContent.close();
+
         }
     }
 
-    public static void deleteAllData(String bucketName)
+    public static void deleteAllDataOnServer(String bucketName)
     {
         OSSClient client = new OSSClient(endPoint,accessKeyId,accessKeySecret);
         ObjectListing listing = client.listObjects(bucketName);
@@ -134,6 +142,13 @@ public class Logger
 
     public static void main(String[] args)
     {
-        deleteAllData(bucketName);
+//        deleteAllDataOnServer(bucketName);
+        try
+        {
+            getAllDataFromServer();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
