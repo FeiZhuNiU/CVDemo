@@ -31,14 +31,37 @@ public class Console
 
     public static void main(String[] args)
     {
-        if (!init())
+        if(args.length == 1)
         {
-            Logger.log(Logger.Level.ERROR, flashStatusDetector.getStatus(), "init failed!");
-            return;
+            if(args[0].equals("downloadResult"))
+            {
+                Logger.main(null);
+            }
+            else if (args[0].equals("testVCode") || args[0].equals("testLowestBid"))
+            {
+                try
+                {
+                    MyRobot.main(args);
+                }
+                catch (AWTException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
         }
-        bidStrategy.execute();
-        // for test
-//        bidStrategy.printResult();
+        else if (args.length == 0)
+        {
+
+            if (!init())
+            {
+                Logger.log(Logger.Level.ERROR, flashStatusDetector.getStatus(), "init failed!");
+                return;
+            }
+            bidStrategy.execute();
+            // for test
+//            bidStrategy.printResult();
+        }
 
     }
 

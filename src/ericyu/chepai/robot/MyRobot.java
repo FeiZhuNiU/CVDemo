@@ -32,6 +32,20 @@ public class MyRobot implements IStatusObserver
 {
     private Robot robot;
     private FlashStatusDetector.Status flashStatus;
+
+    private Recognition vCodeRecognition;
+    private Recognition vCodeRegionRecognition;
+
+    public void setFlashStatus(FlashStatusDetector.Status flashStatus)
+    {
+        this.flashStatus = flashStatus;
+    }
+
+    public FlashStatusDetector.Status getFlashStatus()
+    {
+        return flashStatus;
+    }
+
     /**
      * bid money. set when click add money range button
      */
@@ -58,6 +72,14 @@ public class MyRobot implements IStatusObserver
     {
         this.robot = robot;
         flashStatus = FlashStatusDetector.Status.NONE;
+        vCodeRecognition = new Recognition(new VCodeTrain(
+                SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
+                SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH,
+                new AllPixelEigenvectorStrategy()));
+        vCodeRegionRecognition = new Recognition(new RefreshButtonTrain(
+                SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH,
+                SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH,
+                new RegionPixelEigenVecStrategy(2,10)));
     }
 
     public static Map<Character, Integer> keyMap = new HashMap<>();
@@ -112,14 +134,24 @@ public class MyRobot implements IStatusObserver
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 //        checkColor();
 
-        //check vcode recognition effect
-//        while(true)
-//        {
-//            new MyRobot(new Robot()).recogVerificationCode();
-//        }
+        if(args.length==1)
+        {
+            if (args[0].equals("testVCode"))
+            {
+                MyRobot robot = new MyRobot(new Robot());
+                robot.setFlashStatus(FlashStatusDetector.Status.VCODE);
+                while(true)
+                {
+                    robot.recogVerificationCode();
+                }
+            }
+            else if (args[0].equals("testLowestBid"))
+            {
+                Thread thread = new Thread((new MyRobot(new Robot())).new LowestBidDetector());
+                thread.start();
+            }
+        }
 
-        Thread thread = new Thread((new MyRobot(new Robot())).new LowestBidDetector());
-        thread.start();
     }
 
     /**
@@ -161,7 +193,7 @@ public class MyRobot implements IStatusObserver
         public int recogCurrentLowestDeal()
         {
             //comment when test
-            if(flashStatus != FlashStatusDetector.Status.BID && flashStatus != FlashStatusDetector.Status.V_CODE)
+            if(flashStatus != FlashStatusDetector.Status.BID && flashStatus != FlashStatusDetector.Status.VCODE)
             {
                 return 0;
             }
@@ -291,7 +323,7 @@ public class MyRobot implements IStatusObserver
      */
     public int getVCodeRegionStatus()
     {
-        if(flashStatus != FlashStatusDetector.Status.V_CODE)
+        if(flashStatus != FlashStatusDetector.Status.VCODE)
         {
             Logger.log(Logger.Level.WARNING, flashStatus,"not ready to find refresh button.");
             return -1;
@@ -301,14 +333,12 @@ public class MyRobot implements IStatusObserver
                                  FlashPosition.origin.y + FlashPosition.REGION_VCODE_Y,
                                  FlashPosition.REGION_VCODE_WIDTH,
                                  FlashPosition.REGION_VCODE_HEIGHT);
-        Recognition recognition = new Recognition(new RefreshButtonTrain(SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH,
-                                                                         SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH,
-                                                                         new RegionPixelEigenVecStrategy(2,10)));
-        toReg = recognition.getTraining().process(toReg).get(0);
+
+        toReg = vCodeRegionRecognition.getTraining().process(toReg).get(0);
 //        Imgcodecs.imwrite("dump.bmp",toReg);
 
         //TODO: magic number (1 -> refresh button exists)
-        int result = recognition.recognize(toReg,1);
+        int result = vCodeRegionRecognition.recognize(toReg,1);
         if(result == 1)
         {
             Logger.log(Logger.Level.INFO, flashStatus, "refresh button exists.");
@@ -358,24 +388,24 @@ public class MyRobot implements IStatusObserver
      */
     public ArrayList<Integer> recogVerificationCode()
     {
-        if(flashStatus != FlashStatusDetector.Status.V_CODE)
+        if(flashStatus != FlashStatusDetector.Status.VCODE)
         {
             Logger.log(Logger.Level.WARNING, flashStatus, "can not get verification Code.");
             return null;
         }
 
-        try
-        {
-            Thread.sleep(1000);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
+//        try
+//        {
+//            Thread.sleep(1000);
+//        }
+//        catch (InterruptedException e)
+//        {
+//            e.printStackTrace();
+//        }
         ArrayList<Integer> ret = new ArrayList<>();
 
         long start = System.currentTimeMillis();
-        Recognition recognition = new Recognition(VCodeTrain.getInstance());
+//        Recognition recognition = new Recognition(VCodeTrain.getInstance());
         long mid = System.currentTimeMillis();
         System.out.println("load sample consumed: " + (mid - start) / 1000.0);
 
@@ -387,7 +417,8 @@ public class MyRobot implements IStatusObserver
 
         Mat toRecog = ImageUtils.readImage(ImageUtils.screenCaptureImage);
 
-        java.util.List<Mat> digitsToRecog = recognition.getTraining().process(toRecog);
+        java.util.List<Mat> digitsToRecog = vCodeRecognition.getTraining().process(toRecog);
+
         long mid2 = System.currentTimeMillis();
         System.out.println("segmentation consumed: " + (mid2 - mid) / 1000.0);
         //recognize
@@ -397,7 +428,7 @@ public class MyRobot implements IStatusObserver
             for (Mat mat : digitsToRecog)
             {
 
-                int num = recognition.recognize(mat,10);
+                int num = vCodeRecognition.recognize(mat,10);
 //                    int num = (int)ann_mlp.predict(target);
                 ret.add(num);
             }
@@ -411,7 +442,7 @@ public class MyRobot implements IStatusObserver
 
     public boolean enterVerificationCode(ArrayList<Integer> numbers)
     {
-        if(flashStatus != FlashStatusDetector.Status.V_CODE)
+        if(flashStatus != FlashStatusDetector.Status.VCODE)
         {
             Logger.log(Logger.Level.WARNING, flashStatus, "can not enter verification code.");
             return false;
@@ -496,7 +527,7 @@ public class MyRobot implements IStatusObserver
 
     public boolean focusOnVCodeInputBox()
     {
-        if(flashStatus != FlashStatusDetector.Status.V_CODE)
+        if(flashStatus != FlashStatusDetector.Status.VCODE)
         {
             Logger.log(Logger.Level.WARNING, flashStatus, "can not focus on V-code Input box.");
             return false;
@@ -509,7 +540,7 @@ public class MyRobot implements IStatusObserver
 
     public boolean clickConfirmVCodeButton()
     {
-        if(flashStatus != FlashStatusDetector.Status.V_CODE)
+        if(flashStatus != FlashStatusDetector.Status.VCODE)
         {
             Logger.log(Logger.Level.WARNING, flashStatus, "can not click on V-code confirm button.");
             return false;
@@ -523,7 +554,7 @@ public class MyRobot implements IStatusObserver
 
     public boolean clickCancelVCodeButton()
     {
-        if(flashStatus != FlashStatusDetector.Status.V_CODE &&
+        if(flashStatus != FlashStatusDetector.Status.VCODE &&
                 flashStatus != FlashStatusDetector.Status.NOTIFICATION)
         {
             Logger.log(Logger.Level.WARNING, flashStatus, "can not click on V-code cancel button.");
@@ -537,7 +568,7 @@ public class MyRobot implements IStatusObserver
 
     public boolean clickRefreshVCodeButton()
     {
-        if(flashStatus != FlashStatusDetector.Status.V_CODE)
+        if(flashStatus != FlashStatusDetector.Status.VCODE)
         {
             Logger.log(Logger.Level.WARNING, flashStatus, "can not click on V-code refresh button.");
             return false;

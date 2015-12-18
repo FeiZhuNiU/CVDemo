@@ -42,7 +42,7 @@ public class FlashStatusDetector implements Runnable
         NONE,
         LOGIN,
         BID,
-        V_CODE,
+        VCODE,
         NOTIFICATION
     }
 
@@ -106,7 +106,7 @@ public class FlashStatusDetector implements Runnable
                     curStatus = Status.BID;
                     break;
                 case 3:
-                    curStatus = Status.V_CODE;
+                    curStatus = Status.VCODE;
                     break;
                 case 4:
                     curStatus = Status.NOTIFICATION;

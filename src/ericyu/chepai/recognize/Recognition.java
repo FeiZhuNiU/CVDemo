@@ -29,21 +29,14 @@ public class Recognition
         return training;
     }
 
-    public enum Classifier
-    {
-        KNN, ANN
-    }
+    private KNearest kNearest;
 
     public Recognition(AbstractSampleTrain training)
     {
         this.training = training;
-    }
-
-    private KNearest getKnnClassifier()
-    {
-        KNearest kNearest = KNearest.create();
+        kNearest = KNearest.create();
+        // this will cause memory leak
         kNearest.train(training.getTrainData(), Ml.ROW_SAMPLE, training.getTrainClass());
-        return kNearest;
     }
 
     /**
@@ -54,7 +47,7 @@ public class Recognition
     public int recognize(Mat toRecog, int accuracy)
     {
         Mat eigen = getTraining().getEigenvetorStrategy().getEigenVec(toRecog);
-        int num = (int) getKnnClassifier().findNearest(eigen, accuracy, new Mat());
+        int num = (int) (kNearest.findNearest(eigen, accuracy, new Mat()));
         return num;
     }
 
