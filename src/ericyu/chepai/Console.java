@@ -79,13 +79,13 @@ public class Console
 //            flashPositionDetector.start();
 //            FlashPosition.setOrigin();
             flashStatusDetector = new FlashStatusDetector();
-            Thread detectorThread = new Thread(flashStatusDetector);
-            detectorThread.start();
-
             robot = new MyRobot(new Robot());
             bidStrategy = new AmbushAndAidStrategy(user,robot);
             flashStatusDetector.addStatusObserver(robot);
             flashStatusDetector.addStatusObserver(bidStrategy);
+
+            Thread detectorThread = new Thread(flashStatusDetector);
+            detectorThread.start();
 
             Thread lowestBidDetector = new Thread(robot.new LowestBidDetector());
             lowestBidDetector.start();
