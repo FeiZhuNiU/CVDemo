@@ -64,9 +64,9 @@ public class Logger
         FileWriter writer = null;
         try
         {
-
             writer = new FileWriter(new File(logFile));
-            for(String log : history)
+            List<String> historyCur = new ArrayList<>(history);
+            for(String log : historyCur)
             {
                 writer.write(log + "\n");
             }

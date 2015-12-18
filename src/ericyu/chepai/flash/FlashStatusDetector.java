@@ -8,6 +8,7 @@ package ericyu.chepai.flash;
  |           Created by lliyu on 11/27/2015  (lin.yu@oracle.com)             |
  +===========================================================================*/
 
+import ericyu.chepai.Configuration;
 import ericyu.chepai.DateUtil;
 import ericyu.chepai.Logger;
 import ericyu.chepai.image.ImageUtils;
@@ -52,6 +53,9 @@ public class FlashStatusDetector implements Runnable
                                                                 SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,
                                                                 new RegionPixelEigenVecStrategy(10,10)));
         status = Status.NONE;
+        Logger.log(Logger.Level.INFO, null, "Program will shutdown at " + DateUtil.formatLongValueToDate(DateUtil.getDateLongValue(Configuration.exitTimeHour, Configuration.exitTimeMinute,3)));
+
+        Logger.log(Logger.Level.INFO, null, DateUtil.getDateLongValue(Configuration.exitTimeHour, Configuration.exitTimeMinute,3) - System.currentTimeMillis() + "ms to go");
     }
 
     public void notifyStatusObservers(Status status)
@@ -91,6 +95,15 @@ public class FlashStatusDetector implements Runnable
     {
         while(true)
         {
+
+            // system exit
+
+            if (System.currentTimeMillis() > DateUtil.getDateLongValue(Configuration.exitTimeHour, Configuration.exitTimeMinute,3))
+            {
+                Logger.sendLog();
+                System.exit(1);
+            }
+
             FlashStatusDetector.Status originStatus = status;
             FlashStatusDetector.Status curStatus;
 
@@ -123,13 +136,7 @@ public class FlashStatusDetector implements Runnable
                 Logger.log(Logger.Level.INFO, status, "FlashStatus changed to " + curStatus);
                 notifyStatusObservers(curStatus);
             }
-            // system exit
 
-            if (System.currentTimeMillis() > DateUtil.getDateLongValue(-1,9,5))
-            {
-                Logger.sendLog();
-                System.exit(0);
-            }
 
             try
             {

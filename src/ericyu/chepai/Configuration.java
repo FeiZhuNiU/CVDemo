@@ -110,6 +110,7 @@ public class Configuration
     public static int add300ButtonY;
 
     public static int startBid;
+    public static int exitTimeHour;
     public static int exitTimeMinute;
 
 
@@ -208,9 +209,11 @@ public class Configuration
 
     private static final String START_BID_KEY="startBid";
     private static final String EXIT_TIME_MINUTE_KEY="exitTimeMinute";
+    private static final String EXIT_TIME_HOUR_KEY="exitTimeHour";
 
 
     public static HashMap<String, String> properties = new HashMap<>();
+
 
     static
     {
@@ -315,8 +318,7 @@ public class Configuration
 
             startBid = Integer.parseInt(properties.get(START_BID_KEY).trim());
             exitTimeMinute = Integer.parseInt(properties.get(EXIT_TIME_MINUTE_KEY).trim());
-
-
+            exitTimeHour = Integer.parseInt(properties.get(EXIT_TIME_HOUR_KEY).trim());
 
 
         }

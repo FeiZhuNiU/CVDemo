@@ -147,8 +147,20 @@ public class MyRobot implements IStatusObserver
             }
             else if (args[0].equals("testLowestBid"))
             {
-                Thread thread = new Thread((new MyRobot(new Robot())).new LowestBidDetector());
+                MyRobot robot = new MyRobot(new Robot());
+                robot.setFlashStatus(FlashStatusDetector.Status.VCODE);
+                Thread thread = new Thread(robot.new LowestBidDetector());
                 thread.start();
+            }
+            else if (args[0].equals("testRefreshButton"))
+            {
+                MyRobot robot = new MyRobot(new Robot());
+                robot.setFlashStatus(FlashStatusDetector.Status.VCODE);
+                while(true)
+                {
+                    System.out.println(robot.getVCodeRegionStatus());
+
+                }
             }
         }
 

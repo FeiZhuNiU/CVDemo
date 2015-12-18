@@ -37,7 +37,7 @@ public class Console
             {
                 Logger.main(null);
             }
-            else if (args[0].equals("testVCode") || args[0].equals("testLowestBid"))
+            else if (args[0].equals("testVCode") || args[0].equals("testLowestBid") || args[0].equals("testRefreshButton"))
             {
                 try
                 {
