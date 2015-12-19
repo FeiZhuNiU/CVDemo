@@ -224,6 +224,13 @@ public class MyRobot implements IStatusObserver
 //                Logger.log(Logger.Level.WARNING, flashStatus, "get current Lowest deal failed!");
             }
 //            Logger.log(Logger.Level.INFO, flashStatus, "current Lowest deal: " + ret);
+            if(ret != 0)
+            {
+                if (ret < 80000)
+                {
+                    ret += ((8 - ret/10000))*10000;
+                }
+            }
             return ret;
         }
 
@@ -236,12 +243,13 @@ public class MyRobot implements IStatusObserver
             {
                 int bak = currentLowestBid;
                 int recognized = recogCurrentLowestDeal();
+                System.out.println(recognized);
                 if(recognized != 0)
                 {
                     if (recognized != lastRecognized)
                     {
                         int next = recognized;
-                        if (recognized > currentLowestBid + 200)
+                        if (recognized > currentLowestBid + 100)
                         {
                             diffCnt ++;
                             if (diffCnt == 2)
