@@ -42,7 +42,6 @@ junit*.properties
 production/
 resources/
 dump/
-*.png
 *.bmp
 !/FlashStatusImage/*
 !/RefreshImage/*

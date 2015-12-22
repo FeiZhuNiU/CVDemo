@@ -7,42 +7,59 @@ package ericyu.chepai.image;
  |           Created by lliyu on 11/17/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
-import ericyu.chepai.Logger;
+import com.recognition.software.jdeskew.ImageUtil;
 import org.opencv.core.Core;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Deprecated
-public class SegByGap
-        implements ISegStrategy
+/**
+ * this is for color VCode
+ */
+public class SegMultiColor extends AbstractSegStrategy
 {
     @Override
-    public List<Mat> doSegmentation(Mat src)
+    protected Mat preProcess(Mat src)
     {
-        if (src == null || src.type() != CvType.CV_8UC1)
+        if (src == null)
         {
-            Logger.log(Logger.Level.WARNING, null,"the input Mat is null or its type is not CvType.CV_8UC1");
             return null;
         }
-        List<Rect> ret = new ArrayList<Rect>();
+//        src = ImageUtils.equalization(src);
+        src = ImageUtils.removeNoise(src,3);
+        Mat gray = ImageUtils.color2Gray(src);
 
-        List<Integer> countNonZeros = countNonZeros(src);
-        adjustCountList(countNonZeros, 3);
-        int tmp = 0;
-        for (int i : countNonZeros)
-        {
-            System.out.println(tmp++ + " -> " + i);
-        }
-        List<Integer> indexes = getSegmentationLine(countNonZeros);
+//        Mat equalized = new Mat();
+//        Imgproc.equalizeHist(gray,equalized);
+        gray = ImageUtils.gray2Binary(gray);
 
+        Imgcodecs.imwrite("CodeImage/gray2.bmp",gray);
+        return gray;
 
-        return null;
+//        List<Rect> ret = new ArrayList<>();
+//
+//        List<Integer> countWhitePixels = countWhitePixels(src);
+//        adjustCountList(countWhitePixels, 3);
+//        int tmp = 0;
+//        for (int i : countWhitePixels)
+//        {
+//            System.out.println(tmp++ + " -> " + i);
+//        }
+//        List<Integer> indexes = getSegmentationLine(countWhitePixels);
+//
+//
+//        return null;
     }
 
+    @Override
+    protected List<Rect> getSegRects(Mat src)
+    {
+        return null;
+    }
 
     /**
      * the input should be zero - nonezero where zeros represent gaps
@@ -104,30 +121,52 @@ public class SegByGap
         }
     }
 
-    private List<Integer> countNonZeros(Mat src)
+    private List<Double> countWhitePixels(Mat src)
     {
-        List<Integer> ret = new ArrayList<>();
+        List<Integer> cnt = new ArrayList<>();
         for (int i = 0; i < src.width(); ++i)
         {
             int cur = 0;
             for (int j = 0; j < src.height(); ++j)
             {
-                if (src.get(j, i)[0] > 0)
+                if (src.get(j, i)[0] > 200)
                 {
                     ++cur;
                 }
             }
-            ret.add(cur);
+            //TODO: optimize
+            // first and last 4 cols set 0
+            if(i<4 || i >= src.width()-4)
+            {
+                cnt.add(0);
+            }
+            else
+            {
+                cnt.add(cur);
+            }
         }
+        List<Double> ret = new ArrayList<>();
+        //smooth
+        for(int i = 0 ; i < cnt.size(); ++i)
+        {
+            int cur = 0;
+            cur += (i-1>=0 ? cnt.get(i-1) : 0);
+            cur += cnt.get(i);
+            cur += (i+1<cnt.size() ? cnt.get(i+1) : 0);
+            ret.add(cur/3.0);
+        }
+
         return ret;
     }
 
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        SegByGap segByGap = new SegByGap();
-        Mat test = ImageUtils.readImage("dump\\fixed_.bmp");
-        Mat test1 = ImageUtils.color2Gray(test);
-        segByGap.doSegmentation(test1);
+        SegMultiColor segMultiColor = new SegMultiColor();
+        // 163616 656998 697144
+        Mat test = ImageUtils.readImage("CodeImage\\163616.png");
+        Mat gray = segMultiColor.preProcess(test);
+        System.out.println(segMultiColor.countWhitePixels(gray));
+
     }
 }

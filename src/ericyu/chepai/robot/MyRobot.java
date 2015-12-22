@@ -414,14 +414,6 @@ public class MyRobot implements IStatusObserver
             return null;
         }
 
-//        try
-//        {
-//            Thread.sleep(1000);
-//        }
-//        catch (InterruptedException e)
-//        {
-//            e.printStackTrace();
-//        }
         ArrayList<Integer> ret = new ArrayList<>();
 
         long start = System.currentTimeMillis();

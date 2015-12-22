@@ -19,8 +19,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class SegSingleColor
-        implements ISegStrategy
+public class SegSingleColor extends AbstractSegStrategy
 {
     /**
      * process the color image to a binary one with least noise
@@ -28,7 +27,8 @@ public class SegSingleColor
      * @param src
      * @return
      */
-    private static Mat preProcess(Mat src)
+    @Override
+    protected Mat preProcess(Mat src)
     {
         Mat mat_noiseMoved = ImageUtils.removeNoise(src, 3);
 
@@ -68,18 +68,6 @@ public class SegSingleColor
         return ret;
     }
 
-    @Override
-    public List<Mat> doSegmentation(Mat src)
-    {
-        Mat preprocessed = preProcess(src);
-        if (src == null)
-        {
-            Logger.log(Logger.Level.WARNING, null,"preprocess failed");
-            return null;
-        }
-        List<Rect> digitRects = getDigitRects(preprocessed);
-        return ImageUtils.getOrderedMatsByRects(digitRects, preprocessed);
-    }
 
     /**
      * return bound rects each contains one digits
@@ -87,7 +75,8 @@ public class SegSingleColor
      * @param src make sure not change src
      * @return need not be sorted and size should be 4
      */
-    private List<Rect> getDigitRects(Mat src)
+    @Override
+    protected List<Rect> getSegRects(Mat src)
     {
         if (src == null)
         {

@@ -39,7 +39,7 @@ public class Segmentation
      * @param strategy segmentation stategy
      * @return normalized mats
      */
-    public static List<Mat> segmentROI(Mat src, Rect roiRect, ISegStrategy strategy)
+    public static List<Mat> segmentROI(Mat src, Rect roiRect, AbstractSegStrategy strategy)
     {
         Mat roi = src.submat(roiRect);
         return segment(roi, strategy);
@@ -49,10 +49,10 @@ public class Segmentation
      * main logic for segmentation
      *
      * @param src      image to segment
-     * @param strategy implementation of {@link ISegStrategy}
+     * @param strategy implementation of {@link AbstractSegStrategy}
      * @return return null if fails
      */
-    public static List<Mat> segment(Mat src, ISegStrategy strategy)
+    public static List<Mat> segment(Mat src, AbstractSegStrategy strategy)
     {
         Logger.log(Logger.Level.INFO, null, "process Segmentation... ");
 
