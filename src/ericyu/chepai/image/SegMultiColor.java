@@ -7,15 +7,12 @@ package ericyu.chepai.image;
  |           Created by lliyu on 11/17/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
-import com.recognition.software.jdeskew.ImageUtil;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * this is for color VCode
@@ -29,98 +26,124 @@ public class SegMultiColor extends AbstractSegStrategy
         {
             return null;
         }
-//        src = ImageUtils.equalization(src);
         src = ImageUtils.removeNoise(src,3);
         Mat gray = ImageUtils.color2Gray(src);
+        Mat binary = ImageUtils.gray2Binary(gray);
 
-//        Mat equalized = new Mat();
-//        Imgproc.equalizeHist(gray,equalized);
-        gray = ImageUtils.gray2Binary(gray);
+        Imgcodecs.imwrite("CodeImage/gray2.bmp",binary);
+        return binary;
 
-        Imgcodecs.imwrite("CodeImage/gray2.bmp",gray);
-        return gray;
-
-//        List<Rect> ret = new ArrayList<>();
-//
-//        List<Integer> countWhitePixels = countWhitePixels(src);
-//        adjustCountList(countWhitePixels, 3);
-//        int tmp = 0;
-//        for (int i : countWhitePixels)
-//        {
-//            System.out.println(tmp++ + " -> " + i);
-//        }
-//        List<Integer> indexes = getSegmentationLine(countWhitePixels);
-//
-//
-//        return null;
     }
 
     @Override
     protected List<Rect> getSegRects(Mat src)
     {
-        return null;
+        List<Rect> ret = new ArrayList<>();
+
+        List<Double> data = countWhitePixels(src);
+        List<Integer> segLines = getSegmentationLine(data);
+        for(int i = 0 ; i < segLines.size()-1; ++i)
+        {
+            int x = segLines.get(i) ;
+            int y = 0;
+            int width = segLines.get(i+1) - segLines.get(i);
+            int height = src.height();
+            ret.add(new Rect(x,y,width,height ));
+        }
+        return ret;
     }
 
     /**
-     * the input should be zero - nonezero where zeros represent gaps
-     *
-     * @param countNonZeros
+     * get index of seg lines
+     * including two edge
+     * @param data
      * @return
      */
-    private List<Integer> getSegmentationLine(List<Integer> countNonZeros)
+    private List<Integer> getSegmentationLine(List<Double> data)
     {
-        if (countNonZeros == null || countNonZeros.size() == 0)
+        List<Integer> ret;
+        List<Map.Entry<Double,Integer>> peaks = new ArrayList<>();
+        for(int i = 1; i < data.size()-1; ++i)
         {
-            return null;
+            if(data.get(i) < data.get(i-1))
+            {
+                if (data.get(i) < data.get(i+1))
+                {
+                    peaks.add(new AbstractMap.SimpleEntry<>(data.get(i), i));
+                }
+                else if (Math.abs(data.get(i)-data.get(i+1)) <= 0.0001)
+                {
+                    int j = i+1;
+                    while(j < data.size() && Math.abs(data.get(j)-data.get(i)) <= 0.0001 )
+                    {
+                        ++j;
+                    }
+                    if (j>=data.size())
+                        break;
+                    else if ( data.get(j) > data.get(i))
+                    {
+                        peaks.add(new AbstractMap.SimpleEntry<>(data.get(i),(j+i)/2));
+                    }
+                    else
+                    {
+                        i = j;
+                    }
+                }
+            }
         }
+//        System.out.println("peaks: " + peaks);
+//        System.out.println("peak size: " + peaks.size());
+        ret = findBottom(peaks,5);
+//        System.out.println("top 5 : " + ret);
 
+        ret.add(0,0);
+        ret.add(data.size()-1);
+//        System.out.println("all edge: " + ret);
+        return ret;
+    }
+
+    private List<Integer> findBottom(List<Map.Entry<Double, Integer>> data, int n)
+    {
         List<Integer> ret = new ArrayList<>();
-        int len = countNonZeros.size();
 
-        int zeroStart = 0;
-        boolean inZero = false;
-
-        for (int i = 0; i < len; ++i)
+        if (data.size()<=n)
         {
-            if (countNonZeros.get(i) > 0)
+            for(Map.Entry<Double,Integer> entry : data)
             {
-                if (inZero)
+                ret.add(entry.getValue());
+            }
+        }
+        else
+        {
+            Collections.sort(data, new Comparator<Map.Entry<Double, Integer>>()
+            {
+                @Override
+                public int compare(Map.Entry<Double, Integer> o1, Map.Entry<Double, Integer> o2)
                 {
-                    ret.add((i - zeroStart) / 2);
-                    inZero = false;
+                    return o1.getKey().compareTo(o2.getKey());
                 }
-            } else
+            });
+            for (Map.Entry<Double, Integer> aSorted : data)
             {
-                if (!inZero)
+                if (ret.size() < n)
                 {
-                    zeroStart = i;
-                    inZero = true;
+                    ret.add(aSorted.getValue());
+                } else
+                {
+                    break;
                 }
             }
         }
-        //remove the first and last index
-        ret.remove(ret.size() - 1);
-        ret.remove(0);
+        Collections.sort(ret);
+        return ret;
 
-        //TODO
-
-        return null;
     }
 
-    private void adjustCountList(List<Integer> countNonZeros, int threshold)
-    {
-        for (int i = 0; i < countNonZeros.size(); ++i)
-        {
-            if (countNonZeros.get(i) <= threshold)
-            {
-                countNonZeros.set(i, 0);
-            } else
-            {
-                countNonZeros.set(i, 1);
-            }
-        }
-    }
-
+    /**
+     * count how many white pixels in each col
+     * @param src
+     * @return
+     */
     private List<Double> countWhitePixels(Mat src)
     {
         List<Integer> cnt = new ArrayList<>();
@@ -145,8 +168,8 @@ public class SegMultiColor extends AbstractSegStrategy
                 cnt.add(cur);
             }
         }
-        List<Double> ret = new ArrayList<>();
         //smooth
+        List<Double> ret = new ArrayList<>();
         for(int i = 0 ; i < cnt.size(); ++i)
         {
             int cur = 0;
@@ -155,7 +178,6 @@ public class SegMultiColor extends AbstractSegStrategy
             cur += (i+1<cnt.size() ? cnt.get(i+1) : 0);
             ret.add(cur/3.0);
         }
-
         return ret;
     }
 
@@ -164,9 +186,14 @@ public class SegMultiColor extends AbstractSegStrategy
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         SegMultiColor segMultiColor = new SegMultiColor();
         // 163616 656998 697144
-        Mat test = ImageUtils.readImage("CodeImage\\163616.png");
-        Mat gray = segMultiColor.preProcess(test);
-        System.out.println(segMultiColor.countWhitePixels(gray));
+        Mat test = ImageUtils.readImage("CodeImage\\697144.png");
+
+        List<Mat> segs = segMultiColor.doSegmentation(test);
+        for(Mat mat : segs)
+        {
+            Imgcodecs.imwrite("CodeImage\\" + segs.indexOf(mat) + ".bmp", mat);
+        }
+
 
     }
 }

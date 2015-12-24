@@ -16,7 +16,9 @@ import java.util.List;
 public abstract class AbstractSegStrategy
 {
 
+
     abstract protected Mat preProcess(Mat src);
+
     abstract protected List<Rect> getSegRects(Mat src);
 
     /**

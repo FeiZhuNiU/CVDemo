@@ -168,7 +168,7 @@ public class ImageUtils
                 return -1;
             }
         });
-        List<Mat> ret = new ArrayList<Mat>();
+        List<Mat> ret = new ArrayList<>();
         for (Rect rect : rects)
         {
             Mat cur = src.submat(rect);
