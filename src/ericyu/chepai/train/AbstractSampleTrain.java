@@ -7,6 +7,7 @@ package ericyu.chepai.train;
  |           Created by lliyu on 11/28/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 import ericyu.chepai.Logger;
+import ericyu.chepai.image.AbstractSegStrategy;
 import ericyu.chepai.image.ImageUtils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -247,9 +248,10 @@ public abstract class AbstractSampleTrain
      *
      * should be overrided
      * @param src
+     * @param segStrategy segmentation strategy if needed
      * @return
      */
-    public List<Mat> process(Mat src)
+    public List<Mat> process(Mat src, AbstractSegStrategy segStrategy)
     {
         List<Mat> ret = new ArrayList<>();
         Mat temp = ImageUtils.reduceColor(src,1);

@@ -22,7 +22,7 @@ public class DumpSample
                 FlashPosition.origin.y + FlashPosition.REGION_FLASH_RIGHT_PART_Y,
                 FlashPosition.REGION_FLASH_RIGHT_PART_WIDTH,
                 FlashPosition.REGION_FLASH_RIGHT_PART_HEIGHT);
-        Mat processed = (new FlashStatusTrain()).process(mat).get(0);
+        Mat processed = (new FlashStatusTrain()).process(mat,null).get(0);
         Imgcodecs.imwrite("flashStatus.bmp",processed);
     }
     private static void dumpRefreshButtonSample()
@@ -32,7 +32,7 @@ public class DumpSample
                 FlashPosition.origin.y + FlashPosition.REGION_VCODE_Y,
                 FlashPosition.REGION_VCODE_WIDTH,
                 FlashPosition.REGION_VCODE_HEIGHT);
-        Mat processed = (new RefreshButtonTrain()).process(mat).get(0);
+        Mat processed = (new RefreshButtonTrain()).process(mat,null).get(0);
         Imgcodecs.imwrite("refreshButton.bmp",processed);
     }
 

@@ -108,7 +108,7 @@ public class FlashStatusDetector implements Runnable
             FlashStatusDetector.Status curStatus;
 
             Mat target = getRightPartOfFlash();
-            List<Mat> toRecogs = recognition.getTraining().process(target);
+            List<Mat> toRecogs = recognition.getTraining().process(target,null);
             int result = recognition.recognize(toRecogs.get(0),1);
             switch (result)
             {

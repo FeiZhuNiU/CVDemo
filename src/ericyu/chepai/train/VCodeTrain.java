@@ -8,6 +8,7 @@ package ericyu.chepai.train;
  +===========================================================================*/
 
 import ericyu.chepai.Logger;
+import ericyu.chepai.image.AbstractSegStrategy;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.image.SegSingleColor;
 import ericyu.chepai.image.Segmentation;
@@ -244,9 +245,9 @@ public class VCodeTrain extends AbstractSampleTrain
     }
 
     @Override
-    public List<Mat> process(Mat src)
+    public List<Mat> process(Mat src, AbstractSegStrategy segStrategy)
     {
-        return Segmentation.segment(src, new SegSingleColor());
+        return Segmentation.segment(src, segStrategy);
     }
 
     private void segmentationDemo(String[] args)

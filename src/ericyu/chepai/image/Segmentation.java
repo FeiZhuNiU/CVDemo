@@ -97,7 +97,7 @@ public class Segmentation
     }
 
     /**
-     * process digit mats
+     * normalize digit mats
      * 1.   cut
      * 2.   enlarge
      * 3.   resize

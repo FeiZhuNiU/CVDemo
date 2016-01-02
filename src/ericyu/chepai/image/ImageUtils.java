@@ -467,13 +467,18 @@ public class ImageUtils
 
     /**
      * strategy: remove the pixels' info (where width+height < threshold) from mat
-     *
+     *              if there is only 1 part in image. Just return src.clone()
      * @param src
      * @return
      */
     public static Mat removeSmallPart(Mat src, int threshold)
     {
         List<MatOfPoint> contours = findContours(src);
+        //if there is only 1 part in image. Just return src.clone()
+        if(contours.size() <= 1)
+        {
+            return src.clone();
+        }
         for (int i = 0; i < contours.size(); ++i)
         {
             Rect rect = Imgproc.boundingRect(contours.get(i));
@@ -534,7 +539,9 @@ public class ImageUtils
         if (colorMap.size() < level + 1)
         {
             Logger.log(Logger.Level.WARNING, null, "color quantity is not enough, maybe the picture is blank.");
-            return null;
+            ret = src.clone();
+            return ret;
+//            return null;
         }
 
         //sort color by quantity

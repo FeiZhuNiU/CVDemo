@@ -13,6 +13,7 @@ import ericyu.chepai.flash.FlashStatusDetector;
 import ericyu.chepai.flash.IStatusObserver;
 import ericyu.chepai.image.ImageUtils;
 import ericyu.chepai.Configuration;
+import ericyu.chepai.image.SegSingleColor;
 import ericyu.chepai.train.*;
 import ericyu.chepai.recognize.Recognition;
 import org.opencv.core.Core;
@@ -354,7 +355,7 @@ public class MyRobot implements IStatusObserver
                                  FlashPosition.REGION_VCODE_WIDTH,
                                  FlashPosition.REGION_VCODE_HEIGHT);
 
-        toReg = vCodeRegionRecognition.getTraining().process(toReg).get(0);
+        toReg = vCodeRegionRecognition.getTraining().process(toReg,null).get(0);
 //        Imgcodecs.imwrite("dump.bmp",toReg);
 
         //TODO: magic number (1 -> refresh button exists)
@@ -429,7 +430,7 @@ public class MyRobot implements IStatusObserver
 
         Mat toRecog = ImageUtils.readImage(ImageUtils.screenCaptureImage);
 
-        java.util.List<Mat> digitsToRecog = vCodeRecognition.getTraining().process(toRecog);
+        java.util.List<Mat> digitsToRecog = vCodeRecognition.getTraining().process(toRecog, new SegSingleColor());
 
         long mid2 = System.currentTimeMillis();
         System.out.println("segmentation consumed: " + (mid2 - mid) / 1000.0);

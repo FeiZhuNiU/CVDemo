@@ -10,6 +10,7 @@ package ericyu.chepai.image;
 import ericyu.chepai.Logger;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
+import org.opencv.imgcodecs.Imgcodecs;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public abstract class AbstractSegStrategy
 
 
     abstract protected Mat preProcess(Mat src);
+
 
     abstract protected List<Rect> getSegRects(Mat src);
 
@@ -28,7 +30,7 @@ public abstract class AbstractSegStrategy
     public List<Mat> doSegmentation(Mat src)
     {
         Mat preprocessed = preProcess(src);
-        if (src == null)
+        if (preprocessed == null)
         {
             Logger.log(Logger.Level.WARNING, null,"preprocess failed");
             return null;
