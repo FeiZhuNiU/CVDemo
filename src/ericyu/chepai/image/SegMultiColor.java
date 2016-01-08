@@ -279,7 +279,7 @@ public class SegMultiColor extends AbstractSegStrategy
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 //        SegMultiColor segMultiColor = new SegMultiColor();
         // 163616 656998 697144
-        Mat test = ImageUtils.readImage("CodeImage\\656998.png");
+        Mat test = ImageUtils.readImage("CodeImage\\853352.png");
 
 //        List<Mat> segs = segMultiColor.doSegmentation(test);
 //        for(Mat mat : segs)

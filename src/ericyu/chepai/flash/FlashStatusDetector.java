@@ -38,6 +38,7 @@ public class FlashStatusDetector implements Runnable
     private List<IStatusObserver> observers;
     private Status status;
     private Recognition recognition;
+    private static long exitTime;
     public enum Status
     {
         NONE,
@@ -53,9 +54,12 @@ public class FlashStatusDetector implements Runnable
                                                                 SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,
                                                                 new RegionPixelEigenVecStrategy(10,10)));
         status = Status.NONE;
-        Logger.log(Logger.Level.INFO, null, "Program will shutdown at " + DateUtil.formatLongValueToDate(DateUtil.getDateLongValue(Configuration.exitTimeHour, Configuration.exitTimeMinute,3)));
 
-        Logger.log(Logger.Level.INFO, null, DateUtil.getDateLongValue(Configuration.exitTimeHour, Configuration.exitTimeMinute,3) - System.currentTimeMillis() + "ms to go");
+        int exitTimeMinute = Configuration.exitTimeMinute == -1 ? DateUtil.getCurrentMinute() + 1 : Configuration.exitTimeMinute;
+        exitTime = DateUtil.getDateLongValue(Configuration.exitTimeHour, exitTimeMinute,3);
+        Logger.log(Logger.Level.INFO, null, "Program will shutdown at " + DateUtil.formatLongValueToDate(exitTime));
+
+        Logger.log(Logger.Level.INFO, null, exitTime - System.currentTimeMillis() + "ms to go");
     }
 
     public void notifyStatusObservers(Status status)
@@ -98,7 +102,7 @@ public class FlashStatusDetector implements Runnable
 
             // system exit
 
-            if (System.currentTimeMillis() > DateUtil.getDateLongValue(Configuration.exitTimeHour, Configuration.exitTimeMinute,3))
+            if (System.currentTimeMillis() > exitTime)
             {
                 Logger.sendLog();
                 System.exit(1);
@@ -128,6 +132,7 @@ public class FlashStatusDetector implements Runnable
                     curStatus = Status.NONE;
                     break;
             }
+
             // if status changed, send notification
             if (curStatus != originStatus)
             {

@@ -55,7 +55,13 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //--------------------------------------------------
         //V-code
         //9
-        addAction(new RecogAndEnterVCode());
+        if(!Configuration.skipVCode) {
+            addAction(new RecogAndEnterVCode());
+        }
+        else
+        {
+            addAction(new FocusOnVCodeInputBox());
+        }
 
         addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
                                                                     Configuration.bidTimeMinute,
@@ -66,7 +72,6 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         addAction(new ClickVCodeConfirmButton());
 
         addAction(new BuQiang());
-
 
 //        try
 //        {

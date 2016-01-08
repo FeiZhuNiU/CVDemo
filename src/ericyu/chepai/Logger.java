@@ -98,6 +98,7 @@ public class Logger
         dumpHistory();
         sendToDataServer(new File(logFile));
     }
+
     private static void sendToDataServer(File file)
     {
         OSSClient client = new OSSClient(endPoint,accessKeyId,accessKeySecret);

@@ -31,6 +31,8 @@ public class Configuration
     public static int latestBidTimeSecond;
     public static int bidDiff;
 
+    public static boolean skipVCode;
+
 
     /**
      * flash position related
@@ -118,6 +120,8 @@ public class Configuration
 
     private static final String USERNAME_KEY = "username";
     private static final String PASSWORD_KEY = "password";
+
+    private static final String SKIPVCODE_KEY = "skipVCode";
     /**
      * bid strategy related
      */
@@ -132,12 +136,12 @@ public class Configuration
     /**
      * flash related
      */
-    private static final String LEFTTOP_COLOR_R_KEY = "teftTopColorR";
-    private static final String LEFTTOP_COLOR_G_KEY = "teftTopColorG";
-    private static final String LEFTTOP_COLOR_B_KEY = "teftTopColorB";
-    private static final String LEFTTOP_COLOR_OFFSET_R_KEY = "teftTopColorOffset_10_10_R";
-    private static final String LEFTTOP_COLOR_OFFSET_G_KEY = "teftTopColorOffset_10_10_G";
-    private static final String LEFTTOP_COLOR_OFFSET_B_KEY = "teftTopColorOffset_10_10_B";
+    private static final String LEFTTOP_COLOR_R_KEY = "leftTopColorR";
+    private static final String LEFTTOP_COLOR_G_KEY = "leftTopColorG";
+    private static final String LEFTTOP_COLOR_B_KEY = "leftTopColorB";
+    private static final String LEFTTOP_COLOR_OFFSET_R_KEY = "leftTopColorOffset_10_10_R";
+    private static final String LEFTTOP_COLOR_OFFSET_G_KEY = "leftTopColorOffset_10_10_G";
+    private static final String LEFTTOP_COLOR_OFFSET_B_KEY = "leftTopColorOffset_10_10_B";
 
     private static final String LEFTTOP_X_KEY="lt_x";
     private static final String LEFTTOP_Y_KEY="lt_y";
@@ -231,6 +235,7 @@ public class Configuration
 
             username = properties.get(USERNAME_KEY).trim();
             password = properties.get(PASSWORD_KEY).trim();
+            skipVCode = Boolean.parseBoolean(properties.get(SKIPVCODE_KEY).trim());
 
             addMoneyRange = Integer.parseInt(properties.get(ADD_MONEY_RANGE_KEY).trim());
             bidTimeHour = Integer.parseInt(properties.get(BID_TIME_HOUR_KEY).trim());

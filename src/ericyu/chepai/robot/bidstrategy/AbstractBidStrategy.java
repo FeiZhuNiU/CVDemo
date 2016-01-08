@@ -147,6 +147,20 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         }
     }
 
+    protected class FocusOnVCodeInputBox implements Callable<Map.Entry<Boolean,Object>>
+    {
+        @Override
+        public Map.Entry<Boolean,Object> call() throws Exception
+        {
+            while(true)
+            {
+                if(robot.focusOnVCodeInputBox())
+                    break;
+            }
+            return new AbstractMap.SimpleEntry<>(true, null);
+        }
+    }
+
     protected class InputUserName implements Callable<Map.Entry<Boolean,Object>>
     {
         private String username;
