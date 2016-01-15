@@ -40,6 +40,10 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //----------------------------------------------------
         //bid
         //5
+
+        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
+                                                                    Configuration.bidTimeMinute,
+                                                                    Configuration.startTimeSecond)));
         addAction(new FocusOnAddRangeBox());
         //6
         addAction(new InputAddMoneyRange(Configuration.addMoneyRange));
@@ -55,7 +59,7 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //--------------------------------------------------
         //V-code
         //9
-        if(!Configuration.skipVCode) {
+        if(!Configuration.semiAuto) {
             addAction(new RecogAndEnterVCode());
         }
         else
@@ -71,8 +75,10 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
 
         addAction(new ClickVCodeConfirmButton());
 
-        addAction(new BuQiang());
-
+        if(!Configuration.semiAuto)
+        {
+            addAction(new BuQiang());
+        }
 //        try
 //        {
 //            System.out.println(results.get(0).get().getValue());

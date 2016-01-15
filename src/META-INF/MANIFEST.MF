@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
-Class-Path: opencv-300.jar jna.jar junit-4.10.jar itext-2.1.7.jar jai_
- imageio.jar log4j-1.2.17.jar ghost4j-0.5.1.jar commons-io-2.4.jar com
- mons-logging-1.1.3.jar commons-beanutils-1.9.1.jar xmlgraphics-common
- s-1.5.jar aliyun-sdk-oss-2.0.7.jar commons-codec-1.9.jar commons-logg
- ing-1.2.jar hamcrest-core-1.1.jar httpclient-4.4.jar httpcore-4.4.jar
-  jdom-1.1.jar
+Class-Path: jai_imageio.jar commons-beanutils-1.9.1.jar commons-loggin
+ g-1.1.3.jar ghost4j-0.5.1.jar junit-4.10.jar xmlgraphics-commons-1.5.
+ jar commons-io-2.4.jar itext-2.1.7.jar log4j-1.2.17.jar jna.jar openc
+ v-300.jar jdom-1.1.jar httpcore-4.4.jar httpclient-4.4.jar commons-co
+ dec-1.9.jar hamcrest-core-1.1.jar commons-logging-1.2.jar aliyun-sdk-
+ oss-2.0.7.jar
 Main-Class: ericyu.chepai.Console
 

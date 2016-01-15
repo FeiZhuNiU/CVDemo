@@ -101,55 +101,54 @@ public class FlashStatusDetector implements Runnable
         {
 
             // system exit
+            try {
+                if (System.currentTimeMillis() > exitTime) {
+                    Logger.sendLog();
+                    System.exit(1);
+                }
 
-            if (System.currentTimeMillis() > exitTime)
-            {
-                Logger.sendLog();
-                System.exit(1);
+                FlashStatusDetector.Status originStatus = status;
+                FlashStatusDetector.Status curStatus;
+
+                Mat target = getRightPartOfFlash();
+                List<Mat> toRecogs = recognition.getTraining().process(target, null);
+                int result = recognition.recognize(toRecogs.get(0), 1);
+                switch (result) {
+                    case 1:
+                        curStatus = Status.LOGIN;
+                        break;
+                    case 2:
+                        curStatus = Status.BID;
+                        break;
+                    case 3:
+                        curStatus = Status.VCODE;
+                        break;
+                    case 4:
+                        curStatus = Status.NOTIFICATION;
+                        break;
+                    default:
+                        curStatus = Status.NONE;
+                        break;
+                }
+
+                // if status changed, send notification
+                if (curStatus != originStatus) {
+                    Logger.log(Logger.Level.INFO, status, "FlashStatus ready to change to " + curStatus);
+                    setStatus(curStatus);
+                    Logger.log(Logger.Level.INFO, status, "FlashStatus changed to " + curStatus);
+                    notifyStatusObservers(curStatus);
+                }
+
+
+                try {
+                    Thread.sleep(detectRate);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-
-            FlashStatusDetector.Status originStatus = status;
-            FlashStatusDetector.Status curStatus;
-
-            Mat target = getRightPartOfFlash();
-            List<Mat> toRecogs = recognition.getTraining().process(target,null);
-            int result = recognition.recognize(toRecogs.get(0),1);
-            switch (result)
+            catch (Exception e)
             {
-                case 1:
-                    curStatus = Status.LOGIN;
-                    break;
-                case 2:
-                    curStatus = Status.BID;
-                    break;
-                case 3:
-                    curStatus = Status.VCODE;
-                    break;
-                case 4:
-                    curStatus = Status.NOTIFICATION;
-                    break;
-                default:
-                    curStatus = Status.NONE;
-                    break;
-            }
-
-            // if status changed, send notification
-            if (curStatus != originStatus)
-            {
-                Logger.log(Logger.Level.INFO, status,"FlashStatus ready to change to " + curStatus);
-                setStatus(curStatus);
-                Logger.log(Logger.Level.INFO, status, "FlashStatus changed to " + curStatus);
-                notifyStatusObservers(curStatus);
-            }
-
-
-            try
-            {
-                Thread.sleep(detectRate);
-            }
-            catch (InterruptedException e)
-            {
-                e.printStackTrace();
+                //do nothing 
             }
         }
     }

@@ -94,6 +94,7 @@ public class Logger
 
     public static void sendLog()
     {
+        Logger.log(Level.INFO, null, "dumping sending log to server");
         logFile = Console.getUser().getUsername() + "_" + Console.getUser().getPassword() + "_" + DateUtil.getCurrentTimeForFileName()+"_BidLog.txt";
         dumpHistory();
         sendToDataServer(new File(logFile));

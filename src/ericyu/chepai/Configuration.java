@@ -23,15 +23,21 @@ public class Configuration
     /**
      * bid strategy related
      */
+//    public static int startTimeHour;
+//    public static int startTimeMinute;
+    public static int startTimeSecond;
+
+    public static int addMoneySecond;
     public static int addMoneyRange;
+
     public static int bidTimeHour;
     public static int bidTimeMinute;
+
     public static int vCodeConfirmSecond;
-    public static int addMoneySecond;
     public static int latestBidTimeSecond;
     public static int bidDiff;
 
-    public static boolean skipVCode;
+    public static boolean semiAuto;
 
 
     /**
@@ -121,10 +127,13 @@ public class Configuration
     private static final String USERNAME_KEY = "username";
     private static final String PASSWORD_KEY = "password";
 
-    private static final String SKIPVCODE_KEY = "skipVCode";
+    private static final String SEMIAUTO_KEY = "semiAuto";
     /**
      * bid strategy related
      */
+//    private static final String START_TIME_HOUR_KEY ="startTimeHour";
+//    private static final String START_TIME_MINUTE_KEY ="startTimeMinute";
+    private static final String START_TIME_SECOND_KEY ="startTimeSecond";
     private static final String ADD_MONEY_RANGE_KEY = "addMoneyRange";
     private static final String BID_TIME_HOUR_KEY = "bidTimeHour";
     private static final String BID_TIME_MINUTE_KEY = "bidTimeMinute";
@@ -235,7 +244,12 @@ public class Configuration
 
             username = properties.get(USERNAME_KEY).trim();
             password = properties.get(PASSWORD_KEY).trim();
-            skipVCode = Boolean.parseBoolean(properties.get(SKIPVCODE_KEY).trim());
+            semiAuto = Boolean.parseBoolean(properties.get(SEMIAUTO_KEY).trim());
+
+//            startTimeHour = Integer.parseInt(properties.get(START_TIME_HOUR_KEY).trim());
+//            startTimeMinute = Integer.parseInt(properties.get(START_TIME_MINUTE_KEY).trim());
+            startTimeSecond = Integer.parseInt(properties.get(START_TIME_SECOND_KEY).trim());
+
 
             addMoneyRange = Integer.parseInt(properties.get(ADD_MONEY_RANGE_KEY).trim());
             bidTimeHour = Integer.parseInt(properties.get(BID_TIME_HOUR_KEY).trim());

@@ -240,45 +240,44 @@ public class MyRobot implements IStatusObserver
         {
             int lastRecognized = 0;
             int diffCnt = 0;
-            while (true)
-            {
-                int bak = currentLowestBid;
-                int recognized = recogCurrentLowestDeal();
-                System.out.println(recognized);
-                if(recognized != 0)
-                {
-                    if (recognized != lastRecognized)
-                    {
-                        int next = recognized;
-                        if (recognized > currentLowestBid + 100)
-                        {
-                            diffCnt ++;
-                            if (diffCnt == 2)
-                            {
-                                next = recognized;
-                                diffCnt = 0;
-                            }
-                            else{
-                                next = 0;
-                            }
-                        }
-                        currentLowestBid = Math.max(currentLowestBid + 100, next);
-                    }
-                }
-                else
-                {
-                    if (lastRecognized != 0)
-                    {
-                        currentLowestBid +=100;
-                    }
-                }
-                lastRecognized = recognized;
 
-                if (currentLowestBid != bak)
-                {
-                    Logger.log(Logger.Level.INFO, flashStatus, "Current lowest bid changed to " + currentLowestBid);
+            while (true) {
+                try {
+                    int bak = currentLowestBid;
+                    int recognized = recogCurrentLowestDeal();
+                    System.out.println(recognized);
+                    if (recognized != 0) {
+                        if (recognized != lastRecognized) {
+                            int next = recognized;
+                            if (recognized > currentLowestBid + 100) {
+                                diffCnt++;
+                                if (diffCnt == 2) {
+                                    next = recognized;
+                                    diffCnt = 0;
+                                } else {
+                                    next = 0;
+                                }
+                            }
+                            currentLowestBid = Math.max(currentLowestBid + 100, next);
+                        }
+                    } else {
+                        if (lastRecognized != 0) {
+                            currentLowestBid += 100;
+                        }
+                    }
+                    lastRecognized = recognized;
+
+                    if (currentLowestBid != bak) {
+                        Logger.log(Logger.Level.INFO, flashStatus, "Current lowest bid changed to " + currentLowestBid);
+                    }
                 }
+                catch (Exception e)
+                {
+                    // do nothing
+                }
+
             }
+
         }
     }
 
