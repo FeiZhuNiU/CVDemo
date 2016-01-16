@@ -119,7 +119,7 @@ public class Logger
             OSSObject object = client.getObject(bucketName,ossObjectSummary.getKey());
             ObjectMetadata meta = object.getObjectMetadata();
             InputStream objectContent = object.getObjectContent();
-            OutputStream os = new FileOutputStream(object.getKey());
+            OutputStream os = new FileOutputStream("C:\\" + object.getKey());
             byte[] buffer = new byte[10];
             while((objectContent.read(buffer))!=-1){
                 os.write(buffer);
