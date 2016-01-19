@@ -55,10 +55,10 @@ public class Configuration
     public static int flashWidth;
     public static int flashHeight;
 
-    public static int flashRightPartX;
-    public static int flashRightPartY;
-    public static int flashRightPartWidth;
-    public static int flashRightPartHeight;
+    public static int flashStatusRegionX;
+    public static int flashStatusRegionY;
+    public static int flashStatusRegionWidth;
+    public static int flashStatusRegionHeight;
 
     public static int vCodeConfirmButtonX;
     public static int vCodeConfirmButtonY;
@@ -158,10 +158,10 @@ public class Configuration
     private static final String FLASH_WIDTH_KEY="flashWidth";
     private static final String FLASH_HEIGHT_KEY="flashHeight";
 
-    private static final String REGION_FLASH_RIGHT_PART_X_KEY="flashRightPartX";
-    private static final String REGION_FLASH_RIGHT_PART_Y_KEY="flashRightPartY";
-    private static final String REGION_FLASH_RIGHT_PART_WIDTH_KEY="flashRightPartWidth";
-    private static final String REGION_FLASH_RIGHT_PART_HEIGHT_KEY="flashRightPartHeight";
+    private static final String REGION_FLASH_STATUS_X_KEY = "flashStatusRegionX";
+    private static final String REGION_FLASH_STATUS_Y_KEY = "flashStatusRegionY";
+    private static final String REGION_FLASH_STATUS_WIDTH_KEY = "flashStatusRegionWidth";
+    private static final String REGION_FLASH_STATUS_HEIGHT_KEY = "flashStatusRegionHeight";
 
     private static final String BUTTON_VCODE_CONFIRM_X_KEY = "vCodeConfirmButtonX";
     private static final String BUTTON_VCODE_CONFIRM_Y_KEY = "vCodeConfirmButtonY";
@@ -273,10 +273,10 @@ public class Configuration
             flashWidth = Integer.parseInt(properties.get(FLASH_WIDTH_KEY).trim());
             flashHeight = Integer.parseInt(properties.get(FLASH_HEIGHT_KEY).trim());
 
-            flashRightPartX = Integer.parseInt(properties.get(REGION_FLASH_RIGHT_PART_X_KEY).trim());
-            flashRightPartY = Integer.parseInt(properties.get(REGION_FLASH_RIGHT_PART_Y_KEY).trim());
-            flashRightPartWidth = Integer.parseInt(properties.get(REGION_FLASH_RIGHT_PART_WIDTH_KEY).trim());
-            flashRightPartHeight = Integer.parseInt(properties.get(REGION_FLASH_RIGHT_PART_HEIGHT_KEY).trim());
+            flashStatusRegionX = Integer.parseInt(properties.get(REGION_FLASH_STATUS_X_KEY).trim());
+            flashStatusRegionY = Integer.parseInt(properties.get(REGION_FLASH_STATUS_Y_KEY).trim());
+            flashStatusRegionWidth = Integer.parseInt(properties.get(REGION_FLASH_STATUS_WIDTH_KEY).trim());
+            flashStatusRegionHeight = Integer.parseInt(properties.get(REGION_FLASH_STATUS_HEIGHT_KEY).trim());
 
             vCodeConfirmButtonX = Integer.parseInt(properties.get(BUTTON_VCODE_CONFIRM_X_KEY).trim());
             vCodeConfirmButtonY = Integer.parseInt(properties.get(BUTTON_VCODE_CONFIRM_Y_KEY).trim());

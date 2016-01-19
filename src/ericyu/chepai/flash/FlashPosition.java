@@ -103,10 +103,10 @@ public class FlashPosition
      *  right part of the flash
      *  used for detect flash status
      */
-    public static final int REGION_FLASH_RIGHT_PART_X = Configuration.flashRightPartX;
-    public static final int REGION_FLASH_RIGHT_PART_Y = Configuration.flashRightPartY;
-    public static final int REGION_FLASH_RIGHT_PART_WIDTH = Configuration.flashRightPartWidth;
-    public static final int REGION_FLASH_RIGHT_PART_HEIGHT = Configuration.flashRightPartHeight;
+    public static final int REGION_FLASH_RIGHT_PART_X = Configuration.flashStatusRegionX;
+    public static final int REGION_FLASH_RIGHT_PART_Y = Configuration.flashStatusRegionY;
+    public static final int REGION_FLASH_RIGHT_PART_WIDTH = Configuration.flashStatusRegionWidth;
+    public static final int REGION_FLASH_RIGHT_PART_HEIGHT = Configuration.flashStatusRegionHeight;
     /**
      * verification code confirm button
      */
