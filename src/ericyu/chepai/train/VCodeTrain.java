@@ -7,6 +7,7 @@ package ericyu.chepai.train;
  |           Created by lliyu on 10/31/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.FileUtils;
 import ericyu.chepai.Logger;
 import ericyu.chepai.image.AbstractSegStrategy;
 import ericyu.chepai.image.ImageUtils;
@@ -154,7 +155,7 @@ public class VCodeTrain extends AbstractSampleTrain
                 cur.delete();
             }
         }
-        mkDir(unNormalizedFile);
+        FileUtils.mkDir(unNormalizedFile);
         Boolean bak = Segmentation.dumpImg;
         Segmentation.dumpUnNormalizedSamples = true;
         Segmentation.dumpImg = false;

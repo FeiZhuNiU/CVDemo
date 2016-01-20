@@ -16,6 +16,7 @@ import java.util.Properties;
 
 public class Configuration
 {
+    private static final String configFile = "config.properties";
 
     public static String username;
     public static String password;
@@ -233,7 +234,7 @@ public class Configuration
         Properties property = new Properties();
         try
         {
-            property.load(new FileInputStream("strategy.properties"));
+            property.load(new FileInputStream(configFile));
             Enumeration keyEumeration = property.propertyNames();
             while (keyEumeration.hasMoreElements())
             {
@@ -343,7 +344,7 @@ public class Configuration
         }
         catch (Exception e)
         {
-            Logger.log(Logger.Level.ERROR, FlashStatusDetector.Status.NONE, "property file does not exits!");
+            Logger.log(Logger.Level.ERROR, FlashStatusDetector.Status.NONE, "property file does not exits!", e);
         }
     }
 }

@@ -11,6 +11,7 @@ import ericyu.chepai.robot.MyRobot;
 import ericyu.chepai.robot.bidstrategy.AbstractBidStrategy;
 import ericyu.chepai.robot.bidstrategy.AmbushAndAidStrategy;
 import ericyu.chepai.robot.bidstrategy.User;
+import ericyu.chepai.server.ServerUtils;
 import org.opencv.core.Core;
 
 import java.awt.*;
@@ -35,7 +36,7 @@ public class Console
         {
             if(args[0].equals("downloadResult"))
             {
-                Logger.main(null);
+                ServerUtils.main(args);
             }
             else if (args[0].equals("testVCode") || args[0].equals("testLowestBid") || args[0].equals("testRefreshButton"))
             {
@@ -93,6 +94,7 @@ public class Console
         }
         catch (AWTException e)
         {
+            Logger.log(Logger.Level.ERROR, null, "console init failed!", e);
             e.printStackTrace();
             return false;
         }

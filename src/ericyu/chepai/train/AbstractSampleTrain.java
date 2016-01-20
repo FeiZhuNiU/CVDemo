@@ -6,6 +6,7 @@ package ericyu.chepai.train;
  |  HISTORY                                                                  |
  |           Created by lliyu on 11/28/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
+import ericyu.chepai.FileUtils;
 import ericyu.chepai.Logger;
 import ericyu.chepai.image.AbstractSegStrategy;
 import ericyu.chepai.image.ImageUtils;
@@ -14,8 +15,6 @@ import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -177,48 +176,12 @@ public abstract class AbstractSampleTrain
         }
     }
 
-    /**
-     * create dir recursively if not exist
-     * @param file
-     */
-    public static void mkDir(File file)
-    {
-        file = file.getAbsoluteFile();
-        if (file.getParentFile().exists())
-        {
-            file.mkdir();
-        } else
-        {
-            mkDir(file.getParentFile());
-            file.mkdir();
-        }
-    }
-
-    public static void writeObjectToFile(Object obj, String dst)
-    {
-        File file = new File(dst);
-        FileOutputStream out;
-        try
-        {
-            out = new FileOutputStream(file);
-            ObjectOutputStream objOut = new ObjectOutputStream(out);
-            objOut.writeObject(obj);
-            objOut.flush();
-            objOut.close();
-            Logger.log(Logger.Level.INFO, null, "write object success!");
-        } catch (Exception e)
-        {
-            Logger.log(Logger.Level.WARNING, null, "write object failed");
-            e.printStackTrace();
-        }
-    }
-
     public void dumpTrainData()
     {
         ImageUtils.deleteImage(trainDataPath);
         ImageUtils.deleteImage(trainClassesPath);
 
-        mkDir(new File(SampleConstants.TRAIN_DATA_DIR));
+        FileUtils.mkDir(new File(SampleConstants.TRAIN_DATA_DIR));
 
         Imgcodecs.imwrite(trainDataPath, trainData);
         Imgcodecs.imwrite(trainClassesPath, trainClass);

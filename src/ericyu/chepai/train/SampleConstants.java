@@ -7,6 +7,10 @@ package ericyu.chepai.train;
  |           Created by lliyu on 11/28/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.FileUtils;
+
+import java.io.File;
+
 /**
  * Class for train constants
  */
