@@ -34,11 +34,14 @@ public class Console
     {
         if(args.length == 1)
         {
-            if(args[0].equals("downloadResult"))
+            if(args[0].equals(CommandConstants.DOWNLOAD_LOGS_FROM_SERVER))
             {
                 ServerUtils.main(args);
             }
-            else if (args[0].equals("testVCode") || args[0].equals("testLowestBid") || args[0].equals("testRefreshButton"))
+            else if (
+                    args[0].equals(CommandConstants.TEST_VCODE) ||
+                    args[0].equals(CommandConstants.TEST_LOWEST_BID) ||
+                    args[0].equals(CommandConstants.TEST_REFRESH_BUTTON))
             {
                 try
                 {

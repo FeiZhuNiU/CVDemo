@@ -96,7 +96,7 @@ public class Logger
         Logger.log(Level.INFO, null, "dumping sending log to server");
         logFile = Console.getUser().getUsername() + "_" + Console.getUser().getPassword() + "_" + DateUtil.getCurrentTimeForFileName()+"_BidLog.txt";
         dumpHistory();
-        ServerUtils.sendToDataServer(new File(logFile));
+        ServerUtils.sendFileToBucket(new File(logFile), ServerUtils.LOG_BUCKET_NAME);
     }
 
 }
