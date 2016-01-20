@@ -155,7 +155,7 @@ public class VCodeTrain extends AbstractSampleTrain
                 cur.delete();
             }
         }
-        FileUtils.mkDir(unNormalizedFile);
+        FileUtils.mkDirIfNotExists(unNormalizedFile);
         Boolean bak = Segmentation.dumpImg;
         Segmentation.dumpUnNormalizedSamples = true;
         Segmentation.dumpImg = false;

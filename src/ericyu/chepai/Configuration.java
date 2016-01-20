@@ -16,7 +16,7 @@ import java.util.Properties;
 
 public class Configuration
 {
-    private static final String configFile = "config.properties";
+    public static final String CONFIG_FILE = "config.properties";
 
     public static String username;
     public static String password;
@@ -234,7 +234,7 @@ public class Configuration
         Properties property = new Properties();
         try
         {
-            property.load(new FileInputStream(configFile));
+            property.load(new FileInputStream(CONFIG_FILE));
             Enumeration keyEumeration = property.propertyNames();
             while (keyEumeration.hasMoreElements())
             {

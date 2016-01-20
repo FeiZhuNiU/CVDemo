@@ -17,30 +17,48 @@ import java.io.*;
 
 public class ServerUtils
 {
-    private final static String ACCESS_KEY_ID = "Ndg6XzPda5JTNFpa";
-    private final static String ACCESS_KEY_SECRET = "qHZ3Q5oJCCMv9Xrfwr2b6KVjwre0Zc";
-    private final static String ENDPOINT = "http://oss-cn-shanghai.aliyuncs.com";
+    private final static String ACCESS_KEY_ID                   = "Ndg6XzPda5JTNFpa";
+    private final static String ACCESS_KEY_SECRET               = "qHZ3Q5oJCCMv9Xrfwr2b6KVjwre0Zc";
+    private final static String ENDPOINT                        = "http://oss-cn-shanghai.aliyuncs.com";
 
-    public final static String LOG_BUCKET_NAME = "paipailog";
-    public final static String PROPERTIESPATCH_BUCKET_NAME ="propertiespatch";
-    public final static String RESOURCESPATCH_BUCKET_NAME ="resourcespatch";
+    public final static String LOG_BUCKET_NAME                  = "paipailog";
+    public final static String PROPERTIESPATCH_BUCKET_NAME      = "propertiespatch";
+    public final static String RESOURCESPATCH_BUCKET_NAME       = "resourcespatch";
 
-    private final static String DIR_TO_SAVE_LOGS_FROM_SERVER ="server";
+    private final static String DIR_TO_SAVE_LOGS_FROM_SERVER    = "server";
+    public final static String META_LAST_MODIFIED_TIME          = "last_modified_time";
 
     static {
         if (!new File(DIR_TO_SAVE_LOGS_FROM_SERVER).exists())
         {
-            FileUtils.mkDir(new File(DIR_TO_SAVE_LOGS_FROM_SERVER));
+            FileUtils.mkDirIfNotExists(new File(DIR_TO_SAVE_LOGS_FROM_SERVER));
         }
     }
 
+    /**
+     *
+     * @param file
+     * @param bucketName
+     */
     public static void sendFileToBucket(File file, String bucketName)
     {
-        OSSClient client = new OSSClient(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
-
-        PutObjectResult result = client.putObject(bucketName, file.getName(), file);
-        System.out.println(result.getETag());
+        if(file.isFile())
+        {
+            OSSClient client = new OSSClient(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
+            ObjectMetadata meta = new ObjectMetadata();
+            meta.addUserMetadata(META_LAST_MODIFIED_TIME, String.valueOf(file.lastModified()));
+            PutObjectResult result = client.putObject(bucketName, file.getName(), file);
+            System.out.println(result.getETag());
+        }else
+        {
+            File[] files = file.listFiles();
+            for(File f : files)
+            {
+                sendFileToBucket(f, bucketName);
+            }
+        }
     }
+
 
     /**
      *

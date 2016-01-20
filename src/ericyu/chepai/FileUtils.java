@@ -18,12 +18,12 @@ public class FileUtils
      *
      * @param file
      */
-    public static void mkDir(File file)
+    public static void mkDirIfNotExists(File file)
     {
         file = file.getAbsoluteFile();
         if (!file.getParentFile().exists())
         {
-            mkDir(file.getParentFile());
+            mkDirIfNotExists(file.getParentFile());
         }
         if (!file.exists())
         {
@@ -53,6 +53,6 @@ public class FileUtils
 
     public static void main(String[] args)
     {
-        mkDir(new File("d:\\1\\2\\3\\4"));
+        mkDirIfNotExists(new File("d:\\1\\2\\3\\4"));
     }
 }

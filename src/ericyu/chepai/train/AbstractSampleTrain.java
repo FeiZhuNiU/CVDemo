@@ -181,7 +181,7 @@ public abstract class AbstractSampleTrain
         ImageUtils.deleteImage(trainDataPath);
         ImageUtils.deleteImage(trainClassesPath);
 
-        FileUtils.mkDir(new File(SampleConstants.TRAIN_DATA_DIR));
+        FileUtils.mkDirIfNotExists(new File(SampleConstants.TRAIN_DATA_DIR));
 
         Imgcodecs.imwrite(trainDataPath, trainData);
         Imgcodecs.imwrite(trainClassesPath, trainClass);
