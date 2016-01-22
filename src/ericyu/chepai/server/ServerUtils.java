@@ -14,6 +14,8 @@ import ericyu.chepai.FileUtils;
 import ericyu.chepai.Logger;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ServerUtils
 {
@@ -22,8 +24,8 @@ public class ServerUtils
     private final static String ENDPOINT                        = "http://oss-cn-shanghai.aliyuncs.com";
 
     public final static String LOG_BUCKET_NAME                  = "paipailog";
-    public final static String PROPERTIESPATCH_BUCKET_NAME      = "propertiespatch";
-    public final static String RESOURCESPATCH_BUCKET_NAME       = "resourcespatch";
+    public final static String CONFIG_PATCH_BUCKET_NAME = "propertiespatch";
+    public final static String RESOURCES_PATCH_BUCKET_NAME = "resourcespatch";
 
     private final static String DIR_TO_SAVE_LOGS_FROM_SERVER    = "server";
     public final static String META_LAST_MODIFIED_TIME          = "last_modified_time";
@@ -36,7 +38,7 @@ public class ServerUtils
     }
 
     /**
-     *
+     * TODO: verify before send, if the file is identical with the one on server, skip sending
      * @param file
      * @param bucketName
      */
@@ -44,9 +46,13 @@ public class ServerUtils
     {
         if(file.isFile())
         {
-            OSSClient client = new OSSClient(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
-            ObjectMetadata meta = new ObjectMetadata();
-            meta.addUserMetadata(META_LAST_MODIFIED_TIME, String.valueOf(file.lastModified()));
+            OSSClient client = getOssClient();
+
+//            ObjectMetadata meta = new ObjectMetadata();
+//
+//            meta.addUserMetadata(META_LAST_MODIFIED_TIME, String.valueOf(file.lastModified()));
+
+
             PutObjectResult result = client.putObject(bucketName, file.getName(), file);
             System.out.println(result.getETag());
         }else
@@ -59,6 +65,26 @@ public class ServerUtils
         }
     }
 
+    private static OSSClient getOssClient()
+    {
+        return new OSSClient(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
+    }
+
+
+
+
+    private static Map<String,String> getObjectsInfo(String bucketName)
+    {
+        Map<String, String> infos = new HashMap<>();
+        OSSClient client = getOssClient();
+        ObjectListing listing = client.listObjects(bucketName);
+        for(OSSObjectSummary ossObjectSummary : listing.getObjectSummaries())
+        {
+            OSSObject object = client.getObject(bucketName,ossObjectSummary.getKey());
+            infos.put(ossObjectSummary.getKey(), object.getObjectMetadata().getUserMetadata().get(META_LAST_MODIFIED_TIME));
+        }
+        return infos;
+    }
 
     /**
      *
@@ -67,8 +93,7 @@ public class ServerUtils
      */
     public static void getAllDataFromBucket(String bucketName, String dir)
     {
-        OSSClient client = new OSSClient(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
-
+        OSSClient client = getOssClient();
         ObjectListing listing = client.listObjects(bucketName);
         for(OSSObjectSummary ossObjectSummary : listing.getObjectSummaries())
         {
@@ -111,7 +136,7 @@ public class ServerUtils
      */
     public static void deleteAllDataInBucket(String bucketName)
     {
-        OSSClient client = new OSSClient(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
+        OSSClient client = getOssClient();
         ObjectListing listing = client.listObjects(bucketName);
 
         for(OSSObjectSummary ossObjectSummary : listing.getObjectSummaries())
@@ -138,6 +163,10 @@ public class ServerUtils
             {
                 deleteAllDataInBucket(LOG_BUCKET_NAME);
             }
+        }
+        else
+        {
+            System.out.println(getObjectsInfo(CONFIG_PATCH_BUCKET_NAME));
         }
     }
 }

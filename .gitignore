@@ -46,3 +46,4 @@ dump/
 !/FlashStatusImage/*
 !/RefreshImage/*
 *.txt
+patch/

@@ -14,4 +14,6 @@ public class CommandConstants
     public static final String TEST_LOWEST_BID = "testLowestBid";
     public static final String TEST_REFRESH_BUTTON = "testRefreshButton";
     public static final String DELETE_LOGS_ON_SERVER = "deleteLogs";
+    public static final String UPLOAD_PATCH = "uploadPatch";
+    public static final String UPGRADE = "upgrade";
 }

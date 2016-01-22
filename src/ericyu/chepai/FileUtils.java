@@ -7,9 +7,8 @@ package ericyu.chepai;
  |           Created by lliyu on 1/20/2016  (yulin.jay@gmail.com)            |
  +===========================================================================*/
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.nio.channels.FileChannel;
 
 public class FileUtils
 {
@@ -48,6 +47,67 @@ public class FileUtils
         {
             Logger.log(Logger.Level.WARNING, null, "write object failed!", e);
             e.printStackTrace();
+        }
+    }
+
+    public static void copyFile(File source, File target) {
+        FileChannel in = null;
+        FileChannel out = null;
+        FileInputStream inStream = null;
+        FileOutputStream outStream = null;
+        try {
+            inStream = new FileInputStream(source);
+            outStream = new FileOutputStream(target);
+            in = inStream.getChannel();
+            out = outStream.getChannel();
+            in.transferTo(0, in.size(), out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try
+            {
+                if (inStream != null)
+                {
+                    inStream.close();
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+            try
+            {
+                if (in != null)
+                {
+                    in.close();
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+            try
+            {
+                assert outStream != null;
+                outStream.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            try
+            {
+                if (out != null)
+                {
+                    out.close();
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
