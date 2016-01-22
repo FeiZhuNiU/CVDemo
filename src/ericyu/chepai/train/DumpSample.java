@@ -1,5 +1,6 @@
 package ericyu.chepai.train;
 
+import ericyu.chepai.CommandConstants;
 import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.image.ImageUtils;
 import org.opencv.core.Core;
@@ -40,7 +41,16 @@ public class DumpSample
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        dumpFlashStatusSample();
-//        dumpRefreshButtonSample();
+        if(args.length == 1)
+        {
+            if(args[0].equals(CommandConstants.DUMP_FLASHSTATUS_SAMPLE))
+            {
+                dumpFlashStatusSample();
+            }
+            else if (args[0].equals(CommandConstants.DUMP_VCODE_REGION_SAMPLE))
+            {
+                dumpRefreshButtonSample();
+            }
+        }
     }
 }

@@ -12,6 +12,7 @@ import ericyu.chepai.robot.bidstrategy.AbstractBidStrategy;
 import ericyu.chepai.robot.bidstrategy.AmbushAndAidStrategy;
 import ericyu.chepai.robot.bidstrategy.User;
 import ericyu.chepai.server.ServerUtils;
+import ericyu.chepai.server.UpgradeUtils;
 import org.opencv.core.Core;
 
 import java.awt.*;
@@ -51,6 +52,12 @@ public class Console
                 {
                     e.printStackTrace();
                 }
+            }
+            else if (
+                    args[0].equals(CommandConstants.UPLOAD_PATCH) ||
+                    args[0].equals(CommandConstants.UPGRADE))
+            {
+                UpgradeUtils.main(args);
             }
 
         }
