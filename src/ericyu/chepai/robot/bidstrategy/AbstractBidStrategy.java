@@ -9,8 +9,8 @@ package ericyu.chepai.robot.bidstrategy;
 
 import ericyu.chepai.DateUtil;
 import ericyu.chepai.Logger;
-import ericyu.chepai.flash.FlashStatusDetector;
-import ericyu.chepai.flash.IStatusObserver;
+import ericyu.chepai.FlashStatusDetector;
+import ericyu.chepai.IStatusObserver;
 import ericyu.chepai.robot.MyRobot;
 
 import java.util.AbstractMap;

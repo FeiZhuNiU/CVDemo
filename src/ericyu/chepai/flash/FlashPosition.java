@@ -7,9 +7,9 @@ package ericyu.chepai.flash;
  |           Created by lliyu on 11/25/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import com.iknow.image.ImageUtils;
 import ericyu.chepai.Configuration;
 import ericyu.chepai.Logger;
-import ericyu.chepai.image.ImageUtils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import java.awt.*;
@@ -86,7 +86,7 @@ public class FlashPosition
     /**
      * set origin until origin is found
      */
-    public static void setOrigin()
+    private static void setOrigin()
     {
         Logger.log(Logger.Level.INFO, null,"finding Flash window ... ");
         while ((origin = findLeftTopPosition()) == null);

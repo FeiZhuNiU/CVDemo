@@ -7,10 +7,10 @@ package ericyu.chepai.server;
  |           Created by lliyu on 1/20/2016  (yulin.jay@gmail.com)            |
  +===========================================================================*/
 
+import com.iknow.train.SampleConstants;
 import ericyu.chepai.CommandConstants;
 import ericyu.chepai.Configuration;
 import ericyu.chepai.FileUtils;
-import ericyu.chepai.train.SampleConstants;
 
 import java.io.File;
 

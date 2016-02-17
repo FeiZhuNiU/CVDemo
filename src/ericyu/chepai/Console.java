@@ -6,7 +6,6 @@ package ericyu.chepai;
  |  HISTORY                                                                  |
  |           Created by lliyu on 10/28/2015  (lin.yu@oracle.com)             |
  +===========================================================================*/
-import ericyu.chepai.flash.FlashStatusDetector;
 import ericyu.chepai.robot.MyRobot;
 import ericyu.chepai.robot.bidstrategy.AbstractBidStrategy;
 import ericyu.chepai.robot.bidstrategy.AmbushAndAidStrategy;

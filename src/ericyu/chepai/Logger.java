@@ -7,7 +7,6 @@ package ericyu.chepai;
  |           Created by lliyu on 11/30/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
-import ericyu.chepai.flash.FlashStatusDetector;
 import ericyu.chepai.server.ServerUtils;
 
 import java.io.File;

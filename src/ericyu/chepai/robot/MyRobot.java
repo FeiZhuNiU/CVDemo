@@ -7,15 +7,15 @@ package ericyu.chepai.robot;
  |           Created by lliyu on 11/2/2015  (lin.yu@oracle.com)              |
  +===========================================================================*/
 
+import com.iknow.image.ImageUtils;
+import com.iknow.recognize.Recognition;
 import ericyu.chepai.Logger;
 import ericyu.chepai.flash.FlashPosition;
-import ericyu.chepai.flash.FlashStatusDetector;
-import ericyu.chepai.flash.IStatusObserver;
-import ericyu.chepai.image.ImageUtils;
+import ericyu.chepai.FlashStatusDetector;
+import ericyu.chepai.IStatusObserver;
 import ericyu.chepai.Configuration;
-import ericyu.chepai.image.SegSingleColor;
-import ericyu.chepai.train.*;
-import ericyu.chepai.recognize.Recognition;
+import ericyu.chepai.recognition.vcode.SegSingleColor;
+import ericyu.chepai.recognition.vcode.VCodeTrain;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
@@ -73,14 +73,14 @@ public class MyRobot implements IStatusObserver
     {
         this.robot = robot;
         flashStatus = FlashStatusDetector.Status.NONE;
-        vCodeRecognition = new Recognition(new VCodeTrain(
-                SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
-                SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH,
-                new AllPixelEigenvectorStrategy()));
-        vCodeRegionRecognition = new Recognition(new RefreshButtonTrain(
-                SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH,
-                SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH,
-                new RegionPixelEigenVecStrategy(2,10)));
+//        vCodeRecognition = new Recognition(new VCodeTrain(
+//                SampleConstants.V_CODE_SAMPLE_TRAIN_DATA_PATH,
+//                SampleConstants.V_CODE_SAMPLE_TRAIN_CLASSES_PATH,
+//                new AllPixelEigenvectorStrategy()));
+//        vCodeRegionRecognition = new Recognition(new RefreshButtonTrain(
+//                SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH,
+//                SampleConstants.REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH,
+//                new RegionPixelEigenVecStrategy(2,10)));
     }
 
     public static Map<Character, Integer> keyMap = new HashMap<>();
@@ -354,7 +354,7 @@ public class MyRobot implements IStatusObserver
                                  FlashPosition.REGION_VCODE_WIDTH,
                                  FlashPosition.REGION_VCODE_HEIGHT);
 
-        toReg = vCodeRegionRecognition.getTraining().process(toReg,null).get(0);
+//        toReg = vCodeRegionRecognition.getTraining().process(toReg,null).get(0);
 //        Imgcodecs.imwrite("dump.bmp",toReg);
 
         //TODO: magic number (1 -> refresh button exists)
@@ -421,15 +421,16 @@ public class MyRobot implements IStatusObserver
         long mid = System.currentTimeMillis();
         System.out.println("load sample consumed: " + (mid - start) / 1000.0);
 
-        ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
-                                 FlashPosition.origin.x + FlashPosition.REGION_VCODE_X,
-                                 FlashPosition.origin.y + FlashPosition.REGION_VCODE_Y,
-                                 FlashPosition.REGION_VCODE_WIDTH,
-                                 FlashPosition.REGION_VCODE_HEIGHT);
+//        ImageUtils.screenCapture(ImageUtils.screenCaptureImage,
+//                                 FlashPosition.origin.x + FlashPosition.REGION_VCODE_X,
+//                                 FlashPosition.origin.y + FlashPosition.REGION_VCODE_Y,
+//                                 FlashPosition.REGION_VCODE_WIDTH,
+//                                 FlashPosition.REGION_VCODE_HEIGHT);
 
-        Mat toRecog = ImageUtils.readImage(ImageUtils.screenCaptureImage);
+//        Mat toRecog = ImageUtils.readImage(ImageUtils.screenCaptureImage);
 
-        java.util.List<Mat> digitsToRecog = vCodeRecognition.getTraining().process(toRecog, new SegSingleColor());
+//        java.util.List<Mat> digitsToRecog = vCodeRecognition.getTraining().process(toRecog, new SegSingleColor());
+        java.util.List<Mat> digitsToRecog =null;
 
         long mid2 = System.currentTimeMillis();
         System.out.println("segmentation consumed: " + (mid2 - mid) / 1000.0);
