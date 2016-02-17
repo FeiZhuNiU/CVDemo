@@ -38,7 +38,7 @@ public class FlashStatusDetector implements Runnable
     private List<IStatusObserver> observers;
     private Status status;
     private Recognition recognition;
-    private static long exitTime;
+
     public enum Status
     {
         NONE,
@@ -55,11 +55,6 @@ public class FlashStatusDetector implements Runnable
                                                                 new RegionPixelEigenVecStrategy(10,10)));
         status = Status.NONE;
 
-        int exitTimeMinute = Configuration.exitTimeMinute == -1 ? DateUtil.getCurrentMinute() + 1 : Configuration.exitTimeMinute;
-        exitTime = DateUtil.getDateLongValue(Configuration.exitTimeHour, exitTimeMinute,3);
-        Logger.log(Logger.Level.INFO, null, "Program will shutdown at " + DateUtil.formatLongValueToDate(exitTime));
-
-        Logger.log(Logger.Level.INFO, null, exitTime - System.currentTimeMillis() + "ms to go");
     }
 
     public void notifyStatusObservers(Status status)
@@ -102,10 +97,6 @@ public class FlashStatusDetector implements Runnable
 
             // system exit
             try {
-                if (System.currentTimeMillis() > exitTime) {
-                    Logger.sendLog();
-                    System.exit(1);
-                }
 
                 FlashStatusDetector.Status originStatus = status;
                 FlashStatusDetector.Status curStatus;

@@ -20,6 +20,14 @@ import java.awt.*;
 public class Console
 {
 
+    private static long exitTime;
+    static {
+        int exitTimeMinute = Configuration.exitTimeMinute == -1 ? DateUtil.getCurrentMinute() + 1 : Configuration.exitTimeMinute;
+        exitTime = DateUtil.getDateLongValue(Configuration.exitTimeHour, exitTimeMinute,3);
+        Logger.log(Logger.Level.INFO, null, "Program will shutdown at " + DateUtil.formatLongValueToDate(exitTime));
+        Logger.log(Logger.Level.INFO, null, exitTime - System.currentTimeMillis() + "ms to go");
+    }
+
     private static MyRobot robot;
     private static AbstractBidStrategy bidStrategy;
     private static FlashStatusDetector flashStatusDetector;
@@ -94,6 +102,19 @@ public class Console
             bidStrategy = new AmbushAndAidStrategy(user,robot);
             flashStatusDetector.addStatusObserver(robot);
             flashStatusDetector.addStatusObserver(bidStrategy);
+
+            Thread exitThread = new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    if (System.currentTimeMillis() > exitTime) {
+                        Logger.sendLog();
+                        System.exit(1);
+                    }
+                }
+            });
+            exitThread.start();
 
             Thread detectorThread = new Thread(flashStatusDetector);
             detectorThread.start();
