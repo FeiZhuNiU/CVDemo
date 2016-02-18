@@ -103,8 +103,8 @@ public class ServerUtils
             OutputStream os = null;
             try
             {
-                dir = (dir == null || dir.trim().equals("")) ? object.getKey() : dir + File.separator + object.getKey();
-                os = new FileOutputStream(dir);
+                String dst = (dir == null || dir.trim().equals("")) ? object.getKey() : dir + File.separator + object.getKey();
+                os = new FileOutputStream(dst);
                 byte[] buffer = new byte[10];
                 while((objectContent.read(buffer))!=-1){
                     os.write(buffer);

@@ -2,6 +2,7 @@ package ericyu.chepai;
 
 import com.iknow.image.ImageUtils;
 import com.iknow.train.DefaultNamingRule;
+import com.iknow.train.eigen.AllPixelEigenvectorStrategy;
 import com.iknow.train.eigen.RegionPixelEigenVecStrategy;
 import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.recognition.SampleConstants;
@@ -32,10 +33,6 @@ public class Test
 //        Mat result = statusSeg.doSegmentation().get(0);
 //        ImageUtils.writeImage(result,"haha.png");
 
-        FlashStatusTrain statusTrain = new FlashStatusTrain("FlashStatusImage",
-                SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,
-                SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,
-                new RegionPixelEigenVecStrategy(5,16), new DefaultNamingRule());
-        statusTrain.generateTrainDataAndTrainClassFile();
+
     }
 }

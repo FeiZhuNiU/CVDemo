@@ -8,6 +8,7 @@ package com.iknow.recognize;
  +===========================================================================*/
 
 import com.iknow.train.AbstractSampleTrain;
+import com.iknow.train.ClassificationConsts;
 import org.opencv.core.Mat;
 import org.opencv.ml.KNearest;
 import org.opencv.ml.Ml;
@@ -37,15 +38,14 @@ public class Recognition
     }
 
     /**
-     * @param toRecog generally, this param should be the return value of {@link AbstractSampleTrain#process}
      * @param accuracy a param for KNN classifier
      * @return
      */
-    public int recognize(Mat toRecog, int accuracy)
+    public char recognize(Mat toRecog, int accuracy)
     {
         Mat eigen = getTraining().getEigenvetorStrategy().getEigenVec(toRecog);
         int num = (int) (kNearest.findNearest(eigen, accuracy, new Mat()));
-        return num;
+        return ClassificationConsts.classList.get(num);
     }
 
 }

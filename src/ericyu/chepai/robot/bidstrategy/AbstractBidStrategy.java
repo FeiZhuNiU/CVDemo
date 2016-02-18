@@ -290,6 +290,22 @@ abstract public class AbstractBidStrategy implements IStatusObserver
         }
     }
 
+    protected class ClickNotificationConfirm implements Callable<Map.Entry<Boolean,Object>>
+    {
+
+        @Override
+        public Map.Entry<Boolean,Object> call() throws Exception
+        {
+            while (true)
+            {
+                //TODO: refactor
+                if (robot.clickReBidConfirmButton())
+                    break;
+            }
+            return new AbstractMap.SimpleEntry<>(true, null);
+        }
+    }
+
     protected class ClickVCodeCancelButton implements Callable<Map.Entry<Boolean,Object>>
     {
         @Override

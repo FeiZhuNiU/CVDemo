@@ -24,13 +24,18 @@ public class Configuration
      */
 //    public static int startTimeHour;
 //    public static int startTimeMinute;
+    public static int bidTimeHour;
+    public static int bidTimeMinute;
+
     public static int startTimeSecond;
+
+    public static int firstBidSecond;
+    public static int firstBidConfirmVCodeSecond;
 
     public static int addMoneySecond;
     public static int addMoneyRange;
 
-    public static int bidTimeHour;
-    public static int bidTimeMinute;
+
 
     public static int vCodeConfirmSecond;
     public static int latestBidTimeSecond;
@@ -133,11 +138,16 @@ public class Configuration
 //    private static final String START_TIME_HOUR_KEY ="startTimeHour";
 //    private static final String START_TIME_MINUTE_KEY ="startTimeMinute";
     private static final String START_TIME_SECOND_KEY ="startTimeSecond";
-    private static final String ADD_MONEY_RANGE_KEY = "addMoneyRange";
     private static final String BID_TIME_HOUR_KEY = "bidTimeHour";
     private static final String BID_TIME_MINUTE_KEY = "bidTimeMinute";
-    private static final String V_CODE_CONFIRM_SECOND_KEY = "vCodeConfirmTimeSecond";
+
+    private static final String FIRST_BID_SECOND="firstBidSecond";
+    private static final String FIRST_BID_CONFIRM_SECOND="firstBidConfirmVCodeSecond";
+
+
     private static final String ADD_MONEY_SECOND_KEY = "addMoneyTimeSecond";
+    private static final String ADD_MONEY_RANGE_KEY = "addMoneyRange";
+    private static final String V_CODE_CONFIRM_SECOND_KEY = "vCodeConfirmTimeSecond";
     private static final String LATEST_BID_TIME_SECOND_KEY = "latestBidTimeSecond";
     private static final String BID_DIFF_KEY="bidDiff";
 
@@ -247,14 +257,17 @@ public class Configuration
 
 //            startTimeHour = Integer.parseInt(properties.get(START_TIME_HOUR_KEY).trim());
 //            startTimeMinute = Integer.parseInt(properties.get(START_TIME_MINUTE_KEY).trim());
-            startTimeSecond = Integer.parseInt(properties.get(START_TIME_SECOND_KEY).trim());
-
-
-            addMoneyRange = Integer.parseInt(properties.get(ADD_MONEY_RANGE_KEY).trim());
             bidTimeHour = Integer.parseInt(properties.get(BID_TIME_HOUR_KEY).trim());
             bidTimeMinute = Integer.parseInt(properties.get(BID_TIME_MINUTE_KEY).trim());
-            vCodeConfirmSecond = Integer.parseInt(properties.get(V_CODE_CONFIRM_SECOND_KEY).trim());
+            startTimeSecond = Integer.parseInt(properties.get(START_TIME_SECOND_KEY).trim());
+
+            firstBidSecond = Integer.parseInt(properties.get(FIRST_BID_SECOND).trim());
+            firstBidConfirmVCodeSecond = Integer.parseInt(properties.get(FIRST_BID_CONFIRM_SECOND).trim());
+
             addMoneySecond = Integer.parseInt(properties.get(ADD_MONEY_SECOND_KEY).trim());
+            addMoneyRange = Integer.parseInt(properties.get(ADD_MONEY_RANGE_KEY).trim());
+            vCodeConfirmSecond = Integer.parseInt(properties.get(V_CODE_CONFIRM_SECOND_KEY).trim());
+
             latestBidTimeSecond = Integer.parseInt(properties.get(LATEST_BID_TIME_SECOND_KEY).trim());
             bidDiff = Integer.parseInt(properties.get(BID_DIFF_KEY).trim());
 

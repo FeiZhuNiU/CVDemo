@@ -673,8 +673,12 @@ public class MyRobot implements IStatusObserver
             Logger.log(Logger.Level.WARNING, flashStatus, "can not click ReBid Confirm Button.");
             return false;
         }
-        clickAt(FlashPosition.BUTTON_REBID_CONFIRM_X,
-                FlashPosition.BUTTON_REBID_CONFIRM_Y);
+        while(flashStatus == FlashStatusDetector.Status.NOTIFICATION)
+        {
+            clickAt(FlashPosition.BUTTON_REBID_CONFIRM_X,
+                    FlashPosition.BUTTON_REBID_CONFIRM_Y);
+            wait(500);
+        }
         Logger.log(Logger.Level.INFO, flashStatus, "robot clicked rebid confirm button");
         return true;
     }

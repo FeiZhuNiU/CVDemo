@@ -8,7 +8,9 @@ package ericyu.chepai.recognition.flashstatus;
  +===========================================================================*/
 
 import com.iknow.train.AbstractSampleTrain;
+import com.iknow.train.DefaultNamingRule;
 import com.iknow.train.ISampleNamingRule;
+import com.iknow.train.eigen.AllPixelEigenvectorStrategy;
 import com.iknow.train.eigen.IEigenvectorStrategy;
 import ericyu.chepai.recognition.SampleConstants;
 import org.opencv.core.Core;
@@ -53,7 +55,6 @@ public class FlashStatusTrain extends AbstractSampleTrain
                 {
                     for(int col = 0; col < mat.cols(); ++col)
                     {
-                        //TODO???? Can this be ok?
                         double[] target;
                         if(row+i >=0 && row + i < mat.rows() && col + j >=0 && col + j < mat.cols())
                         {
@@ -76,7 +77,11 @@ public class FlashStatusTrain extends AbstractSampleTrain
     public static void main(String[] args)
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        FlashStatusTrain train = new FlashStatusTrain(null,null);
+        FlashStatusTrain statusTrain = new FlashStatusTrain(SampleConstants.FLASH_STATUS_SAMPLE_DIR,
+                SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,
+                SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,
+                new AllPixelEigenvectorStrategy(), new DefaultNamingRule());
+        statusTrain.generateTrainDataAndTrainClassFile();
 
     }
 }

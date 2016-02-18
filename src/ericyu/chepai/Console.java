@@ -21,7 +21,7 @@ public class Console
 
     private static long exitTime;
     static {
-        int exitTimeMinute = Configuration.exitTimeMinute == -1 ? DateUtil.getCurrentMinute() + 1 : Configuration.exitTimeMinute;
+        int exitTimeMinute = Configuration.exitTimeMinute == -1 ? Configuration.bidTimeMinute + 1 : Configuration.exitTimeMinute;
         exitTime = DateUtil.getDateLongValue(Configuration.exitTimeHour, exitTimeMinute,3);
         Logger.log(Logger.Level.INFO, null, "Program will shutdown at " + DateUtil.formatLongValueToDate(exitTime));
         Logger.log(Logger.Level.INFO, null, exitTime - System.currentTimeMillis() + "ms to go");
@@ -88,7 +88,6 @@ public class Console
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Logger.log(Logger.Level.INFO, null, "this line is for test encoding :" + MyRobot.NOTIFICATION_REQUEST_VCODE_TOO_OFTEN);
 
-
         try
         {
             user = new User(Configuration.username, Configuration.password);
@@ -107,9 +106,20 @@ public class Console
                 @Override
                 public void run()
                 {
-                    if (System.currentTimeMillis() > exitTime) {
-                        Logger.sendLog();
-                        System.exit(1);
+                    while (true)
+                    {
+                        if (System.currentTimeMillis() > exitTime)
+                        {
+                            Logger.sendLog();
+                            System.exit(1);
+                        }
+                        try
+                        {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
                     }
                 }
             });

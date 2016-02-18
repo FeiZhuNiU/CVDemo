@@ -41,9 +41,23 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //bid
         //5
 
+
         addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
                                                                     Configuration.bidTimeMinute,
                                                                     Configuration.startTimeSecond)));
+        addAction(new FocusOnAddRangeBox());
+        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
+                Configuration.bidTimeMinute,
+                Configuration.firstBidSecond)));
+        addAction(new ClickAdd300Button());
+        addAction(new ClickBidButton());
+        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
+                                                                    Configuration.bidTimeMinute,
+                                                                    Configuration.firstBidConfirmVCodeSecond)));
+        addAction(new ClickVCodeConfirmButton());
+        addAction(new ClickNotificationConfirm());
+
+
         addAction(new FocusOnAddRangeBox());
         //6
         addAction(new InputAddMoneyRange(Configuration.addMoneyRange));

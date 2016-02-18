@@ -15,14 +15,14 @@ public class SampleConstants
     public static final String TRAIN_DATA_DIR = "resources";
 
     public static final String V_CODE_SAMPLE_DIR="dump\\unNormalized";
-    public static final String V_CODE_SAMPLE_TRAIN_DATA_PATH = TRAIN_DATA_DIR + "\\traindata.bmp";
-    public static final String V_CODE_SAMPLE_TRAIN_CLASSES_PATH = TRAIN_DATA_DIR + "\\trainclasses.bmp";
+    public static final String V_CODE_SAMPLE_TRAIN_DATA_PATH = TRAIN_DATA_DIR + "\\traindata.png";
+    public static final String V_CODE_SAMPLE_TRAIN_CLASSES_PATH = TRAIN_DATA_DIR + "\\trainclasses.png";
 
     public static final String FLASH_STATUS_SAMPLE_DIR="samples\\FlashStatusImage";
-    public static final String FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH = TRAIN_DATA_DIR + "\\falshStatusTrainData.bmp";
-    public static final String FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH = TRAIN_DATA_DIR + "\\falshStatusTrainClasses.bmp";
+    public static final String FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH = TRAIN_DATA_DIR + "\\flashStatusTrainData.png";
+    public static final String FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH = TRAIN_DATA_DIR + "\\flashStatusTrainClasses.png";
 
     public static final String REFRESH_BUTTON_SAMPLE_DIR="samples\\RefreshImage";
-    public static final String REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH = TRAIN_DATA_DIR + "\\refreshButtonTrainData.bmp";
-    public static final String REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH = TRAIN_DATA_DIR + "\\refreshButtonTrainClasses.bmp";
+    public static final String REFRESH_BUTTON_SAMPLE_TRAIN_DATA_PATH = TRAIN_DATA_DIR + "\\refreshButtonTrainData.png";
+    public static final String REFRESH_BUTTON_SAMPLE_TRAIN_CLASSES_PATH = TRAIN_DATA_DIR + "\\refreshButtonTrainClasses.png";
 }

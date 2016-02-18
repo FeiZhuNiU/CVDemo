@@ -11,11 +11,12 @@ package ericyu.chepai;
 import com.iknow.image.ImageUtils;
 import com.iknow.recognize.Recognition;
 import com.iknow.train.DefaultNamingRule;
+import com.iknow.train.eigen.AllPixelEigenvectorStrategy;
 import com.iknow.train.eigen.RegionPixelEigenVecStrategy;
 import ericyu.chepai.flash.FlashPosition;
+import ericyu.chepai.recognition.SampleConstants;
 import ericyu.chepai.recognition.flashstatus.FlashStatusSeg;
 import ericyu.chepai.recognition.flashstatus.FlashStatusTrain;
-import ericyu.chepai.recognition.SampleConstants;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -52,7 +53,7 @@ public class FlashStatusDetector implements Runnable
         this.recognition = new Recognition(new FlashStatusTrain(SampleConstants.FLASH_STATUS_SAMPLE_DIR,
                 SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_DATA_PATH,
                 SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,
-                new RegionPixelEigenVecStrategy(5,16), new DefaultNamingRule()));
+                new AllPixelEigenvectorStrategy(), new DefaultNamingRule()));
         this.statusSeg = new FlashStatusSeg(null);
         status = Status.NONE;
 
@@ -100,23 +101,24 @@ public class FlashStatusDetector implements Runnable
 
                 Mat target = getRightPartOfFlash();
                 statusSeg.setSrc(target);
+
                 List<Mat> toRecogs = statusSeg.doSegmentation();
-                int result = recognition.recognize(toRecogs.get(0), 1);
+                char result = recognition.recognize(toRecogs.get(0), 3);
                 switch (result) {
-                    case 1:
+                    case '1':
                         curStatus = Status.LOGIN;
                         break;
-                    case 2:
+                    case '2':
                         curStatus = Status.BID;
                         break;
-                    case 3:
+                    case '3':
                         curStatus = Status.VCODE;
                         break;
-                    case 4:
+                    case '4':
                         curStatus = Status.NOTIFICATION;
                         break;
                     default:
-                        curStatus = Status.NONE;
+                        curStatus = status;
                         break;
                 }
 
@@ -125,7 +127,7 @@ public class FlashStatusDetector implements Runnable
                     Logger.log(Logger.Level.INFO, status, "FlashStatus ready to change to " + curStatus);
                     status = curStatus;
                     Logger.log(Logger.Level.INFO, status, "FlashStatus changed to " + curStatus);
-                    notifyStatusObservers(curStatus);
+                    notifyStatusObservers(status);
                 }
 
 
