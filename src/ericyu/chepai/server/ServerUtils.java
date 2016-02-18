@@ -106,8 +106,10 @@ public class ServerUtils
                 String dst = (dir == null || dir.trim().equals("")) ? object.getKey() : dir + File.separator + object.getKey();
                 os = new FileOutputStream(dst);
                 byte[] buffer = new byte[10];
-                while((objectContent.read(buffer))!=-1){
-                    os.write(buffer);
+                int i = 0;
+                while( (i=objectContent.read(buffer))!=-1)
+                {
+                    os.write(buffer,0,i);
                 }
             }
             catch (Exception e)
