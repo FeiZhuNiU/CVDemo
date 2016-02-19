@@ -111,6 +111,24 @@ public class FileUtils
         }
     }
 
+    public static void removeFile(File file)
+    {
+        if(file == null || !file.exists())
+        {
+            return;
+        }
+        if(file.isFile())
+        {
+            file.delete();
+            return;
+        }
+        File[] files = file.listFiles();
+        for(File f : files)
+        {
+            removeFile(f);
+        }
+    }
+
     public static void main(String[] args)
     {
         mkDirIfNotExists(new File("d:\\1\\2\\3\\4"));

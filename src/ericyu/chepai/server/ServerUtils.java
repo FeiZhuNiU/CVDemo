@@ -24,8 +24,8 @@ public class ServerUtils
     private final static String ENDPOINT                        = "http://oss-cn-shanghai.aliyuncs.com";
 
     public final static String LOG_BUCKET_NAME                  = "paipailog";
-    public final static String CONFIG_PATCH_BUCKET_NAME = "propertiespatch";
-    public final static String RESOURCES_PATCH_BUCKET_NAME = "resourcespatch";
+    public final static String CONFIG_PATCH_BUCKET_NAME         = "propertiespatch";
+    public final static String RESOURCES_PATCH_BUCKET_NAME      = "resourcespatch";
 
     private final static String DIR_TO_SAVE_LOGS_FROM_SERVER    = "server";
     public final static String META_LAST_MODIFIED_TIME          = "last_modified_time";
@@ -168,7 +168,8 @@ public class ServerUtils
         }
         else
         {
-            System.out.println(getObjectsInfo(CONFIG_PATCH_BUCKET_NAME));
+//            System.out.println(getObjectsInfo(CONFIG_PATCH_BUCKET_NAME));
+            deleteAllDataInBucket(CONFIG_PATCH_BUCKET_NAME);
         }
     }
 }

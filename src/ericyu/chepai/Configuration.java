@@ -14,7 +14,8 @@ import java.util.Properties;
 
 public class Configuration
 {
-    public static final String CONFIG_FILE = "config.properties";
+    public static final String FLASH_CONFIG_FILE = "flash.properties";
+    public static final String STRATEGY_CONFIG_FILE = "strategy.properties";
 
     public static String username;
     public static String password;
@@ -234,122 +235,133 @@ public class Configuration
     private static final String EXIT_TIME_HOUR_KEY="exitTimeHour";
 
 
-    public static HashMap<String, String> properties = new HashMap<>();
+    public static HashMap<String, String> flashProperties = new HashMap<>();
+    public static HashMap<String, String> strategyProperties = new HashMap<>();
 
 
     static
     {
-        Properties property = new Properties();
+        Properties flashProperty = new Properties();
+        Properties strategyProperty = new Properties();
         try
         {
-            property.load(new FileInputStream(CONFIG_FILE));
-            Enumeration keyEumeration = property.propertyNames();
+            flashProperty.load(new FileInputStream(FLASH_CONFIG_FILE));
+            strategyProperty.load(new FileInputStream(STRATEGY_CONFIG_FILE));
+
+            Enumeration keyEumeration = flashProperty.propertyNames();
             while (keyEumeration.hasMoreElements())
             {
                 String key = (String) keyEumeration.nextElement();
-                String value = property.getProperty(key);
-                properties.put(key, value);
+                String value = flashProperty.getProperty(key);
+                flashProperties.put(key, value);
+            }
+            keyEumeration = strategyProperty.propertyNames();
+            while (keyEumeration.hasMoreElements())
+            {
+                String key = (String) keyEumeration.nextElement();
+                String value = strategyProperty.getProperty(key);
+                strategyProperties.put(key, value);
             }
 
-            username = properties.get(USERNAME_KEY).trim();
-            password = properties.get(PASSWORD_KEY).trim();
-            semiAuto = Boolean.parseBoolean(properties.get(SEMIAUTO_KEY).trim());
+            username = strategyProperties.get(USERNAME_KEY).trim();
+            password = strategyProperties.get(PASSWORD_KEY).trim();
+            semiAuto = Boolean.parseBoolean(strategyProperties.get(SEMIAUTO_KEY).trim());
 
-//            startTimeHour = Integer.parseInt(properties.get(START_TIME_HOUR_KEY).trim());
-//            startTimeMinute = Integer.parseInt(properties.get(START_TIME_MINUTE_KEY).trim());
-            bidTimeHour = Integer.parseInt(properties.get(BID_TIME_HOUR_KEY).trim());
-            bidTimeMinute = Integer.parseInt(properties.get(BID_TIME_MINUTE_KEY).trim());
-            startTimeSecond = Integer.parseInt(properties.get(START_TIME_SECOND_KEY).trim());
+//            startTimeHour = Integer.parseInt(flashProperties.get(START_TIME_HOUR_KEY).trim());
+//            startTimeMinute = Integer.parseInt(flashProperties.get(START_TIME_MINUTE_KEY).trim());
+            bidTimeHour = Integer.parseInt(strategyProperties.get(BID_TIME_HOUR_KEY).trim());
+            bidTimeMinute = Integer.parseInt(strategyProperties.get(BID_TIME_MINUTE_KEY).trim());
+            startTimeSecond = Integer.parseInt(strategyProperties.get(START_TIME_SECOND_KEY).trim());
+            startBid = Integer.parseInt(strategyProperties.get(START_BID_KEY).trim());
+            exitTimeMinute = Integer.parseInt(strategyProperties.get(EXIT_TIME_MINUTE_KEY).trim());
+            exitTimeHour = Integer.parseInt(strategyProperties.get(EXIT_TIME_HOUR_KEY).trim());
 
-            firstBidSecond = Integer.parseInt(properties.get(FIRST_BID_SECOND).trim());
-            firstBidConfirmVCodeSecond = Integer.parseInt(properties.get(FIRST_BID_CONFIRM_SECOND).trim());
+            firstBidSecond = Integer.parseInt(strategyProperties.get(FIRST_BID_SECOND).trim());
+            firstBidConfirmVCodeSecond = Integer.parseInt(strategyProperties.get(FIRST_BID_CONFIRM_SECOND).trim());
 
-            addMoneySecond = Integer.parseInt(properties.get(ADD_MONEY_SECOND_KEY).trim());
-            addMoneyRange = Integer.parseInt(properties.get(ADD_MONEY_RANGE_KEY).trim());
-            vCodeConfirmSecond = Integer.parseInt(properties.get(V_CODE_CONFIRM_SECOND_KEY).trim());
+            addMoneySecond = Integer.parseInt(strategyProperties.get(ADD_MONEY_SECOND_KEY).trim());
+            addMoneyRange = Integer.parseInt(strategyProperties.get(ADD_MONEY_RANGE_KEY).trim());
+            vCodeConfirmSecond = Integer.parseInt(strategyProperties.get(V_CODE_CONFIRM_SECOND_KEY).trim());
 
-            latestBidTimeSecond = Integer.parseInt(properties.get(LATEST_BID_TIME_SECOND_KEY).trim());
-            bidDiff = Integer.parseInt(properties.get(BID_DIFF_KEY).trim());
+            latestBidTimeSecond = Integer.parseInt(strategyProperties.get(LATEST_BID_TIME_SECOND_KEY).trim());
+            bidDiff = Integer.parseInt(strategyProperties.get(BID_DIFF_KEY).trim());
 
-            lefttopColorR = Integer.parseInt(properties.get(LEFTTOP_COLOR_R_KEY).trim());
-            lefttopColorG = Integer.parseInt(properties.get(LEFTTOP_COLOR_G_KEY).trim());
-            lefttopColorB = Integer.parseInt(properties.get(LEFTTOP_COLOR_B_KEY).trim());
 
-            lefttopColorOffsetR = Integer.parseInt(properties.get(LEFTTOP_COLOR_OFFSET_R_KEY).trim());
-            lefttopColorOffsetG = Integer.parseInt(properties.get(LEFTTOP_COLOR_OFFSET_G_KEY).trim());
-            lefttopColorOffsetB = Integer.parseInt(properties.get(LEFTTOP_COLOR_OFFSET_B_KEY).trim());
+            lefttopColorR = Integer.parseInt(flashProperties.get(LEFTTOP_COLOR_R_KEY).trim());
+            lefttopColorG = Integer.parseInt(flashProperties.get(LEFTTOP_COLOR_G_KEY).trim());
+            lefttopColorB = Integer.parseInt(flashProperties.get(LEFTTOP_COLOR_B_KEY).trim());
 
-            leftTopX = Integer.parseInt(properties.get(LEFTTOP_X_KEY).trim());
-            leftTopY = Integer.parseInt(properties.get(LEFTTOP_Y_KEY).trim());
+            lefttopColorOffsetR = Integer.parseInt(flashProperties.get(LEFTTOP_COLOR_OFFSET_R_KEY).trim());
+            lefttopColorOffsetG = Integer.parseInt(flashProperties.get(LEFTTOP_COLOR_OFFSET_G_KEY).trim());
+            lefttopColorOffsetB = Integer.parseInt(flashProperties.get(LEFTTOP_COLOR_OFFSET_B_KEY).trim());
 
-            flashWidth = Integer.parseInt(properties.get(FLASH_WIDTH_KEY).trim());
-            flashHeight = Integer.parseInt(properties.get(FLASH_HEIGHT_KEY).trim());
+            leftTopX = Integer.parseInt(flashProperties.get(LEFTTOP_X_KEY).trim());
+            leftTopY = Integer.parseInt(flashProperties.get(LEFTTOP_Y_KEY).trim());
 
-            flashStatusRegionX = Integer.parseInt(properties.get(REGION_FLASH_STATUS_X_KEY).trim());
-            flashStatusRegionY = Integer.parseInt(properties.get(REGION_FLASH_STATUS_Y_KEY).trim());
-            flashStatusRegionWidth = Integer.parseInt(properties.get(REGION_FLASH_STATUS_WIDTH_KEY).trim());
-            flashStatusRegionHeight = Integer.parseInt(properties.get(REGION_FLASH_STATUS_HEIGHT_KEY).trim());
+            flashWidth = Integer.parseInt(flashProperties.get(FLASH_WIDTH_KEY).trim());
+            flashHeight = Integer.parseInt(flashProperties.get(FLASH_HEIGHT_KEY).trim());
 
-            vCodeConfirmButtonX = Integer.parseInt(properties.get(BUTTON_VCODE_CONFIRM_X_KEY).trim());
-            vCodeConfirmButtonY = Integer.parseInt(properties.get(BUTTON_VCODE_CONFIRM_Y_KEY).trim());
+            flashStatusRegionX = Integer.parseInt(flashProperties.get(REGION_FLASH_STATUS_X_KEY).trim());
+            flashStatusRegionY = Integer.parseInt(flashProperties.get(REGION_FLASH_STATUS_Y_KEY).trim());
+            flashStatusRegionWidth = Integer.parseInt(flashProperties.get(REGION_FLASH_STATUS_WIDTH_KEY).trim());
+            flashStatusRegionHeight = Integer.parseInt(flashProperties.get(REGION_FLASH_STATUS_HEIGHT_KEY).trim());
 
-            vCodeCancelButtonX = Integer.parseInt(properties.get(BUTTON_VCODE_CANCEL_X_KEY).trim());
-            vCodeCancelButtonY = Integer.parseInt(properties.get(BUTTON_VCODE_CANCEL_Y_KEY).trim());
+            vCodeConfirmButtonX = Integer.parseInt(flashProperties.get(BUTTON_VCODE_CONFIRM_X_KEY).trim());
+            vCodeConfirmButtonY = Integer.parseInt(flashProperties.get(BUTTON_VCODE_CONFIRM_Y_KEY).trim());
 
-            vCodeRegionX = Integer.parseInt(properties.get(REGION_VCODE_X_KEY).trim());
-            vCodeRegionY = Integer.parseInt(properties.get(REGION_VCODE_Y_KEY).trim());
-            vCodeRegionWidth = Integer.parseInt(properties.get(REGION_VCODE_WIDTH_KEY).trim());
-            vCodeRegionHeight = Integer.parseInt(properties.get(REGION_VCODE_HEIGHT_KEY).trim());
+            vCodeCancelButtonX = Integer.parseInt(flashProperties.get(BUTTON_VCODE_CANCEL_X_KEY).trim());
+            vCodeCancelButtonY = Integer.parseInt(flashProperties.get(BUTTON_VCODE_CANCEL_Y_KEY).trim());
 
-            vCodeInputX = Integer.parseInt(properties.get(INPUT_VCODE_X_KEY).trim());
-            vCodeInputY = Integer.parseInt(properties.get(INPUT_VCODE_Y_KEY).trim());
+            vCodeRegionX = Integer.parseInt(flashProperties.get(REGION_VCODE_X_KEY).trim());
+            vCodeRegionY = Integer.parseInt(flashProperties.get(REGION_VCODE_Y_KEY).trim());
+            vCodeRegionWidth = Integer.parseInt(flashProperties.get(REGION_VCODE_WIDTH_KEY).trim());
+            vCodeRegionHeight = Integer.parseInt(flashProperties.get(REGION_VCODE_HEIGHT_KEY).trim());
 
-            vCodeRefreshButtonX = Integer.parseInt(properties.get(BUTTON_VCODE_REFRESH_X_KEY).trim());
-            vCodeRefreshButtonY = Integer.parseInt(properties.get(BUTTON_VCODE_REFRESH_Y_KEY).trim());
+            vCodeInputX = Integer.parseInt(flashProperties.get(INPUT_VCODE_X_KEY).trim());
+            vCodeInputY = Integer.parseInt(flashProperties.get(INPUT_VCODE_Y_KEY).trim());
 
-            addMoneyInputX = Integer.parseInt(properties.get(INPUT_CUSTOM_ADD_MONEY_X_KEY).trim());
-            addMoneyInputY = Integer.parseInt(properties.get(INPUT_CUSTOM_ADD_MONEY_Y_KEY).trim());
+            vCodeRefreshButtonX = Integer.parseInt(flashProperties.get(BUTTON_VCODE_REFRESH_X_KEY).trim());
+            vCodeRefreshButtonY = Integer.parseInt(flashProperties.get(BUTTON_VCODE_REFRESH_Y_KEY).trim());
 
-            addMoneyButtonX = Integer.parseInt(properties.get(BUTTON_ADD_MONEY_X_KEY).trim());
-            addMoneyButtonY = Integer.parseInt(properties.get(BUTTON_ADD_MONEY_Y_KEY).trim());
+            addMoneyInputX = Integer.parseInt(flashProperties.get(INPUT_CUSTOM_ADD_MONEY_X_KEY).trim());
+            addMoneyInputY = Integer.parseInt(flashProperties.get(INPUT_CUSTOM_ADD_MONEY_Y_KEY).trim());
 
-            bidButtonX = Integer.parseInt(properties.get(BUTTON_BID_X_KEY).trim());
-            bidButtonY = Integer.parseInt(properties.get(BUTTON_BID_Y_KEY).trim());
+            addMoneyButtonX = Integer.parseInt(flashProperties.get(BUTTON_ADD_MONEY_X_KEY).trim());
+            addMoneyButtonY = Integer.parseInt(flashProperties.get(BUTTON_ADD_MONEY_Y_KEY).trim());
 
-            notificationRegionX = Integer.parseInt(properties.get(REGION_SYSTEM_NOTIFICATION_X_KEY).trim());
-            notificationRegionY = Integer.parseInt(properties.get(REGION_SYSTEM_NOTIFICATION_Y_KEY).trim());
-            notificationRegionWidth = Integer.parseInt(properties.get(REGION_SYSTEM_NOTIFICATION_WIDTH_KEY).trim());
-            notificationRegionHeight = Integer.parseInt(properties.get(REGION_SYSTEM_NOTIFICATION_HEIGHT_KEY).trim());
+            bidButtonX = Integer.parseInt(flashProperties.get(BUTTON_BID_X_KEY).trim());
+            bidButtonY = Integer.parseInt(flashProperties.get(BUTTON_BID_Y_KEY).trim());
 
-            rebidConfirmButtonX = Integer.parseInt(properties.get(BUTTON_REBID_CONFIRM_X_KEY).trim());
-            rebidConfirmButtonY = Integer.parseInt(properties.get(BUTTON_REBID_CONFIRM_Y_KEY).trim());
+            notificationRegionX = Integer.parseInt(flashProperties.get(REGION_SYSTEM_NOTIFICATION_X_KEY).trim());
+            notificationRegionY = Integer.parseInt(flashProperties.get(REGION_SYSTEM_NOTIFICATION_Y_KEY).trim());
+            notificationRegionWidth = Integer.parseInt(flashProperties.get(REGION_SYSTEM_NOTIFICATION_WIDTH_KEY).trim());
+            notificationRegionHeight = Integer.parseInt(flashProperties.get(REGION_SYSTEM_NOTIFICATION_HEIGHT_KEY).trim());
 
-            reEnterVCodeConfirmButtonX = Integer.parseInt(properties.get(BUTTON_RE_ENTER_VCODE_CONFIRM_X_KEY).trim());
-            reEnterVCodeConfirmButtonY = Integer.parseInt(properties.get(BUTTON_RE_ENTER_VCODE_CONFIRM_Y_KEY).trim());
+            rebidConfirmButtonX = Integer.parseInt(flashProperties.get(BUTTON_REBID_CONFIRM_X_KEY).trim());
+            rebidConfirmButtonY = Integer.parseInt(flashProperties.get(BUTTON_REBID_CONFIRM_Y_KEY).trim());
 
-            vCodeRequestTooOftenConfirmButtonX = Integer.parseInt(properties.get(BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_X).trim());
-            vCodeRequestTooOftenConfirmButtonY = Integer.parseInt(properties.get(BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_Y).trim());
+            reEnterVCodeConfirmButtonX = Integer.parseInt(flashProperties.get(BUTTON_RE_ENTER_VCODE_CONFIRM_X_KEY).trim());
+            reEnterVCodeConfirmButtonY = Integer.parseInt(flashProperties.get(BUTTON_RE_ENTER_VCODE_CONFIRM_Y_KEY).trim());
 
-            lowestDealRegionX = Integer.parseInt(properties.get(REGION_LOWEST_DEAL_X_KEY).trim());
-            lowestDealRegionY = Integer.parseInt(properties.get(REGION_LOWEST_DEAL_Y_KEY).trim());
-            lowestDealRegionWidth = Integer.parseInt(properties.get(REGION_LOWEST_DEAL_WIDTH_KEY).trim());
-            lowestDealRegionHeight = Integer.parseInt(properties.get(REGION_LOWEST_DEAL_HEIGHT_KEY).trim());
+            vCodeRequestTooOftenConfirmButtonX = Integer.parseInt(flashProperties.get(BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_X).trim());
+            vCodeRequestTooOftenConfirmButtonY = Integer.parseInt(flashProperties.get(BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_Y).trim());
 
-            usernameInputX = Integer.parseInt(properties.get(INPUT_USERNAME_X_KEY).trim());
-            usernameInputY = Integer.parseInt(properties.get(INPUT_USERNAME_Y_KEY).trim());
+            lowestDealRegionX = Integer.parseInt(flashProperties.get(REGION_LOWEST_DEAL_X_KEY).trim());
+            lowestDealRegionY = Integer.parseInt(flashProperties.get(REGION_LOWEST_DEAL_Y_KEY).trim());
+            lowestDealRegionWidth = Integer.parseInt(flashProperties.get(REGION_LOWEST_DEAL_WIDTH_KEY).trim());
+            lowestDealRegionHeight = Integer.parseInt(flashProperties.get(REGION_LOWEST_DEAL_HEIGHT_KEY).trim());
 
-            passwordInputX = Integer.parseInt(properties.get(INPUT_PASSWORD_X_KEY).trim());
-            passwordInputY = Integer.parseInt(properties.get(INPUT_PASSWORD_Y_KEY).trim());
+            usernameInputX = Integer.parseInt(flashProperties.get(INPUT_USERNAME_X_KEY).trim());
+            usernameInputY = Integer.parseInt(flashProperties.get(INPUT_USERNAME_Y_KEY).trim());
 
-            loginButtonX = Integer.parseInt(properties.get(BUTTON_LOGIN_X_KEY).trim());
-            loginButtonY = Integer.parseInt(properties.get(BUTTON_LOGIN_Y_KEY).trim());
+            passwordInputX = Integer.parseInt(flashProperties.get(INPUT_PASSWORD_X_KEY).trim());
+            passwordInputY = Integer.parseInt(flashProperties.get(INPUT_PASSWORD_Y_KEY).trim());
 
-            add300ButtonX = Integer.parseInt(properties.get(BUTTON_ADD_300_X_KEY).trim());
-            add300ButtonY = Integer.parseInt(properties.get(BUTTON_ADD_300_Y_KEY).trim());
+            loginButtonX = Integer.parseInt(flashProperties.get(BUTTON_LOGIN_X_KEY).trim());
+            loginButtonY = Integer.parseInt(flashProperties.get(BUTTON_LOGIN_Y_KEY).trim());
 
-            startBid = Integer.parseInt(properties.get(START_BID_KEY).trim());
-            exitTimeMinute = Integer.parseInt(properties.get(EXIT_TIME_MINUTE_KEY).trim());
-            exitTimeHour = Integer.parseInt(properties.get(EXIT_TIME_HOUR_KEY).trim());
+            add300ButtonX = Integer.parseInt(flashProperties.get(BUTTON_ADD_300_X_KEY).trim());
+            add300ButtonY = Integer.parseInt(flashProperties.get(BUTTON_ADD_300_Y_KEY).trim());
 
 
         }
@@ -357,5 +369,9 @@ public class Configuration
         {
             Logger.log(Logger.Level.ERROR, FlashStatusDetector.Status.NONE, "property file does not exits!", e);
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("haha");
     }
 }
