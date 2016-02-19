@@ -82,6 +82,5 @@ public class FlashStatusTrain extends AbstractSampleTrain
                 SampleConstants.FLASH_STATUS_SAMPLE_TRAIN_CLASSES_PATH,
                 new AllPixelEigenvectorStrategy(), new DefaultNamingRule());
         statusTrain.generateTrainDataAndTrainClassFile();
-
     }
 }
