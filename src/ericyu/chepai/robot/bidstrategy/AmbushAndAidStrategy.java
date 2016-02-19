@@ -8,7 +8,7 @@ package ericyu.chepai.robot.bidstrategy;
  +===========================================================================*/
 
 import ericyu.chepai.Configuration;
-import ericyu.chepai.DateUtil;
+import ericyu.chepai.utils.DateUtil;
 import ericyu.chepai.robot.MyRobot;
 
 public class AmbushAndAidStrategy extends AbstractBidStrategy

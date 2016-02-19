@@ -9,7 +9,7 @@ package ericyu.chepai.flash;
 
 import com.iknow.image.ImageUtils;
 import ericyu.chepai.Configuration;
-import ericyu.chepai.Logger;
+import ericyu.chepai.utils.Logger;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import java.awt.*;

@@ -9,13 +9,11 @@ package ericyu.chepai.robot;
 
 import com.iknow.image.ImageUtils;
 import com.iknow.recognize.Recognition;
-import ericyu.chepai.Logger;
+import ericyu.chepai.utils.Logger;
 import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.FlashStatusDetector;
 import ericyu.chepai.IStatusObserver;
 import ericyu.chepai.Configuration;
-import ericyu.chepai.recognition.vcode.SegSingleColor;
-import ericyu.chepai.recognition.vcode.VCodeTrain;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 

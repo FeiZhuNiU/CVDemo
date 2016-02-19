@@ -7,7 +7,7 @@ package ericyu.chepai.robot.bidstrategy;
  |           Created by lliyu on 11/27/2015  (lin.yu@oracle.com)             |
  +===========================================================================*/
 
-import ericyu.chepai.Logger;
+import ericyu.chepai.utils.Logger;
 import org.opencv.core.Core;
 
 import java.awt.*;

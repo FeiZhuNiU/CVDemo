@@ -7,6 +7,8 @@ package ericyu.chepai;
  |           Created by lliyu on 11/30/2015  (yulin.jay@gmail.com)            |
  +===========================================================================*/
 
+import ericyu.chepai.utils.Logger;
+
 import java.io.FileInputStream;
 import java.util.Enumeration;
 import java.util.HashMap;

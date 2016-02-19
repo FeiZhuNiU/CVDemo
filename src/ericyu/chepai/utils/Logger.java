@@ -1,4 +1,4 @@
-package ericyu.chepai;
+package ericyu.chepai.utils;
 /*===========================================================================+
  |      Copyright (c) 2015 Eric Yu                                           |
  |                         All rights reserved.                              |
@@ -7,6 +7,8 @@ package ericyu.chepai;
  |           Created by lliyu on 11/30/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
+import ericyu.chepai.Console;
+import ericyu.chepai.FlashStatusDetector;
 import ericyu.chepai.server.ServerUtils;
 import ericyu.chepai.server.UpgradeUtils;
 

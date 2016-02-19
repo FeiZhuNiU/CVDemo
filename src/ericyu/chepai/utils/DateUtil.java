@@ -1,10 +1,7 @@
-package ericyu.chepai;
+package ericyu.chepai.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.*;
-
-import static java.lang.Thread.*;
 
 /**
  * Created by 麟 on 2015/11/29.

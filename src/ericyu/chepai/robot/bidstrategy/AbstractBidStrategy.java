@@ -7,8 +7,8 @@ package ericyu.chepai.robot.bidstrategy;
  |           Created by lliyu on 11/27/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
-import ericyu.chepai.DateUtil;
-import ericyu.chepai.Logger;
+import ericyu.chepai.utils.DateUtil;
+import ericyu.chepai.utils.Logger;
 import ericyu.chepai.FlashStatusDetector;
 import ericyu.chepai.IStatusObserver;
 import ericyu.chepai.robot.MyRobot;

@@ -9,7 +9,7 @@ package ericyu.chepai.recognition.vcode;
 
 import com.iknow.image.AbstractSegStrategy;
 import com.iknow.image.ImageUtils;
-import ericyu.chepai.Logger;
+import ericyu.chepai.utils.Logger;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;

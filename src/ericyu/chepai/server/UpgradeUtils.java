@@ -9,7 +9,7 @@ package ericyu.chepai.server;
 
 import ericyu.chepai.CommandConstants;
 import ericyu.chepai.Configuration;
-import ericyu.chepai.FileUtils;
+import ericyu.chepai.utils.FileUtils;
 import ericyu.chepai.recognition.SampleConstants;
 
 import java.io.File;

@@ -9,8 +9,8 @@ package ericyu.chepai.server;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.*;
-import ericyu.chepai.FileUtils;
-import ericyu.chepai.Logger;
+import ericyu.chepai.utils.FileUtils;
+import ericyu.chepai.utils.Logger;
 
 import java.io.*;
 import java.util.HashMap;
