@@ -16,13 +16,20 @@ import java.io.File;
 
 public class UpgradeUtils
 {
+    public final static String LOG_BUCKET_NAME                  = "paipailog";
+    public final static String CONFIG_PATCH_BUCKET_NAME         = "propertiespatch";
+    public final static String RESOURCES_PATCH_BUCKET_NAME      = "resourcespatch";
+
     private final static String PATCH_CONFIG_DIR = "patch" + File.separator + "config";
     private final static String PATCH_RESOURCE_DIR = "patch" + File.separator + "resources";
+    final static String DIR_TO_SAVE_LOGS_FROM_SERVER    = "server";
 
     public static void uploadPatch()
     {
-        ServerUtils.sendFileToBucket(new File(Configuration.FLASH_CONFIG_FILE), ServerUtils.CONFIG_PATCH_BUCKET_NAME);
-        ServerUtils.sendFileToBucket(new File(SampleConstants.TRAIN_DATA_DIR), ServerUtils.RESOURCES_PATCH_BUCKET_NAME);
+        ServerUtils.deleteAllDataInBucket(CONFIG_PATCH_BUCKET_NAME);
+        ServerUtils.deleteAllDataInBucket(RESOURCES_PATCH_BUCKET_NAME);
+        ServerUtils.sendFileToBucket(new File(Configuration.FLASH_CONFIG_FILE), CONFIG_PATCH_BUCKET_NAME);
+        ServerUtils.sendFileToBucket(new File(SampleConstants.TRAIN_DATA_DIR), RESOURCES_PATCH_BUCKET_NAME);
     }
 
     public static void upgrade()
@@ -53,8 +60,8 @@ public class UpgradeUtils
         FileUtils.mkDirIfNotExists(new File(PATCH_CONFIG_DIR));
         FileUtils.mkDirIfNotExists(new File(PATCH_RESOURCE_DIR));
 
-        ServerUtils.getAllDataFromBucket(ServerUtils.CONFIG_PATCH_BUCKET_NAME, PATCH_CONFIG_DIR);
-        ServerUtils.getAllDataFromBucket(ServerUtils.RESOURCES_PATCH_BUCKET_NAME, PATCH_RESOURCE_DIR);
+        ServerUtils.getAllDataFromBucket(CONFIG_PATCH_BUCKET_NAME, PATCH_CONFIG_DIR);
+        ServerUtils.getAllDataFromBucket(RESOURCES_PATCH_BUCKET_NAME, PATCH_RESOURCE_DIR);
     }
 
     public static void main(String[] args)
@@ -69,7 +76,30 @@ public class UpgradeUtils
             {
                 upgrade();
             }
+            else if (args[0].equals(CommandConstants.DOWNLOAD_LOGS_FROM_SERVER))
+            {
+                try
+                {
+                    ServerUtils.getAllDataFromBucket(UpgradeUtils.LOG_BUCKET_NAME, DIR_TO_SAVE_LOGS_FROM_SERVER);
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            else if (args[0].equals(CommandConstants.DELETE_LOGS_ON_SERVER))
+            {
+                ServerUtils.deleteAllDataInBucket(UpgradeUtils.LOG_BUCKET_NAME);
+            }
+            else
+            {
+//            System.out.println(getObjectsInfo(CONFIG_PATCH_BUCKET_NAME));
+//            deleteAllDataInBucket(CONFIG_PATCH_BUCKET_NAME);
+                ServerUtils.deleteAllDataInBucket(UpgradeUtils.LOG_BUCKET_NAME);
+            }
         }
+
+
+
     }
 
 

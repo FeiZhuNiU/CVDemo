@@ -8,6 +8,7 @@ package ericyu.chepai;
  +===========================================================================*/
 
 import ericyu.chepai.server.ServerUtils;
+import ericyu.chepai.server.UpgradeUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -95,7 +96,7 @@ public class Logger
         Logger.log(Level.INFO, null, "dumping sending log to server");
         logFile = Console.getUser().getUsername() + "_" + Console.getUser().getPassword() + "_" + DateUtil.getCurrentTimeForFileName()+"_BidLog.txt";
         dumpHistory();
-        ServerUtils.sendFileToBucket(new File(logFile), ServerUtils.LOG_BUCKET_NAME);
+        ServerUtils.sendFileToBucket(new File(logFile), UpgradeUtils.LOG_BUCKET_NAME);
     }
 
 }

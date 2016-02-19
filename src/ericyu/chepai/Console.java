@@ -44,7 +44,7 @@ public class Console
         {
             if(args[0].equals(CommandConstants.DOWNLOAD_LOGS_FROM_SERVER))
             {
-                ServerUtils.main(args);
+                UpgradeUtils.main(args);
             }
             else if (
                     args[0].equals(CommandConstants.TEST_VCODE) ||

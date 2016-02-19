@@ -9,7 +9,6 @@ package ericyu.chepai.server;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.*;
-import ericyu.chepai.CommandConstants;
 import ericyu.chepai.FileUtils;
 import ericyu.chepai.Logger;
 
@@ -23,17 +22,12 @@ public class ServerUtils
     private final static String ACCESS_KEY_SECRET               = "qHZ3Q5oJCCMv9Xrfwr2b6KVjwre0Zc";
     private final static String ENDPOINT                        = "http://oss-cn-shanghai.aliyuncs.com";
 
-    public final static String LOG_BUCKET_NAME                  = "paipailog";
-    public final static String CONFIG_PATCH_BUCKET_NAME         = "propertiespatch";
-    public final static String RESOURCES_PATCH_BUCKET_NAME      = "resourcespatch";
-
-    private final static String DIR_TO_SAVE_LOGS_FROM_SERVER    = "server";
     public final static String META_LAST_MODIFIED_TIME          = "last_modified_time";
 
     static {
-        if (!new File(DIR_TO_SAVE_LOGS_FROM_SERVER).exists())
+        if (!new File(UpgradeUtils.DIR_TO_SAVE_LOGS_FROM_SERVER).exists())
         {
-            FileUtils.mkDirIfNotExists(new File(DIR_TO_SAVE_LOGS_FROM_SERVER));
+            FileUtils.mkDirIfNotExists(new File(UpgradeUtils.DIR_TO_SAVE_LOGS_FROM_SERVER));
         }
     }
 
@@ -147,29 +141,4 @@ public class ServerUtils
         }
     }
 
-    public static void main(String[] args)
-    {
-        if (args.length == 1)
-        {
-            if (args[0].equals(CommandConstants.DOWNLOAD_LOGS_FROM_SERVER))
-            {
-                try
-                {
-                    getAllDataFromBucket(LOG_BUCKET_NAME, DIR_TO_SAVE_LOGS_FROM_SERVER);
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            else if (args[0].equals(CommandConstants.DELETE_LOGS_ON_SERVER))
-            {
-                deleteAllDataInBucket(LOG_BUCKET_NAME);
-            }
-        }
-        else
-        {
-//            System.out.println(getObjectsInfo(CONFIG_PATCH_BUCKET_NAME));
-            deleteAllDataInBucket(CONFIG_PATCH_BUCKET_NAME);
-        }
-    }
 }
