@@ -9,6 +9,7 @@ package ericyu.chepai;
 
 import ericyu.chepai.utils.Logger;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -164,7 +165,7 @@ public class Configuration
     private static final String LEFTTOP_COLOR_OFFSET_G_KEY = "leftTopColorOffset_10_10_G";
     private static final String LEFTTOP_COLOR_OFFSET_B_KEY = "leftTopColorOffset_10_10_B";
 
-    private static final String LEFTTOP_X_KEY="lt_x";
+//    private static final String LEFTTOP_X_KEY="lt_x";
     private static final String LEFTTOP_Y_KEY="lt_y";
 
     private static final String FLASH_WIDTH_KEY="flashWidth";
@@ -297,11 +298,14 @@ public class Configuration
             lefttopColorOffsetG = Integer.parseInt(flashProperties.get(LEFTTOP_COLOR_OFFSET_G_KEY).trim());
             lefttopColorOffsetB = Integer.parseInt(flashProperties.get(LEFTTOP_COLOR_OFFSET_B_KEY).trim());
 
-            leftTopX = Integer.parseInt(flashProperties.get(LEFTTOP_X_KEY).trim());
-            leftTopY = Integer.parseInt(flashProperties.get(LEFTTOP_Y_KEY).trim());
-
             flashWidth = Integer.parseInt(flashProperties.get(FLASH_WIDTH_KEY).trim());
             flashHeight = Integer.parseInt(flashProperties.get(FLASH_HEIGHT_KEY).trim());
+
+            int screenWidth= Toolkit.getDefaultToolkit().getScreenSize().width;
+            leftTopX = (screenWidth - flashWidth)/2;
+            leftTopY = Integer.parseInt(flashProperties.get(LEFTTOP_Y_KEY).trim());
+
+
 
             flashStatusRegionX = Integer.parseInt(flashProperties.get(REGION_FLASH_STATUS_X_KEY).trim());
             flashStatusRegionY = Integer.parseInt(flashProperties.get(REGION_FLASH_STATUS_Y_KEY).trim());
