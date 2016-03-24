@@ -87,10 +87,11 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
 
         addAction(new WaitUntilBidDiffLessThan(Configuration.bidDiff));
 
-        addAction(new ClickVCodeConfirmButton());
+
 
         if(!Configuration.semiAuto)
         {
+            addAction(new ClickVCodeConfirmButton());
             addAction(new BuQiang());
         }
 //        try
