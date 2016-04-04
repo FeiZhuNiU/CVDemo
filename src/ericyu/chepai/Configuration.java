@@ -131,8 +131,6 @@ public class Configuration
     public static int exitTimeMinute;
 
 
-
-
     private static final String USERNAME_KEY = "username";
     private static final String PASSWORD_KEY = "password";
 

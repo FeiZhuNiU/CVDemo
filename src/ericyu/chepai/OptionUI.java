@@ -30,7 +30,9 @@ public class OptionUI
             @Override
             public void mouseClicked(MouseEvent e) {
                 Configuration.bidTimeHour                   = Integer.parseInt(textField_start_hour.getText());
+                Configuration.exitTimeHour                  = Configuration.bidTimeHour;
                 Configuration.bidTimeMinute                 = Integer.parseInt(textField_start_minute.getText());
+                Configuration.exitTimeMinute                = Configuration.bidTimeMinute + 1;
                 Configuration.firstBidSecond                = Integer.parseInt(textField_1st_add_second.getText());
                 Configuration.firstBidConfirmVCodeSecond    = Integer.parseInt(textField_1st_bid_second.getText());
                 Configuration.addMoneySecond                = Integer.parseInt(textField_2nd_add_second.getText());
