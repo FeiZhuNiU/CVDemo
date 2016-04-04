@@ -7,6 +7,7 @@ package ericyu.chepai;
  |           Created by lliyu on 11/30/2015  (yulin.jay@gmail.com)            |
  +===========================================================================*/
 
+import ericyu.chepai.utils.DateUtil;
 import ericyu.chepai.utils.Logger;
 
 import java.awt.*;
@@ -272,12 +273,16 @@ public class Configuration
 
 //            startTimeHour = Integer.parseInt(flashProperties.get(START_TIME_HOUR_KEY).trim());
 //            startTimeMinute = Integer.parseInt(flashProperties.get(START_TIME_MINUTE_KEY).trim());
-            bidTimeHour = Integer.parseInt(strategyProperties.get(BID_TIME_HOUR_KEY).trim());
-            bidTimeMinute = Integer.parseInt(strategyProperties.get(BID_TIME_MINUTE_KEY).trim());
+            int bidTimeHour_tmp = Integer.parseInt(strategyProperties.get(BID_TIME_HOUR_KEY).trim());
+            int bidTimeMinute_tmp = Integer.parseInt(strategyProperties.get(BID_TIME_MINUTE_KEY).trim());
+            bidTimeHour = bidTimeHour_tmp == -1 ? DateUtil.getCurrentHour() : bidTimeHour_tmp;
+            bidTimeMinute = bidTimeMinute_tmp == -1 ? DateUtil.getCurrentMinute() : bidTimeMinute_tmp;
             startTimeSecond = Integer.parseInt(strategyProperties.get(START_TIME_SECOND_KEY).trim());
             startBid = Integer.parseInt(strategyProperties.get(START_BID_KEY).trim());
-            exitTimeMinute = Integer.parseInt(strategyProperties.get(EXIT_TIME_MINUTE_KEY).trim());
-            exitTimeHour = Integer.parseInt(strategyProperties.get(EXIT_TIME_HOUR_KEY).trim());
+            int exitTimeHour_tmp = Integer.parseInt(strategyProperties.get(EXIT_TIME_HOUR_KEY).trim());
+            exitTimeHour = exitTimeHour_tmp == -1 ? bidTimeHour : exitTimeHour_tmp;
+            int exitTimeMinute_tmp = Integer.parseInt(strategyProperties.get(EXIT_TIME_MINUTE_KEY).trim());
+            exitTimeMinute = exitTimeMinute_tmp == -1 ? bidTimeMinute + 1 : exitTimeMinute_tmp;
 
             firstBidSecond = Integer.parseInt(strategyProperties.get(FIRST_BID_SECOND).trim());
             firstBidConfirmVCodeSecond = Integer.parseInt(strategyProperties.get(FIRST_BID_CONFIRM_SECOND).trim());

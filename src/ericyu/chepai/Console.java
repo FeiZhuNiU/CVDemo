@@ -22,8 +22,7 @@ public class Console
 
     private static long exitTime;
     static {
-        int exitTimeMinute = Configuration.exitTimeMinute == -1 ? Configuration.bidTimeMinute + 1 : Configuration.exitTimeMinute;
-        exitTime = DateUtil.getDateLongValue(Configuration.exitTimeHour, exitTimeMinute,3);
+        exitTime = DateUtil.getDateLongValue(Configuration.exitTimeHour, Configuration.exitTimeMinute,3);
         Logger.log(Logger.Level.INFO, null, "Program will shutdown at " + DateUtil.formatLongValueToDate(exitTime));
         Logger.log(Logger.Level.INFO, null, exitTime - System.currentTimeMillis() + "ms to go");
     }

@@ -41,14 +41,6 @@ public class DateUtil
 
     public static long getDateLongValue(int hour, int minute, int second)
     {
-        if(hour == -1)
-        {
-            hour = DateUtil.getCurrentHour();
-        }
-        if(minute == -1)
-        {
-            minute = DateUtil.getCurrentMinute();
-        }
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY,hour);
         calendar.set(Calendar.MINUTE,minute);

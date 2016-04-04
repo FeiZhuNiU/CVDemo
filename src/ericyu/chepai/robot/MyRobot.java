@@ -243,7 +243,7 @@ public class MyRobot implements IStatusObserver
                 try {
                     int bak = currentLowestBid;
                     int recognized = recogCurrentLowestDeal();
-                    System.out.println(recognized);
+//                    System.out.println(recognized);
                     if (recognized != 0) {
                         if (recognized != lastRecognized) {
                             int next = recognized;
