@@ -17,8 +17,12 @@ import org.opencv.core.Core;
 
 import java.awt.*;
 
-public class Console
+public class Console implements Runnable
 {
+    private String[] args;
+    public Console(String[] arg) {
+        args = arg;
+    }
 
     private static long exitTime;
     static {
@@ -141,4 +145,8 @@ public class Console
         return true;
     }
 
+    @Override
+    public void run() {
+        main(args);
+    }
 }

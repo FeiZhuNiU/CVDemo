@@ -17,7 +17,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="6ab71" binding="practiceTab" layout-manager="GridLayoutManager" row-count="11" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="6ab71" binding="practiceTab" layout-manager="GridLayoutManager" row-count="12" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Practice"/>
@@ -100,7 +100,7 @@
                 </constraints>
                 <properties>
                   <horizontalAlignment value="4"/>
-                  <text value="46"/>
+                  <text value="44"/>
                 </properties>
               </component>
               <hspacer id="86bf2">
@@ -172,7 +172,7 @@
                 </constraints>
                 <properties>
                   <horizontalAlignment value="4"/>
-                  <text value="700"/>
+                  <text value="1100"/>
                 </properties>
               </component>
               <component id="70682" class="javax.swing.JLabel">
@@ -197,7 +197,7 @@
                 </constraints>
                 <properties>
                   <horizontalAlignment value="4"/>
-                  <text value="52"/>
+                  <text value="49"/>
                 </properties>
               </component>
               <component id="f3305" class="javax.swing.JLabel">
@@ -222,7 +222,7 @@
                 </constraints>
                 <properties>
                   <horizontalAlignment value="4"/>
-                  <text value="53"/>
+                  <text value="49"/>
                 </properties>
               </component>
               <component id="1c72e" class="javax.swing.JLabel">
@@ -235,19 +235,11 @@
               </component>
               <vspacer id="cf93b">
                 <constraints>
-                  <grid row="10" column="0" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                  <grid row="11" column="0" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="10"/>
                   </grid>
                 </constraints>
               </vspacer>
-              <component id="ed2e4" class="javax.swing.JButton" binding="runButton">
-                <constraints>
-                  <grid row="9" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="启动"/>
-                </properties>
-              </component>
               <component id="90f42" class="javax.swing.JCheckBox" binding="autoCheckBox">
                 <constraints>
                   <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -263,6 +255,30 @@
                   </grid>
                 </constraints>
               </hspacer>
+              <component id="ed2e4" class="javax.swing.JButton" binding="runButton">
+                <constraints>
+                  <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="启动"/>
+                </properties>
+              </component>
+              <component id="e6af2" class="javax.swing.JButton" binding="updateButton">
+                <constraints>
+                  <grid row="9" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="更新"/>
+                </properties>
+              </component>
+              <component id="62a65" class="javax.swing.JLabel" binding="label_update_status">
+                <constraints>
+                  <grid row="10" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value=""/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="f1282" binding="inactionTab" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

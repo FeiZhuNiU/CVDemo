@@ -24,6 +24,8 @@ public class OptionUI
     private JButton runButton;
     private JCheckBox autoCheckBox;
     private JPanel inactionTab;
+    private JButton updateButton;
+    private JLabel label_update_status;
 
     public OptionUI() {
         runButton.addMouseListener(new MouseAdapter() {
@@ -47,7 +49,18 @@ public class OptionUI
                 System.out.println(Configuration.addMoneyRange);
                 System.out.println(Configuration.vCodeConfirmSecond);
                 System.out.println(Configuration.latestBidTimeSecond);
-                Console.main(new String[]{});
+                runButton.setEnabled(false);
+                Thread mainThread = new Thread(new Console(new String[]{}));
+                mainThread.start();
+            }
+        });
+        updateButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                updateButton.setEnabled(false);
+                label_update_status.setText("更新中...");
+                Console.main(new String[]{CommandConstants.UPGRADE});
+                label_update_status.setText("更新完毕！");
             }
         });
     }
