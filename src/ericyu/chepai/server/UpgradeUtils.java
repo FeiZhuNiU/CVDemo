@@ -94,7 +94,7 @@ public class UpgradeUtils
             {
 //            System.out.println(getObjectsInfo(CONFIG_PATCH_BUCKET_NAME));
 //            deleteAllDataInBucket(CONFIG_PATCH_BUCKET_NAME);
-                ServerUtils.deleteAllDataInBucket(UpgradeUtils.LOG_BUCKET_NAME);
+//                ServerUtils.deleteAllDataInBucket(UpgradeUtils.LOG_BUCKET_NAME);
             }
         }
 

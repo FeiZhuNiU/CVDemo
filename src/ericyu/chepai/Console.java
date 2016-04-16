@@ -24,12 +24,7 @@ public class Console implements Runnable
         args = arg;
     }
 
-    private static long exitTime;
-    static {
-        exitTime = DateUtil.getDateLongValue(Configuration.exitTimeHour, Configuration.exitTimeMinute,3);
-        Logger.log(Logger.Level.INFO, null, "Program will shutdown at " + DateUtil.formatLongValueToDate(exitTime));
-        Logger.log(Logger.Level.INFO, null, exitTime - System.currentTimeMillis() + "ms to go");
-    }
+    private long exitTime;
 
     private static MyRobot robot;
     private static AbstractBidStrategy bidStrategy;
@@ -42,7 +37,7 @@ public class Console implements Runnable
 
     private static User user;
 
-    public static void main(String[] args)
+    public void main(String[] args)
     {
         if(args.length == 1)
         {
@@ -87,8 +82,11 @@ public class Console implements Runnable
 
     }
 
-    private static boolean init()
+    private boolean init()
     {
+        exitTime = DateUtil.getDateLongValue(Configuration.exitTimeHour, Configuration.exitTimeMinute,3);
+        Logger.log(Logger.Level.INFO, null, "Program will shutdown at " + DateUtil.formatLongValueToDate(exitTime));
+        Logger.log(Logger.Level.INFO, null, exitTime - System.currentTimeMillis() + "ms to go");
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Logger.log(Logger.Level.INFO, null, "this line is for test encoding :" + MyRobot.NOTIFICATION_REQUEST_VCODE_TOO_OFTEN);
 

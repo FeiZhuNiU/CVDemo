@@ -26,11 +26,15 @@ public class OptionUI
     private JPanel inactionTab;
     private JButton updateButton;
     private JLabel label_update_status;
+    private boolean startButtonEnabled = true;
+    private boolean updateButtonEnabled = true;
 
     public OptionUI() {
         runButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (!startButtonEnabled)
+                    return;
                 Configuration.bidTimeHour                   = Integer.parseInt(textField_start_hour.getText());
                 Configuration.exitTimeHour                  = Configuration.bidTimeHour;
                 Configuration.bidTimeMinute                 = Integer.parseInt(textField_start_minute.getText());
@@ -49,7 +53,11 @@ public class OptionUI
                 System.out.println(Configuration.addMoneyRange);
                 System.out.println(Configuration.vCodeConfirmSecond);
                 System.out.println(Configuration.latestBidTimeSecond);
+                updateButtonEnabled = false;
+                label_update_status.setEnabled(false);
+                startButtonEnabled = false;
                 runButton.setEnabled(false);
+
                 Thread mainThread = new Thread(new Console(new String[]{}));
                 mainThread.start();
             }
@@ -57,9 +65,18 @@ public class OptionUI
         updateButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (!updateButtonEnabled)
+                    return;
                 updateButton.setEnabled(false);
+                updateButtonEnabled = false;
                 label_update_status.setText("更新中...");
-                Console.main(new String[]{CommandConstants.UPGRADE});
+                Thread updateThread = new Thread(new Console(new String[]{CommandConstants.UPGRADE}));
+                updateThread.start();
+                try {
+                    updateThread.join();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
                 label_update_status.setText("更新完毕！");
             }
         });
