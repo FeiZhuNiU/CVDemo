@@ -13,7 +13,7 @@ import ericyu.chepai.utils.Logger;
 import ericyu.chepai.flash.FlashPosition;
 import ericyu.chepai.FlashStatusDetector;
 import ericyu.chepai.IStatusObserver;
-import ericyu.chepai.Configuration;
+import ericyu.chepai.StrategyConfig;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
@@ -188,7 +188,7 @@ public class MyRobot implements IStatusObserver
     }
 
     // currently, the value lag around 1 second
-    private int currentLowestBid = Configuration.startBid;
+    private int currentLowestBid = StrategyConfig.startBid;
 
     public int getCurrentLowestBid()
     {
@@ -630,7 +630,7 @@ public class MyRobot implements IStatusObserver
                 FlashPosition.BUTTON_ADD_MONEY_Y);
         Logger.log(Logger.Level.INFO, flashStatus, "robot clicked add money button");
         //set bid money when click add money range button
-        bidMoney = getCurrentLowestBid() + Configuration.addMoneyRange;
+        bidMoney = getCurrentLowestBid() + StrategyConfig.addMoneyRange;
         Logger.log(Logger.Level.INFO, flashStatus, "bid money : " + bidMoney);
         return true;
     }

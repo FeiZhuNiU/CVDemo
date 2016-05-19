@@ -7,7 +7,7 @@ package ericyu.chepai.robot.bidstrategy;
  |           Created by lliyu on 11/27/2015  (yulin.jay@gmail.com)           |
  +===========================================================================*/
 
-import ericyu.chepai.Configuration;
+import ericyu.chepai.StrategyConfig;
 import ericyu.chepai.utils.DateUtil;
 import ericyu.chepai.robot.MyRobot;
 
@@ -17,9 +17,9 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
     public AmbushAndAidStrategy(User user, MyRobot robot)
     {
         super(user, robot);
-        latestBidTime = DateUtil.getDateLongValue(Configuration.bidTimeHour,
-                                                  Configuration.bidTimeMinute,
-                                                  Configuration.latestBidTimeSecond);
+        latestBidTime = DateUtil.getDateLongValue(StrategyConfig.bidTimeHour,
+                                                  StrategyConfig.bidTimeMinute,
+                                                  StrategyConfig.latestBidTimeSecond);
     }
 
     @Override
@@ -42,29 +42,29 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //5
 
 
-        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
-                                                                    Configuration.bidTimeMinute,
-                                                                    Configuration.startTimeSecond)));
+        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(StrategyConfig.bidTimeHour,
+                                                                    StrategyConfig.bidTimeMinute,
+                                                                    StrategyConfig.startTimeSecond)));
         addAction(new FocusOnAddRangeBox());
-        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
-                Configuration.bidTimeMinute,
-                Configuration.firstBidSecond)));
+        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(StrategyConfig.bidTimeHour,
+                StrategyConfig.bidTimeMinute,
+                StrategyConfig.firstBidSecond)));
         addAction(new ClickAdd300Button());
         addAction(new ClickBidButton());
-        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
-                                                                    Configuration.bidTimeMinute,
-                                                                    Configuration.firstBidConfirmVCodeSecond)));
+        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(StrategyConfig.bidTimeHour,
+                                                                    StrategyConfig.bidTimeMinute,
+                                                                    StrategyConfig.firstBidConfirmVCodeSecond)));
         addAction(new ClickVCodeConfirmButton());
         addAction(new ClickNotificationConfirm());
 
 
         addAction(new FocusOnAddRangeBox());
         //6
-        addAction(new InputAddMoneyRange(Configuration.addMoneyRange));
+        addAction(new InputAddMoneyRange(StrategyConfig.addMoneyRange));
 
-        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
-                                                                    Configuration.bidTimeMinute,
-                                                                    Configuration.addMoneySecond)));
+        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(StrategyConfig.bidTimeHour,
+                                                                    StrategyConfig.bidTimeMinute,
+                                                                    StrategyConfig.addMoneySecond)));
         //7
         addAction(new ClickAddMoneyButton());
         //8
@@ -73,7 +73,7 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
         //--------------------------------------------------
         //V-code
         //9
-        if(!Configuration.semiAuto) {
+        if(!StrategyConfig.semiAuto) {
             addAction(new RecogAndEnterVCode());
         }
         else
@@ -81,15 +81,15 @@ public class AmbushAndAidStrategy extends AbstractBidStrategy
             addAction(new FocusOnVCodeInputBox());
         }
 
-        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(Configuration.bidTimeHour,
-                                                                    Configuration.bidTimeMinute,
-                                                                    Configuration.vCodeConfirmSecond)));
+        addAction(new WaitUntilTargetTime(DateUtil.getDateLongValue(StrategyConfig.bidTimeHour,
+                                                                    StrategyConfig.bidTimeMinute,
+                                                                    StrategyConfig.vCodeConfirmSecond)));
 
-        addAction(new WaitUntilBidDiffLessThan(Configuration.bidDiff));
+        addAction(new WaitUntilBidDiffLessThan(StrategyConfig.bidDiff));
 
         addAction(new ClickVCodeConfirmButton());
 
-        if(!Configuration.semiAuto)
+        if(!StrategyConfig.semiAuto)
         {
             addAction(new BuQiang());
         }

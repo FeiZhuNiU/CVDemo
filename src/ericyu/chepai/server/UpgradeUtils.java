@@ -8,7 +8,7 @@ package ericyu.chepai.server;
  +===========================================================================*/
 
 import ericyu.chepai.CommandConstants;
-import ericyu.chepai.Configuration;
+import ericyu.chepai.FlashConstants;
 import ericyu.chepai.utils.FileUtils;
 import ericyu.chepai.recognition.SampleConstants;
 
@@ -28,7 +28,7 @@ public class UpgradeUtils
     {
         ServerUtils.deleteAllDataInBucket(CONFIG_PATCH_BUCKET_NAME);
         ServerUtils.deleteAllDataInBucket(RESOURCES_PATCH_BUCKET_NAME);
-        ServerUtils.sendFileToBucket(new File(Configuration.FLASH_CONFIG_FILE), CONFIG_PATCH_BUCKET_NAME);
+        ServerUtils.sendFileToBucket(new File(FlashConstants.FLASH_CONFIG_FILE), CONFIG_PATCH_BUCKET_NAME);
         ServerUtils.sendFileToBucket(new File(SampleConstants.TRAIN_DATA_DIR), RESOURCES_PATCH_BUCKET_NAME);
     }
 

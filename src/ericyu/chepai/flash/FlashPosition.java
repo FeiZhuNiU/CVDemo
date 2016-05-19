@@ -8,7 +8,7 @@ package ericyu.chepai.flash;
  +===========================================================================*/
 
 import com.iknow.image.ImageUtils;
-import ericyu.chepai.Configuration;
+import ericyu.chepai.FlashConstants;
 import ericyu.chepai.utils.Logger;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -43,13 +43,13 @@ public class FlashPosition
     private static int detectRate = 100; // ms
     static
     {
-        topLeftCornerColor = new double[]{Configuration.lefttopColorB,
-                Configuration.lefttopColorG,
-                Configuration.lefttopColorR};
-        topLeftCornerColorOffset_10_10 = new double[]{Configuration.lefttopColorOffsetB,
-                Configuration.lefttopColorOffsetG,
-                Configuration.lefttopColorOffsetR};
-        origin = new Point(Configuration.leftTopX,Configuration.leftTopY);
+        topLeftCornerColor = new double[]{FlashConstants.lefttopColorB,
+                FlashConstants.lefttopColorG,
+                FlashConstants.lefttopColorR};
+        topLeftCornerColorOffset_10_10 = new double[]{FlashConstants.lefttopColorOffsetB,
+                FlashConstants.lefttopColorOffsetG,
+                FlashConstants.lefttopColorOffsetR};
+        origin = new Point(FlashConstants.leftTopX, FlashConstants.leftTopY);
 
     }
 
@@ -96,115 +96,115 @@ public class FlashPosition
     /**
      * flash
      */
-    public static final int FLASH_WIDTH     = Configuration.flashWidth;
-    public static final int FLASH_HEIGHT    = Configuration.flashHeight;
+    public static final int FLASH_WIDTH     = FlashConstants.flashWidth;
+    public static final int FLASH_HEIGHT    = FlashConstants.flashHeight;
 
     /**
      *  right part of the flash
      *  used for detect flash status
      */
-    public static final int REGION_FLASH_RIGHT_PART_X = Configuration.flashStatusRegionX;
-    public static final int REGION_FLASH_RIGHT_PART_Y = Configuration.flashStatusRegionY;
-    public static final int REGION_FLASH_RIGHT_PART_WIDTH = Configuration.flashStatusRegionWidth;
-    public static final int REGION_FLASH_RIGHT_PART_HEIGHT = Configuration.flashStatusRegionHeight;
+    public static final int REGION_FLASH_RIGHT_PART_X = FlashConstants.flashStatusRegionX;
+    public static final int REGION_FLASH_RIGHT_PART_Y = FlashConstants.flashStatusRegionY;
+    public static final int REGION_FLASH_RIGHT_PART_WIDTH = FlashConstants.flashStatusRegionWidth;
+    public static final int REGION_FLASH_RIGHT_PART_HEIGHT = FlashConstants.flashStatusRegionHeight;
     /**
      * verification code confirm button
      */
-    public static final int BUTTON_VCODE_CONFIRM_X = Configuration.vCodeConfirmButtonX;
-    public static final int BUTTON_VCODE_CONFIRM_Y = Configuration.vCodeConfirmButtonY;
+    public static final int BUTTON_VCODE_CONFIRM_X = FlashConstants.vCodeConfirmButtonX;
+    public static final int BUTTON_VCODE_CONFIRM_Y = FlashConstants.vCodeConfirmButtonY;
     /**
      * verification code cancel button
      */
-    public static final int BUTTON_VCODE_CANCEL_X = Configuration.vCodeCancelButtonX;
-    public static final int BUTTON_VCODE_CANCEL_Y = Configuration.vCodeCancelButtonY;
+    public static final int BUTTON_VCODE_CANCEL_X = FlashConstants.vCodeCancelButtonX;
+    public static final int BUTTON_VCODE_CANCEL_Y = FlashConstants.vCodeCancelButtonY;
     /**
      * verification code image region
      */
-    public static final int REGION_VCODE_X = Configuration.vCodeRegionX;
-    public static final int REGION_VCODE_Y = Configuration.vCodeRegionY;
-    public static final int REGION_VCODE_WIDTH = Configuration.vCodeRegionWidth;
-    public static final int REGION_VCODE_HEIGHT = Configuration.vCodeRegionHeight;
+    public static final int REGION_VCODE_X = FlashConstants.vCodeRegionX;
+    public static final int REGION_VCODE_Y = FlashConstants.vCodeRegionY;
+    public static final int REGION_VCODE_WIDTH = FlashConstants.vCodeRegionWidth;
+    public static final int REGION_VCODE_HEIGHT = FlashConstants.vCodeRegionHeight;
     /**
      * verification code input box
      */
-    public static final int INPUT_VCODE_X = Configuration.vCodeInputX;
-    public static final int INPUT_VCODE_Y = Configuration.vCodeInputY;
+    public static final int INPUT_VCODE_X = FlashConstants.vCodeInputX;
+    public static final int INPUT_VCODE_Y = FlashConstants.vCodeInputY;
     /**
      * verification code refresh button
      */
-    public static final int BUTTON_VCODE_REFRESH_X = Configuration.vCodeRefreshButtonX;
-    public static final int BUTTON_VCODE_REFRESH_Y = Configuration.vCodeRefreshButtonY;
+    public static final int BUTTON_VCODE_REFRESH_X = FlashConstants.vCodeRefreshButtonX;
+    public static final int BUTTON_VCODE_REFRESH_Y = FlashConstants.vCodeRefreshButtonY;
     /**
      * custom add money range input box
      */
-    public static final int INPUT_CUSTOM_ADD_MONEY_X = Configuration.addMoneyInputX;
-    public static final int INPUT_CUSTOM_ADD_MONEY_Y = Configuration.addMoneyInputY;
+    public static final int INPUT_CUSTOM_ADD_MONEY_X = FlashConstants.addMoneyInputX;
+    public static final int INPUT_CUSTOM_ADD_MONEY_Y = FlashConstants.addMoneyInputY;
     /**
      * add money button
      */
-    public static final int BUTTON_ADD_MONEY_X = Configuration.addMoneyButtonX;
-    public static final int BUTTON_ADD_MONEY_Y = Configuration.addMoneyButtonY;
+    public static final int BUTTON_ADD_MONEY_X = FlashConstants.addMoneyButtonX;
+    public static final int BUTTON_ADD_MONEY_Y = FlashConstants.addMoneyButtonY;
     /**
      * bid (chujia) button
      */
-    public static final int BUTTON_BID_X = Configuration.bidButtonX;
-    public static final int BUTTON_BID_Y = Configuration.bidButtonY;
+    public static final int BUTTON_BID_X = FlashConstants.bidButtonX;
+    public static final int BUTTON_BID_Y = FlashConstants.bidButtonY;
     /**
      * system notification region
      */
-    public static final int REGION_SYSTEM_NOTIFICATION_X = Configuration.notificationRegionX;
-    public static final int REGION_SYSTEM_NOTIFICATION_Y = Configuration.notificationRegionY;
-    public static final int REGION_SYSTEM_NOTIFICATION_WIDTH = Configuration.notificationRegionWidth;
-    public static final int REGION_SYSTEM_NOTIFICATION_HEIGHT = Configuration.notificationRegionHeight;
+    public static final int REGION_SYSTEM_NOTIFICATION_X = FlashConstants.notificationRegionX;
+    public static final int REGION_SYSTEM_NOTIFICATION_Y = FlashConstants.notificationRegionY;
+    public static final int REGION_SYSTEM_NOTIFICATION_WIDTH = FlashConstants.notificationRegionWidth;
+    public static final int REGION_SYSTEM_NOTIFICATION_HEIGHT = FlashConstants.notificationRegionHeight;
     /**
      * rebid confirm button
      */
-    public static final int BUTTON_REBID_CONFIRM_X = Configuration.rebidConfirmButtonX;
-    public static final int BUTTON_REBID_CONFIRM_Y = Configuration.rebidConfirmButtonY;
+    public static final int BUTTON_REBID_CONFIRM_X = FlashConstants.rebidConfirmButtonX;
+    public static final int BUTTON_REBID_CONFIRM_Y = FlashConstants.rebidConfirmButtonY;
     /**
      * re-enter verification code confirm button
      */
-    public static final int BUTTON_RE_ENTER_VCODE_CONFIRM_X = Configuration.reEnterVCodeConfirmButtonX;
-    public static final int BUTTON_RE_ENTER_VCODE_CONFIRM_Y = Configuration.reEnterVCodeConfirmButtonY;
+    public static final int BUTTON_RE_ENTER_VCODE_CONFIRM_X = FlashConstants.reEnterVCodeConfirmButtonX;
+    public static final int BUTTON_RE_ENTER_VCODE_CONFIRM_Y = FlashConstants.reEnterVCodeConfirmButtonY;
     /**
      * request for verification code too often button
      * same as verification code cancel button
      * BUTTON_VCODE_CANCEL_X
      * BUTTON_VCODE_CANCEL_Y
      */
-    public static final int BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_X = Configuration.vCodeRequestTooOftenConfirmButtonX;
-    public static final int BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_Y = Configuration.vCodeRequestTooOftenConfirmButtonY;
+    public static final int BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_X = FlashConstants.vCodeRequestTooOftenConfirmButtonX;
+    public static final int BUTTON_VCODE_REQUEST_TOO_OFTEN_CONFIRM_Y = FlashConstants.vCodeRequestTooOftenConfirmButtonY;
     /**
      * lowest deal money region
      */
-    public static final int REGION_LOWEST_DEAL_X = Configuration.lowestDealRegionX;
-    public static final int REGION_LOWEST_DEAL_Y = Configuration.lowestDealRegionY;
-    public static final int REGION_LOWEST_DEAL_WIDTH = Configuration.lowestDealRegionWidth;
-    public static final int REGION_LOWEST_DEAL_HEIGHT = Configuration.lowestDealRegionHeight;
+    public static final int REGION_LOWEST_DEAL_X = FlashConstants.lowestDealRegionX;
+    public static final int REGION_LOWEST_DEAL_Y = FlashConstants.lowestDealRegionY;
+    public static final int REGION_LOWEST_DEAL_WIDTH = FlashConstants.lowestDealRegionWidth;
+    public static final int REGION_LOWEST_DEAL_HEIGHT = FlashConstants.lowestDealRegionHeight;
 
     /**
      * username input
      */
-    public static final int INPUT_USERNAME_X = Configuration.usernameInputX;
-    public static final int INPUT_USERNAME_Y = Configuration.usernameInputY;
+    public static final int INPUT_USERNAME_X = FlashConstants.usernameInputX;
+    public static final int INPUT_USERNAME_Y = FlashConstants.usernameInputY;
 
     /**
      * password input
      */
-    public static final int INPUT_PASSWORD_X = Configuration.passwordInputX;
-    public static final int INPUT_PASSWORD_Y = Configuration.passwordInputY;
+    public static final int INPUT_PASSWORD_X = FlashConstants.passwordInputX;
+    public static final int INPUT_PASSWORD_Y = FlashConstants.passwordInputY;
 
     /**
      * username and password submit button
      */
-    public static final int BUTTON_LOGIN_X = Configuration.loginButtonX;
-    public static final int BUTTON_LOGIN_Y = Configuration.loginButtonY;
+    public static final int BUTTON_LOGIN_X = FlashConstants.loginButtonX;
+    public static final int BUTTON_LOGIN_Y = FlashConstants.loginButtonY;
 
     /**
      * add 300 button
      */
-    public static final int BUTTON_ADD_300_X = Configuration.add300ButtonX;
-    public static final int BUTTON_ADD_300_Y = Configuration.add300ButtonY;
+    public static final int BUTTON_ADD_300_X = FlashConstants.add300ButtonX;
+    public static final int BUTTON_ADD_300_Y = FlashConstants.add300ButtonY;
 
     /**
      * return null if target color is not found

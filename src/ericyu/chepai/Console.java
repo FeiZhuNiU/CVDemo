@@ -84,7 +84,7 @@ public class Console implements Runnable
 
     private boolean init()
     {
-        exitTime = DateUtil.getDateLongValue(Configuration.exitTimeHour, Configuration.exitTimeMinute,3);
+        exitTime = DateUtil.getDateLongValue(StrategyConfig.exitTimeHour, StrategyConfig.exitTimeMinute,3);
         Logger.log(Logger.Level.INFO, null, "Program will shutdown at " + DateUtil.formatLongValueToDate(exitTime));
         Logger.log(Logger.Level.INFO, null, exitTime - System.currentTimeMillis() + "ms to go");
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -92,7 +92,7 @@ public class Console implements Runnable
 
         try
         {
-            user = new User(Configuration.username, Configuration.password);
+            user = new User(StrategyConfig.username, StrategyConfig.password);
 
 //            Thread flashPositionDetector = new Thread(new FlashPosition.FlashPositionDetector());
 //            flashPositionDetector.start();

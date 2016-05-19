@@ -47,3 +47,4 @@ dump/
 !/RefreshImage/*
 *.txt
 patch/
+strategy.properties
