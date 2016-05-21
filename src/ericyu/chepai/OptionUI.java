@@ -26,12 +26,16 @@ public class OptionUI
     private JPanel inactionTab;
     private JButton updateButton;
     private JLabel label_update_status;
+    private JTextField textField_username;
+    private JTextField textField_password;
     private boolean startButtonEnabled = true;
     private boolean updateButtonEnabled = true;
 
     public OptionUI() {
 
         // read strategies
+        textField_username.setText(StrategyConfig.username);
+        textField_password.setText(StrategyConfig.password);
         textField_start_hour.setText(String.valueOf(StrategyConfig.bidTimeHour));
         textField_start_minute.setText(String.valueOf(StrategyConfig.bidTimeMinute));
         textField_1st_add_second.setText(String.valueOf(StrategyConfig.firstBidSecond));
@@ -48,6 +52,8 @@ public class OptionUI
                 if (!startButtonEnabled)
                     return;
                 // get strategies from ui
+                StrategyConfig.username                      = textField_username.getText();
+                StrategyConfig.password                      = textField_password.getText();
                 StrategyConfig.bidTimeHour                   = Integer.parseInt(textField_start_hour.getText());
                 StrategyConfig.exitTimeHour                  = StrategyConfig.bidTimeHour;
                 StrategyConfig.bidTimeMinute                 = Integer.parseInt(textField_start_minute.getText());

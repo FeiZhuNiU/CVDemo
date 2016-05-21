@@ -17,8 +17,8 @@ public class StrategyConfig {
     public static final String STRATEGY_CONFIG_FILE = "strategy.properties";
     public static HashMap<String, String> strategyPropertyMap = new HashMap<>();
 
-    public static String username = "username";
-    public static String password = "password";
+    public static String username = "";
+    public static String password = "";
     public static int bidTimeHour = 11;
     public static int bidTimeMinute = 29;
     public static int startTimeSecond = 0;
