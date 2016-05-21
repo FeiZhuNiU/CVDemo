@@ -139,6 +139,7 @@ public class StrategyConfig {
     }
     public static void writePropertyFile()
     {
+        updatePropMap();
         try {
             File file = new File(STRATEGY_CONFIG_FILE);
             if (!file.exists())
@@ -148,7 +149,6 @@ public class StrategyConfig {
             }
             OutputStream fos = new FileOutputStream(STRATEGY_CONFIG_FILE);
             Properties strategyProperty = new Properties();
-            updatePropMap();
             Set<Map.Entry<String, String>> entries = strategyPropertyMap.entrySet();
             for (Map.Entry<String, String> curProp : entries) {
                 strategyProperty.setProperty(curProp.getKey(), curProp.getValue());

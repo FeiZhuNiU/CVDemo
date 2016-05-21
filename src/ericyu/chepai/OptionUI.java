@@ -31,6 +31,7 @@ public class OptionUI
 
     public OptionUI() {
 
+        // read strategies
         textField_start_hour.setText(String.valueOf(StrategyConfig.bidTimeHour));
         textField_start_minute.setText(String.valueOf(StrategyConfig.bidTimeMinute));
         textField_1st_add_second.setText(String.valueOf(StrategyConfig.firstBidSecond));
@@ -46,6 +47,7 @@ public class OptionUI
             public void mouseClicked(MouseEvent e) {
                 if (!startButtonEnabled)
                     return;
+                // get strategies from ui
                 StrategyConfig.bidTimeHour                   = Integer.parseInt(textField_start_hour.getText());
                 StrategyConfig.exitTimeHour                  = StrategyConfig.bidTimeHour;
                 StrategyConfig.bidTimeMinute                 = Integer.parseInt(textField_start_minute.getText());
@@ -56,19 +58,19 @@ public class OptionUI
                 StrategyConfig.addMoneyRange                 = Integer.parseInt(textField_2nd_addMoney.getText());
                 StrategyConfig.vCodeConfirmSecond            = Integer.parseInt(textField_2nd_bid_ready_second.getText());
                 StrategyConfig.latestBidTimeSecond           = Integer.parseInt(textField_2nd_bid_latest_second.getText());
-                System.out.println(StrategyConfig.bidTimeHour);
-                System.out.println(StrategyConfig.bidTimeMinute);
-                System.out.println(StrategyConfig.firstBidSecond);
-                System.out.println(StrategyConfig.firstBidConfirmVCodeSecond);
-                System.out.println(StrategyConfig.addMoneySecond);
-                System.out.println(StrategyConfig.addMoneyRange);
-                System.out.println(StrategyConfig.vCodeConfirmSecond);
-                System.out.println(StrategyConfig.latestBidTimeSecond);
+//                System.out.println(StrategyConfig.bidTimeHour);
+//                System.out.println(StrategyConfig.bidTimeMinute);
+//                System.out.println(StrategyConfig.firstBidSecond);
+//                System.out.println(StrategyConfig.firstBidConfirmVCodeSecond);
+//                System.out.println(StrategyConfig.addMoneySecond);
+//                System.out.println(StrategyConfig.addMoneyRange);
+//                System.out.println(StrategyConfig.vCodeConfirmSecond);
+//                System.out.println(StrategyConfig.latestBidTimeSecond);
                 updateButtonEnabled = false;
                 label_update_status.setEnabled(false);
                 startButtonEnabled = false;
                 runButton.setEnabled(false);
-
+                // save current strategy configs
                 StrategyConfig.writePropertyFile();
 
                 Thread mainThread = new Thread(new Console(new String[]{}));
