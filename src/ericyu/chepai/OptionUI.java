@@ -24,12 +24,10 @@ public class OptionUI
     private JButton runButton;
     private JCheckBox autoCheckBox;
     private JPanel inactionTab;
-    private JButton updateButton;
     private JLabel label_update_status;
     private JTextField textField_username;
     private JTextField textField_password;
     private boolean startButtonEnabled = true;
-    private boolean updateButtonEnabled = true;
 
     public OptionUI() {
 
@@ -51,6 +49,18 @@ public class OptionUI
             public void mouseClicked(MouseEvent e) {
                 if (!startButtonEnabled)
                     return;
+                label_update_status.setText("更新中...");
+                System.out.println("ready to update ");
+                Thread updateThread = new Thread(new Console(new String[]{CommandConstants.UPGRADE}));
+                updateThread.start();
+                try {
+                    updateThread.join();
+                    label_update_status.setText("更新完毕！");
+                    System.out.println("updated!");
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
                 // get strategies from ui
                 StrategyConfig.username                      = textField_username.getText();
                 StrategyConfig.password                      = textField_password.getText();
@@ -72,35 +82,18 @@ public class OptionUI
 //                System.out.println(StrategyConfig.addMoneyRange);
 //                System.out.println(StrategyConfig.vCodeConfirmSecond);
 //                System.out.println(StrategyConfig.latestBidTimeSecond);
-                updateButtonEnabled = false;
                 label_update_status.setEnabled(false);
                 startButtonEnabled = false;
                 runButton.setEnabled(false);
                 // save current strategy configs
+                System.out.println("write property File");
                 StrategyConfig.writePropertyFile();
 
                 Thread mainThread = new Thread(new Console(new String[]{}));
                 mainThread.start();
             }
         });
-        updateButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (!updateButtonEnabled)
-                    return;
-                updateButton.setEnabled(false);
-                updateButtonEnabled = false;
-                label_update_status.setText("更新中...");
-                Thread updateThread = new Thread(new Console(new String[]{CommandConstants.UPGRADE}));
-                updateThread.start();
-                try {
-                    updateThread.join();
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }
-                label_update_status.setText("更新完毕！");
-            }
-        });
+
     }
 
     public static void main(String[] args)
