@@ -49,17 +49,17 @@ public class OptionUI
             public void mouseClicked(MouseEvent e) {
                 if (!startButtonEnabled)
                     return;
-                label_update_status.setText("更新中...");
-                System.out.println("ready to update ");
-                Thread updateThread = new Thread(new Console(new String[]{CommandConstants.UPGRADE}));
-                updateThread.start();
-                try {
-                    updateThread.join();
-                    label_update_status.setText("更新完毕！");
-                    System.out.println("updated!");
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }
+//                label_update_status.setText("更新中...");
+//                System.out.println("ready to update ");
+//                Thread updateThread = new Thread(new Console(new String[]{CommandConstants.UPGRADE}));
+//                updateThread.start();
+//                try {
+//                    updateThread.join();
+//                    label_update_status.setText("更新完毕！");
+//                    System.out.println("updated!");
+//                } catch (InterruptedException e1) {
+//                    e1.printStackTrace();
+//                }
 
                 // get strategies from ui
                 StrategyConfig.username                      = textField_username.getText();

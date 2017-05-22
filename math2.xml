@@ -1,0 +1,1117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:cx="http://schemas.microsoft.com/office/drawing/2014/chartex"
+            xmlns:cx1="http://schemas.microsoft.com/office/drawing/2015/9/8/chartex"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:o="urn:schemas-microsoft-com:office:office"
+            xmlns:r="http://purl.oclc.org/ooxml/officeDocument/relationships"
+            xmlns:m="http://purl.oclc.org/ooxml/officeDocument/math" xmlns:v="urn:schemas-microsoft-com:vml"
+            xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing"
+            xmlns:wp="http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing"
+            xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://purl.oclc.org/ooxml/wordprocessingml/main"
+            xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml"
+            xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml"
+            xmlns:w16se="http://schemas.microsoft.com/office/word/2015/wordml/symex"
+            xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk"
+            xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" mc:Ignorable="w14 w15 w16se wne wp14"
+            w:conformance="strict">
+    <w:body>
+        <w:p w:rsidR="006C0246" w:rsidRDefault="007348BC" w:rsidP="006C0246">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="18pt" w:lineRule="auto"/>
+                <w:ind w:start="15.75pt" w:hangingChars="150" w:hanging="15.75pt"/>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>@</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">1. </w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-24"/>
+                </w:rPr>
+                <mc:AlternateContent>
+                    <mc:Choice Requires="v">
+                        <w:object w:dxaOrig="60.95pt" w:dyaOrig="30.95pt">
+                            <v:shapetype id="_x0000_t75" coordsize="21600,21600" o:spt="75" o:preferrelative="t"
+                                         path="m@4@5l@4@11@9@11@9@5xe" filled="f" stroked="f">
+                                <v:stroke joinstyle="miter"/>
+                                <v:formulas>
+                                    <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+                                    <v:f eqn="sum @0 1 0"/>
+                                    <v:f eqn="sum 0 0 @1"/>
+                                    <v:f eqn="prod @2 1 2"/>
+                                    <v:f eqn="prod @3 21600 pixelWidth"/>
+                                    <v:f eqn="prod @3 21600 pixelHeight"/>
+                                    <v:f eqn="sum @0 0 1"/>
+                                    <v:f eqn="prod @6 1 2"/>
+                                    <v:f eqn="prod @7 21600 pixelWidth"/>
+                                    <v:f eqn="sum @8 21600 0"/>
+                                    <v:f eqn="prod @7 21600 pixelHeight"/>
+                                    <v:f eqn="sum @10 21600 0"/>
+                                </v:formulas>
+                                <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+                                <o:lock v:ext="edit" aspectratio="t"/>
+                            </v:shapetype>
+                            <v:shape id="对象 1" o:spid="_x0000_i1025" type="#_x0000_t75"
+                                     style="width:60.75pt;height:30.75pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                                     o:ole="">
+                                <v:imagedata r:id="rId6" o:title=""/>
+                            </v:shape>
+                            <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 1" DrawAspect="Content"
+                                         ObjectID="_1556182166" r:id="rId7"/>
+                        </w:object>
+                    </mc:Choice>
+                    <mc:Fallback>
+                        <w:object>
+                            <w:drawing>
+                                <wp:inline distT="0" distB="0" distL="0" distR="0" wp14:anchorId="501CBCF0"
+                                           wp14:editId="59A65157">
+                                    <wp:extent cx="771525" cy="390525"/>
+                                    <wp:effectExtent l="0" t="0" r="9525" b="9525"/>
+                                    <wp:docPr id="1" name="对象 1"/>
+                                    <wp:cNvGraphicFramePr>
+                                        <a:graphicFrameLocks xmlns:a="http://purl.oclc.org/ooxml/drawingml/main"
+                                                             noChangeAspect="1"/>
+                                    </wp:cNvGraphicFramePr>
+                                    <a:graphic xmlns:a="http://purl.oclc.org/ooxml/drawingml/main">
+                                        <a:graphicData uri="http://purl.oclc.org/ooxml/drawingml/picture">
+                                            <pic:pic xmlns:pic="http://purl.oclc.org/ooxml/drawingml/picture">
+                                                <pic:nvPicPr>
+                                                    <pic:cNvPr id="0" name="对象 1"/>
+                                                    <pic:cNvPicPr>
+                                                        <a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+                                                    </pic:cNvPicPr>
+                                                </pic:nvPicPr>
+                                                <pic:blipFill>
+                                                    <a:blip r:embed="rId8">
+                                                        <a:extLst>
+                                                            <a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}">
+                                                                <a14:useLocalDpi
+                                                                        xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"
+                                                                        val="0"/>
+                                                            </a:ext>
+                                                        </a:extLst>
+                                                    </a:blip>
+                                                    <a:srcRect/>
+                                                    <a:stretch>
+                                                        <a:fillRect/>
+                                                    </a:stretch>
+                                                </pic:blipFill>
+                                                <pic:spPr bwMode="auto">
+                                                    <a:xfrm>
+                                                        <a:off x="0" y="0"/>
+                                                        <a:ext cx="771525" cy="390525"/>
+                                                    </a:xfrm>
+                                                    <a:prstGeom prst="rect">
+                                                        <a:avLst/>
+                                                    </a:prstGeom>
+                                                    <a:noFill/>
+                                                    <a:ln>
+                                                        <a:noFill/>
+                                                    </a:ln>
+                                                </pic:spPr>
+                                            </pic:pic>
+                                        </a:graphicData>
+                                    </a:graphic>
+                                </wp:inline>
+                            </w:drawing>
+                        </w:object>
+                    </mc:Fallback>
+                </mc:AlternateContent>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                    <w:u w:val="single"/>
+                </w:rPr>
+                <w:t xml:space="preserve">        </w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="006C0246" w:rsidRDefault="007348BC" w:rsidP="006C0246">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="18pt" w:lineRule="auto"/>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>@</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>9.</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:t xml:space="preserve"> </w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>定义在</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-4"/>
+                </w:rPr>
+                <mc:AlternateContent>
+                    <mc:Choice Requires="v">
+                        <w:object w:dxaOrig="11.95pt" w:dyaOrig="12.95pt">
+                            <v:shape id="对象 30" o:spid="_x0000_i1026" type="#_x0000_t75"
+                                     style="width:12pt;height:12.75pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                                     o:ole="">
+                                <v:imagedata r:id="rId9" o:title=""/>
+                            </v:shape>
+                            <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 30" DrawAspect="Content"
+                                         ObjectID="_1556182167" r:id="rId10"/>
+                        </w:object>
+                    </mc:Choice>
+                    <mc:Fallback>
+                        <w:object>
+                            <w:drawing>
+                                <wp:inline distT="0" distB="0" distL="0" distR="0" wp14:anchorId="001983E5"
+                                           wp14:editId="0C7C1144">
+                                    <wp:extent cx="152400" cy="161925"/>
+                                    <wp:effectExtent l="0" t="0" r="0" b="9525"/>
+                                    <wp:docPr id="2" name="对象 30"/>
+                                    <wp:cNvGraphicFramePr>
+                                        <a:graphicFrameLocks xmlns:a="http://purl.oclc.org/ooxml/drawingml/main"
+                                                             noChangeAspect="1"/>
+                                    </wp:cNvGraphicFramePr>
+                                    <a:graphic xmlns:a="http://purl.oclc.org/ooxml/drawingml/main">
+                                        <a:graphicData uri="http://purl.oclc.org/ooxml/drawingml/picture">
+                                            <pic:pic xmlns:pic="http://purl.oclc.org/ooxml/drawingml/picture">
+                                                <pic:nvPicPr>
+                                                    <pic:cNvPr id="0" name="对象 30"/>
+                                                    <pic:cNvPicPr>
+                                                        <a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+                                                    </pic:cNvPicPr>
+                                                </pic:nvPicPr>
+                                                <pic:blipFill>
+                                                    <a:blip r:embed="rId11">
+                                                        <a:extLst>
+                                                            <a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}">
+                                                                <a14:useLocalDpi
+                                                                        xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"
+                                                                        val="0"/>
+                                                            </a:ext>
+                                                        </a:extLst>
+                                                    </a:blip>
+                                                    <a:srcRect/>
+                                                    <a:stretch>
+                                                        <a:fillRect/>
+                                                    </a:stretch>
+                                                </pic:blipFill>
+                                                <pic:spPr bwMode="auto">
+                                                    <a:xfrm>
+                                                        <a:off x="0" y="0"/>
+                                                        <a:ext cx="152400" cy="161925"/>
+                                                    </a:xfrm>
+                                                    <a:prstGeom prst="rect">
+                                                        <a:avLst/>
+                                                    </a:prstGeom>
+                                                    <a:noFill/>
+                                                    <a:ln>
+                                                        <a:noFill/>
+                                                    </a:ln>
+                                                </pic:spPr>
+                                            </pic:pic>
+                                        </a:graphicData>
+                                    </a:graphic>
+                                </wp:inline>
+                            </w:drawing>
+                        </w:object>
+                    </mc:Fallback>
+                </mc:AlternateContent>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>上的偶函数</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-10"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <mc:AlternateContent>
+                    <mc:Choice Requires="v">
+                        <w:object w:dxaOrig="45.95pt" w:dyaOrig="15.95pt">
+                            <v:shape id="对象 26" o:spid="_x0000_i1027" type="#_x0000_t75"
+                                     style="width:45.75pt;height:15.75pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                                     o:ole="">
+                                <v:imagedata r:id="rId12" o:title=""/>
+                            </v:shape>
+                            <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 26" DrawAspect="Content"
+                                         ObjectID="_1556182168" r:id="rId13"/>
+                        </w:object>
+                    </mc:Choice>
+                    <mc:Fallback>
+                        <w:object>
+                            <w:drawing>
+                                <wp:inline distT="0" distB="0" distL="0" distR="0" wp14:anchorId="7987240F"
+                                           wp14:editId="2509C4C9">
+                                    <wp:extent cx="581025" cy="200025"/>
+                                    <wp:effectExtent l="0" t="0" r="9525" b="9525"/>
+                                    <wp:docPr id="3" name="对象 26"/>
+                                    <wp:cNvGraphicFramePr>
+                                        <a:graphicFrameLocks xmlns:a="http://purl.oclc.org/ooxml/drawingml/main"
+                                                             noChangeAspect="1"/>
+                                    </wp:cNvGraphicFramePr>
+                                    <a:graphic xmlns:a="http://purl.oclc.org/ooxml/drawingml/main">
+                                        <a:graphicData uri="http://purl.oclc.org/ooxml/drawingml/picture">
+                                            <pic:pic xmlns:pic="http://purl.oclc.org/ooxml/drawingml/picture">
+                                                <pic:nvPicPr>
+                                                    <pic:cNvPr id="0" name="对象 26"/>
+                                                    <pic:cNvPicPr>
+                                                        <a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+                                                    </pic:cNvPicPr>
+                                                </pic:nvPicPr>
+                                                <pic:blipFill>
+                                                    <a:blip r:embed="rId14">
+                                                        <a:extLst>
+                                                            <a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}">
+                                                                <a14:useLocalDpi
+                                                                        xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"
+                                                                        val="0"/>
+                                                            </a:ext>
+                                                        </a:extLst>
+                                                    </a:blip>
+                                                    <a:srcRect/>
+                                                    <a:stretch>
+                                                        <a:fillRect/>
+                                                    </a:stretch>
+                                                </pic:blipFill>
+                                                <pic:spPr bwMode="auto">
+                                                    <a:xfrm>
+                                                        <a:off x="0" y="0"/>
+                                                        <a:ext cx="581025" cy="200025"/>
+                                                    </a:xfrm>
+                                                    <a:prstGeom prst="rect">
+                                                        <a:avLst/>
+                                                    </a:prstGeom>
+                                                    <a:noFill/>
+                                                    <a:ln>
+                                                        <a:noFill/>
+                                                    </a:ln>
+                                                </pic:spPr>
+                                            </pic:pic>
+                                        </a:graphicData>
+                                    </a:graphic>
+                                </wp:inline>
+                            </w:drawing>
+                        </w:object>
+                    </mc:Fallback>
+                </mc:AlternateContent>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>，当</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-6"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <mc:AlternateContent>
+                    <mc:Choice Requires="v">
+                        <w:object w:dxaOrig="27.90pt" w:dyaOrig="13.95pt">
+                            <v:shape id="对象 27" o:spid="_x0000_i1028" type="#_x0000_t75"
+                                     style="width:27.75pt;height:14.25pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                                     o:ole="">
+                                <v:imagedata r:id="rId15" o:title=""/>
+                            </v:shape>
+                            <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 27" DrawAspect="Content"
+                                         ObjectID="_1556182169" r:id="rId16"/>
+                        </w:object>
+                    </mc:Choice>
+                    <mc:Fallback>
+                        <w:object>
+                            <w:drawing>
+                                <wp:inline distT="0" distB="0" distL="0" distR="0" wp14:anchorId="55D872D3"
+                                           wp14:editId="3D48FE56">
+                                    <wp:extent cx="352425" cy="180975"/>
+                                    <wp:effectExtent l="0" t="0" r="9525" b="9525"/>
+                                    <wp:docPr id="4" name="对象 27"/>
+                                    <wp:cNvGraphicFramePr>
+                                        <a:graphicFrameLocks xmlns:a="http://purl.oclc.org/ooxml/drawingml/main"
+                                                             noChangeAspect="1"/>
+                                    </wp:cNvGraphicFramePr>
+                                    <a:graphic xmlns:a="http://purl.oclc.org/ooxml/drawingml/main">
+                                        <a:graphicData uri="http://purl.oclc.org/ooxml/drawingml/picture">
+                                            <pic:pic xmlns:pic="http://purl.oclc.org/ooxml/drawingml/picture">
+                                                <pic:nvPicPr>
+                                                    <pic:cNvPr id="0" name="对象 27"/>
+                                                    <pic:cNvPicPr>
+                                                        <a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+                                                    </pic:cNvPicPr>
+                                                </pic:nvPicPr>
+                                                <pic:blipFill>
+                                                    <a:blip r:embed="rId17">
+                                                        <a:extLst>
+                                                            <a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}">
+                                                                <a14:useLocalDpi
+                                                                        xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"
+                                                                        val="0"/>
+                                                            </a:ext>
+                                                        </a:extLst>
+                                                    </a:blip>
+                                                    <a:srcRect/>
+                                                    <a:stretch>
+                                                        <a:fillRect/>
+                                                    </a:stretch>
+                                                </pic:blipFill>
+                                                <pic:spPr bwMode="auto">
+                                                    <a:xfrm>
+                                                        <a:off x="0" y="0"/>
+                                                        <a:ext cx="352425" cy="180975"/>
+                                                    </a:xfrm>
+                                                    <a:prstGeom prst="rect">
+                                                        <a:avLst/>
+                                                    </a:prstGeom>
+                                                    <a:noFill/>
+                                                    <a:ln>
+                                                        <a:noFill/>
+                                                    </a:ln>
+                                                </pic:spPr>
+                                            </pic:pic>
+                                        </a:graphicData>
+                                    </a:graphic>
+                                </wp:inline>
+                            </w:drawing>
+                        </w:object>
+                    </mc:Fallback>
+                </mc:AlternateContent>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>时，</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-10"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <mc:AlternateContent>
+                    <mc:Choice Requires="v">
+                        <w:object w:dxaOrig="105pt" w:dyaOrig="17.95pt">
+                            <v:shape id="对象 28" o:spid="_x0000_i1029" type="#_x0000_t75"
+                                     style="width:105pt;height:18pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                                     o:ole="">
+                                <v:imagedata r:id="rId18" o:title=""/>
+                            </v:shape>
+                            <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 28" DrawAspect="Content"
+                                         ObjectID="_1556182170" r:id="rId19"/>
+                        </w:object>
+                    </mc:Choice>
+                    <mc:Fallback>
+                        <w:object>
+                            <w:drawing>
+                                <wp:inline distT="0" distB="0" distL="0" distR="0" wp14:anchorId="4E0980B1"
+                                           wp14:editId="354FCF8C">
+                                    <wp:extent cx="1333500" cy="228600"/>
+                                    <wp:effectExtent l="0" t="0" r="0" b="0"/>
+                                    <wp:docPr id="5" name="对象 28"/>
+                                    <wp:cNvGraphicFramePr>
+                                        <a:graphicFrameLocks xmlns:a="http://purl.oclc.org/ooxml/drawingml/main"
+                                                             noChangeAspect="1"/>
+                                    </wp:cNvGraphicFramePr>
+                                    <a:graphic xmlns:a="http://purl.oclc.org/ooxml/drawingml/main">
+                                        <a:graphicData uri="http://purl.oclc.org/ooxml/drawingml/picture">
+                                            <pic:pic xmlns:pic="http://purl.oclc.org/ooxml/drawingml/picture">
+                                                <pic:nvPicPr>
+                                                    <pic:cNvPr id="0" name="对象 28"/>
+                                                    <pic:cNvPicPr>
+                                                        <a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+                                                    </pic:cNvPicPr>
+                                                </pic:nvPicPr>
+                                                <pic:blipFill>
+                                                    <a:blip r:embed="rId20">
+                                                        <a:extLst>
+                                                            <a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}">
+                                                                <a14:useLocalDpi
+                                                                        xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"
+                                                                        val="0"/>
+                                                            </a:ext>
+                                                        </a:extLst>
+                                                    </a:blip>
+                                                    <a:srcRect/>
+                                                    <a:stretch>
+                                                        <a:fillRect/>
+                                                    </a:stretch>
+                                                </pic:blipFill>
+                                                <pic:spPr bwMode="auto">
+                                                    <a:xfrm>
+                                                        <a:off x="0" y="0"/>
+                                                        <a:ext cx="1333500" cy="228600"/>
+                                                    </a:xfrm>
+                                                    <a:prstGeom prst="rect">
+                                                        <a:avLst/>
+                                                    </a:prstGeom>
+                                                    <a:noFill/>
+                                                    <a:ln>
+                                                        <a:noFill/>
+                                                    </a:ln>
+                                                </pic:spPr>
+                                            </pic:pic>
+                                        </a:graphicData>
+                                    </a:graphic>
+                                </wp:inline>
+                            </w:drawing>
+                        </w:object>
+                    </mc:Fallback>
+                </mc:AlternateContent>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>，则</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-10"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <mc:AlternateContent>
+                    <mc:Choice Requires="v">
+                        <w:object w:dxaOrig="26.95pt" w:dyaOrig="15.95pt">
+                            <v:shape id="对象 29" o:spid="_x0000_i1030" type="#_x0000_t75"
+                                     style="width:27pt;height:15.75pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                                     o:ole="">
+                                <v:imagedata r:id="rId21" o:title=""/>
+                            </v:shape>
+                            <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 29" DrawAspect="Content"
+                                         ObjectID="_1556182171" r:id="rId22"/>
+                        </w:object>
+                    </mc:Choice>
+                    <mc:Fallback>
+                        <w:object>
+                            <w:drawing>
+                                <wp:inline distT="0" distB="0" distL="0" distR="0" wp14:anchorId="45F1F23F"
+                                           wp14:editId="77C0CF19">
+                                    <wp:extent cx="342900" cy="200025"/>
+                                    <wp:effectExtent l="0" t="0" r="0" b="9525"/>
+                                    <wp:docPr id="6" name="对象 29"/>
+                                    <wp:cNvGraphicFramePr>
+                                        <a:graphicFrameLocks xmlns:a="http://purl.oclc.org/ooxml/drawingml/main"
+                                                             noChangeAspect="1"/>
+                                    </wp:cNvGraphicFramePr>
+                                    <a:graphic xmlns:a="http://purl.oclc.org/ooxml/drawingml/main">
+                                        <a:graphicData uri="http://purl.oclc.org/ooxml/drawingml/picture">
+                                            <pic:pic xmlns:pic="http://purl.oclc.org/ooxml/drawingml/picture">
+                                                <pic:nvPicPr>
+                                                    <pic:cNvPr id="0" name="对象 29"/>
+                                                    <pic:cNvPicPr>
+                                                        <a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+                                                    </pic:cNvPicPr>
+                                                </pic:nvPicPr>
+                                                <pic:blipFill>
+                                                    <a:blip r:embed="rId23">
+                                                        <a:extLst>
+                                                            <a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}">
+                                                                <a14:useLocalDpi
+                                                                        xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"
+                                                                        val="0"/>
+                                                            </a:ext>
+                                                        </a:extLst>
+                                                    </a:blip>
+                                                    <a:srcRect/>
+                                                    <a:stretch>
+                                                        <a:fillRect/>
+                                                    </a:stretch>
+                                                </pic:blipFill>
+                                                <pic:spPr bwMode="auto">
+                                                    <a:xfrm>
+                                                        <a:off x="0" y="0"/>
+                                                        <a:ext cx="342900" cy="200025"/>
+                                                    </a:xfrm>
+                                                    <a:prstGeom prst="rect">
+                                                        <a:avLst/>
+                                                    </a:prstGeom>
+                                                    <a:noFill/>
+                                                    <a:ln>
+                                                        <a:noFill/>
+                                                    </a:ln>
+                                                </pic:spPr>
+                                            </pic:pic>
+                                        </a:graphicData>
+                                    </a:graphic>
+                                </wp:inline>
+                            </w:drawing>
+                        </w:object>
+                    </mc:Fallback>
+                </mc:AlternateContent>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>在</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-4"/>
+                </w:rPr>
+                <mc:AlternateContent>
+                    <mc:Choice Requires="v">
+                        <w:object w:dxaOrig="11.95pt" w:dyaOrig="12.95pt">
+                            <v:shape id="对象 31" o:spid="_x0000_i1031" type="#_x0000_t75"
+                                     style="width:12pt;height:12.75pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                                     o:ole="">
+                                <v:imagedata r:id="rId24" o:title=""/>
+                            </v:shape>
+                            <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 31" DrawAspect="Content"
+                                         ObjectID="_1556182172" r:id="rId25"/>
+                        </w:object>
+                    </mc:Choice>
+                    <mc:Fallback>
+                        <w:object>
+                            <w:drawing>
+                                <wp:inline distT="0" distB="0" distL="0" distR="0" wp14:anchorId="7FBBC9FB"
+                                           wp14:editId="1ECFB64A">
+                                    <wp:extent cx="152400" cy="161925"/>
+                                    <wp:effectExtent l="0" t="0" r="0" b="9525"/>
+                                    <wp:docPr id="7" name="对象 31"/>
+                                    <wp:cNvGraphicFramePr>
+                                        <a:graphicFrameLocks xmlns:a="http://purl.oclc.org/ooxml/drawingml/main"
+                                                             noChangeAspect="1"/>
+                                    </wp:cNvGraphicFramePr>
+                                    <a:graphic xmlns:a="http://purl.oclc.org/ooxml/drawingml/main">
+                                        <a:graphicData uri="http://purl.oclc.org/ooxml/drawingml/picture">
+                                            <pic:pic xmlns:pic="http://purl.oclc.org/ooxml/drawingml/picture">
+                                                <pic:nvPicPr>
+                                                    <pic:cNvPr id="0" name="对象 31"/>
+                                                    <pic:cNvPicPr>
+                                                        <a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+                                                    </pic:cNvPicPr>
+                                                </pic:nvPicPr>
+                                                <pic:blipFill>
+                                                    <a:blip r:embed="rId26">
+                                                        <a:extLst>
+                                                            <a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}">
+                                                                <a14:useLocalDpi
+                                                                        xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"
+                                                                        val="0"/>
+                                                            </a:ext>
+                                                        </a:extLst>
+                                                    </a:blip>
+                                                    <a:srcRect/>
+                                                    <a:stretch>
+                                                        <a:fillRect/>
+                                                    </a:stretch>
+                                                </pic:blipFill>
+                                                <pic:spPr bwMode="auto">
+                                                    <a:xfrm>
+                                                        <a:off x="0" y="0"/>
+                                                        <a:ext cx="152400" cy="161925"/>
+                                                    </a:xfrm>
+                                                    <a:prstGeom prst="rect">
+                                                        <a:avLst/>
+                                                    </a:prstGeom>
+                                                    <a:noFill/>
+                                                    <a:ln>
+                                                        <a:noFill/>
+                                                    </a:ln>
+                                                </pic:spPr>
+                                            </pic:pic>
+                                        </a:graphicData>
+                                    </a:graphic>
+                                </wp:inline>
+                            </w:drawing>
+                        </w:object>
+                    </mc:Fallback>
+                </mc:AlternateContent>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>上</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="006C0246" w:rsidRDefault="006C0246" w:rsidP="006C0246">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="18pt" w:lineRule="auto"/>
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>的零点个数为</w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                    <w:u w:val="single"/>
+                </w:rPr>
+                <w:t xml:space="preserve">        </w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>个</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="006C0246" w:rsidRDefault="0054291A" w:rsidP="006C0246">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="18pt" w:lineRule="auto"/>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:noProof/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:drawing>
+                    <wp:inline distT="0" distB="0" distL="0" distR="0">
+                        <wp:extent cx="5267325" cy="933450"/>
+                        <wp:effectExtent l="0" t="0" r="0" b="0"/>
+                        <wp:docPr id="33" name="图片 165"/>
+                        <wp:cNvGraphicFramePr>
+                            <a:graphicFrameLocks xmlns:a="http://purl.oclc.org/ooxml/drawingml/main"
+                                                 noChangeAspect="1"/>
+                        </wp:cNvGraphicFramePr>
+                        <a:graphic xmlns:a="http://purl.oclc.org/ooxml/drawingml/main">
+                            <a:graphicData uri="http://purl.oclc.org/ooxml/drawingml/picture">
+                                <pic:pic xmlns:pic="http://purl.oclc.org/ooxml/drawingml/picture">
+                                    <pic:nvPicPr>
+                                        <pic:cNvPr id="0" name="图片 165"/>
+                                        <pic:cNvPicPr>
+                                            <a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+                                        </pic:cNvPicPr>
+                                    </pic:nvPicPr>
+                                    <pic:blipFill>
+                                        <a:blip r:embed="rId27" cstate="print">
+                                            <a:extLst>
+                                                <a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}">
+                                                    <a14:useLocalDpi
+                                                            xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"
+                                                            val="0"/>
+                                                </a:ext>
+                                            </a:extLst>
+                                        </a:blip>
+                                        <a:srcRect t="30.417%" b="28.751%"/>
+                                        <a:stretch>
+                                            <a:fillRect/>
+                                        </a:stretch>
+                                    </pic:blipFill>
+                                    <pic:spPr bwMode="auto">
+                                        <a:xfrm>
+                                            <a:off x="0" y="0"/>
+                                            <a:ext cx="5267325" cy="933450"/>
+                                        </a:xfrm>
+                                        <a:prstGeom prst="rect">
+                                            <a:avLst/>
+                                        </a:prstGeom>
+                                        <a:noFill/>
+                                        <a:ln>
+                                            <a:noFill/>
+                                        </a:ln>
+                                    </pic:spPr>
+                                </pic:pic>
+                            </a:graphicData>
+                        </a:graphic>
+                    </wp:inline>
+                </w:drawing>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="006C0246" w:rsidRDefault="007348BC" w:rsidP="006C0246">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="13.80pt" w:lineRule="auto"/>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>#</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">13. </w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>“</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-24"/>
+                </w:rPr>
+                <mc:AlternateContent>
+                    <mc:Choice Requires="v">
+                        <w:object w:dxaOrig="55.95pt" w:dyaOrig="30.95pt">
+                            <v:shape id="对象 44" o:spid="_x0000_i1032" type="#_x0000_t75"
+                                     style="width:56.25pt;height:30.75pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                                     o:ole="">
+                                <v:imagedata r:id="rId28" o:title=""/>
+                            </v:shape>
+                            <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 44" DrawAspect="Content"
+                                         ObjectID="_1556182173" r:id="rId29"/>
+                        </w:object>
+                    </mc:Choice>
+                    <mc:Fallback>
+                        <w:object>
+                            <w:drawing>
+                                <wp:inline distT="0" distB="0" distL="0" distR="0" wp14:anchorId="57331C62"
+                                           wp14:editId="3AA515AD">
+                                    <wp:extent cx="714375" cy="390525"/>
+                                    <wp:effectExtent l="0" t="0" r="0" b="9525"/>
+                                    <wp:docPr id="8" name="对象 44"/>
+                                    <wp:cNvGraphicFramePr>
+                                        <a:graphicFrameLocks xmlns:a="http://purl.oclc.org/ooxml/drawingml/main"
+                                                             noChangeAspect="1"/>
+                                    </wp:cNvGraphicFramePr>
+                                    <a:graphic xmlns:a="http://purl.oclc.org/ooxml/drawingml/main">
+                                        <a:graphicData uri="http://purl.oclc.org/ooxml/drawingml/picture">
+                                            <pic:pic xmlns:pic="http://purl.oclc.org/ooxml/drawingml/picture">
+                                                <pic:nvPicPr>
+                                                    <pic:cNvPr id="0" name="对象 44"/>
+                                                    <pic:cNvPicPr>
+                                                        <a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+                                                    </pic:cNvPicPr>
+                                                </pic:nvPicPr>
+                                                <pic:blipFill>
+                                                    <a:blip r:embed="rId30">
+                                                        <a:extLst>
+                                                            <a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}">
+                                                                <a14:useLocalDpi
+                                                                        xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"
+                                                                        val="0"/>
+                                                            </a:ext>
+                                                        </a:extLst>
+                                                    </a:blip>
+                                                    <a:srcRect/>
+                                                    <a:stretch>
+                                                        <a:fillRect/>
+                                                    </a:stretch>
+                                                </pic:blipFill>
+                                                <pic:spPr bwMode="auto">
+                                                    <a:xfrm>
+                                                        <a:off x="0" y="0"/>
+                                                        <a:ext cx="714375" cy="390525"/>
+                                                    </a:xfrm>
+                                                    <a:prstGeom prst="rect">
+                                                        <a:avLst/>
+                                                    </a:prstGeom>
+                                                    <a:noFill/>
+                                                    <a:ln>
+                                                        <a:noFill/>
+                                                    </a:ln>
+                                                </pic:spPr>
+                                            </pic:pic>
+                                        </a:graphicData>
+                                    </a:graphic>
+                                </wp:inline>
+                            </w:drawing>
+                        </w:object>
+                    </mc:Fallback>
+                </mc:AlternateContent>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-10"/>
+                </w:rPr>
+                <mc:AlternateContent>
+                    <mc:Choice Requires="v">
+                        <w:object w:dxaOrig="37.90pt" w:dyaOrig="15.95pt">
+                            <v:shape id="对象 45" o:spid="_x0000_i1033" type="#_x0000_t75"
+                                     style="width:38.25pt;height:15.75pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                                     o:ole="">
+                                <v:imagedata r:id="rId31" o:title=""/>
+                            </v:shape>
+                            <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 45" DrawAspect="Content"
+                                         ObjectID="_1556182174" r:id="rId32"/>
+                        </w:object>
+                    </mc:Choice>
+                    <mc:Fallback>
+                        <w:object>
+                            <w:drawing>
+                                <wp:inline distT="0" distB="0" distL="0" distR="0" wp14:anchorId="63F6BC82"
+                                           wp14:editId="2A398843">
+                                    <wp:extent cx="485775" cy="200025"/>
+                                    <wp:effectExtent l="0" t="0" r="9525" b="9525"/>
+                                    <wp:docPr id="9" name="对象 45"/>
+                                    <wp:cNvGraphicFramePr>
+                                        <a:graphicFrameLocks xmlns:a="http://purl.oclc.org/ooxml/drawingml/main"
+                                                             noChangeAspect="1"/>
+                                    </wp:cNvGraphicFramePr>
+                                    <a:graphic xmlns:a="http://purl.oclc.org/ooxml/drawingml/main">
+                                        <a:graphicData uri="http://purl.oclc.org/ooxml/drawingml/picture">
+                                            <pic:pic xmlns:pic="http://purl.oclc.org/ooxml/drawingml/picture">
+                                                <pic:nvPicPr>
+                                                    <pic:cNvPr id="0" name="对象 45"/>
+                                                    <pic:cNvPicPr>
+                                                        <a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+                                                    </pic:cNvPicPr>
+                                                </pic:nvPicPr>
+                                                <pic:blipFill>
+                                                    <a:blip r:embed="rId33">
+                                                        <a:extLst>
+                                                            <a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}">
+                                                                <a14:useLocalDpi
+                                                                        xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"
+                                                                        val="0"/>
+                                                            </a:ext>
+                                                        </a:extLst>
+                                                    </a:blip>
+                                                    <a:srcRect/>
+                                                    <a:stretch>
+                                                        <a:fillRect/>
+                                                    </a:stretch>
+                                                </pic:blipFill>
+                                                <pic:spPr bwMode="auto">
+                                                    <a:xfrm>
+                                                        <a:off x="0" y="0"/>
+                                                        <a:ext cx="485775" cy="200025"/>
+                                                    </a:xfrm>
+                                                    <a:prstGeom prst="rect">
+                                                        <a:avLst/>
+                                                    </a:prstGeom>
+                                                    <a:noFill/>
+                                                    <a:ln>
+                                                        <a:noFill/>
+                                                    </a:ln>
+                                                </pic:spPr>
+                                            </pic:pic>
+                                        </a:graphicData>
+                                    </a:graphic>
+                                </wp:inline>
+                            </w:drawing>
+                        </w:object>
+                    </mc:Fallback>
+                </mc:AlternateContent>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>”是“</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-6"/>
+                </w:rPr>
+                <mc:AlternateContent>
+                    <mc:Choice Requires="v">
+                        <w:object w:dxaOrig="42.90pt" w:dyaOrig="13.95pt">
+                            <v:shape id="对象 46" o:spid="_x0000_i1034" type="#_x0000_t75"
+                                     style="width:42.75pt;height:14.25pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                                     o:ole="">
+                                <v:imagedata r:id="rId34" o:title=""/>
+                            </v:shape>
+                            <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 46" DrawAspect="Content"
+                                         ObjectID="_1556182175" r:id="rId35"/>
+                        </w:object>
+                    </mc:Choice>
+                    <mc:Fallback>
+                        <w:object>
+                            <w:drawing>
+                                <wp:inline distT="0" distB="0" distL="0" distR="0" wp14:anchorId="1E3726E6"
+                                           wp14:editId="295479E8">
+                                    <wp:extent cx="542925" cy="180975"/>
+                                    <wp:effectExtent l="0" t="0" r="9525" b="9525"/>
+                                    <wp:docPr id="10" name="对象 46"/>
+                                    <wp:cNvGraphicFramePr>
+                                        <a:graphicFrameLocks xmlns:a="http://purl.oclc.org/ooxml/drawingml/main"
+                                                             noChangeAspect="1"/>
+                                    </wp:cNvGraphicFramePr>
+                                    <a:graphic xmlns:a="http://purl.oclc.org/ooxml/drawingml/main">
+                                        <a:graphicData uri="http://purl.oclc.org/ooxml/drawingml/picture">
+                                            <pic:pic xmlns:pic="http://purl.oclc.org/ooxml/drawingml/picture">
+                                                <pic:nvPicPr>
+                                                    <pic:cNvPr id="0" name="对象 46"/>
+                                                    <pic:cNvPicPr>
+                                                        <a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+                                                    </pic:cNvPicPr>
+                                                </pic:nvPicPr>
+                                                <pic:blipFill>
+                                                    <a:blip r:embed="rId36">
+                                                        <a:extLst>
+                                                            <a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}">
+                                                                <a14:useLocalDpi
+                                                                        xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"
+                                                                        val="0"/>
+                                                            </a:ext>
+                                                        </a:extLst>
+                                                    </a:blip>
+                                                    <a:srcRect/>
+                                                    <a:stretch>
+                                                        <a:fillRect/>
+                                                    </a:stretch>
+                                                </pic:blipFill>
+                                                <pic:spPr bwMode="auto">
+                                                    <a:xfrm>
+                                                        <a:off x="0" y="0"/>
+                                                        <a:ext cx="542925" cy="180975"/>
+                                                    </a:xfrm>
+                                                    <a:prstGeom prst="rect">
+                                                        <a:avLst/>
+                                                    </a:prstGeom>
+                                                    <a:noFill/>
+                                                    <a:ln>
+                                                        <a:noFill/>
+                                                    </a:ln>
+                                                </pic:spPr>
+                                            </pic:pic>
+                                        </a:graphicData>
+                                    </a:graphic>
+                                </wp:inline>
+                            </w:drawing>
+                        </w:object>
+                    </mc:Fallback>
+                </mc:AlternateContent>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>”的</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>（</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">    </w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>）条件</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="006C0246" w:rsidRDefault="006C0246" w:rsidP="006C0246">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="18pt" w:lineRule="auto"/>
+                <w:ind w:firstLineChars="150" w:firstLine="15.75pt"/>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">A. </w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>充分不必要</w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">     B. </w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>必要不充分</w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">     C. </w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>充分必要</w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">     D. </w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>既不充分也不必要</w:t>
+            </w:r>
+        </w:p>
+        <w:sectPr w:rsidR="006C0246">
+            <w:headerReference w:type="even" r:id="rId37"/>
+            <w:headerReference w:type="default" r:id="rId38"/>
+            <w:headerReference w:type="first" r:id="rId39"/>
+            <w:pgSz w:w="595.30pt" w:h="841.90pt"/>
+            <w:pgMar w:top="72pt" w:right="90pt" w:bottom="72pt" w:left="90pt" w:header="42.55pt" w:footer="49.60pt"
+                     w:gutter="0pt"/>
+            <w:cols w:space="21.25pt"/>
+            <w:docGrid w:type="lines" w:linePitch="312"/>
+        </w:sectPr>
+    </w:body>
+</w:document>

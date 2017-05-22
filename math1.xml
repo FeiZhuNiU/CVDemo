@@ -1,0 +1,1111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas"
+            xmlns:cx="http://schemas.microsoft.com/office/drawing/2014/chartex"
+            xmlns:cx1="http://schemas.microsoft.com/office/drawing/2015/9/8/chartex"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:o="urn:schemas-microsoft-com:office:office"
+            xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+            xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:v="urn:schemas-microsoft-com:vml"
+            xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing"
+            xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+            xmlns:w10="urn:schemas-microsoft-com:office:word"
+            xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+            xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml"
+            xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml"
+            xmlns:w16se="http://schemas.microsoft.com/office/word/2015/wordml/symex"
+            xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup"
+            xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk"
+            xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
+            xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"
+            mc:Ignorable="w14 w15 w16se wp14">
+    <w:body>
+        <w:p w:rsidR="006C0246" w:rsidRDefault="007348BC" w:rsidP="006C0246">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="360" w:lineRule="auto"/>
+                <w:ind w:left="315" w:hangingChars="150" w:hanging="315"/>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>@</w:t>
+            </w:r>
+            <w:r w:rsidR="000C0B77">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>@</w:t>
+            </w:r>
+            <w:proofErr w:type="gramStart"/>
+            <w:r w:rsidR="000C0B77">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>!</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>1</w:t>
+            </w:r>
+            <w:proofErr w:type="gramEnd"/>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">. </w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-24"/>
+                </w:rPr>
+                <w:object w:dxaOrig="1219" w:dyaOrig="619">
+                    <v:shapetype id="_x0000_t75" coordsize="21600,21600" o:spt="75" o:preferrelative="t"
+                                 path="m@4@5l@4@11@9@11@9@5xe" filled="f" stroked="f">
+                        <v:stroke joinstyle="miter"/>
+                        <v:formulas>
+                            <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+                            <v:f eqn="sum @0 1 0"/>
+                            <v:f eqn="sum 0 0 @1"/>
+                            <v:f eqn="prod @2 1 2"/>
+                            <v:f eqn="prod @3 21600 pixelWidth"/>
+                            <v:f eqn="prod @3 21600 pixelHeight"/>
+                            <v:f eqn="sum @0 0 1"/>
+                            <v:f eqn="prod @6 1 2"/>
+                            <v:f eqn="prod @7 21600 pixelWidth"/>
+                            <v:f eqn="sum @8 21600 0"/>
+                            <v:f eqn="prod @7 21600 pixelHeight"/>
+                            <v:f eqn="sum @10 21600 0"/>
+                        </v:formulas>
+                        <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+                        <o:lock v:ext="edit" aspectratio="t"/>
+                    </v:shapetype>
+                    <v:shape id="对象 1" o:spid="_x0000_i1025" type="#_x0000_t75"
+                             style="width:61.05pt;height:31pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                             o:ole="">
+                        <v:imagedata r:id="rId6" o:title=""/>
+                    </v:shape>
+                    <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 1" DrawAspect="Content"
+                                 ObjectID="_1556553482" r:id="rId7"/>
+                </w:object>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                    <w:u w:val="single"/>
+                </w:rPr>
+                <w:t xml:space="preserve">   </w:t>
+            </w:r>
+            <w:r w:rsidR="00690CEE">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                    <w:u w:val="single"/>
+                </w:rPr>
+                <w:t>(1)</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                    <w:u w:val="single"/>
+                </w:rPr>
+                <w:t xml:space="preserve">     </w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="006C0246" w:rsidRDefault="007348BC" w:rsidP="006C0246">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="360" w:lineRule="auto"/>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>@</w:t>
+            </w:r>
+            <w:r w:rsidR="000C0B77">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>@</w:t>
+            </w:r>
+            <w:proofErr w:type="gramStart"/>
+            <w:r w:rsidR="000C0B77">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>!</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>9</w:t>
+            </w:r>
+            <w:proofErr w:type="gramEnd"/>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>.</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:t xml:space="preserve"> </w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>定义在</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-4"/>
+                </w:rPr>
+                <w:object w:dxaOrig="239" w:dyaOrig="259">
+                    <v:shape id="对象 30" o:spid="_x0000_i1026" type="#_x0000_t75"
+                             style="width:11.9pt;height:13.15pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                             o:ole="">
+                        <v:imagedata r:id="rId8" o:title=""/>
+                    </v:shape>
+                    <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 30" DrawAspect="Content"
+                                 ObjectID="_1556553483" r:id="rId9"/>
+                </w:object>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>上的</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246" w:rsidRPr="00681C5E">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:b/>
+                    <w:i/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>偶函数</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-10"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:object w:dxaOrig="919" w:dyaOrig="319">
+                    <v:shape id="对象 26" o:spid="_x0000_i1027" type="#_x0000_t75"
+                             style="width:46pt;height:15.65pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                             o:ole="">
+                        <v:imagedata r:id="rId10" o:title=""/>
+                    </v:shape>
+                    <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 26" DrawAspect="Content"
+                                 ObjectID="_1556553484" r:id="rId11"/>
+                </w:object>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>，当</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-6"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:object w:dxaOrig="558" w:dyaOrig="279">
+                    <v:shape id="对象 27" o:spid="_x0000_i1028" type="#_x0000_t75"
+                             style="width:27.85pt;height:14.4pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                             o:ole="">
+                        <v:imagedata r:id="rId12" o:title=""/>
+                    </v:shape>
+                    <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 27" DrawAspect="Content"
+                                 ObjectID="_1556553485" r:id="rId13"/>
+                </w:object>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>时，</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-10"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:object w:dxaOrig="2100" w:dyaOrig="359">
+                    <v:shape id="对象 28" o:spid="_x0000_i1029" type="#_x0000_t75"
+                             style="width:104.85pt;height:18.15pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                             o:ole="">
+                        <v:imagedata r:id="rId14" o:title=""/>
+                    </v:shape>
+                    <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 28" DrawAspect="Content"
+                                 ObjectID="_1556553486" r:id="rId15"/>
+                </w:object>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>，则</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-10"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:object w:dxaOrig="539" w:dyaOrig="319">
+                    <v:shape id="对象 29" o:spid="_x0000_i1030" type="#_x0000_t75"
+                             style="width:26.9pt;height:15.65pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                             o:ole="">
+                        <v:imagedata r:id="rId16" o:title=""/>
+                    </v:shape>
+                    <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 29" DrawAspect="Content"
+                                 ObjectID="_1556553487" r:id="rId17"/>
+                </w:object>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>在</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-4"/>
+                </w:rPr>
+                <w:object w:dxaOrig="239" w:dyaOrig="259">
+                    <v:shape id="对象 31" o:spid="_x0000_i1031" type="#_x0000_t75"
+                             style="width:11.9pt;height:13.15pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                             o:ole="">
+                        <v:imagedata r:id="rId18" o:title=""/>
+                    </v:shape>
+                    <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 31" DrawAspect="Content"
+                                 ObjectID="_1556553488" r:id="rId19"/>
+                </w:object>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>上</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="006C0246" w:rsidRDefault="006C0246" w:rsidP="006C0246">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="360" w:lineRule="auto"/>
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>的零点个数为</w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                    <w:u w:val="single"/>
+                </w:rPr>
+                <w:t xml:space="preserve">        </w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hAnsi="宋体"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>个</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="006C0246" w:rsidRDefault="0054291A" w:rsidP="006C0246">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="360" w:lineRule="auto"/>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:noProof/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:drawing>
+                    <wp:inline distT="0" distB="0" distL="0" distR="0">
+                        <wp:extent cx="5267325" cy="933450"/>
+                        <wp:effectExtent l="0" t="0" r="0" b="0"/>
+                        <wp:docPr id="33" name="图片 165"/>
+                        <wp:cNvGraphicFramePr>
+                            <a:graphicFrameLocks xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+                                                 noChangeAspect="1"/>
+                        </wp:cNvGraphicFramePr>
+                        <a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+                            <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+                                <pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+                                    <pic:nvPicPr>
+                                        <pic:cNvPr id="0" name="图片 165"/>
+                                        <pic:cNvPicPr>
+                                            <a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+                                        </pic:cNvPicPr>
+                                    </pic:nvPicPr>
+                                    <pic:blipFill>
+                                        <a:blip r:embed="rId20" cstate="print">
+                                            <a:extLst>
+                                                <a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}">
+                                                    <a14:useLocalDpi
+                                                            xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"
+                                                            val="0"/>
+                                                </a:ext>
+                                            </a:extLst>
+                                        </a:blip>
+                                        <a:srcRect t="30417" b="28751"/>
+                                        <a:stretch>
+                                            <a:fillRect/>
+                                        </a:stretch>
+                                    </pic:blipFill>
+                                    <pic:spPr bwMode="auto">
+                                        <a:xfrm>
+                                            <a:off x="0" y="0"/>
+                                            <a:ext cx="5267325" cy="933450"/>
+                                        </a:xfrm>
+                                        <a:prstGeom prst="rect">
+                                            <a:avLst/>
+                                        </a:prstGeom>
+                                        <a:noFill/>
+                                        <a:ln>
+                                            <a:noFill/>
+                                        </a:ln>
+                                    </pic:spPr>
+                                </pic:pic>
+                            </a:graphicData>
+                        </a:graphic>
+                    </wp:inline>
+                </w:drawing>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="006C0246" w:rsidRDefault="000C0B77" w:rsidP="006C0246">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="276" w:lineRule="auto"/>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>@@@</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">13. </w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>“</w:t>
+            </w:r>
+            <w:bookmarkStart w:id="0" w:name="OLE_LINK1"/>
+            <w:bookmarkStart w:id="1" w:name="OLE_LINK2"/>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-24"/>
+                </w:rPr>
+                <w:object w:dxaOrig="1119" w:dyaOrig="619">
+                    <v:shape id="对象 44" o:spid="_x0000_i1032" type="#_x0000_t75"
+                             style="width:56.05pt;height:31pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                             o:ole="">
+                        <v:imagedata r:id="rId21" o:title=""/>
+                    </v:shape>
+                    <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 44" DrawAspect="Content"
+                                 ObjectID="_1556553489" r:id="rId22"/>
+                </w:object>
+            </w:r>
+            <w:bookmarkEnd w:id="0"/>
+            <w:bookmarkEnd w:id="1"/>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-10"/>
+                </w:rPr>
+                <w:object w:dxaOrig="758" w:dyaOrig="319">
+                    <v:shape id="对象 45" o:spid="_x0000_i1033" type="#_x0000_t75"
+                             style="width:37.9pt;height:15.65pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                             o:ole="">
+                        <v:imagedata r:id="rId23" o:title=""/>
+                    </v:shape>
+                    <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 45" DrawAspect="Content"
+                                 ObjectID="_1556553490" r:id="rId24"/>
+                </w:object>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>”是“</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:position w:val="-6"/>
+                </w:rPr>
+                <w:object w:dxaOrig="858" w:dyaOrig="279">
+                    <v:shape id="对象 46" o:spid="_x0000_i1034" type="#_x0000_t75"
+                             style="width:42.9pt;height:14.4pt;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+                             o:ole="">
+                        <v:imagedata r:id="rId25" o:title=""/>
+                    </v:shape>
+                    <o:OLEObject Type="Embed" ProgID="Equation.DSMT4" ShapeID="对象 46" DrawAspect="Content"
+                                 ObjectID="_1556553491" r:id="rId26"/>
+                </w:object>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>”的</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>（</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">    </w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>）条件</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="006C0246" w:rsidRDefault="00BC7C1D" w:rsidP="006C0246">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="360" w:lineRule="auto"/>
+                <w:ind w:firstLineChars="150" w:firstLine="315"/>
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>###</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">A. </w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>充分不必要</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">     </w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>###</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">B. </w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>必要不充分</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">     </w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>###</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">C. </w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>充分必要</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">     </w:t>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t>###</w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+                <w:t xml:space="preserve">D. </w:t>
+            </w:r>
+            <w:r w:rsidR="006C0246">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>既不充分也不必要</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00A265D5" w:rsidRDefault="000C0B77" w:rsidP="00A265D5">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="360" w:lineRule="auto"/>
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>@@</w:t>
+            </w:r>
+            <w:proofErr w:type="gramStart"/>
+            <w:r w:rsidR="006A58C1">
+                <w:t>!</w:t>
+            </w:r>
+            <w:r w:rsidR="00A265D5">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>15</w:t>
+            </w:r>
+            <w:proofErr w:type="gramEnd"/>
+            <w:r w:rsidR="00A265D5">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t xml:space="preserve">. </w:t>
+            </w:r>
+            <w:r w:rsidR="00A265D5">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>这里</w:t>
+            </w:r>
+            <w:r w:rsidR="00A265D5">
+                <w:t>有一张</w:t>
+            </w:r>
+            <w:r w:rsidR="00A265D5">
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:t>表</w:t>
+            </w:r>
+        </w:p>
+        <w:tbl>
+            <w:tblPr>
+                <w:tblpPr w:leftFromText="180" w:rightFromText="180" w:vertAnchor="text" w:horzAnchor="page"
+                          w:tblpX="2581" w:tblpY="115"/>
+                <w:tblW w:w="0" w:type="auto"/>
+                <w:tblBorders>
+                    <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                    <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                    <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                    <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                    <w:insideH w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                    <w:insideV w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                </w:tblBorders>
+                <w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0"
+                           w:noVBand="1"/>
+            </w:tblPr>
+            <w:tblGrid>
+                <w:gridCol w:w="1843"/>
+                <w:gridCol w:w="1316"/>
+            </w:tblGrid>
+            <w:tr w:rsidR="00BB1EB7" w:rsidTr="00BB1EB7">
+                <w:tc>
+                    <w:tcPr>
+                        <w:tcW w:w="1843" w:type="dxa"/>
+                        <w:tcBorders>
+                            <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                        </w:tcBorders>
+                        <w:vAlign w:val="center"/>
+                        <w:hideMark/>
+                    </w:tcPr>
+                    <w:p w:rsidR="00BB1EB7" w:rsidRDefault="00BB1EB7" w:rsidP="00BB1EB7">
+                        <w:pPr>
+                            <w:snapToGrid w:val="0"/>
+                            <w:spacing w:line="360" w:lineRule="exact"/>
+                            <w:jc w:val="center"/>
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋"/>
+                                <w:kern w:val="0"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r>
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋" w:hint="eastAsia"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>型号</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr>
+                        <w:tcW w:w="1316" w:type="dxa"/>
+                        <w:tcBorders>
+                            <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                        </w:tcBorders>
+                        <w:vAlign w:val="center"/>
+                        <w:hideMark/>
+                    </w:tcPr>
+                    <w:p w:rsidR="00BB1EB7" w:rsidRDefault="00BB1EB7" w:rsidP="00BB1EB7">
+                        <w:pPr>
+                            <w:snapToGrid w:val="0"/>
+                            <w:spacing w:line="360" w:lineRule="exact"/>
+                            <w:jc w:val="center"/>
+                            <w:rPr>
+                                <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r>
+                            <w:rPr>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>xx-xx</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr w:rsidR="00BB1EB7" w:rsidTr="00BB1EB7">
+                <w:tc>
+                    <w:tcPr>
+                        <w:tcW w:w="1843" w:type="dxa"/>
+                        <w:tcBorders>
+                            <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                        </w:tcBorders>
+                        <w:vAlign w:val="center"/>
+                        <w:hideMark/>
+                    </w:tcPr>
+                    <w:p w:rsidR="00BB1EB7" w:rsidRDefault="00BB1EB7" w:rsidP="00BB1EB7">
+                        <w:pPr>
+                            <w:snapToGrid w:val="0"/>
+                            <w:spacing w:line="360" w:lineRule="exact"/>
+                            <w:jc w:val="center"/>
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r>
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋" w:hint="eastAsia"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>额</w:t>
+                        </w:r>
+                        <w:r w:rsidRPr="00323D31">
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋" w:hint="eastAsia"/>
+                                <w:i/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>定容</w:t>
+                        </w:r>
+                        <w:r>
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋" w:hint="eastAsia"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>量（米</w:t>
+                        </w:r>
+                        <w:r>
+                            <w:rPr>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                                <w:vertAlign w:val="superscript"/>
+                            </w:rPr>
+                            <w:t>3</w:t>
+                        </w:r>
+                        <w:r>
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋" w:hint="eastAsia"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>）</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr>
+                        <w:tcW w:w="1316" w:type="dxa"/>
+                        <w:tcBorders>
+                            <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                        </w:tcBorders>
+                        <w:vAlign w:val="center"/>
+                        <w:hideMark/>
+                    </w:tcPr>
+                    <w:p w:rsidR="00BB1EB7" w:rsidRDefault="00BB1EB7" w:rsidP="00BB1EB7">
+                        <w:pPr>
+                            <w:snapToGrid w:val="0"/>
+                            <w:spacing w:line="360" w:lineRule="exact"/>
+                            <w:jc w:val="center"/>
+                            <w:rPr>
+                                <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r>
+                            <w:rPr>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>3</w:t>
+                        </w:r>
+                        <w:r>
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋" w:hint="eastAsia"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>×</w:t>
+                        </w:r>
+                        <w:r>
+                            <w:rPr>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>10</w:t>
+                        </w:r>
+                        <w:r>
+                            <w:rPr>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                                <w:vertAlign w:val="superscript"/>
+                            </w:rPr>
+                            <w:sym w:font="Symbol" w:char="F02D"/>
+                        </w:r>
+                        <w:r>
+                            <w:rPr>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                                <w:vertAlign w:val="superscript"/>
+                            </w:rPr>
+                            <w:t>3</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr w:rsidR="00BB1EB7" w:rsidTr="00BB1EB7">
+                <w:tc>
+                    <w:tcPr>
+                        <w:tcW w:w="1843" w:type="dxa"/>
+                        <w:tcBorders>
+                            <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                        </w:tcBorders>
+                        <w:vAlign w:val="center"/>
+                        <w:hideMark/>
+                    </w:tcPr>
+                    <w:p w:rsidR="00BB1EB7" w:rsidRDefault="00BB1EB7" w:rsidP="00BB1EB7">
+                        <w:pPr>
+                            <w:snapToGrid w:val="0"/>
+                            <w:spacing w:line="360" w:lineRule="exact"/>
+                            <w:jc w:val="center"/>
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r>
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋" w:hint="eastAsia"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>额定</w:t>
+                        </w:r>
+                        <w:r w:rsidRPr="002C5B8E">
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋" w:hint="eastAsia"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                                <w:vertAlign w:val="subscript"/>
+                            </w:rPr>
+                            <w:t>电</w:t>
+                        </w:r>
+                        <w:r>
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋" w:hint="eastAsia"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>压（伏）</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr>
+                        <w:tcW w:w="1316" w:type="dxa"/>
+                        <w:tcBorders>
+                            <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                        </w:tcBorders>
+                        <w:vAlign w:val="center"/>
+                        <w:hideMark/>
+                    </w:tcPr>
+                    <w:p w:rsidR="00BB1EB7" w:rsidRDefault="00BB1EB7" w:rsidP="00BB1EB7">
+                        <w:pPr>
+                            <w:snapToGrid w:val="0"/>
+                            <w:spacing w:line="360" w:lineRule="exact"/>
+                            <w:jc w:val="center"/>
+                            <w:rPr>
+                                <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r>
+                            <w:rPr>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>2</w:t>
+                        </w:r>
+                        <w:r w:rsidRPr="00323D31">
+                            <w:rPr>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                                <w:u w:val="single"/>
+                            </w:rPr>
+                            <w:t>2</w:t>
+                        </w:r>
+                        <w:r>
+                            <w:rPr>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>0</w:t>
+                        </w:r>
+                        <w:r w:rsidR="00323D31">
+                            <w:rPr>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>_</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr w:rsidR="00BB1EB7" w:rsidTr="00BB1EB7">
+                <w:tc>
+                    <w:tcPr>
+                        <w:tcW w:w="1843" w:type="dxa"/>
+                        <w:tcBorders>
+                            <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                        </w:tcBorders>
+                        <w:vAlign w:val="center"/>
+                        <w:hideMark/>
+                    </w:tcPr>
+                    <w:p w:rsidR="00BB1EB7" w:rsidRDefault="00BB1EB7" w:rsidP="00BB1EB7">
+                        <w:pPr>
+                            <w:snapToGrid w:val="0"/>
+                            <w:spacing w:line="360" w:lineRule="exact"/>
+                            <w:jc w:val="center"/>
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r>
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋" w:hint="eastAsia"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>额</w:t>
+                        </w:r>
+                        <w:r w:rsidRPr="002C5B8E">
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋" w:hint="eastAsia"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                                <w:vertAlign w:val="subscript"/>
+                            </w:rPr>
+                            <w:t>定</w:t>
+                        </w:r>
+                        <w:r w:rsidRPr="00817666">
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋" w:hint="eastAsia"/>
+                                <w:b/>
+                                <w:i/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                                <w:u w:val="single"/>
+                                <w:vertAlign w:val="subscript"/>
+                            </w:rPr>
+                            <w:t>功</w:t>
+                        </w:r>
+                        <w:r>
+                            <w:rPr>
+                                <w:rFonts w:ascii="华文中宋" w:hAnsi="华文中宋" w:hint="eastAsia"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>率（瓦）</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr>
+                        <w:tcW w:w="1316" w:type="dxa"/>
+                        <w:tcBorders>
+                            <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+                        </w:tcBorders>
+                        <w:vAlign w:val="center"/>
+                        <w:hideMark/>
+                    </w:tcPr>
+                    <w:p w:rsidR="00BB1EB7" w:rsidRDefault="00BB1EB7" w:rsidP="00BB1EB7">
+                        <w:pPr>
+                            <w:snapToGrid w:val="0"/>
+                            <w:spacing w:line="360" w:lineRule="exact"/>
+                            <w:jc w:val="center"/>
+                            <w:rPr>
+                                <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r>
+                            <w:rPr>
+                                <w:sz w:val="18"/>
+                                <w:szCs w:val="18"/>
+                            </w:rPr>
+                            <w:t>1000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+        </w:tbl>
+        <w:p w:rsidR="00A265D5" w:rsidRDefault="00A265D5" w:rsidP="00A265D5">
+            <w:pPr>
+                <w:adjustRightInd w:val="0"/>
+                <w:snapToGrid w:val="0"/>
+                <w:spacing w:line="360" w:lineRule="auto"/>
+                <w:rPr>
+                    <w:szCs w:val="21"/>
+                </w:rPr>
+            </w:pPr>
+            <w:bookmarkStart w:id="2" w:name="_GoBack"/>
+            <w:bookmarkEnd w:id="2"/>
+        </w:p>
+        <w:sectPr w:rsidR="00A265D5">
+            <w:headerReference w:type="even" r:id="rId27"/>
+            <w:headerReference w:type="default" r:id="rId28"/>
+            <w:headerReference w:type="first" r:id="rId29"/>
+            <w:pgSz w:w="11906" w:h="16838"/>
+            <w:pgMar w:top="1440" w:right="1800" w:bottom="1440" w:left="1800" w:header="851" w:footer="992"
+                     w:gutter="0"/>
+            <w:cols w:space="425"/>
+            <w:docGrid w:type="lines" w:linePitch="312"/>
+        </w:sectPr>
+    </w:body>
+</w:document>
+        w:gutter="0"/><w:cols w:space="425"/><w:docGrid w:type="lines"
+                                                        w:linePitch="312"/></w:sectPr></w:body></w:document>
